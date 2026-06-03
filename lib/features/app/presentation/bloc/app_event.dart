@@ -1,0 +1,13 @@
+part of 'app_bloc.dart';
+
+@freezed
+class AppEvent with _$AppEvent {
+  /// Khởi chạy app — kiểm tra session
+  const factory AppEvent.started() = _Started;
+
+  /// Đã đăng nhập thành công (gọi từ LoginBloc sau khi login xong)
+  const factory AppEvent.loggedIn(User user) = _LoggedIn;
+
+  /// Đăng xuất
+  const factory AppEvent.loggedOut() = _LoggedOut;
+}

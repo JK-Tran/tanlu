@@ -1,0 +1,191 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tanlu_management/core/dimensions/app_dimens.dart';
+import 'package:tanlu_management/core/themes/app_colors.dart';
+import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/core/widgets/app_text_field.dart';
+import 'package:tanlu_management/core/widgets/buttons/app_primary_button.dart';
+import 'package:tanlu_management/features/auth/presentation/login/bloc/login_bloc.dart';
+
+class LoginFormCard extends StatelessWidget {
+  const LoginFormCard({
+    super.key,
+    required this.formKey,
+    required this.usernameController,
+    required this.passwordController,
+    required this.onLoginPressed,
+  });
+
+  final GlobalKey<FormState> formKey;
+  final TextEditingController usernameController;
+  final TextEditingController passwordController;
+  final VoidCallback onLoginPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(AppDimens.spacingLg),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(AppDimens.radiusLg),
+        border: Border.all(
+          color: AppColors.primaryLight.withValues(alpha: 0.5),
+          width: 1.5.w,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.05),
+            blurRadius: 30,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            AppText.t0(
+              'ĐĂNG NHẬP',
+              color: AppColors.grayDark80,
+              fontWeight: FontWeight.w700,
+              fontSize: 20.sp,
+            ),
+            SizedBox(height: 20.h),
+            // --- Email/SĐT ---
+            BlocBuilder<LoginBloc, LoginState>(
+              buildWhen: (p, c) => p.username != c.username,
+              builder: (context, state) {
+                return AppTextField(
+                  controller: usernameController,
+                  onChanged: (value) => context.read<LoginBloc>().add(
+                    UsernameChanged(value, username: value),
+                  ),
+                  labelText: 'Tài khoản',
+                  hintText: 'Email hoặc Số điện thoại',
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Vui lòng nhập email hoặc số điện thoại';
+                    }
+                    return null;
+                  },
+                  prefixIcon: Icon(
+                    Icons.person_2_outlined,
+                    color: AppColors.grayDark80,
+                    size: 20,
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 16.h),
+            // --- Mật khẩu ---
+            BlocBuilder<LoginBloc, LoginState>(
+              buildWhen: (p, c) =>
+                  p.obscureText != c.obscureText || p.password != c.password,
+              builder: (context, state) {
+                return AppTextField(
+                  controller: passwordController,
+                  onChanged: (value) => context.read<LoginBloc>().add(
+                    PasswordChanged(value, password: value),
+                  ),
+                  labelText: 'Mật khẩu',
+                  hintText: 'Nhập mật khẩu của bạn',
+                  obscureText: state.obscureText,
+                  textInputAction: TextInputAction.done,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Vui lòng nhập mật khẩu';
+                    }
+                    if (value.length < 6) {
+                      return 'Mật khẩu phải tối thiểu 6 ký tự';
+                    }
+                    return null;
+                  },
+                  prefixIcon: Icon(
+                    Icons.lock_outline_rounded,
+                    color: AppColors.grayDark80,
+                    size: 20,
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 12.h),
+            // --- Remember me + Quên mật khẩu ---
+            const RememberForgotRow(),
+            SizedBox(height: 24.h),
+            // --- Nút Đăng nhập ---
+            BlocBuilder<LoginBloc, LoginState>(
+              buildWhen: (p, c) =>
+                  p.isLoginButtonEnabled != c.isLoginButtonEnabled ||
+                  p.showLoginButtonLoading != c.showLoginButtonLoading,
+              builder: (context, state) {
+                return AppPrimaryButton(
+                  label: 'Đăng nhập',
+                  loading: state.showLoginButtonLoading,
+                  onPressed: state.isLoginButtonEnabled ? onLoginPressed : null,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class RememberForgotRow extends StatelessWidget {
+  const RememberForgotRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        // Quên mật khẩu
+        TextButton(
+          onPressed: () => _showForgotDialog(context),
+          style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: AppText.b2(
+            'Quên mật khẩu?',
+            color: AppColors.primary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showForgotDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppDimens.radiusMd),
+        ),
+        title: AppText.t0('Quên mật khẩu?', fontWeight: FontWeight.w700),
+        content: AppText.b1(
+          'Vui lòng liên hệ Quản trị viên hệ thống để khôi phục mật khẩu.',
+          color: AppColors.grayDark80,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: AppText.t1(
+              'Đã hiểu',
+              color: AppColors.primary,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

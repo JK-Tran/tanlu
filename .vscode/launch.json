@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Dev",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "toolArgs": [
+                "--flavor",
+                "dev",
+                "--dart-define",
+                "FLAVOR=dev"
+            ]
+        },
+        {
+            "name": "Debug Staging",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "toolArgs": [
+                "--flavor",
+                "stg",
+                "--dart-define",
+                "FLAVOR=stg"
+            ]
+        },
+        {
+            "name": "Debug Production",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "toolArgs": [
+                "--flavor",
+                "production",
+                "--dart-define",
+                "FLAVOR=production"
+            ]
+        }
+    ]
+}
