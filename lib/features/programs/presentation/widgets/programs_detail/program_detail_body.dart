@@ -108,7 +108,7 @@ class ProgramDetailBody extends StatelessWidget {
                                     program.version.isNotEmpty
                                         ? 'Phiên bản ${program.version}'
                                         : 'Giáo trình',
-                                    fontSize: 12.sp,
+                                    fontSize: 10.sp,
                                     fontWeight: FontWeight.w700,
                                     color: catColor,
                                   ),
@@ -119,7 +119,7 @@ class ProgramDetailBody extends StatelessWidget {
                             // Title
                             AppText.b1(
                               program.title,
-                              fontSize: 18.sp,
+                              fontSize: 16.sp,
                               fontWeight: FontWeight.w700,
                               color: AppColors.grayDark80,
                               maxLines: 4,
@@ -146,7 +146,7 @@ class ProgramDetailBody extends StatelessWidget {
                                   children: [
                                     AppText.b1(
                                       'Ngày tạo',
-                                      fontSize: 12.sp,
+                                      fontSize: 10.sp,
                                       color: AppColors.grayMedium,
                                     ),
                                     SizedBox(height: 2.h),
@@ -155,7 +155,7 @@ class ProgramDetailBody extends StatelessWidget {
                                             program.createdAt,
                                           ) ??
                                           '',
-                                      fontSize: 12.sp,
+                                      fontSize: 10.sp,
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.grayDark80,
                                     ),
@@ -211,7 +211,7 @@ class ProgramDetailBody extends StatelessWidget {
                     SizedBox(width: 10.w),
                     AppText.b1(
                       'Thông tin chung',
-                      fontSize: 16.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                       color: const Color(0xFF1E293B),
                     ),
@@ -291,7 +291,7 @@ class ProgramDetailBody extends StatelessWidget {
                     SizedBox(width: 10.w),
                     AppText.b1(
                       'Mô tả chi tiết',
-                      fontSize: 16.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
                       color: const Color(0xFF1E293B),
                     ),
@@ -300,7 +300,7 @@ class ProgramDetailBody extends StatelessWidget {
                 SizedBox(height: 12.h),
                 AppText.b1(
                   program.description,
-                  fontSize: 14.sp,
+                  fontSize: 12.sp,
                   color: const Color(0xFF475569),
                 ),
               ],
@@ -344,7 +344,7 @@ class ProgramDetailBody extends StatelessWidget {
                       SizedBox(width: 10.w),
                       AppText.b1(
                         'Tài liệu đính kèm (${program.files.length})',
-                        fontSize: 16.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
                         color: const Color(0xFF1E293B),
                       ),
@@ -471,13 +471,13 @@ class ProgramDetailBody extends StatelessWidget {
                                     AppText.b1(
                                       file.fileName,
                                       maxLines: 1,
-                                      fontSize: 14.sp,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w600,
                                       color: const Color(0xFF1E293B),
                                     ),
                                     AppText.b1(
                                       'Bấm để xem',
-                                      fontSize: 12.sp,
+                                      fontSize: 10.sp,
                                       color: const Color(0xFF94A3B8),
                                     ),
                                   ],
@@ -533,14 +533,14 @@ class ProgramDetailBody extends StatelessWidget {
           width: 90.w,
           child: AppText.b1(
             label,
-            fontSize: 13.sp,
+            fontSize: 11.sp,
             color: const Color(0xFF94A3B8),
           ),
         ),
         Expanded(
           child: AppText.b1(
             value,
-            fontSize: 14.sp,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w600,
             color: valueColor ?? const Color(0xFF1E293B),
           ),

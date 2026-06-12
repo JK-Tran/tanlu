@@ -50,7 +50,7 @@ class ChildListItem extends StatelessWidget {
       child: AppText.t1(
         firstLetter,
         color: AppColors.primary,
-        fontSize: 24.sp,
+        fontSize: 22.sp,
         fontWeight: FontWeight.w700,
       ),
     );
@@ -75,7 +75,7 @@ class ChildListItem extends StatelessWidget {
           SizedBox(width: 4.w),
           AppText.b2(
             text,
-            fontSize: 13.sp,
+            fontSize: 11.sp,
             fontWeight: FontWeight.w600,
             color: color,
           ),
@@ -131,7 +131,7 @@ class ChildListItem extends StatelessWidget {
                       children: [
                         AppText.h2(
                           student.fullName,
-                          fontSize: 18.sp,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
                           color: const Color(0xFF1E1E2D),
                           maxLines: 1,
@@ -173,7 +173,7 @@ class ChildListItem extends StatelessWidget {
                                 student.classroom.name.isNotEmpty
                                     ? 'Lớp: ${student.classroom.name}'
                                     : 'Chưa xếp lớp',
-                                fontSize: 13.sp,
+                                fontSize: 11.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.grayMedium,
                                 maxLines: 1,

@@ -30,6 +30,28 @@ import '../../features/auth/domain/usecases/logout_use_case.dart' as _i711;
 import '../../features/auth/domain/usecases/save_current_user_use_case.dart'
     as _i546;
 import '../../features/auth/presentation/login/bloc/login_bloc.dart' as _i204;
+import '../../features/chat/data/mapper/chat_user_data_mapper.dart' as _i182;
+import '../../features/chat/data/mapper/contact_data_mapper.dart' as _i203;
+import '../../features/chat/data/mapper/conversation_data_mapper.dart' as _i808;
+import '../../features/chat/data/mapper/message_data_mapper.dart' as _i1071;
+import '../../features/chat/data/mapper/participant_data_mapper.dart' as _i50;
+import '../../features/chat/data/repositories/chat_repository_impl.dart'
+    as _i504;
+import '../../features/chat/data/sources/chat_api_service.dart' as _i958;
+import '../../features/chat/domain/repositories/chat_repository.dart' as _i420;
+import '../../features/chat/domain/usecases/create_conversation_use_case.dart'
+    as _i441;
+import '../../features/chat/domain/usecases/get_contacts_use_case.dart'
+    as _i444;
+import '../../features/chat/domain/usecases/get_conversations_use_case.dart'
+    as _i890;
+import '../../features/chat/domain/usecases/get_messages_use_case.dart'
+    as _i671;
+import '../../features/chat/domain/usecases/mark_messages_as_read_use_case.dart'
+    as _i29;
+import '../../features/chat/domain/usecases/send_message_use_case.dart'
+    as _i500;
+import '../../features/chat/presentation/bloc/chat_bloc.dart' as _i65;
 import '../../features/programs/data/mapper/program_data_mapper.dart' as _i562;
 import '../../features/programs/data/mapper/program_file_data_mapper.dart'
     as _i64;
@@ -100,6 +122,7 @@ import '../../shared/network/api_client.dart' as _i757;
 import '../../shared/network/dio_client.dart' as _i833;
 import '../../shared/services/google_auth_service.dart' as _i175;
 import '../../shared/services/local_storage/app_preferences.dart' as _i531;
+import '../../shared/services/socket_io/socket.dart' as _i46;
 import '../base/default_bloc.dart' as _i841;
 import '../utils/shared_prefs_helper.dart' as _i964;
 import 'register_module.dart' as _i291;
@@ -128,11 +151,28 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i563.ScreeningTestDataMapper>(
       () => _i563.ScreeningTestDataMapper(),
     );
+    gh.factory<_i182.ChatUserDataMapper>(() => _i182.ChatUserDataMapper());
+    gh.factory<_i203.ContactDataMapper>(() => _i203.ContactDataMapper());
     gh.lazySingleton<_i59.FirebaseAuth>(() => registerModule.firebaseAuth);
     gh.lazySingleton<_i303.DeviceInfo>(() => registerModule.deviceInfo());
     gh.lazySingleton<_i80.AppInfo>(() => _i80.AppInfo());
     gh.lazySingleton<_i964.SharedPrefsHelper>(
       () => _i964.SharedPrefsHelper(gh<_i460.SharedPreferences>()),
+    );
+    gh.lazySingleton<_i46.SocketService>(
+      () => _i46.SocketService(gh<_i460.SharedPreferences>()),
+    );
+    gh.factory<_i1071.MessageDataMapper>(
+      () => _i1071.MessageDataMapper(gh<_i182.ChatUserDataMapper>()),
+    );
+    gh.factory<_i50.ParticipantDataMapper>(
+      () => _i50.ParticipantDataMapper(gh<_i182.ChatUserDataMapper>()),
+    );
+    gh.factory<_i808.ConversationDataMapper>(
+      () => _i808.ConversationDataMapper(
+        gh<_i50.ParticipantDataMapper>(),
+        gh<_i1071.MessageDataMapper>(),
+      ),
     );
     gh.lazySingleton<_i531.AppPreferences>(
       () => _i512.AppApiService(gh<_i964.SharedPrefsHelper>()),
@@ -182,6 +222,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i587.AuthApiService>(
       () => _i587.AuthApiService(gh<_i757.ApiClient>()),
     );
+    gh.lazySingleton<_i958.ChatApiService>(
+      () => _i958.ChatApiService(gh<_i757.ApiClient>()),
+    );
     gh.lazySingleton<_i429.ProgramApiService>(
       () => _i429.ProgramApiService(gh<_i757.ApiClient>()),
     );
@@ -205,6 +248,32 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i429.ProgramApiService>(),
         gh<_i562.ProgramDataMapper>(),
       ),
+    );
+    gh.lazySingleton<_i420.ChatRepository>(
+      () => _i504.ChatRepositoryImpl(
+        gh<_i958.ChatApiService>(),
+        gh<_i808.ConversationDataMapper>(),
+        gh<_i1071.MessageDataMapper>(),
+        gh<_i203.ContactDataMapper>(),
+      ),
+    );
+    gh.factory<_i441.CreateConversationUseCase>(
+      () => _i441.CreateConversationUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i890.GetConversationsUseCase>(
+      () => _i890.GetConversationsUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i671.GetMessagesUseCase>(
+      () => _i671.GetMessagesUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i500.SendMessageUseCase>(
+      () => _i500.SendMessageUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i444.GetContactsUseCase>(
+      () => _i444.GetContactsUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i29.MarkMessagesAsReadUseCase>(
+      () => _i29.MarkMessagesAsReadUseCase(gh<_i420.ChatRepository>()),
     );
     gh.lazySingleton<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
@@ -247,9 +316,24 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i344.CreatorDataMapper>(),
       ),
     );
+    gh.lazySingleton<_i65.ChatBloc>(
+      () => _i65.ChatBloc(
+        gh<_i890.GetConversationsUseCase>(),
+        gh<_i444.GetContactsUseCase>(),
+        gh<_i671.GetMessagesUseCase>(),
+        gh<_i500.SendMessageUseCase>(),
+        gh<_i441.CreateConversationUseCase>(),
+        gh<_i29.MarkMessagesAsReadUseCase>(),
+        gh<_i46.SocketService>(),
+        gh<_i1071.MessageDataMapper>(),
+      ),
+    );
     gh.lazySingleton<_i120.AppBloc>(
-      () =>
-          _i120.AppBloc(gh<_i787.AuthRepository>(), gh<_i531.AppPreferences>()),
+      () => _i120.AppBloc(
+        gh<_i787.AuthRepository>(),
+        gh<_i531.AppPreferences>(),
+        gh<_i46.SocketService>(),
+      ),
     );
     gh.lazySingleton<_i23.ReportRepository>(
       () => _i420.ReportRepositoryImpl(

@@ -41,7 +41,7 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA), // Clean, light background
+      backgroundColor: AppColors.white, // Clean, light background
       body: SafeArea(
         bottom: false,
         child: AppRefreshList(
@@ -113,7 +113,7 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                                         ),
                                       ),
                               ),
-                              SizedBox(width: 12.w),
+                              SizedBox(width: 6.w),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,13 +121,13 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                                     AppText.b2(
                                       'Xin chào 👋',
                                       color: const Color(0xFF8E8E93),
-                                      fontSize: 13.sp,
+                                      fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
                                     ),
                                     AppText.h2(
                                       displayName,
                                       color: const Color(0xFF1E1E2D),
-                                      fontSize: 18.sp,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                       maxLines: 1,
                                       textOverflow: TextOverflow.ellipsis,
@@ -183,16 +183,16 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                             height: 170.h, // Fixed height for banner
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
-                                colors: [Color(0xFF6366F1), Color(0xFF818CF8)],
+                                colors: [AppColors.primary, AppColors.accent],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
                               borderRadius: BorderRadius.circular(24.r),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(
-                                    0xFF6366F1,
-                                  ).withValues(alpha: 0.3),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.3,
+                                  ),
                                   blurRadius: 15,
                                   offset: const Offset(0, 6),
                                 ),
@@ -205,7 +205,7 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                                   right: 0.w,
                                   top: 5.h,
                                   child: Opacity(
-                                    opacity: 0.8,
+                                    opacity: 0.9,
                                     child: Transform.scale(
                                       scale: 1,
                                       child: Image.asset(
@@ -215,28 +215,12 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                                     ),
                                   ),
                                 ),
-                                Positioned(
-                                  right: -20,
-                                  bottom: -10,
-                                  child: Opacity(
-                                    opacity: 0.2,
-                                    child: Transform.scale(
-                                      scale: 1.5,
-                                      child: Image.asset(
-                                        'assets/icons/ic-clouds.png',
-                                        width: 120.w,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                SizedBox(),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+
                                 Positioned(
                                   left: 10.w,
-                                  top: 0.h,
+                                  top: -2.h,
                                   child: Opacity(
-                                    opacity: 0.8,
+                                    opacity: 1,
                                     child: Transform.scale(
                                       scale: 0.8,
                                       child: Image.asset(
@@ -250,10 +234,10 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                                   ),
                                 ),
                                 Positioned(
-                                  right: 30.w,
+                                  right: 40.w,
                                   bottom: 0.h,
                                   child: Transform.scale(
-                                    scale: 1.3,
+                                    scale: 1.6,
                                     child: Image.asset(
                                       'assets/images/img-banner.png',
                                       width: 130.w, // Adjust based on asset
@@ -275,30 +259,38 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                                       AppText.h2(
                                         centerName,
                                         color: Colors.white,
-                                        fontSize: 18.sp,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.bold,
                                         maxLines: 2,
                                         textOverflow: TextOverflow.ellipsis,
                                       ),
                                       SizedBox(height: 8.h),
+                                      SizedBox(
+                                        width: 180.w,
+                                        child: AppText.b2(
+                                          'Đồng hành cùng bé phát triển\ntoàn diện mỗi ngày',
+                                          color: AppColors.grayVeryLight,
+                                          fontSize: 12.sp,
+                                        ),
+                                      ),
+
+                                      SizedBox(height: 12.h),
                                       Container(
                                         padding: EdgeInsets.symmetric(
-                                          horizontal: 12.w,
+                                          horizontal: 16.w,
                                           vertical: 6.h,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: Colors.white.withValues(
-                                            alpha: 0.2,
-                                          ),
+                                          color: AppColors.warning,
                                           borderRadius: BorderRadius.circular(
-                                            16,
+                                            6,
                                           ),
                                         ),
                                         child: AppText.b2(
                                           'Thấu hiểu & Tận tình',
                                           color: Colors.white,
                                           fontSize: 12.sp,
-                                          fontWeight: FontWeight.w600,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                     ],
@@ -320,7 +312,7 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                 delegate: AppStickyHeaderDelegate(
                   height: 100.h,
                   child: Container(
-                    color: const Color(0xFFF8F9FA),
+                    color: AppColors.white,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -334,7 +326,7 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                               AppText.h1(
                                 'Danh sách học sinh',
                                 color: const Color(0xFF1E1E2D),
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w800,
                               ),
                             ],

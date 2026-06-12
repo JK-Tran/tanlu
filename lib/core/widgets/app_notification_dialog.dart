@@ -113,7 +113,7 @@ class AppNotificationDialog extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.w800,
                 color: Color(0xFF1E293B), // Dark blue/slate
               ),
@@ -124,7 +124,7 @@ class AppNotificationDialog extends StatelessWidget {
             Text(
               content,
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 12.sp,
                 color: Color(0xFF64748B), // Slate gray
                 height: 1.5.h,
               ),
@@ -158,7 +158,7 @@ class AppNotificationDialog extends StatelessWidget {
                   buttonText,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 15.sp,
+                    fontSize: 13.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

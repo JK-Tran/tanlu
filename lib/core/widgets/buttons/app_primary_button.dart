@@ -34,7 +34,7 @@ class AppPrimaryButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.r),
           ),
-          textStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
+          textStyle: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
         ),
         child: loading
             ? SizedBox(

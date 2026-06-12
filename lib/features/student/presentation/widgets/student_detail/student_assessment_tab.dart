@@ -4,19 +4,39 @@ import 'package:flutter/material.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
 import 'package:tanlu_management/features/student/presentation/widgets/student_info_row.dart';
 
-class StudentAssessmentTab extends StatelessWidget {
+class StudentAssessmentTab extends StatefulWidget {
   const StudentAssessmentTab({super.key, required this.student});
 
   final Student student;
 
   @override
+  State<StudentAssessmentTab> createState() => _StudentAssessmentTabState();
+}
+
+class _StudentAssessmentTabState extends State<StudentAssessmentTab> with AutomaticKeepAliveClientMixin {
+  final ScrollController _controller = ScrollController();
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+    final student = widget.student;
     if (student.screeningResults.isEmpty &&
         student.developmentResults.isEmpty) {
       return _buildEmptyState('Chưa có kết quả đánh giá nào');
     }
 
     return SingleChildScrollView(
+      controller: _controller,
+      key: const PageStorageKey<String>('student_assessment_tab'),
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       child: Column(
@@ -113,7 +133,7 @@ class StudentAssessmentTab extends StatelessWidget {
             Text(
               message,
               style: TextStyle(
-                fontSize: 15.sp,
+                fontSize: 13.sp,
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF8E8E93),
               ),

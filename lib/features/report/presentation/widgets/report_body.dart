@@ -98,7 +98,7 @@ class ReportErrorView extends StatelessWidget {
               message,
               color: AppColors.grayMedium,
               textAlign: TextAlign.center,
-              fontSize: 14.sp,
+              fontSize: 12.sp,
             ),
             SizedBox(height: 20.h),
             ElevatedButton.icon(
@@ -135,7 +135,7 @@ class ReportEmptyView extends StatelessWidget {
           AppText.t1(
             'Chưa có học viên nào.',
             color: AppColors.grayMedium,
-            fontSize: 15.sp,
+            fontSize: 13.sp,
           ),
         ],
       ),

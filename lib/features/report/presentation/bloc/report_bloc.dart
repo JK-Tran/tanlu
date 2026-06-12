@@ -275,7 +275,11 @@ class ReportBloc extends BaseBloc<ReportEvent, ReportState> {
         emit(state.copyWith(reports: updatedReports));
       },
       doOnError: (e) {
-        final errorMsg = e.toString().replaceFirst(RegExp(r'^\[.*?\] 💢  FutureUseCase Error:\s*'), '').replaceFirst(RegExp(r'^ServerException\s*\('), '').replaceAll(RegExp(r'\)$'), '');
+        final errorMsg = e
+            .toString()
+            .replaceFirst(RegExp(r'^\[.*?\] 💢  FutureUseCase Error:\s*'), '')
+            .replaceFirst(RegExp(r'^ServerException\s*\('), '')
+            .replaceAll(RegExp(r'\)$'), '');
         emit(state.copyWith(isLoading: false, submitError: errorMsg));
       },
     );
@@ -320,7 +324,10 @@ class ReportBloc extends BaseBloc<ReportEvent, ReportState> {
       },
       doOnError: (e) {
         // Loại bỏ phần prefix thừa từ UseCase Exception nếu có
-        final errorMsg = e.toString().replaceFirst(RegExp(r'^\[.*?\] 💢  FutureUseCase Error:\s*'), '');
+        final errorMsg = e.toString().replaceFirst(
+          RegExp(r'^\[.*?\] 💢  FutureUseCase Error:\s*'),
+          '',
+        );
         emit(state.copyWith(isLoading: false, submitError: errorMsg));
       },
     );

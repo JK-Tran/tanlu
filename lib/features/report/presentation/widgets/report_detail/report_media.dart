@@ -90,25 +90,24 @@ class ReportMedia extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: 24.h),
+          SizedBox(height: 16.h),
         ],
         if (otherFiles.isNotEmpty) ...[
           _buildSectionLabel(
             'Tài liệu khác (${otherFiles.length})',
             Icons.insert_drive_file_outlined,
           ),
-          SizedBox(height: 10.h),
+
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: otherFiles.length,
-            separatorBuilder: (_, index) => SizedBox(height: 8.h),
+            separatorBuilder: (_, index) => SizedBox(height: 4.h),
             itemBuilder: (context, index) {
               final file = otherFiles[index];
               return _OtherFileItem(file: file);
             },
           ),
-          SizedBox(height: 24.h),
         ],
       ],
     );
@@ -178,7 +177,7 @@ class _MediaGridItem extends StatelessWidget {
             ),
           ],
         ),
-        padding: EdgeInsets.all(8.w),
+        padding: EdgeInsets.all(6.w),
         child: Column(
           children: [
             Expanded(
@@ -237,7 +236,7 @@ class _MediaGridItem extends StatelessWidget {
                         ? file.fileName
                         : (isImage ? 'Ảnh can thiệp' : 'Video can thiệp'),
                     color: AppColors.grayDark,
-                    fontSize: 12.sp,
+                    fontSize: 10.sp,
                     fontWeight: FontWeight.w700,
                     maxLines: 1,
                     textOverflow: TextOverflow.ellipsis,
@@ -343,7 +342,7 @@ class _OtherFileItem extends StatelessWidget {
                   SizedBox(height: 2.h),
                   AppText.b2(
                     StringUtils.sizeLabel(file.fileSize),
-                    fontSize: 11.sp,
+                    fontSize: 10.sp,
                     color: AppColors.grayMedium,
                   ),
                 ],

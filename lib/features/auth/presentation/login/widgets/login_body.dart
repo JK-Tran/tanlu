@@ -4,7 +4,7 @@ import 'package:tanlu_management/core/dimensions/app_dimens.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'login_form_card.dart';
 import 'logo_section.dart';
-import 'footer_section.dart';
+import 'login_footer.dart';
 
 class LoginBody extends StatelessWidget {
   const LoginBody({
@@ -39,22 +39,27 @@ class LoginBody extends StatelessWidget {
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: AppDimens.spacingMd),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 24.h),
-                  LogoSection(),
-                  SizedBox(height: 32.h),
-                  LoginFormCard(
-                    formKey: formKey,
-                    usernameController: usernameController,
-                    passwordController: passwordController,
-                    onLoginPressed: onLoginPressed,
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 500),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 24.h),
+                      LogoSection(),
+                      SizedBox(height: 32.h),
+                      LoginFormCard(
+                        formKey: formKey,
+                        usernameController: usernameController,
+                        passwordController: passwordController,
+                        onLoginPressed: onLoginPressed,
+                      ),
+                      SizedBox(height: 20.h),
+                      LoginFooter(),
+                      SizedBox(height: 24.h),
+                    ],
                   ),
-                  SizedBox(height: 20.h),
-                  FooterSection(),
-                  SizedBox(height: 24.h),
-                ],
+                ),
               ),
             ),
           ),

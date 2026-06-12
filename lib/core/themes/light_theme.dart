@@ -23,7 +23,7 @@ abstract final class LightTheme {
         error: AppColors.error,
         onError: AppColors.lightOnError,
       ),
-      scaffoldBackgroundColor: AppColors.lightBackground,
+      scaffoldBackgroundColor: AppColors.white,
       textTheme: AppTypography.textTheme(
         onBackground: AppColors.lightOnBackground,
         onSurface: AppColors.lightOnSurface,

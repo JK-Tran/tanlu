@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
+import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/programs/presentation/bloc/programs_bloc.dart';
 import 'package:tanlu_management/features/programs/presentation/widgets/programs_body.dart';
@@ -34,7 +35,7 @@ class _ProgramsPageState extends BasePageState<ProgramsPage, ProgramsBloc> {
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5FA),
+      backgroundColor: AppColors.white,
       body: SafeArea(
         bottom: false,
         child: BlocBuilder<ProgramsBloc, ProgramsState>(
@@ -61,30 +62,51 @@ class _ProgramsPageState extends BasePageState<ProgramsPage, ProgramsBloc> {
                     slivers: [
                       SliverToBoxAdapter(
                         child: Container(
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(24.r),
+                            ),
+                          ),
                           child: _buildHeader(),
                         ),
                       ),
                       SliverPersistentHeader(
                         pinned: true,
                         delegate: AppStickyHeaderDelegate(
+                          height: 70.h,
                           child: Container(
-                            color: Colors.white,
-                            padding: EdgeInsets.fromLTRB(20, 0, 20, 14),
+                            color: AppColors.white,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                AppText.h1(
-                                  'Danh sách giáo trình',
-                                  color: const Color(0xFF1E1E2D),
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                                SizedBox(height: 12.h),
-                                AppSearchBar(
-                                  controller: _searchController,
-                                  hintText: 'Tìm kiếm giáo trình...',
+                                SizedBox(height: 16.h),
+                                // Padding(
+                                //   padding: EdgeInsets.symmetric(
+                                //     horizontal: 16.w,
+                                //   ),
+                                //   child: AppText.h1(
+                                //     'Danh sách giáo trình',
+                                //     color: const Color(0xFF1E1E2D),
+                                //     fontSize: 16.sp,
+                                //     fontWeight: FontWeight.w800,
+                                //   ),
+                                // ),
+                                // SizedBox(height: 8.h),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.w,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: AppSearchBar(
+                                          controller: _searchController,
+                                          hintText: 'Tìm kiếm giáo trình...',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -97,7 +119,6 @@ class _ProgramsPageState extends BasePageState<ProgramsPage, ProgramsBloc> {
                         programs: filtered,
                         onRetry: () => bloc.add(const FetchPrograms()),
                       ),
-                      SliverPadding(padding: EdgeInsets.only(bottom: 24.h)),
                     ],
                   ),
                 );
@@ -111,32 +132,31 @@ class _ProgramsPageState extends BasePageState<ProgramsPage, ProgramsBloc> {
 
   Widget _buildHeader() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 12, 0, 0),
+      padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText.b1(
                   'Giáo trình',
-                  fontSize: 28.sp,
+                  fontSize: 26.sp,
                   fontWeight: FontWeight.w900,
-                  color: const Color(0xFF1E293B),
+                  color: AppColors.white,
                 ),
                 SizedBox(height: 6.h),
                 AppText.b1(
                   'Khám phá kiến thức – Nâng cao mỗi ngày ✨',
-                  fontSize: 13.sp,
-                  color: const Color(0xFF94A3B8),
+                  fontSize: 11.sp,
+                  color: AppColors.grayVeryLight,
                 ),
               ],
             ),
           ),
           Transform.scale(
-            scale: 2,
+            scale: 2.2,
             child: Image.asset(
               'assets/images/img-programs.png',
               width: 120.w,

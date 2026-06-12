@@ -1,5 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:tanlu_management/core/dimensions/app_dimens.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/report/domain/entity/report.dart';
@@ -29,8 +30,11 @@ class ReportDetailAppBar extends StatelessWidget {
 
   Widget _buildAvatarFallback() {
     return Container(
-      color: const Color(0xFF1040A0),
       alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: const Color(0xFF1040A0),
+        shape: BoxShape.circle,
+      ),
       child: AppText.h1(
         student.fullName.isNotEmpty ? student.fullName[0].toUpperCase() : '?',
         color: Colors.white,
@@ -126,17 +130,21 @@ class ReportDetailAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isTablet = AppDimens.isTablet(context);
+    final double expandedH = isTablet ? 220.0 : 200.0;
+    final double collapsedH = isTablet ? 160.0 : 140.0;
+
     return SliverAppBar(
-      expandedHeight: 250.0,
-      collapsedHeight: 180.0,
+      expandedHeight: expandedH,
+      collapsedHeight: collapsedH,
       pinned: true,
       elevation: 0,
       backgroundColor: AppColors.primary,
       automaticallyImplyLeading: false,
       leading: Center(
         child: Container(
-          width: 44.w,
-          height: 44.h,
+          width: 35.w,
+          height: 35.h,
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.8),
             shape: BoxShape.circle,
@@ -144,8 +152,8 @@ class ReportDetailAppBar extends StatelessWidget {
           child: IconButton(
             icon: Icon(
               Icons.arrow_back_ios_new_rounded,
-              color: Colors.black87,
-              size: 20,
+              color: Colors.black,
+              size: 16,
             ),
             onPressed: () => Navigator.pop(context),
           ),
@@ -155,9 +163,9 @@ class ReportDetailAppBar extends StatelessWidget {
         Center(
           child: Container(
             margin: EdgeInsets.only(right: 8.w),
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.white.withValues(alpha: 0.9),
               borderRadius: BorderRadius.circular(100.r),
               border: Border.all(color: statusColor, width: 1.5.w),
               boxShadow: [
@@ -171,12 +179,12 @@ class ReportDetailAppBar extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(statusIcon, color: statusColor, size: 14),
+                Icon(statusIcon, color: statusColor, size: 12),
                 SizedBox(width: 4.w),
-                AppText.l1(
+                AppText.b2(
                   report.status.label,
                   color: statusColor,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.bold,
                 ),
               ],
             ),
@@ -184,18 +192,18 @@ class ReportDetailAppBar extends StatelessWidget {
         ),
         Center(
           child: Container(
-            margin: EdgeInsets.only(right: 12.w),
-            width: 36.w,
-            height: 36.h,
+            margin: EdgeInsets.only(right: 16.w),
+            width: 35.w,
+            height: 35.h,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: Colors.white.withValues(alpha: 0.8),
               shape: BoxShape.circle,
             ),
             child: PopupMenuButton<String>(
               icon: Icon(
                 Icons.more_horiz_rounded,
-                color: Color.fromRGBO(255, 255, 255, 1),
-                size: 20,
+                color: Colors.black,
+                size: 16,
               ),
               padding: EdgeInsets.zero,
               offset: const Offset(0, 40),
@@ -212,10 +220,6 @@ class ReportDetailAppBar extends StatelessWidget {
               itemBuilder: (context) => [
                 PopupMenuItem(
                   value: 'edit',
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 8.h,
-                  ),
                   child: Row(
                     children: [
                       Container(
@@ -239,6 +243,7 @@ class ReportDetailAppBar extends StatelessWidget {
                             'Chỉnh sửa',
                             fontWeight: FontWeight.bold,
                             color: const Color(0xFF1E293B),
+                            fontSize: 14.sp,
                           ),
                           SizedBox(height: 2.h),
                           AppText.b2(
@@ -281,6 +286,7 @@ class ReportDetailAppBar extends StatelessWidget {
                             'Xóa báo cáo',
                             fontWeight: FontWeight.bold,
                             color: const Color(0xFFDC2626),
+                            fontSize: 14.sp,
                           ),
                           SizedBox(height: 2.h),
                           AppText.b2(
@@ -302,11 +308,12 @@ class ReportDetailAppBar extends StatelessWidget {
         builder: (context, constraints) {
           final top = constraints.biggest.height;
           final safeArea = MediaQuery.of(context).padding.top;
-          // minHeight is where the app bar stops collapsing
-          final double minHeight = safeArea + 140.0 + 60.0;
 
-          // Animate during the last 100 pixels of scroll
-          double percent = (top - minHeight) / 100.0;
+          final double maxTop = safeArea + expandedH + 32.0;
+          final double minTop = safeArea + collapsedH + 32.0;
+
+          double percent = (top - minTop) / (maxTop - minTop);
+          if (maxTop == minTop) percent = 1.0;
           percent = percent.clamp(0.0, 1.0);
 
           final double scale = 0.7 + (0.3 * percent); // Scale from 0.7 to 1.0
@@ -338,59 +345,79 @@ class ReportDetailAppBar extends StatelessWidget {
                     child: Transform.scale(
                       scale: scale,
                       alignment: Alignment.topCenter,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Avatar
-                          Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 3.w),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.white.withValues(alpha: 0.3),
-                                  blurRadius: 24,
-                                  spreadRadius: 4,
+                      child: OverflowBox(
+                        maxHeight: double.infinity,
+                        alignment: Alignment.topCenter,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // Avatar
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 3.w,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.white.withValues(alpha: 0.3),
+                                    blurRadius: 24,
+                                    spreadRadius: 4,
+                                  ),
+                                ],
+                              ),
+                              child: Container(
+                                width: 110.w,
+                                height: 110.h,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100.r),
+                                  child: student.avatarFileId.isNotEmpty
+                                      ? Image.network(
+                                          student.avatarFileId,
+                                          fit: BoxFit.cover,
+                                          errorBuilder: (_, _, _) =>
+                                              _buildAvatarFallback(),
+                                        )
+                                      : _buildAvatarFallback(),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 12.h),
+                            // Name
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AppText.h1(
+                                  student.fullName,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 22.sp,
+                                ),
+                                SizedBox(width: 8.w),
+                                Icon(
+                                  student.gender.toLowerCase() == 'male'
+                                      ? Icons.male_rounded
+                                      : Icons.female_rounded,
+                                  color: Colors.white.withValues(alpha: 0.9),
+                                  size: 24,
                                 ),
                               ],
                             ),
-                            child: Container(
-                              width: 110.w,
-                              height: 110.h,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100.r),
-                                child: student.avatarFileId.isNotEmpty
-                                    ? Image.network(
-                                        student.avatarFileId,
-                                        fit: BoxFit.cover,
-                                        errorBuilder: (_, _, _) =>
-                                            _buildAvatarFallback(),
-                                      )
-                                    : _buildAvatarFallback(),
-                              ),
+                            SizedBox(height: 4.h),
+                            // Month label
+                            AppText.b2(
+                              monthLabel,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white.withValues(alpha: 0.9),
                             ),
-                          ),
-                          SizedBox(height: 12.h),
-                          // Name
-                          AppText.h1(
-                            student.fullName,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: 4.h),
-                          // Month label
-                          AppText.b2(
-                            monthLabel,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white.withValues(alpha: 0.9),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -403,9 +430,9 @@ class ReportDetailAppBar extends StatelessWidget {
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(32),
         child: Container(
-          height: 16.h,
+          height: 32.h,
           decoration: BoxDecoration(
-            color: Color(0xFFF8F9FA),
+            color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(32.r)),
           ),
         ),

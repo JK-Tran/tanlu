@@ -202,7 +202,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             title,
             fontWeight: FontWeight.w700,
             color: isDark ? AppColors.white : AppColors.grayDark,
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             textAlign: isCentered ? TextAlign.center : TextAlign.left,
           ),
           if (subtitle != null) ...[
@@ -212,7 +212,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               color: isDark
                   ? AppColors.white.withValues(alpha: 0.7)
                   : AppColors.grayMedium,
-              fontSize: 12.sp,
+              fontSize: 10.sp,
             ),
           ],
         ],

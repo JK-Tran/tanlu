@@ -32,17 +32,19 @@ class AppSearchBar extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: onChanged,
-        style: TextStyle(fontSize: 15.sp, color: AppColors.grayDark80),
+        style: TextStyle(fontSize: 12.sp, color: AppColors.grayDark80),
+        textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
+          isDense: true,
+          contentPadding: EdgeInsets.zero,
           hintText: hintText,
-          hintStyle: TextStyle(color: AppColors.grayMedium, fontSize: 15.sp),
+          hintStyle: TextStyle(color: AppColors.grayMedium, fontSize: 12.sp),
           prefixIcon: Icon(
             Icons.search_rounded,
             color: AppColors.grayMedium,
-            size: 22,
+            size: 20,
           ),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 12.h),
         ),
       ),
     );

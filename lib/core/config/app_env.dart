@@ -6,14 +6,15 @@ abstract final class AppEnv {
     switch (Flavor.current) {
       case Flavor.develop:
         //return 'http://172.16.0.79:5000';
-      return 'http://180.93.2.137:10003';
+        return 'http://180.93.2.137:10003';
       case Flavor.staging:
         return 'http://180.93.2.137:10003';
       case Flavor.production:
-        //return 'http://172.16.0.79:5000';
         return 'http://180.93.2.137:10003';
     }
   }
 
   static String get apiBaseUrl => '$baseUrl/api';
+
+  static String get socketUrl => 'http://180.93.2.137:10003';
 }

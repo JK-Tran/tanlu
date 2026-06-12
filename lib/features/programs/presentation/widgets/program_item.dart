@@ -27,9 +27,9 @@ class ProgramItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 5,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -69,7 +69,7 @@ class ProgramItem extends StatelessWidget {
                       program.version.isNotEmpty
                           ? 'Phiên bản ${program.version}'
                           : 'Giáo trình',
-                      fontSize: 11.5.sp,
+                      fontSize: 10.5.sp,
                       fontWeight: FontWeight.w700,
                       color: catColor,
                     ),
@@ -79,7 +79,7 @@ class ProgramItem extends StatelessWidget {
                   AppText.b1(
                     program.title,
                     maxLines: 2,
-                    fontSize: 15.sp,
+                    fontSize: 13.sp,
                     fontWeight: FontWeight.w700,
                     color: const Color(0xFF1E293B),
                   ),
@@ -98,7 +98,7 @@ class ProgramItem extends StatelessWidget {
                               program.createdAt,
                             ) ??
                             '',
-                        fontSize: 12.sp,
+                        fontSize: 10.sp,
                         color: AppColors.grayDark80,
                       ),
                     ],
@@ -108,7 +108,7 @@ class ProgramItem extends StatelessWidget {
                   AppText.b1(
                     program.description,
                     maxLines: 2,
-                    fontSize: 13.sp,
+                    fontSize: 11.sp,
                     color: const Color(0xFF64748B),
                   ),
                   // Attachment count
@@ -124,7 +124,7 @@ class ProgramItem extends StatelessWidget {
                         SizedBox(width: 4.w),
                         AppText.b1(
                           '${program.files.length} tệp đính kèm',
-                          fontSize: 12.5.sp,
+                          fontSize: 10.5.sp,
                           fontWeight: FontWeight.w600,
                           color: catColor,
                         ),

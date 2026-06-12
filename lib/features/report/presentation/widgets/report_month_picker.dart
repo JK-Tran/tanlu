@@ -44,7 +44,7 @@ class ReportMonthPicker extends StatelessWidget {
               _formatLabel(selectedMonth),
               color: Colors.white,
               fontWeight: FontWeight.w600,
-              fontSize: 13.sp,
+              fontSize: 11.sp,
             ),
             SizedBox(width: 4.w),
             Icon(
@@ -147,7 +147,7 @@ class _MonthPickerSheetState extends State<_MonthPickerSheet> {
                   'Chọn tháng báo cáo',
                   fontWeight: FontWeight.w700,
                   color: AppColors.grayDark,
-                  fontSize: 16.sp,
+                  fontSize: 14.sp,
                 ),
                 TextButton(
                   onPressed: () {
@@ -160,7 +160,7 @@ class _MonthPickerSheetState extends State<_MonthPickerSheet> {
                     style: TextStyle(
                       color: AppColors.primary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
+                      fontSize: 14.sp,
                     ),
                   ),
                 ),
@@ -188,7 +188,7 @@ class _MonthPickerSheetState extends State<_MonthPickerSheet> {
                         child: Text(
                           'Tháng ${index + 1}',
                           style: TextStyle(
-                            fontSize: 17.sp,
+                            fontSize: 15.sp,
                             color: AppColors.grayDark,
                           ),
                         ),
@@ -213,7 +213,7 @@ class _MonthPickerSheetState extends State<_MonthPickerSheet> {
                         child: Text(
                           '${_minYear + index}',
                           style: TextStyle(
-                            fontSize: 17.sp,
+                            fontSize: 15.sp,
                             color: AppColors.grayDark,
                           ),
                         ),

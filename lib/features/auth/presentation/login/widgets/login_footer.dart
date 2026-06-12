@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 
-class FooterSection extends StatelessWidget {
-  const FooterSection({super.key});
+class LoginFooter extends StatelessWidget {
+  const LoginFooter({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class FooterSection extends StatelessWidget {
           'Tổng đài hỗ trợ: 1900 636 999',
           color: Colors.white,
           fontWeight: FontWeight.w700,
-          fontSize: 12.sp,
+          fontSize: 14.sp,
         ),
         SizedBox(height: 4.h),
         AppText.b1(

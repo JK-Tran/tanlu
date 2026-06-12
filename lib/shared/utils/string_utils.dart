@@ -111,6 +111,24 @@ class StringUtils {
         ext.endsWith('.ogg');
   }
 
+  static String getFormattedDate() {
+    final now = DateTime.now();
+    final weekdays = [
+      'Chủ nhật',
+      'Thứ 2',
+      'Thứ 3',
+      'Thứ 4',
+      'Thứ 5',
+      'Thứ 6',
+      'Thứ 7',
+    ];
+    final dayOfWeek = weekdays[now.weekday % 7];
+    final day = now.day.toString().padLeft(2, '0');
+    final month = now.month.toString().padLeft(2, '0');
+    final year = now.year;
+    return '$dayOfWeek, $day/$month/$year';
+  }
+
   /// Checks if string is an powerpoint file.
   static bool isPPT(String filePath) {
     final String ext = filePath.toLowerCase();

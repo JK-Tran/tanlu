@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tanlu_management/core/di/injection_container.dart';
 import 'package:tanlu_management/core/router/custom_transitions.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
 import 'package:tanlu_management/features/auth/presentation/login/pages/login_page.dart';
@@ -18,10 +19,14 @@ import 'package:tanlu_management/features/programs/domain/entity/program.dart';
 import 'package:tanlu_management/features/report/presentation/pages/report_detail_page.dart';
 import 'package:tanlu_management/features/person/presentation/pages/person_page.dart';
 import 'package:tanlu_management/features/person/presentation/pages/settings_page.dart';
+import 'package:tanlu_management/features/overview/presentation/pages/overview_page.dart';
 
 import 'package:tanlu_management/features/progress/presentation/pages/progress_page.dart';
 import 'package:tanlu_management/features/activity/presentation/pages/activity_page.dart';
-import 'package:tanlu_management/features/message/presentation/pages/message_page.dart';
+import 'package:tanlu_management/features/chat/presentation/pages/chat_page.dart';
+import 'package:tanlu_management/features/chat/presentation/pages/chat_detail_page.dart';
+import 'package:tanlu_management/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:tanlu_management/features/chat/domain/entity/conversation.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
   debugLabel: 'root',
@@ -41,6 +46,7 @@ class AppRouter {
   static const String message = '/message';
   static const String person = '/person';
   static const String settings = '/settings';
+  static const String overview = '/overview';
 
   static GoRouter createRouter(AppBloc appBloc) {
     return GoRouter(
@@ -111,6 +117,18 @@ class AppRouter {
           },
         ),
         GoRoute(
+          path: '/chat-detail',
+          name: 'chat-detail',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) {
+            final args = state.extra as Map<String, dynamic>;
+            return ChatDetailPage(
+              conversation: args['conversation'] as Conversation,
+              chatBloc: args['chatBloc'] as ChatBloc,
+            );
+          },
+        ),
+        GoRoute(
           path: '/program-detail',
           name: 'program-detail',
           parentNavigatorKey: _rootNavigatorKey,
@@ -128,7 +146,10 @@ class AppRouter {
         // Shell: wraps all tabs inside HomePage (bottom nav)
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
-            return HomePage(navigationShell: navigationShell);
+            return BlocProvider.value(
+              value: sl<ChatBloc>(),
+              child: HomePage(navigationShell: navigationShell),
+            );
           },
           branches: [
             // Branch 0: DS Trẻ (Teacher)
@@ -183,7 +204,7 @@ class AppRouter {
                   path: message,
                   name: 'message',
                   pageBuilder: (context, state) =>
-                      const FadeTransitionPage(child: MessagePage()),
+                      const FadeTransitionPage(child: ChatPage()),
                 ),
               ],
             ),
@@ -206,6 +227,17 @@ class AppRouter {
                   name: 'programs',
                   pageBuilder: (context, state) =>
                       const FadeTransitionPage(child: ProgramsPage()),
+                ),
+              ],
+            ),
+            // Branch 7: Tổng quan (Teacher)
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: overview,
+                  name: 'overview',
+                  pageBuilder: (context, state) =>
+                      const FadeTransitionPage(child: OverviewPage()),
                 ),
               ],
             ),

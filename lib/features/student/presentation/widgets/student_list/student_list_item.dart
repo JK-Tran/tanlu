@@ -19,21 +19,43 @@ class StudentListItem extends StatelessWidget {
       years--;
       months += 12;
     }
-    return '$years tuổi';
+    return months > 0 ? '$years tuổi $months tháng' : '$years tuổi';
   }
 
   Widget _buildAvatar() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(24.r),
-      child: student.avatarFileId.isNotEmpty
-          ? Image.network(
-              student.avatarFileId,
-              width: 48.w,
-              height: 48.h,
-              fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => _buildFallbackAvatar(),
-            )
-          : _buildFallbackAvatar(),
+    final isMale = student.gender == 'male';
+    return Stack(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(24.r),
+          child: student.avatarFileId.isNotEmpty
+              ? Image.network(
+                  student.avatarFileId,
+                  width: 48.w,
+                  height: 48.h,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => _buildFallbackAvatar(),
+                )
+              : _buildFallbackAvatar(),
+        ),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: Container(
+            padding: EdgeInsets.all(2.w),
+            decoration: BoxDecoration(
+              color: isMale ? const Color(0xFFE5F1FF) : const Color(0xFFFFE5EA),
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 1.5),
+            ),
+            child: Icon(
+              isMale ? Icons.male_rounded : Icons.female_rounded,
+              size: 10,
+              color: isMale ? const Color(0xFF007AFF) : const Color(0xFFFF2D55),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -49,36 +71,8 @@ class StudentListItem extends StatelessWidget {
       child: AppText.t1(
         firstLetter,
         color: AppColors.primary,
-        fontSize: 20.sp,
+        fontSize: 18.sp,
         fontWeight: FontWeight.w700,
-      ),
-    );
-  }
-
-  Widget _buildTag({
-    required IconData icon,
-    required String text,
-    required Color color,
-    required Color bgColor,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(6.r),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: color),
-          SizedBox(width: 4.w),
-          AppText.b2(
-            text,
-            fontSize: 13.sp,
-            fontWeight: FontWeight.w600,
-            color: color,
-          ),
-        ],
       ),
     );
   }
@@ -101,101 +95,124 @@ class StudentListItem extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(16.r),
+          borderRadius: BorderRadius.circular(6.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 2,
+              offset: const Offset(0, 1),
             ),
           ],
         ),
         child: Material(
           color: Colors.transparent,
-          borderRadius: BorderRadius.circular(16.r),
+          borderRadius: BorderRadius.circular(6.r),
           child: InkWell(
             onTap: () {
               context.push('/student-detail', extra: student);
             },
-            borderRadius: BorderRadius.circular(16.r),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-              child: Row(
-                children: [
-                  _buildAvatar(),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: AppText.t1(
-                                student.fullName,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
-                                color: const Color(0xFF1E1E2D),
-                                maxLines: 1,
-                                textOverflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            SizedBox(width: 8.w),
-                            if (isMale)
-                              _buildTag(
-                                icon: Icons.male_rounded,
-                                text: 'Nam',
-                                color: const Color(0xFF007AFF),
-                                bgColor: const Color(0xFFE5F1FF),
-                              )
-                            else if (student.gender == 'female')
-                              _buildTag(
-                                icon: Icons.female_rounded,
-                                text: 'Nữ',
-                                color: const Color(0xFFFF2D55),
-                                bgColor: const Color(0xFFFFE5EA),
-                              ),
-                          ],
-                        ),
-                        SizedBox(height: 6.h),
-                        Row(
-                          children: [
-                            AppText.b2(
-                              _formatAge(student.dateOfBirth),
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.grayMedium,
-                            ),
-                            AppText.b2(
-                              ' • ',
-                              fontSize: 12.sp,
-                              color: AppColors.grayMedium,
-                            ),
-                            Expanded(
-                              child: AppText.b2(
-                                student.classroom.name.isNotEmpty
-                                    ? student.classroom.name
-                                    : 'Chưa xếp lớp',
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.grayMedium,
-                                maxLines: 1,
-                                textOverflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+            borderRadius: BorderRadius.circular(6.r),
+            child: Stack(
+              children: [
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Container(
+                    width: 4.w,
+                    decoration: BoxDecoration(
+                      color: isMale
+                          ? const Color(0xFF007AFF)
+                          : const Color(0xFFFF2D55),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(6.r),
+                        bottomLeft: Radius.circular(6.r),
+                      ),
                     ),
                   ),
-                  SizedBox(width: 8.w),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    color: Color(0xFFC7C7CC),
-                    size: 24,
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(20.w, 12.h, 16.w, 12.h),
+                  child: Row(
+                    children: [
+                      _buildAvatar(),
+                      SizedBox(width: 10.w),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: AppText.t1(
+                                    student.fullName,
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.grayDark80,
+                                    maxLines: 1,
+                                    textOverflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.cake_rounded,
+                                      size: 14,
+                                      color: AppColors.grayMedium,
+                                    ),
+                                    SizedBox(width: 4.w),
+                                    AppText.b2(
+                                      _formatAge(student.dateOfBirth),
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.grayMedium,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4.h),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.school_rounded,
+                                      size: 14,
+                                      color: AppColors.grayMedium,
+                                    ),
+                                    SizedBox(width: 4.w),
+                                    Expanded(
+                                      child: AppText.b2(
+                                        student.classroom.name.isNotEmpty
+                                            ? student.classroom.name
+                                            : 'Chưa xếp lớp',
+                                        fontSize: 11.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.grayMedium,
+                                        maxLines: 1,
+                                        textOverflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Icon(
+                        Icons.chevron_right_rounded,
+                        color: Color(0xFFC7C7CC),
+                        size: 24,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

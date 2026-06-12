@@ -119,7 +119,7 @@ class _ReportPageState extends BasePageState<ReportPage, ReportBloc> {
                           (i) => Center(
                             child: AppText.t2(
                               'Tháng ${i + 1}',
-                              fontSize: 18.sp,
+                              fontSize: 16.sp,
                             ),
                           ),
                         ),
@@ -138,7 +138,7 @@ class _ReportPageState extends BasePageState<ReportPage, ReportBloc> {
                         children: List.generate(
                           20,
                           (i) => Center(
-                            child: AppText.t2('${2020 + i}', fontSize: 18.sp),
+                            child: AppText.t2('${2020 + i}', fontSize: 16.sp),
                           ),
                         ),
                       ),
@@ -209,6 +209,7 @@ class _ReportPageState extends BasePageState<ReportPage, ReportBloc> {
                                       'Báo cáo',
                                       color: const Color(0xFF1C1C1E),
                                       fontWeight: FontWeight.w900,
+                                      fontSize: 24.sp,
                                     ),
                                   ),
                                   _MonthPillButton(
@@ -257,7 +258,7 @@ class _ReportPageState extends BasePageState<ReportPage, ReportBloc> {
                                       AppText.h1(
                                         'Danh sách báo cáo',
                                         color: const Color(0xFF1E1E2D),
-                                        fontSize: 18.sp,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.w800,
                                       ),
                                     ],
@@ -328,7 +329,7 @@ class _MonthPillButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(100.r),
@@ -345,15 +346,16 @@ class _MonthPillButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              Icons.calendar_today_rounded,
-              color: AppColors.primary,
-              size: 16,
+              Icons.calendar_month_rounded,
+              color: AppColors.grayMedium,
+              size: 14.sp,
             ),
             SizedBox(width: 6.w),
             AppText.l0(
               label,
               color: AppColors.grayDark,
               fontWeight: FontWeight.w600,
+              fontSize: 14.sp,
             ),
             SizedBox(width: 4.w),
             Icon(
@@ -397,7 +399,7 @@ class _ReportBanner extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: AppColors.accent,
-            blurRadius: 10,
+            blurRadius: 5,
             offset: const Offset(0, 4),
           ),
         ],
@@ -424,7 +426,7 @@ class _ReportBanner extends StatelessWidget {
             child: Opacity(
               opacity: 0.8,
               child: Transform.scale(
-                scale: 1.2,
+                scale: 1.3,
                 child: Image.asset('assets/icons/ic_balloon.png', width: 55.w),
               ),
             ),
@@ -432,11 +434,11 @@ class _ReportBanner extends StatelessWidget {
           // Book – bottom-right
           Positioned(
             right: 12.w,
-            top: 10.h,
+            top: 0.h,
             child: Opacity(
               opacity: 1,
               child: Transform.scale(
-                scale: 1.1,
+                scale: 0.9,
                 child: Image.asset('assets/images/img-report.png', width: 55.w),
               ),
             ),
@@ -459,7 +461,7 @@ class _ReportBanner extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(6.w),
+                        padding: EdgeInsets.all(4.w),
                         child: Image.asset('assets/icons/ic-analysis.png'),
                       ),
                     ),
@@ -467,15 +469,18 @@ class _ReportBanner extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppText.t0(
-                          'Báo cáo tháng',
-                          color: Colors.white,
-                          fontWeight: FontWeight.w800,
-                        ),
                         AppText.b2(
-                          'Quản lý báo cáo của học sinh trong lớp',
+                          'Tiến độ báo cáo',
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
+                          fontSize: 16.sp,
+                        ),
+                        AppText.b2(
+                          'Theo dõi báo cáo hàng tháng\ncủa học sinh',
+                          color: AppColors.grayLight,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12.sp,
+                          fontStyle: FontStyle.italic,
                         ),
                       ],
                     ),
@@ -533,7 +538,7 @@ class _StatChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 8.w),
+        padding: EdgeInsets.symmetric(vertical: 4.h),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(14.r),
@@ -544,14 +549,20 @@ class _StatChip extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Icon(icon, color: color, size: 22),
+            Icon(icon, color: color, size: 16),
             SizedBox(height: 4.h),
             AppText.h2(
               count.toString(),
               color: Colors.white,
               fontWeight: FontWeight.w900,
+              fontSize: 16.sp,
             ),
-            AppText.b2(label, color: Colors.white, fontWeight: FontWeight.w700),
+            AppText.b2(
+              label,
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 12.sp,
+            ),
           ],
         ),
       ),

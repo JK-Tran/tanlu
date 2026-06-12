@@ -120,7 +120,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                       _errorMessage,
                       style: TextStyle(
                         color: Colors.white70,
-                        fontSize: 16.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                       ),
                       textAlign: TextAlign.center,
@@ -146,7 +146,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                         SizedBox(height: 16.h),
                         Text(
                           'Đang tải video...',
-                          style: TextStyle(color: Colors.white70, fontSize: 14.sp),
+                          style: TextStyle(color: Colors.white70, fontSize: 12.sp),
                         ),
                       ],
                     ),
@@ -211,7 +211,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                                   widget.fileName,
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 15.sp,
+                                    fontSize: 13.sp,
                                     fontWeight: FontWeight.w600,
                                     shadows: [
                                       Shadow(
@@ -339,7 +339,7 @@ class _AppVideoPlayerState extends State<AppVideoPlayer> {
                                       '${_formatDuration(_controller.value.position)} / ${_formatDuration(_controller.value.duration)}',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 13.sp,
+                                        fontSize: 11.sp,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),

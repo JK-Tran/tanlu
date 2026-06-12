@@ -1,66 +1,114 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:tanlu_management/core/widgets/custom_card.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
 import 'package:tanlu_management/features/student/presentation/widgets/student_contact_row.dart';
 
-class StudentFamilyTab extends StatelessWidget {
+class StudentFamilyTab extends StatefulWidget {
   const StudentFamilyTab({super.key, required this.student});
 
   final Student student;
 
   @override
+  State<StudentFamilyTab> createState() => _StudentFamilyTabState();
+}
+
+class _StudentFamilyTabState extends State<StudentFamilyTab>
+    with AutomaticKeepAliveClientMixin {
+  final ScrollController _controller = ScrollController();
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+    final student = widget.student;
     if (student.studentParents.isEmpty) {
       return _buildEmptyState('Chưa có thông tin phụ huynh');
     }
 
     return SingleChildScrollView(
+      controller: _controller,
+      key: const PageStorageKey<String>('student_family_tab'),
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       child: Column(
         children: [
-          CustomCard(
-            title: 'Thành viên gia đình',
-            icon: Icons.family_restroom_rounded,
-            children: student.studentParents.map((sp) {
-              final p = sp.parent;
-              String rel = sp.relationship;
-              if (rel == 'father') rel = 'Ba';
-              if (rel == 'mother') rel = 'Mẹ';
-              final name = p.user.fullName;
-              final initials = name.isNotEmpty
-                  ? name.split(' ').last[0].toUpperCase()
-                  : '?';
-
-              return Padding(
-                padding: EdgeInsets.only(
-                  bottom: sp != student.studentParents.last ? 16 : 0,
+          // Header Title
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(vertical: 12.h),
+            child: Row(
+              children: [
+                Container(
+                  width: 52.w,
+                  height: 52.h,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF0EDFF),
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.family_restroom_rounded,
+                    color: const Color(0xFF6366F1),
+                    size: 28.sp,
+                  ),
                 ),
-                child: Column(
-                  children: [
-                    StudentContactRow(
-                      initials: initials,
-                      name: '$name ($rel)',
-                      phone: p.user.phone,
-                      isPrimary: sp.isPrimaryContact,
-                      avatarBg: const Color(0xFFFFE8F4),
-                      avatarText: const Color(0xFFE91E8C),
-                    ),
-                    if (sp != student.studentParents.last)
-                      Padding(
-                        padding: EdgeInsets.only(top: 16.h),
-                        child: Divider(
-                          height: 1.h,
-                          color: Colors.grey.withValues(alpha: 0.15),
+                SizedBox(width: 16.h),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Thành viên gia đình',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w800,
+                          color: const Color(0xFF1E1E2D),
                         ),
                       ),
-                  ],
+                      SizedBox(height: 4.h),
+                      Text(
+                        'Danh sách các thành viên trong gia đình',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF8E8E93),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            }).toList(),
+              ],
+            ),
           ),
-          SizedBox(height: 24.h),
+
+          // Family Members List
+          ...student.studentParents.asMap().entries.map((entry) {
+            final int index = entry.key;
+            final sp = entry.value;
+            final p = sp.parent;
+            String rel = sp.relationship;
+            if (rel == 'father') rel = 'Bố';
+            if (rel == 'mother') rel = 'Mẹ';
+            final name = p.user.fullName;
+
+            return Padding(
+              padding: EdgeInsets.only(bottom: 16.h),
+              child: StudentContactRow(
+                index: index + 1,
+                name: '$name ($rel)',
+                phone: p.user.phone,
+                isPrimary: sp.isPrimaryContact,
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -96,7 +144,7 @@ class StudentFamilyTab extends StatelessWidget {
             Text(
               message,
               style: TextStyle(
-                fontSize: 15.sp,
+                fontSize: 13.sp,
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF8E8E93),
               ),

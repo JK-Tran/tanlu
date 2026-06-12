@@ -215,7 +215,7 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
             AppText.t1(
               'Chưa có báo cáo',
               fontWeight: FontWeight.w700,
-              fontSize: 18.sp,
+              fontSize: 16.sp,
               color: AppColors.grayDark,
             ),
             SizedBox(height: 8.h),
@@ -227,11 +227,7 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
             SizedBox(height: 32.h),
             ElevatedButton.icon(
               onPressed: () => _openCreatePage(context),
-              icon: Icon(
-                Icons.add_rounded,
-                size: 20,
-                color: Colors.white,
-              ),
+              icon: Icon(Icons.add_rounded, size: 20, color: Colors.white),
               label: AppText.b1(
                 'Tạo Báo Cáo Ngay',
                 color: Colors.white,
@@ -241,15 +237,12 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
                 minimumSize: const Size(0, 48), // Ghi đè Size.infinity từ theme
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24.w,
-                  vertical: 12.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
                 textStyle: TextStyle(
-                  fontSize: 15.sp,
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -305,7 +298,7 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
         ];
       },
       body: Container(
-        color: AppColors.grayBg,
+        color: Colors.white,
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
@@ -349,15 +342,11 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
                 watermarkAsset: 'assets/icons/love-letter.png',
               ),
 
-              SizedBox(height: 12.h),
-
-              // ── Hình ảnh & Video section
-              // ── Hình ảnh & Video section
               if (report.files.isNotEmpty) ...[
                 ReportMedia(report: report),
-                SizedBox(height: 24.h),
+                SizedBox(height: 20.h),
               ],
-              SizedBox(height: 24.h),
+              SizedBox(height: 20.h),
 
               // Timestamp
               if (report.createdAt != null)

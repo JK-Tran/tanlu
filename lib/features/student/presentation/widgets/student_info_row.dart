@@ -30,7 +30,7 @@ class StudentInfoRow extends StatelessWidget {
               label,
               style: TextStyle(
                 color: Color(0xFF8E8E93),
-                fontSize: 14.sp,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -43,7 +43,7 @@ class StudentInfoRow extends StatelessWidget {
               textAlign: TextAlign.right,
               style: TextStyle(
                 color: valueColor ?? const Color(0xFF1C1C1E),
-                fontSize: 14.sp,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w600,
                 height: 1.4.h,
               ),

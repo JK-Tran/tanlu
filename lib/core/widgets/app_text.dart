@@ -22,6 +22,8 @@ class AppText extends StatelessWidget {
     TextOverflow? textOverflow,
     FontWeight? fontWeight,
     double? fontSize,
+    FontStyle? fontStyle,
+    TextStyle? textStyle,
   }) {
     return AppText._(
       text,
@@ -47,6 +49,7 @@ class AppText extends StatelessWidget {
     TextOverflow? textOverflow,
     FontWeight? fontWeight,
     double? fontSize,
+    TextStyle? textStyle,
   }) {
     return AppText._(
       text,
@@ -319,6 +322,7 @@ class AppText extends StatelessWidget {
     TextOverflow? textOverflow,
     double? fontSize,
     FontWeight? fontWeight,
+    FontStyle? fontStyle,
   }) {
     return AppText._(
       text,

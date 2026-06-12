@@ -1,5 +1,6 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 
 class ReportInfoCard extends StatelessWidget {
@@ -81,19 +82,21 @@ class ReportInfoCard extends StatelessWidget {
                       Expanded(
                         child: AppText.t2(
                           title,
-                          color: const Color(0xFF1E1E2D),
-                          fontWeight: FontWeight.w800,
+                          color: AppColors.grayDark80,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.sp,
                         ),
                       ),
                       ?trailingIcon,
                     ],
                   ),
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 8.h),
                   // Content text
-                  AppText.b0(
+                  AppText.t2(
                     content,
-                    color: const Color(0xFF3D3D4E),
+                    color: AppColors.grayDark80,
                     fontWeight: FontWeight.w500,
+                    fontSize: 12.sp,
                   ),
                 ],
               ),
@@ -103,7 +106,7 @@ class ReportInfoCard extends StatelessWidget {
 
         // Bottom right decoration (if any)
         if (bottomRightDecoration != null)
-          Positioned(right: -30, bottom: -20, child: bottomRightDecoration!),
+          Positioned(right: -30, top: -25, child: bottomRightDecoration!),
       ],
     );
   }

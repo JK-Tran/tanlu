@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
+import 'package:tanlu_management/core/dimensions/app_dimens.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/features/student/presentation/bloc/student_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,6 +66,10 @@ class _StudentDetailPageState
         ? const Color(0xFF34C759)
         : const Color(0xFFFF9F0A);
 
+    final isTablet = AppDimens.isTablet(context);
+    final double expandedH = isTablet ? 240.0 : 200.0;
+    final double collapsedH = isTablet ? 180.0 : 140.0;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: DefaultTabController(
@@ -74,13 +79,10 @@ class _StudentDetailPageState
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                expandedHeight: 300.0,
-                collapsedHeight: 180.0,
+                expandedHeight: expandedH,
+                collapsedHeight: collapsedH,
                 pinned: true,
                 elevation: 0,
-                backgroundColor: const Color(
-                  0xFF0F52BA,
-                ), // Solid color when collapsed
                 automaticallyImplyLeading: false,
                 leading: Center(
                   child: _buildCircleButton(
@@ -94,7 +96,8 @@ class _StudentDetailPageState
                     final top = constraints.biggest.height;
                     final safeArea = MediaQuery.of(context).padding.top;
                     // minHeight is where the app bar stops collapsing
-                    final double minHeight = safeArea + 180.0 + 60.0;
+                    final double minHeight =
+                        safeArea + (isTablet ? 220.0 : 180.0) + 60.0;
 
                     // Animate during the last 100 pixels of scroll
                     double percent = (top - minHeight) / 100.0;
@@ -121,11 +124,11 @@ class _StudentDetailPageState
                         // Floating decorations
                         Positioned(
                           left: -20,
-                          top: 120.h,
+                          top: 100.h,
                           child: Opacity(
-                            opacity: 0.7,
+                            opacity: 0.9,
                             child: Transform.scale(
-                              scale: 1.2,
+                              scale: 1,
                               child: Image.asset(
                                 'assets/icons/balloon.png',
                                 width: 100.w,
@@ -138,9 +141,9 @@ class _StudentDetailPageState
                           right: 10.w,
                           top: 50.h,
                           child: Opacity(
-                            opacity: 0.7,
+                            opacity: 0.9,
                             child: Transform.scale(
-                              scale: 1.2,
+                              scale: 1,
                               child: Image.asset(
                                 'assets/icons/ic-stars.png',
                                 width: 50.w,
@@ -151,11 +154,11 @@ class _StudentDetailPageState
                         ),
                         Positioned(
                           right: -20,
-                          top: 150.h,
+                          top: 100.h,
                           child: Opacity(
-                            opacity: 0.5,
+                            opacity: 0.8,
                             child: Transform.scale(
-                              scale: 1.2,
+                              scale: 1.3,
                               child: Image.asset(
                                 'assets/icons/ic-clouds.png',
                                 width: 120.w,
@@ -179,12 +182,12 @@ class _StudentDetailPageState
                           ),
                         ),
                         Positioned(
-                          left: 70.w,
+                          left: 60.w,
                           top: 30.h,
                           child: Opacity(
-                            opacity: 0.9,
+                            opacity: 1,
                             child: Transform.scale(
-                              scale: 1.2,
+                              scale: 1,
                               child: Image.asset(
                                 'assets/icons/ic-rocket.png',
                                 width: 60.w,
@@ -232,11 +235,15 @@ class _StudentDetailPageState
                               child: Transform.scale(
                                 scale: scale,
                                 alignment: Alignment.topCenter,
-                                child: StudentDetailHeader(
-                                  student: student,
-                                  dob: dob,
-                                  status: status,
-                                  statusColor: statusColor,
+                                child: OverflowBox(
+                                  maxHeight: double.infinity,
+                                  alignment: Alignment.topCenter,
+                                  child: StudentDetailHeader(
+                                    student: student,
+                                    dob: dob,
+                                    status: status,
+                                    statusColor: statusColor,
+                                  ),
                                 ),
                               ),
                             ),
@@ -262,10 +269,9 @@ class _StudentDetailPageState
                           margin: EdgeInsets.symmetric(horizontal: 16.w),
                           padding: EdgeInsets.all(4.w),
                           decoration: BoxDecoration(
-                            color: const Color(
-                              0xFFF1F5F9,
-                            ), // Light grey background for the whole tab bar
-                            borderRadius: BorderRadius.circular(100.r),
+                            color: AppColors
+                                .grayLight, // Light grey background for the whole tab bar
+                            borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: TabBar(
                             isScrollable: false,
@@ -275,8 +281,8 @@ class _StudentDetailPageState
                             ), // Slate 500
                             indicatorSize: TabBarIndicatorSize.tab,
                             indicator: BoxDecoration(
-                              color: const Color(0xFF6366F1),
-                              borderRadius: BorderRadius.circular(100.r),
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(12.r),
                               boxShadow: [
                                 BoxShadow(
                                   color: const Color(
@@ -289,17 +295,18 @@ class _StudentDetailPageState
                             ),
                             dividerColor: Colors.transparent,
                             labelStyle: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
                             ),
                             unselectedLabelStyle: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w600,
                             ),
-                            tabs: _tabs.map((t) => Tab(text: t)).toList(),
+                            tabs: _tabs
+                                .map((t) => Tab(height: 32.h, text: t))
+                                .toList(),
                           ),
                         ),
-                        SizedBox(height: 8.h),
                       ],
                     ),
                   ),
@@ -324,14 +331,14 @@ class _StudentDetailPageState
 
   Widget _buildCircleButton(IconData icon, VoidCallback onPressed) {
     return Container(
-      width: 44.w,
-      height: 44.h,
+      width: 35.w,
+      height: 35.h,
       decoration: BoxDecoration(
         color: AppColors.white.withValues(alpha: 0.8),
         shape: BoxShape.circle,
       ),
       child: IconButton(
-        icon: Icon(icon, color: AppColors.black, size: 20),
+        icon: Icon(icon, color: AppColors.black, size: 16),
         onPressed: onPressed,
       ),
     );

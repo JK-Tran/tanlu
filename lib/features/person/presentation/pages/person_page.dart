@@ -42,7 +42,7 @@ class PersonPage extends StatelessWidget {
                         'Cá nhân',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 18.sp,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -84,7 +84,7 @@ class PersonPage extends StatelessWidget {
                                 : 'U',
                             style: TextStyle(
                               color: AppColors.primary,
-                              fontSize: 32.sp,
+                              fontSize: 30.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -95,7 +95,7 @@ class PersonPage extends StatelessWidget {
                     currentUser?.fullName ?? 'Người dùng',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -107,7 +107,7 @@ class PersonPage extends StatelessWidget {
                         : 'Giáo viên',
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.9),
-                      fontSize: 14.sp,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -175,7 +175,7 @@ class PersonPage extends StatelessWidget {
                   SizedBox(height: 32.h),
                   Text(
                     'Phiên bản 1.0.0',
-                    style: TextStyle(fontSize: 14.sp, color: Color(0xFF8E8E93)),
+                    style: TextStyle(fontSize: 12.sp, color: Color(0xFF8E8E93)),
                   ),
                   SizedBox(height: 32.h),
                 ],
@@ -209,7 +209,7 @@ class PersonPage extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                   color: titleColor,
                 ),
@@ -218,7 +218,7 @@ class PersonPage extends StatelessWidget {
             if (value != null) ...[
               Text(
                 value,
-                style: TextStyle(fontSize: 14.sp, color: Color(0xFF8E8E93)),
+                style: TextStyle(fontSize: 12.sp, color: Color(0xFF8E8E93)),
               ),
               SizedBox(width: 8.w),
             ],
@@ -262,7 +262,7 @@ class PersonPage extends StatelessWidget {
                   Text(
                     'Thông tin cá nhân',
                     style: TextStyle(
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF1C1C1E),
                     ),
@@ -326,7 +326,7 @@ class PersonPage extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 13.sp,
+                  fontSize: 11.sp,
                   color: Color(0xFF8E8E93),
                   fontWeight: FontWeight.w500,
                 ),
@@ -335,7 +335,7 @@ class PersonPage extends StatelessWidget {
               Text(
                 value,
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF1C1C1E),
                 ),

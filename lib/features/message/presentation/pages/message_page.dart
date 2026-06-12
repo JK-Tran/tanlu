@@ -15,7 +15,7 @@ class MessagePage extends StatelessWidget {
           'Tin nhắn',
           style: TextStyle(
             color: Color(0xFF1C1C1E),
-            fontSize: 22.sp,
+            fontSize: 20.sp,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -55,7 +55,7 @@ class MessagePage extends StatelessWidget {
                             'Tìm kiếm tin nhắn...',
                             style: TextStyle(
                               color: Color(0xFF8E8E93),
-                              fontSize: 16.sp,
+                              fontSize: 14.sp,
                             ),
                           ),
                         ],
@@ -122,7 +122,7 @@ class MessagePage extends StatelessWidget {
                 msg['name'][0].toUpperCase(),
                 style: TextStyle(
                   color: AppColors.primary,
-                  fontSize: 22.sp,
+                  fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -135,7 +135,7 @@ class MessagePage extends StatelessWidget {
                   Text(
                     msg['name'],
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 14.sp,
                       fontWeight: isUnread ? FontWeight.bold : FontWeight.w600,
                       color: const Color(0xFF1C1C1E),
                     ),
@@ -146,7 +146,7 @@ class MessagePage extends StatelessWidget {
                   Text(
                     msg['snippet'],
                     style: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: 12.sp,
                       color: isUnread
                           ? const Color(0xFF1C1C1E)
                           : const Color(0xFF8E8E93),
@@ -168,7 +168,7 @@ class MessagePage extends StatelessWidget {
                 Text(
                   msg['time'],
                   style: TextStyle(
-                    fontSize: 12.sp,
+                    fontSize: 10.sp,
                     color: isUnread
                         ? AppColors.primary
                         : const Color(0xFF8E8E93),
@@ -190,7 +190,7 @@ class MessagePage extends StatelessWidget {
                       unreadCount.toString(),
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 11.sp,
+                        fontSize: 10.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

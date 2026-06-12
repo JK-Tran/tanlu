@@ -12,7 +12,7 @@ class ActivityPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: Text('Hoạt động', style: TextStyle(fontSize: 24.sp)),
+        child: Text('Hoạt động', style: TextStyle(fontSize: 22.sp)),
       ),
     );
   }

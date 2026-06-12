@@ -79,7 +79,7 @@ class AppConfirmDialog extends StatelessWidget {
             child: Text(
               title,
               style: TextStyle(
-                fontSize: 16.sp,
+                fontSize: 14.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.grayDark,
               ),
@@ -90,7 +90,7 @@ class AppConfirmDialog extends StatelessWidget {
       content: Text(
         content,
         style: TextStyle(
-          fontSize: 14.5.sp,
+          fontSize: 12.5.sp,
           color: AppColors.grayDark,
           height: 1.45.h,
         ),
@@ -109,7 +109,7 @@ class AppConfirmDialog extends StatelessWidget {
             cancelLabel,
             style: TextStyle(
               color: AppColors.grayMedium,
-              fontSize: 14.sp,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -128,7 +128,7 @@ class AppConfirmDialog extends StatelessWidget {
             confirmLabel,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 14.sp,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w700,
             ),
           ),

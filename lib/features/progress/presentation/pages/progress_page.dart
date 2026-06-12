@@ -141,20 +141,20 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                         AppText.h2(
                           'Xin chào, $displayName',
                           color: const Color(0xFF1E1E2D),
-                          fontSize: 18.sp,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
                           maxLines: 1,
                           textOverflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(width: 4.w),
-                        Text('👋', style: TextStyle(fontSize: 18.sp)),
+                        Text('👋', style: TextStyle(fontSize: 16.sp)),
                       ],
                     ),
                     SizedBox(height: 2.h),
                     AppText.b2(
                       'Phụ huynh',
                       color: const Color(0xFF8E8E93),
-                      fontSize: 14.sp,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ],
@@ -185,7 +185,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
             children: [
               AppText.h2(
                 'Các bé của tôi',
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
                 color: AppColors.grayDark,
               ),
@@ -255,7 +255,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                                           ? student.fullName[0].toUpperCase()
                                           : '?',
                                       color: AppColors.primary,
-                                      fontSize: 24.sp,
+                                      fontSize: 22.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -263,7 +263,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                           SizedBox(height: 12.h),
                           AppText.h2(
                             student.fullName,
-                            fontSize: 15.sp,
+                            fontSize: 13.sp,
                             fontWeight: FontWeight.bold,
                             color: AppColors.grayDark,
                             maxLines: 1,
@@ -273,7 +273,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                           SizedBox(height: 4.h),
                           AppText.b2(
                             _formatAge(student.dateOfBirth),
-                            fontSize: 12.sp,
+                            fontSize: 10.sp,
                             color: AppColors.grayMedium,
                             maxLines: 1,
                             textOverflow: TextOverflow.ellipsis,
@@ -367,7 +367,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                   child: AppText.b2(
                     'Trung tâm Can thiệp sớm Ánh Dương',
                     color: Colors.white,
-                    fontSize: 12.sp,
+                    fontSize: 10.sp,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -375,7 +375,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                 AppText.h1(
                   'Thấu hiểu & Tận tâm',
                   color: Colors.white,
-                  fontSize: 20.sp,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ],
@@ -406,7 +406,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
         children: [
           AppText.h2(
             'Tổng quan nhanh',
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.bold,
             color: AppColors.grayDark,
           ),
@@ -449,7 +449,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                                     ? student.fullName[0].toUpperCase()
                                     : '?',
                                 color: AppColors.primary,
-                                fontSize: 18.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -461,18 +461,18 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                         children: [
                           AppText.h2(
                             student.fullName,
-                            fontSize: 15.sp,
+                            fontSize: 13.sp,
                             fontWeight: FontWeight.bold,
                             color: AppColors.grayDark,
                           ),
                           AppText.b2(
                             _formatAge(student.dateOfBirth),
-                            fontSize: 12.sp,
+                            fontSize: 10.sp,
                             color: AppColors.grayMedium,
                           ),
                           AppText.b2(
                             student.classroom.name,
-                            fontSize: 12.sp,
+                            fontSize: 10.sp,
                             color: AppColors.grayMedium,
                             textOverflow: TextOverflow.ellipsis,
                           ),
@@ -500,7 +500,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                       child: AppText.b2(
                         'Xem chi tiết',
                         color: AppColors.primary,
-                        fontSize: 13.sp,
+                        fontSize: 11.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -602,7 +602,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
           SizedBox(height: 4.h),
           AppText.h2(
             value,
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.bold,
             color: AppColors.grayDark,
           ),
@@ -664,7 +664,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
             children: [
               AppText.h2(
                 'Thông báo mới',
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
                 color: AppColors.grayDark,
               ),
@@ -752,14 +752,14 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
                 children: [
                   AppText.h2(
                     title,
-                    fontSize: 15.sp,
+                    fontSize: 13.sp,
                     fontWeight: FontWeight.bold,
                     color: AppColors.grayDark,
                   ),
                   SizedBox(height: 4.h),
                   AppText.b2(
                     subtitle,
-                    fontSize: 13.sp,
+                    fontSize: 11.sp,
                     color: AppColors.grayMedium,
                     maxLines: 1,
                     textOverflow: TextOverflow.ellipsis,
@@ -771,7 +771,7 @@ class _ProgressPageState extends BasePageState<ProgressPage, StudentBloc> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                AppText.b2(time, fontSize: 12.sp, color: AppColors.grayMedium),
+                AppText.b2(time, fontSize: 10.sp, color: AppColors.grayMedium),
                 SizedBox(height: 4.h),
                 Icon(
                   Icons.chevron_right_rounded,

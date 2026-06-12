@@ -86,7 +86,7 @@ class InteractiveImageViewer extends StatelessWidget {
                           'Ảnh không thể mở',
                           style: TextStyle(
                             color: Colors.white70,
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                           ),
                         ),

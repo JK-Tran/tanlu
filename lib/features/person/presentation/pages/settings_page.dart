@@ -18,7 +18,7 @@ class SettingsPage extends StatelessWidget {
           'Cài đặt',
           style: TextStyle(
             color: Color(0xFF1C1C1E),
-            fontSize: 20.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -132,7 +132,7 @@ class SettingsPage extends StatelessWidget {
             SizedBox(height: 32.h),
             Text(
               'Phiên bản 1.0.0',
-              style: TextStyle(fontSize: 14.sp, color: Color(0xFF8E8E93)),
+              style: TextStyle(fontSize: 12.sp, color: Color(0xFF8E8E93)),
             ),
             SizedBox(height: 32.h),
           ],
@@ -163,7 +163,7 @@ class SettingsPage extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: 16.sp,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
                   color: titleColor,
                 ),
@@ -172,7 +172,7 @@ class SettingsPage extends StatelessWidget {
             if (value != null) ...[
               Text(
                 value,
-                style: TextStyle(fontSize: 14.sp, color: Color(0xFF8E8E93)),
+                style: TextStyle(fontSize: 12.sp, color: Color(0xFF8E8E93)),
               ),
               SizedBox(width: 8.w),
             ],

@@ -42,7 +42,7 @@ class _ProgramDetailPageState
         ),
         title: AppText.b1(
           'Chi tiết giáo trình',
-          fontSize: 17.sp,
+          fontSize: 15.sp,
           fontWeight: FontWeight.bold,
           color: const Color(0xFF1E293B),
         ),

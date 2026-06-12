@@ -32,7 +32,7 @@ class ProgramsBodySlivers {
                   SizedBox(height: 16.h),
                   AppText.b1(
                     'Không thể tải dữ liệu',
-                    fontSize: 16.sp,
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF64748B),
                   ),
@@ -40,7 +40,7 @@ class ProgramsBodySlivers {
                   AppText.b1(
                     pageError,
                     textAlign: TextAlign.center,
-                    fontSize: 13.sp,
+                    fontSize: 11.sp,
                     color: const Color(0xFFB0B8C8),
                   ),
                   SizedBox(height: 24.h),
@@ -126,14 +126,14 @@ class ProgramsEmptyState extends StatelessWidget {
           SizedBox(height: 16.h),
           AppText.b1(
             'Không tìm thấy giáo trình',
-            fontSize: 16.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w600,
             color: const Color(0xFF94A3B8),
           ),
           SizedBox(height: 6.h),
           AppText.b1(
             'Thử tìm kiếm với từ khoá khác',
-            fontSize: 13.sp,
+            fontSize: 11.sp,
             color: const Color(0xFFB8C5D6),
           ),
         ],

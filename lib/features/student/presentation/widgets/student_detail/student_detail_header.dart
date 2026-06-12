@@ -83,15 +83,20 @@ class StudentDetailHeader extends StatelessWidget {
             ),
           ],
         ),
-
+        SizedBox(height: 10.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AppText.h1(name, color: Colors.white, fontWeight: FontWeight.w900),
+            AppText.h1(
+              name,
+              color: Colors.white,
+              fontWeight: FontWeight.w900,
+              fontSize: 22.sp,
+            ),
             SizedBox(width: 8.w),
             Icon(
               isMale ? Icons.male_rounded : Icons.female_rounded,
-              color: Colors.white.withValues(alpha: 0.9),
+              color: AppColors.white.withValues(alpha: 0.9),
               size: 24,
             ),
           ],
@@ -103,15 +108,17 @@ class StudentDetailHeader extends StatelessWidget {
           children: [
             AppText.b0(
               student.nickname.isNotEmpty ? '${student.nickname} • $dob' : dob,
-              color: Colors.white.withValues(alpha: 0.95),
+              color: AppColors.white.withValues(alpha: 0.95),
               fontWeight: FontWeight.w500,
+              fontSize: 16.sp,
             ),
             if (student.classroom.name.isNotEmpty) ...[
               AppText.b0(' • ', color: Colors.white.withValues(alpha: 0.95)),
               AppText.b0(
                 student.classroom.name,
-                color: Colors.white.withValues(alpha: 0.95),
+                color: AppColors.white.withValues(alpha: 0.95),
                 fontWeight: FontWeight.w500,
+                fontSize: 16.sp,
               ),
             ],
           ],

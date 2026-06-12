@@ -435,7 +435,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 13.sp,
+                              fontSize: 11.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.grayDark,
                             ),
@@ -444,7 +444,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                             Text(
                               _sizeLabel(file.fileSize),
                               style: TextStyle(
-                                fontSize: 11.sp,
+                                fontSize: 10.sp,
                                 color: AppColors.grayMedium,
                               ),
                             ),
@@ -493,7 +493,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 13.sp,
+                              fontSize: 11.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.grayDark,
                             ),
@@ -502,7 +502,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                             Text(
                               _sizeLabel(file.size),
                               style: TextStyle(
-                                fontSize: 11.sp,
+                                fontSize: 10.sp,
                                 color: AppColors.grayMedium,
                               ),
                             ),
@@ -608,7 +608,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
             widget.report != null ? 'Cập nhật báo cáo' : 'Tạo báo cáo',
             fontWeight: FontWeight.w700,
             color: AppColors.grayDark,
-            fontSize: 16.sp,
+            fontSize: 14.sp,
           ),
           centerTitle: true,
         ),
@@ -649,12 +649,12 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                                   : 'Tạo báo cáo tháng',
                               fontWeight: FontWeight.w700,
                               color: AppColors.grayDark,
-                              fontSize: 16.sp,
+                              fontSize: 14.sp,
                             ),
                             AppText.b2(
                               '${widget.student.fullName} • ${_formatMonthLabel(widget.selectedMonth)}',
                               color: AppColors.grayMedium,
-                              fontSize: 13.sp,
+                              fontSize: 11.sp,
                             ),
                           ],
                         ),
@@ -724,7 +724,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                                   'Thư viện ảnh',
                                   color: AppColors.primary,
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 13.sp,
+                                  fontSize: 11.sp,
                                 ),
                               ],
                             ),
@@ -761,7 +761,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                                   'Chọn tài liệu',
                                   color: AppColors.grayDark,
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 13.sp,
+                                  fontSize: 11.sp,
                                 ),
                               ],
                             ),
@@ -822,7 +822,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                                         'Đang xử lý...',
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 14.sp,
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
@@ -843,7 +843,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                                             : 'Tạo báo cáo',
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 15.sp,
+                                          fontSize: 13.sp,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
@@ -866,7 +866,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
                                             '${_selectedFiles.length}',
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 11.sp,
+                                              fontSize: 10.sp,
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
@@ -892,7 +892,7 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
     text,
     color: AppColors.grayDark,
     fontWeight: FontWeight.w600,
-    fontSize: 13.sp,
+    fontSize: 11.sp,
   );
 
   Widget _buildTextField({
@@ -904,11 +904,11 @@ class _ReportCreatePageState extends State<ReportCreatePage> {
     return TextFormField(
       controller: controller,
       maxLines: maxLines,
-      style: TextStyle(fontSize: 14.sp, color: AppColors.grayDark),
+      style: TextStyle(fontSize: 12.sp, color: AppColors.grayDark),
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: TextStyle(
-          fontSize: 14.sp,
+          fontSize: 12.sp,
           color: AppColors.grayMedium.withValues(alpha: 0.8),
         ),
         filled: true,

@@ -3,14 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
 
-class StudentInfoTab extends StatelessWidget {
+class StudentInfoTab extends StatefulWidget {
   const StudentInfoTab({super.key, required this.student, required this.group});
 
   final Student student;
   final String group;
 
   @override
+  State<StudentInfoTab> createState() => _StudentInfoTabState();
+}
+
+class _StudentInfoTabState extends State<StudentInfoTab>
+    with AutomaticKeepAliveClientMixin {
+  final ScrollController _controller = ScrollController();
+
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
+    final student = widget.student;
     final bool isMale = student.gender.toLowerCase() == 'male';
     final String gender = isMale ? 'Nam' : 'Nữ';
     final String dob = student.dateOfBirth != null
@@ -21,8 +40,10 @@ class StudentInfoTab extends StatelessWidget {
         : 'Chưa cập nhật';
 
     return SingleChildScrollView(
+      controller: _controller,
+      key: const PageStorageKey<String>('student_info_tab'),
       physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -110,7 +131,7 @@ class StudentInfoTab extends StatelessWidget {
                 student.note,
                 style: TextStyle(
                   color: Color(0xFF1E1E2D),
-                  fontSize: 14.sp,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w500,
                   height: 1.5.h,
                 ),
@@ -146,7 +167,7 @@ class StudentInfoTab extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 16.sp,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w800,
               color: Color(0xFF1E1E2D),
             ),
@@ -178,20 +199,18 @@ class StudentInfoTab extends StatelessWidget {
             label,
             style: TextStyle(
               color: Color(0xFF8E8E93),
-              fontSize: 14.sp,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w500,
             ),
           ),
-          if (!isMultiLine) Spacer(),
-          if (isMultiLine) SizedBox(width: 16.w),
+          SizedBox(width: 16.w),
           Expanded(
-            flex: isMultiLine ? 1 : 0,
             child: Text(
               value,
-              textAlign: isMultiLine ? TextAlign.left : TextAlign.right,
+              textAlign: TextAlign.right,
               style: TextStyle(
                 color: Color(0xFF1E1E2D),
-                fontSize: 14.sp,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -218,7 +237,7 @@ class StudentInfoTab extends StatelessWidget {
             label,
             style: TextStyle(
               color: Color(0xFF8E8E93),
-              fontSize: 14.sp,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -242,7 +261,7 @@ class StudentInfoTab extends StatelessWidget {
                   tagText,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 12.sp,
+                    fontSize: 10.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),

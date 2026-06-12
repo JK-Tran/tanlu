@@ -10,7 +10,7 @@ class LogoSection extends StatelessWidget {
     return Column(
       children: [
         Transform.scale(
-          scale: 3,
+          scale: 2.5,
           child: Image.asset(
             'assets/images/playstore.png',
             width: 120.w,

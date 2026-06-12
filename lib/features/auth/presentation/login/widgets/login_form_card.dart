@@ -112,9 +112,6 @@ class LoginFormCard extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: 12.h),
-            // --- Remember me + Quên mật khẩu ---
-            const RememberForgotRow(),
             SizedBox(height: 24.h),
             // --- Nút Đăng nhập ---
             BlocBuilder<LoginBloc, LoginState>(
@@ -131,60 +128,6 @@ class LoginFormCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class RememberForgotRow extends StatelessWidget {
-  const RememberForgotRow({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        // Quên mật khẩu
-        TextButton(
-          onPressed: () => _showForgotDialog(context),
-          style: TextButton.styleFrom(
-            padding: EdgeInsets.zero,
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          ),
-          child: AppText.b2(
-            'Quên mật khẩu?',
-            color: AppColors.primary,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _showForgotDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppDimens.radiusMd),
-        ),
-        title: AppText.t0('Quên mật khẩu?', fontWeight: FontWeight.w700),
-        content: AppText.b1(
-          'Vui lòng liên hệ Quản trị viên hệ thống để khôi phục mật khẩu.',
-          color: AppColors.grayDark80,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: AppText.t1(
-              'Đã hiểu',
-              color: AppColors.primary,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
       ),
     );
   }
