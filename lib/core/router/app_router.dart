@@ -8,20 +8,14 @@ import 'package:tanlu_management/core/router/custom_transitions.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
 import 'package:tanlu_management/features/auth/presentation/login/pages/login_page.dart';
 import 'package:tanlu_management/features/home/presentation/pages/home_page.dart';
-import 'package:tanlu_management/features/report/presentation/pages/report_page.dart';
-import 'package:tanlu_management/features/student/domain/entity/student.dart';
-import 'package:tanlu_management/features/student/presentation/pages/student_page.dart';
-import 'package:tanlu_management/features/student/presentation/pages/student_detail_page.dart';
-import 'package:tanlu_management/features/programs/presentation/pages/programs_page.dart';
-import 'package:tanlu_management/features/programs/presentation/pages/program_detail_page.dart';
-import 'package:tanlu_management/features/programs/domain/entity/program.dart';
 
-import 'package:tanlu_management/features/report/presentation/pages/report_detail_page.dart';
+import 'package:tanlu_management/features/student/presentation/pages/student_page.dart';
+
 import 'package:tanlu_management/features/person/presentation/pages/person_page.dart';
 import 'package:tanlu_management/features/person/presentation/pages/settings_page.dart';
 import 'package:tanlu_management/features/overview/presentation/pages/overview_page.dart';
+import 'package:tanlu_management/features/feed/pages/feed_page.dart';
 
-import 'package:tanlu_management/features/progress/presentation/pages/progress_page.dart';
 import 'package:tanlu_management/features/activity/presentation/pages/activity_page.dart';
 import 'package:tanlu_management/features/chat/presentation/pages/chat_page.dart';
 import 'package:tanlu_management/features/chat/presentation/pages/chat_detail_page.dart';
@@ -47,6 +41,7 @@ class AppRouter {
   static const String person = '/person';
   static const String settings = '/settings';
   static const String overview = '/overview';
+  static const String feed = '/feed';
 
   static GoRouter createRouter(AppBloc appBloc) {
     return GoRouter(
@@ -61,7 +56,7 @@ class AppRouter {
         final isOnLogin = currentLoc == login;
         final isOnRoot = currentLoc == root;
 
-        return appState.when(
+        return appState.maybeWhen(
           loading: () =>
               null, // Đang loading → không redirect, giữ nguyên ở Splash
           unauthenticated: () {
@@ -72,10 +67,11 @@ class AppRouter {
             FlutterNativeSplash.remove();
             final isParent = user.role.code.toUpperCase() == 'PARENT';
             if (isOnLogin || isOnRoot) {
-              return isParent ? progress : student;
+              return isParent ? progress : overview;
             }
             return null;
           },
+          orElse: () => null,
         );
       },
       refreshListenable: _AppBlocListenable(appBloc),
@@ -91,31 +87,7 @@ class AppRouter {
           name: 'login',
           builder: (context, state) => const LoginPage(),
         ),
-        GoRoute(
-          path: '/student-detail',
-          name: 'student-detail',
-          parentNavigatorKey: _rootNavigatorKey,
-          builder: (context, state) {
-            final student = state.extra as Student;
-            return StudentDetailPage(student: student);
-          },
-        ),
-        GoRoute(
-          path: '/report-detail',
-          name: 'report-detail',
-          parentNavigatorKey: _rootNavigatorKey,
-          builder: (context, state) {
-            final args = state.extra as ReportDetailArgs;
-            return BlocProvider.value(
-              value: args.reportBloc,
-              child: ReportDetailPage(
-                student: args.student,
-                report: args.report,
-                selectedMonth: args.selectedMonth,
-              ),
-            );
-          },
-        ),
+
         GoRoute(
           path: '/chat-detail',
           name: 'chat-detail',
@@ -128,15 +100,7 @@ class AppRouter {
             );
           },
         ),
-        GoRoute(
-          path: '/program-detail',
-          name: 'program-detail',
-          parentNavigatorKey: _rootNavigatorKey,
-          builder: (context, state) {
-            final program = state.extra as Program;
-            return ProgramDetailPage(program: program);
-          },
-        ),
+
         GoRoute(
           path: settings,
           name: 'settings',
@@ -163,30 +127,8 @@ class AppRouter {
                 ),
               ],
             ),
+
             // Branch 1: Báo cáo (Teacher)
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: report,
-                  name: 'report',
-                  pageBuilder: (context, state) {
-                    return FadeTransitionPage(child: ReportPage());
-                  },
-                ),
-              ],
-            ),
-            // Branch 2: Tiến trình (Parent)
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: progress,
-                  name: 'progress',
-                  pageBuilder: (context, state) =>
-                      const FadeTransitionPage(child: ProgressPage()),
-                ),
-              ],
-            ),
-            // Branch 3: Hoạt động (Parent)
             StatefulShellBranch(
               routes: [
                 GoRoute(
@@ -220,16 +162,7 @@ class AppRouter {
               ],
             ),
             // Branch 6: Giáo trình (Teacher)
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: programs,
-                  name: 'programs',
-                  pageBuilder: (context, state) =>
-                      const FadeTransitionPage(child: ProgramsPage()),
-                ),
-              ],
-            ),
+
             // Branch 7: Tổng quan (Teacher)
             StatefulShellBranch(
               routes: [
@@ -238,6 +171,17 @@ class AppRouter {
                   name: 'overview',
                   pageBuilder: (context, state) =>
                       const FadeTransitionPage(child: OverviewPage()),
+                ),
+              ],
+            ),
+            // Branch 8: Bảng tin (Teacher)
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: feed,
+                  name: 'feed',
+                  pageBuilder: (context, state) =>
+                      const FadeTransitionPage(child: FeedPage()),
                 ),
               ],
             ),

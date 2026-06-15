@@ -52,42 +52,6 @@ import '../../features/chat/domain/usecases/mark_messages_as_read_use_case.dart'
 import '../../features/chat/domain/usecases/send_message_use_case.dart'
     as _i500;
 import '../../features/chat/presentation/bloc/chat_bloc.dart' as _i65;
-import '../../features/programs/data/mapper/program_data_mapper.dart' as _i562;
-import '../../features/programs/data/mapper/program_file_data_mapper.dart'
-    as _i64;
-import '../../features/programs/data/repositories/program_repository_impl.dart'
-    as _i669;
-import '../../features/programs/data/sources/program_api_service.dart' as _i429;
-import '../../features/programs/domain/repositories/program_repository.dart'
-    as _i1057;
-import '../../features/programs/domain/usecases/get_program_by_id_use_case.dart'
-    as _i1008;
-import '../../features/programs/domain/usecases/get_programs_use_case.dart'
-    as _i895;
-import '../../features/programs/presentation/bloc/programs_bloc.dart' as _i625;
-import '../../features/report/data/mapper/creator_data_mapper.dart' as _i344;
-import '../../features/report/data/mapper/file_data_mapper.dart' as _i313;
-import '../../features/report/data/mapper/report_data_mapper.dart' as _i110;
-import '../../features/report/data/repositories/report_repository_impl.dart'
-    as _i420;
-import '../../features/report/data/sources/report_api_service.dart' as _i256;
-import '../../features/report/domain/repositories/report_repository.dart'
-    as _i23;
-import '../../features/report/domain/usecases/create_report_use_case.dart'
-    as _i256;
-import '../../features/report/domain/usecases/delete_report_file_use_case.dart'
-    as _i641;
-import '../../features/report/domain/usecases/delete_report_use_case.dart'
-    as _i146;
-import '../../features/report/domain/usecases/get_report_by_id_use_case.dart'
-    as _i716;
-import '../../features/report/domain/usecases/get_reports_use_case.dart'
-    as _i916;
-import '../../features/report/domain/usecases/update_report_use_case.dart'
-    as _i515;
-import '../../features/report/domain/usecases/upload_file_use_case.dart'
-    as _i370;
-import '../../features/report/presentation/bloc/report_bloc.dart' as _i852;
 import '../../features/student/data/mapper/classroom_data_mapper.dart' as _i317;
 import '../../features/student/data/mapper/development_assessment_data_mapper.dart'
     as _i929;
@@ -142,17 +106,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i443.CenterDataMapper>(() => _i443.CenterDataMapper());
     gh.factory<_i337.RoleDataMapper>(() => _i337.RoleDataMapper());
-    gh.factory<_i64.ProgramFileDataMapper>(() => _i64.ProgramFileDataMapper());
-    gh.factory<_i344.CreatorDataMapper>(() => _i344.CreatorDataMapper());
-    gh.factory<_i313.FileDataMapper>(() => _i313.FileDataMapper());
+    gh.factory<_i182.ChatUserDataMapper>(() => _i182.ChatUserDataMapper());
+    gh.factory<_i203.ContactDataMapper>(() => _i203.ContactDataMapper());
     gh.factory<_i929.DevelopmentAssessmentDataMapper>(
       () => _i929.DevelopmentAssessmentDataMapper(),
     );
     gh.factory<_i563.ScreeningTestDataMapper>(
       () => _i563.ScreeningTestDataMapper(),
     );
-    gh.factory<_i182.ChatUserDataMapper>(() => _i182.ChatUserDataMapper());
-    gh.factory<_i203.ContactDataMapper>(() => _i203.ContactDataMapper());
     gh.lazySingleton<_i59.FirebaseAuth>(() => registerModule.firebaseAuth);
     gh.lazySingleton<_i303.DeviceInfo>(() => registerModule.deviceInfo());
     gh.lazySingleton<_i80.AppInfo>(() => _i80.AppInfo());
@@ -225,29 +186,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i958.ChatApiService>(
       () => _i958.ChatApiService(gh<_i757.ApiClient>()),
     );
-    gh.lazySingleton<_i429.ProgramApiService>(
-      () => _i429.ProgramApiService(gh<_i757.ApiClient>()),
-    );
-    gh.lazySingleton<_i256.ReportApiService>(
-      () => _i256.ReportApiService(gh<_i757.ApiClient>()),
-    );
     gh.lazySingleton<_i374.StudentApiService>(
       () => _i374.StudentApiService(gh<_i757.ApiClient>()),
     );
     gh.factory<_i849.StudentTeacherDataMapper>(
       () => _i849.StudentTeacherDataMapper(gh<_i437.TeacherDataMapper>()),
-    );
-    gh.factory<_i562.ProgramDataMapper>(
-      () => _i562.ProgramDataMapper(
-        gh<_i64.ProgramFileDataMapper>(),
-        gh<_i317.ClassroomDataMapper>(),
-      ),
-    );
-    gh.lazySingleton<_i1057.ProgramRepository>(
-      () => _i669.ProgramRepositoryImpl(
-        gh<_i429.ProgramApiService>(),
-        gh<_i562.ProgramDataMapper>(),
-      ),
     );
     gh.lazySingleton<_i420.ChatRepository>(
       () => _i504.ChatRepositoryImpl(
@@ -260,20 +203,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i441.CreateConversationUseCase>(
       () => _i441.CreateConversationUseCase(gh<_i420.ChatRepository>()),
     );
+    gh.factory<_i444.GetContactsUseCase>(
+      () => _i444.GetContactsUseCase(gh<_i420.ChatRepository>()),
+    );
     gh.factory<_i890.GetConversationsUseCase>(
       () => _i890.GetConversationsUseCase(gh<_i420.ChatRepository>()),
     );
     gh.factory<_i671.GetMessagesUseCase>(
       () => _i671.GetMessagesUseCase(gh<_i420.ChatRepository>()),
     );
-    gh.factory<_i500.SendMessageUseCase>(
-      () => _i500.SendMessageUseCase(gh<_i420.ChatRepository>()),
-    );
-    gh.factory<_i444.GetContactsUseCase>(
-      () => _i444.GetContactsUseCase(gh<_i420.ChatRepository>()),
-    );
     gh.factory<_i29.MarkMessagesAsReadUseCase>(
       () => _i29.MarkMessagesAsReadUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i500.SendMessageUseCase>(
+      () => _i500.SendMessageUseCase(gh<_i420.ChatRepository>()),
     );
     gh.lazySingleton<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
@@ -291,29 +234,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i43.DevelopmentResultDataMapper>(),
       ),
     );
-    gh.factory<_i895.GetProgramsUseCase>(
-      () => _i895.GetProgramsUseCase(gh<_i1057.ProgramRepository>()),
-    );
-    gh.factory<_i1008.GetProgramByIdUseCase>(
-      () => _i1008.GetProgramByIdUseCase(gh<_i1057.ProgramRepository>()),
-    );
-    gh.factory<_i625.ProgramsBloc>(
-      () => _i625.ProgramsBloc(
-        gh<_i895.GetProgramsUseCase>(),
-        gh<_i1008.GetProgramByIdUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i215.StudentRepository>(
       () => _i687.StudentRepositoryImpl(
         gh<_i374.StudentApiService>(),
         gh<_i67.StudentDataMapper>(),
-      ),
-    );
-    gh.factory<_i110.ReportDataMapper>(
-      () => _i110.ReportDataMapper(
-        gh<_i313.FileDataMapper>(),
-        gh<_i67.StudentDataMapper>(),
-        gh<_i344.CreatorDataMapper>(),
       ),
     );
     gh.lazySingleton<_i65.ChatBloc>(
@@ -333,12 +257,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i787.AuthRepository>(),
         gh<_i531.AppPreferences>(),
         gh<_i46.SocketService>(),
-      ),
-    );
-    gh.lazySingleton<_i23.ReportRepository>(
-      () => _i420.ReportRepositoryImpl(
-        gh<_i256.ReportApiService>(),
-        gh<_i110.ReportDataMapper>(),
       ),
     );
     gh.factory<_i37.LoginUseCase>(
@@ -366,40 +284,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i778.UpdateStudentUseCase>(),
       ),
     );
-    gh.factory<_i256.CreateReportUseCase>(
-      () => _i256.CreateReportUseCase(gh<_i23.ReportRepository>()),
-    );
-    gh.factory<_i641.DeleteReportFileUseCase>(
-      () => _i641.DeleteReportFileUseCase(gh<_i23.ReportRepository>()),
-    );
-    gh.factory<_i146.DeleteReportUseCase>(
-      () => _i146.DeleteReportUseCase(gh<_i23.ReportRepository>()),
-    );
-    gh.factory<_i916.GetReportsUseCase>(
-      () => _i916.GetReportsUseCase(gh<_i23.ReportRepository>()),
-    );
-    gh.factory<_i716.GetReportByIdUseCase>(
-      () => _i716.GetReportByIdUseCase(gh<_i23.ReportRepository>()),
-    );
-    gh.factory<_i515.UpdateReportUseCase>(
-      () => _i515.UpdateReportUseCase(gh<_i23.ReportRepository>()),
-    );
-    gh.factory<_i370.UploadFileUseCase>(
-      () => _i370.UploadFileUseCase(gh<_i23.ReportRepository>()),
-    );
     gh.factory<_i204.LoginBloc>(() => _i204.LoginBloc(gh<_i37.LoginUseCase>()));
-    gh.factory<_i852.ReportBloc>(
-      () => _i852.ReportBloc(
-        gh<_i386.GetStudentsUseCase>(),
-        gh<_i916.GetReportsUseCase>(),
-        gh<_i256.CreateReportUseCase>(),
-        gh<_i370.UploadFileUseCase>(),
-        gh<_i716.GetReportByIdUseCase>(),
-        gh<_i515.UpdateReportUseCase>(),
-        gh<_i641.DeleteReportFileUseCase>(),
-        gh<_i146.DeleteReportUseCase>(),
-      ),
-    );
     return this;
   }
 }

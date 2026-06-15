@@ -39,7 +39,9 @@ abstract final class AppColors {
 
   // --- 3. Semantic Colors (Giữ tone Pastel nhưng phù hợp với Đỏ) ---
   static const Color success = Color(0xFF2ED573); // Xanh lá
-  static const Color successDark = Color(0xFF38B28B); // Xanh lá đậm (giống icon điểm danh)
+  static const Color successDark = Color(
+    0xFF38B28B,
+  ); // Xanh lá đậm (giống icon điểm danh)
   static const Color successLight = Color(0xFFEBFDF2);
 
   static const Color error = Color(

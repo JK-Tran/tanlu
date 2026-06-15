@@ -17,9 +17,9 @@ class ImageGroupBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final timeStr = DateFormat('HH:mm').format(
-      messages.last.createdAt ?? DateTime.now(),
-    );
+    final timeStr = DateFormat(
+      'HH:mm',
+    ).format(messages.last.createdAt ?? DateTime.now());
     final urls = messages
         .where((m) => m.fileUrl != null && m.fileUrl!.isNotEmpty)
         .map((m) => m.fileUrl!)
@@ -36,8 +36,9 @@ class ImageGroupBubble extends StatelessWidget {
           right: isMe ? 0 : 60.w,
         ),
         child: Column(
-          crossAxisAlignment:
-              isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: isMe
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
@@ -92,9 +93,17 @@ class ImageGroupBubble extends StatelessWidget {
           SizedBox(width: 2.w),
           Column(
             children: [
-              _buildSquareImage(urls[1], maxW * 0.45 - 1, height: maxW * 0.55 / 2 - 1),
+              _buildSquareImage(
+                urls[1],
+                maxW * 0.45 - 1,
+                height: maxW * 0.55 / 2 - 1,
+              ),
               SizedBox(height: 2.h),
-              _buildSquareImage(urls[2], maxW * 0.45 - 1, height: maxW * 0.55 / 2 - 1),
+              _buildSquareImage(
+                urls[2],
+                maxW * 0.45 - 1,
+                height: maxW * 0.55 / 2 - 1,
+              ),
             ],
           ),
         ],
@@ -138,7 +147,7 @@ class ImageGroupBubble extends StatelessWidget {
       child: Image.network(
         url,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _errorPlaceholder(maxW, maxW),
+        errorBuilder: (_, _, _) => _errorPlaceholder(maxW, maxW),
       ),
     );
   }
@@ -150,7 +159,7 @@ class ImageGroupBubble extends StatelessWidget {
       child: Image.network(
         url,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) => _errorPlaceholder(size, height ?? size),
+        errorBuilder: (_, _, _) => _errorPlaceholder(size, height ?? size),
       ),
     );
   }

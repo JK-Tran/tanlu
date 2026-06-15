@@ -23,46 +23,27 @@ class HomePage extends StatelessWidget {
             orElse: () => false,
           );
 
-          final visibleBranches = isParent ? [2, 3, 4, 5] : [7, 0, 1, 6, 4, 5];
+          final visibleBranches = isParent ? [1, 1, 2, 3] : [4, 0, 5, 2, 3];
 
           final selectedIndex = visibleBranches.indexOf(
             navigationShell.currentIndex,
           );
           final safeSelectedIndex = selectedIndex >= 0 ? selectedIndex : 0;
 
-          return Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.04),
-                  blurRadius: 20,
-                  offset: const Offset(0, -4),
-                ),
-              ],
-            ),
-            child: NavigationBarTheme(
-              data: NavigationBarThemeData(
-                elevation: 0,
-                height: 72.h,
-                backgroundColor: Colors.white,
-                indicatorColor: AppColors.primary.withValues(alpha: 0.15),
-                labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-                iconTheme: WidgetStateProperty.resolveWith((states) {
-                  if (states.contains(WidgetState.selected)) {
-                    return IconThemeData(color: AppColors.primary, size: 20);
-                  }
-                  return IconThemeData(color: Color(0xFF999999), size: 20);
-                }),
-                labelTextStyle: WidgetStateProperty.resolveWith((states) {
-                  final isSelected = states.contains(WidgetState.selected);
-                  return AppText.styleOf(context, StyleEnum.l1)!.copyWith(
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    color: isSelected
-                        ? AppColors.primary
-                        : const Color(0xFF999999),
-                    fontSize: 10.sp,
-                  );
-                }),
+          return SafeArea(
+            child: Container(
+              margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
+              padding: EdgeInsets.symmetric(vertical: 8.h),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(36.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 24,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
               ),
               child: BlocBuilder<ChatBloc, ChatState>(
                 builder: (context, chatState) {
@@ -83,6 +64,8 @@ class HomePage extends StatelessWidget {
                       selected
                           ? Icons.chat_bubble_rounded
                           : Icons.chat_bubble_outline_rounded,
+                      color: selected ? AppColors.primary : const Color(0xFF999999),
+                      size: 24.w,
                     );
                     if (unreadCount == 0) return icon;
                     return Badge(
@@ -98,69 +81,115 @@ class HomePage extends StatelessWidget {
                     );
                   }
 
-                  return NavigationBar(
-                    selectedIndex: safeSelectedIndex,
-                    onDestinationSelected: (index) {
-                      final targetBranch = visibleBranches[index];
-                      navigationShell.goBranch(
-                        targetBranch,
-                        initialLocation:
-                            targetBranch == navigationShell.currentIndex,
-                      );
-                    },
-                    destinations: isParent
+                  void onItemTapped(int index) {
+                    final targetBranch = visibleBranches[index];
+                    navigationShell.goBranch(
+                      targetBranch,
+                      initialLocation: targetBranch == navigationShell.currentIndex,
+                    );
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: isParent
                         ? [
-                            NavigationDestination(
-                              icon: Icon(Icons.trending_up_outlined),
-                              selectedIcon: Icon(Icons.trending_up_rounded),
+                            _buildNavItem(
+                              icon: Icon(
+                                safeSelectedIndex == 0
+                                    ? Icons.trending_up_rounded
+                                    : Icons.trending_up_outlined,
+                                color: safeSelectedIndex == 0 ? AppColors.primary : const Color(0xFF999999),
+                                size: 24.w,
+                              ),
                               label: 'Tiến trình',
+                              isSelected: safeSelectedIndex == 0,
+                              onTap: () => onItemTapped(0),
                             ),
-                            NavigationDestination(
-                              icon: Icon(Icons.local_activity_outlined),
-                              selectedIcon: Icon(Icons.local_activity_rounded),
+                            _buildNavItem(
+                              icon: Icon(
+                                safeSelectedIndex == 1
+                                    ? Icons.local_activity_rounded
+                                    : Icons.local_activity_outlined,
+                                color: safeSelectedIndex == 1 ? AppColors.primary : const Color(0xFF999999),
+                                size: 24.w,
+                              ),
                               label: 'Hoạt động',
+                              isSelected: safeSelectedIndex == 1,
+                              onTap: () => onItemTapped(1),
                             ),
-                            NavigationDestination(
-                              icon: buildChatIcon(selected: false),
-                              selectedIcon: buildChatIcon(selected: true),
+                            _buildNavItem(
+                              icon: buildChatIcon(selected: safeSelectedIndex == 2),
                               label: 'Tin nhắn',
+                              isSelected: safeSelectedIndex == 2,
+                              onTap: () => onItemTapped(2),
                             ),
-                            NavigationDestination(
-                              icon: Icon(Icons.person_outline_rounded),
-                              selectedIcon: Icon(Icons.person_rounded),
+                            _buildNavItem(
+                              icon: Icon(
+                                safeSelectedIndex == 3
+                                    ? Icons.person_rounded
+                                    : Icons.person_outline_rounded,
+                                color: safeSelectedIndex == 3 ? AppColors.primary : const Color(0xFF999999),
+                                size: 24.w,
+                              ),
                               label: 'Tài khoản',
+                              isSelected: safeSelectedIndex == 3,
+                              onTap: () => onItemTapped(3),
                             ),
                           ]
                         : [
-                            NavigationDestination(
-                              icon: Icon(Icons.dashboard_outlined),
-                              selectedIcon: Icon(Icons.dashboard_rounded),
+                            _buildNavItem(
+                              icon: Icon(
+                                safeSelectedIndex == 0
+                                    ? Icons.dashboard_rounded
+                                    : Icons.dashboard_outlined,
+                                color: safeSelectedIndex == 0 ? AppColors.primary : const Color(0xFF999999),
+                                size: 24.w,
+                              ),
                               label: 'Tổng quan',
+                              isSelected: safeSelectedIndex == 0,
+                              onTap: () => onItemTapped(0),
                             ),
-                            NavigationDestination(
-                              icon: Icon(Icons.child_care_outlined),
-                              selectedIcon: Icon(Icons.child_care_rounded),
+                            _buildNavItem(
+                              icon: Icon(
+                                safeSelectedIndex == 1
+                                    ? Icons.child_care_rounded
+                                    : Icons.child_care_outlined,
+                                color: safeSelectedIndex == 1 ? AppColors.primary : const Color(0xFF999999),
+                                size: 24.w,
+                              ),
                               label: 'Học sinh',
+                              isSelected: safeSelectedIndex == 1,
+                              onTap: () => onItemTapped(1),
                             ),
-                            NavigationDestination(
-                              icon: Icon(Icons.menu_book_outlined),
-                              selectedIcon: Icon(Icons.menu_book_rounded),
-                              label: 'Báo cáo',
+                            _buildNavItem(
+                              icon: Icon(
+                                safeSelectedIndex == 2
+                                    ? Icons.feed_rounded
+                                    : Icons.feed_outlined,
+                                color: safeSelectedIndex == 2 ? AppColors.primary : const Color(0xFF999999),
+                                size: 24.w,
+                              ),
+                              label: 'Bảng tin',
+                              isSelected: safeSelectedIndex == 2,
+                              onTap: () => onItemTapped(2),
                             ),
-                            NavigationDestination(
-                              icon: Icon(Icons.library_books_outlined),
-                              selectedIcon: Icon(Icons.library_books_rounded),
-                              label: 'Giáo trình',
-                            ),
-                            NavigationDestination(
-                              icon: buildChatIcon(selected: false),
-                              selectedIcon: buildChatIcon(selected: true),
+                            _buildNavItem(
+                              icon: buildChatIcon(selected: safeSelectedIndex == 3),
                               label: 'Tin nhắn',
+                              isSelected: safeSelectedIndex == 3,
+                              onTap: () => onItemTapped(3),
                             ),
-                            NavigationDestination(
-                              icon: Icon(Icons.person_outline_rounded),
-                              selectedIcon: Icon(Icons.person_rounded),
+                            _buildNavItem(
+                              icon: Icon(
+                                safeSelectedIndex == 4
+                                    ? Icons.person_rounded
+                                    : Icons.person_outline_rounded,
+                                color: safeSelectedIndex == 4 ? AppColors.primary : const Color(0xFF999999),
+                                size: 24.w,
+                              ),
                               label: 'Cá nhân',
+                              isSelected: safeSelectedIndex == 4,
+                              onTap: () => onItemTapped(4),
                             ),
                           ],
                   );
@@ -169,6 +198,43 @@ class HomePage extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildNavItem({
+    required Widget icon,
+    required String label,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColors.primary.withValues(alpha: 0.1)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(20.r),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            icon,
+            SizedBox(height: 4.h),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? AppColors.primary : const Color(0xFF999999),
+                fontSize: 10.sp,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
