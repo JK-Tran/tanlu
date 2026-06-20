@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/features/auth/domain/entity/user.dart'
-    hide Center;
+import 'package:tanlu_management/features/auth/domain/entity/user.dart';
 
 class PersonPage extends StatelessWidget {
   const PersonPage({super.key});
@@ -66,10 +65,10 @@ class PersonPage extends StatelessWidget {
                       ],
                     ),
                     alignment: Alignment.center,
-                    child: currentUser?.avatarFileId.isNotEmpty == true
+                    child: currentUser?.avatar?.isNotEmpty == true
                         ? ClipOval(
                             child: Image.network(
-                              currentUser!.avatarFileId,
+                              currentUser!.avatar!,
                               fit: BoxFit.cover,
                               width: 80.w,
                               height: 80.h,
@@ -102,8 +101,8 @@ class PersonPage extends StatelessWidget {
                   SizedBox(height: 6.h),
                   // Role / Job title
                   Text(
-                    currentUser?.role.name.isNotEmpty == true
-                        ? currentUser!.role.name
+                    currentUser?.role.isNotEmpty == true
+                        ? currentUser!.role
                         : 'Giáo viên',
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.9),
@@ -283,7 +282,9 @@ class PersonPage extends StatelessWidget {
               _buildInfoDetailRow(
                 Icons.phone_outlined,
                 'Số điện thoại',
-                user.phone.isNotEmpty ? user.phone : 'Chưa cập nhật',
+                (user.phone?.isNotEmpty == true)
+                    ? user.phone!
+                    : 'Chưa cập nhật',
               ),
               Divider(height: 32.h, color: Color(0xFFF2F2F7)),
               _buildInfoDetailRow(
@@ -295,8 +296,8 @@ class PersonPage extends StatelessWidget {
               _buildInfoDetailRow(
                 Icons.school_outlined,
                 'Trường',
-                user.center.name.isNotEmpty
-                    ? user.center.name
+                user.centerId?.isNotEmpty == true
+                    ? user.centerId!
                     : 'Chưa cập nhật',
               ),
               SizedBox(height: 8.h),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
-import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
 import 'package:tanlu_management/features/chat/presentation/bloc/chat_bloc.dart';
 
@@ -19,7 +18,7 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
           final isParent = state.maybeWhen(
-            authenticated: (user) => user.role.code.toUpperCase() == 'PARENT',
+            authenticated: (user) => user.role == 'parent',
             orElse: () => false,
           );
 
@@ -33,10 +32,9 @@ class HomePage extends StatelessWidget {
           return SafeArea(
             child: Container(
               margin: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
-              padding: EdgeInsets.symmetric(vertical: 8.h),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(36.r),
+                borderRadius: BorderRadius.circular(12.r),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.08),
@@ -54,7 +52,9 @@ class HomePage extends StatelessWidget {
                         sum +
                         conv.messages
                             .where(
-                              (m) => !m.isRead && m.senderId != currentUser?.id,
+                              (m) =>
+                                  !m.isRead &&
+                                  m.senderId.toString() != currentUser?.id,
                             )
                             .length,
                   );
@@ -64,7 +64,9 @@ class HomePage extends StatelessWidget {
                       selected
                           ? Icons.chat_bubble_rounded
                           : Icons.chat_bubble_outline_rounded,
-                      color: selected ? AppColors.primary : const Color(0xFF999999),
+                      color: selected
+                          ? AppColors.primary
+                          : const Color(0xFF999999),
                       size: 24.w,
                     );
                     if (unreadCount == 0) return icon;
@@ -85,7 +87,8 @@ class HomePage extends StatelessWidget {
                     final targetBranch = visibleBranches[index];
                     navigationShell.goBranch(
                       targetBranch,
-                      initialLocation: targetBranch == navigationShell.currentIndex,
+                      initialLocation:
+                          targetBranch == navigationShell.currentIndex,
                     );
                   }
 
@@ -98,7 +101,9 @@ class HomePage extends StatelessWidget {
                                 safeSelectedIndex == 0
                                     ? Icons.trending_up_rounded
                                     : Icons.trending_up_outlined,
-                                color: safeSelectedIndex == 0 ? AppColors.primary : const Color(0xFF999999),
+                                color: safeSelectedIndex == 0
+                                    ? AppColors.primary
+                                    : const Color(0xFF999999),
                                 size: 24.w,
                               ),
                               label: 'Tiến trình',
@@ -110,7 +115,9 @@ class HomePage extends StatelessWidget {
                                 safeSelectedIndex == 1
                                     ? Icons.local_activity_rounded
                                     : Icons.local_activity_outlined,
-                                color: safeSelectedIndex == 1 ? AppColors.primary : const Color(0xFF999999),
+                                color: safeSelectedIndex == 1
+                                    ? AppColors.primary
+                                    : const Color(0xFF999999),
                                 size: 24.w,
                               ),
                               label: 'Hoạt động',
@@ -118,7 +125,9 @@ class HomePage extends StatelessWidget {
                               onTap: () => onItemTapped(1),
                             ),
                             _buildNavItem(
-                              icon: buildChatIcon(selected: safeSelectedIndex == 2),
+                              icon: buildChatIcon(
+                                selected: safeSelectedIndex == 2,
+                              ),
                               label: 'Tin nhắn',
                               isSelected: safeSelectedIndex == 2,
                               onTap: () => onItemTapped(2),
@@ -128,7 +137,9 @@ class HomePage extends StatelessWidget {
                                 safeSelectedIndex == 3
                                     ? Icons.person_rounded
                                     : Icons.person_outline_rounded,
-                                color: safeSelectedIndex == 3 ? AppColors.primary : const Color(0xFF999999),
+                                color: safeSelectedIndex == 3
+                                    ? AppColors.primary
+                                    : const Color(0xFF999999),
                                 size: 24.w,
                               ),
                               label: 'Tài khoản',
@@ -142,7 +153,9 @@ class HomePage extends StatelessWidget {
                                 safeSelectedIndex == 0
                                     ? Icons.dashboard_rounded
                                     : Icons.dashboard_outlined,
-                                color: safeSelectedIndex == 0 ? AppColors.primary : const Color(0xFF999999),
+                                color: safeSelectedIndex == 0
+                                    ? AppColors.primary
+                                    : const Color(0xFF999999),
                                 size: 24.w,
                               ),
                               label: 'Tổng quan',
@@ -154,7 +167,9 @@ class HomePage extends StatelessWidget {
                                 safeSelectedIndex == 1
                                     ? Icons.child_care_rounded
                                     : Icons.child_care_outlined,
-                                color: safeSelectedIndex == 1 ? AppColors.primary : const Color(0xFF999999),
+                                color: safeSelectedIndex == 1
+                                    ? AppColors.primary
+                                    : const Color(0xFF999999),
                                 size: 24.w,
                               ),
                               label: 'Học sinh',
@@ -166,7 +181,9 @@ class HomePage extends StatelessWidget {
                                 safeSelectedIndex == 2
                                     ? Icons.feed_rounded
                                     : Icons.feed_outlined,
-                                color: safeSelectedIndex == 2 ? AppColors.primary : const Color(0xFF999999),
+                                color: safeSelectedIndex == 2
+                                    ? AppColors.primary
+                                    : const Color(0xFF999999),
                                 size: 24.w,
                               ),
                               label: 'Bảng tin',
@@ -174,7 +191,9 @@ class HomePage extends StatelessWidget {
                               onTap: () => onItemTapped(2),
                             ),
                             _buildNavItem(
-                              icon: buildChatIcon(selected: safeSelectedIndex == 3),
+                              icon: buildChatIcon(
+                                selected: safeSelectedIndex == 3,
+                              ),
                               label: 'Tin nhắn',
                               isSelected: safeSelectedIndex == 3,
                               onTap: () => onItemTapped(3),
@@ -184,7 +203,9 @@ class HomePage extends StatelessWidget {
                                 safeSelectedIndex == 4
                                     ? Icons.person_rounded
                                     : Icons.person_outline_rounded,
-                                color: safeSelectedIndex == 4 ? AppColors.primary : const Color(0xFF999999),
+                                color: safeSelectedIndex == 4
+                                    ? AppColors.primary
+                                    : const Color(0xFF999999),
                                 size: 24.w,
                               ),
                               label: 'Cá nhân',
@@ -208,32 +229,38 @@ class HomePage extends StatelessWidget {
     required bool isSelected,
     required VoidCallback onTap,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.primary.withValues(alpha: 0.1)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            icon,
-            SizedBox(height: 4.h),
-            Text(
-              label,
-              style: TextStyle(
-                color: isSelected ? AppColors.primary : const Color(0xFF999999),
-                fontSize: 10.sp,
-                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 6.h),
+          padding: EdgeInsets.symmetric(vertical: 4.h),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppColors.primary.withValues(alpha: 0.1)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              icon,
+              SizedBox(height: 4.h),
+              Text(
+                label,
+                style: TextStyle(
+                  color: isSelected ? AppColors.primary : AppColors.grayMedium,
+                  fontSize: 11.sp,
+                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

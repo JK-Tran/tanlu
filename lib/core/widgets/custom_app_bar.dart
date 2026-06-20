@@ -58,17 +58,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return Container(
       decoration: _buildDecoration(isDark, resolvedBg),
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.w,
-        vertical: subtitle != null ? 12 : 8,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _buildLeading(context, isDark),
-          _buildTitleAndSubtitle(isDark),
-          _buildTrailing(isDark),
-        ],
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: subtitle != null ? 12 : 8,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildLeading(context, isDark),
+              _buildTitleAndSubtitle(isDark),
+              _buildTrailing(isDark),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -164,7 +169,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final bool isCentered = subtitle == null;
 
     if (action != null) {
-      return Padding(padding: EdgeInsets.only(left: 12.w), child: action!);
+      return Padding(
+        padding: EdgeInsets.only(left: 12.w),
+        child: action!,
+      );
     }
 
     if (actionIcon != null) {

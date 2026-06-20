@@ -8,42 +8,59 @@ class AppSearchBar extends StatelessWidget {
     this.controller,
     this.onChanged,
     this.hintText = 'Tìm kiếm...',
+    this.focusNode,
+    this.backgroundColor,
+    this.borderColor,
+    this.suffixIcon,
+    this.boxShadow,
   });
 
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
   final String hintText;
+  final FocusNode? focusNode;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final Widget? suffixIcon;
+  final List<BoxShadow>? boxShadow;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 48.h,
       decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(14.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: backgroundColor ?? AppColors.white,
+        borderRadius: BorderRadius.circular(8.r),
+        border: borderColor != null
+            ? Border.all(color: borderColor!, width: 1.5)
+            : null,
+        boxShadow:
+            boxShadow ??
+            [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 5,
+                offset: const Offset(0, 2),
+              ),
+            ],
       ),
       child: TextField(
         controller: controller,
+        focusNode: focusNode,
         onChanged: onChanged,
-        style: TextStyle(fontSize: 12.sp, color: AppColors.grayDark80),
+        style: TextStyle(fontSize: 14.sp, color: AppColors.grayDark80),
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           isDense: true,
-          contentPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.symmetric(vertical: 12.h),
           hintText: hintText,
-          hintStyle: TextStyle(color: AppColors.grayMedium, fontSize: 12.sp),
+          hintStyle: TextStyle(color: AppColors.grayMedium, fontSize: 14.sp),
           prefixIcon: Icon(
             Icons.search_rounded,
             color: AppColors.grayMedium,
-            size: 20,
+            size: 20.w,
           ),
+          suffixIcon: suffixIcon,
           border: InputBorder.none,
         ),
       ),

@@ -71,7 +71,7 @@ class ConversationList extends StatelessWidget {
             : _formatDate(conversation.updatedAt ?? DateTime.now());
 
         final otherParticipant = conversation.participants.firstWhereOrNull(
-          (p) => p.userId != currentUser?.id,
+          (p) => p.userId.toString() != currentUser?.id.toString(),
         );
         String name = conversation.name;
         if (name.isEmpty) {
@@ -80,7 +80,7 @@ class ConversationList extends StatelessWidget {
 
         // Calculate real unread count
         final unreadCount = conversation.messages
-            .where((m) => !m.isRead && m.senderId != currentUser?.id)
+            .where((m) => m.senderId.toString() != currentUser?.id.toString() && !m.isRead)
             .length;
         final isUnread = unreadCount > 0;
 
@@ -91,10 +91,7 @@ class ConversationList extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   chatBloc.add(SelectConversation(conversation));
-                  context.pushNamed(
-                    'chat-detail',
-                    extra: {'conversation': conversation, 'chatBloc': chatBloc},
-                  );
+                  context.push('/chat-detail/${conversation.id}');
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(
@@ -215,8 +212,8 @@ class ConversationList extends StatelessWidget {
                                     ),
                                   )
                                 else if (conversation.messages.isNotEmpty &&
-                                    conversation.messages.last.senderId ==
-                                        currentUser?.id)
+                                    conversation.messages.last.senderId.toString() ==
+                                        currentUser?.id.toString())
                                   Padding(
                                     padding: EdgeInsets.only(left: 8.w),
                                     child: Icon(

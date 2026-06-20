@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/core/session/session_expired_helper.dart';
 import 'package:tanlu_management/core/utils/shared_prefs_helper.dart';
@@ -14,6 +17,15 @@ abstract class RegisterModule {
 
   @lazySingleton
   FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+
+  @lazySingleton
+  FirebaseFirestore get firestore => FirebaseFirestore.instance;
+
+  @lazySingleton
+  FirebaseFunctions get firebaseFunctions => FirebaseFunctions.instance;
+
+  @lazySingleton
+  FirebaseMessaging get firebaseMessaging => FirebaseMessaging.instance;
 
   @lazySingleton
   DioClient dioClient(SharedPrefsHelper prefs) =>

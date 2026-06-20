@@ -159,7 +159,6 @@ class OverviewProgressCard extends StatelessWidget {
                                           color: primaryColor,
                                           fontSize: 18.sp,
                                           fontWeight: FontWeight.bold,
-                                          fontFamily: 'Inter',
                                         ),
                                       ),
                                       TextSpan(
@@ -168,7 +167,6 @@ class OverviewProgressCard extends StatelessWidget {
                                           color: AppColors.grayDark80,
                                           fontSize: 12.sp,
                                           fontWeight: FontWeight.bold,
-                                          fontFamily: 'Inter',
                                         ),
                                       ),
                                     ],

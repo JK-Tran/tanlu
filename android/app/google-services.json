@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "248157629173",
+    "project_id": "tanlu-ceab0",
+    "storage_bucket": "tanlu-ceab0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248157629173:android:f98f971e96d9b10155f3bc",
+        "android_client_info": {
+          "package_name": "com.tanlu_management"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-YrnkMLaVUJWqqd3QLaYiffnt5l88Y8g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

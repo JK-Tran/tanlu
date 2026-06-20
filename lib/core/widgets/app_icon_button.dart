@@ -42,33 +42,25 @@ class AppIconButton extends StatelessWidget {
     final Color resolvedBgColor = backgroundColor ?? Colors.transparent;
     final double resolvedRadius = borderRadius ?? 6;
 
-    final boxDecoration = shape == BoxShape.circle
-        ? BoxDecoration(color: resolvedBgColor, shape: BoxShape.circle)
-        : BoxDecoration(
-            color: resolvedBgColor,
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(resolvedRadius),
-          );
-
     final inkBorder = shape == BoxShape.circle
         ? const CircleBorder()
         : RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(resolvedRadius),
           );
 
-    return Container(
-      width: resolvedSize,
-      height: resolvedSize,
-      decoration: boxDecoration,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onPressed,
-          customBorder: inkBorder,
+    return Material(
+      color: resolvedBgColor,
+      shape: inkBorder,
+      clipBehavior: Clip.antiAlias, // Cắt gợn sóng đúng theo viền
+      child: InkWell(
+        onTap: onPressed,
+        child: SizedBox(
+          width: resolvedSize,
+          height: resolvedSize,
           child: Center(
             child: Icon(
               icon,
-              size: resolvedSize * 0.6,
+              size: resolvedSize * 0.5, // Tỉ lệ icon hợp lý hơn
               color: resolvedIconColor,
             ),
           ),

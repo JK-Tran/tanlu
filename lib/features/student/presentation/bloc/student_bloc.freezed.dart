@@ -16,77 +16,15 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 /// @nodoc
-mixin _$StudentStarted {}
+mixin _$FetchStudents {
+  String? get classId => throw _privateConstructorUsedError;
 
-/// @nodoc
-abstract class $StudentStartedCopyWith<$Res> {
-  factory $StudentStartedCopyWith(
-    StudentStarted value,
-    $Res Function(StudentStarted) then,
-  ) = _$StudentStartedCopyWithImpl<$Res, StudentStarted>;
-}
-
-/// @nodoc
-class _$StudentStartedCopyWithImpl<$Res, $Val extends StudentStarted>
-    implements $StudentStartedCopyWith<$Res> {
-  _$StudentStartedCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of StudentStarted
+  /// Create a copy of FetchStudents
   /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $FetchStudentsCopyWith<FetchStudents> get copyWith =>
+      throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-abstract class _$$StudentStartedImplCopyWith<$Res> {
-  factory _$$StudentStartedImplCopyWith(
-    _$StudentStartedImpl value,
-    $Res Function(_$StudentStartedImpl) then,
-  ) = __$$StudentStartedImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$StudentStartedImplCopyWithImpl<$Res>
-    extends _$StudentStartedCopyWithImpl<$Res, _$StudentStartedImpl>
-    implements _$$StudentStartedImplCopyWith<$Res> {
-  __$$StudentStartedImplCopyWithImpl(
-    _$StudentStartedImpl _value,
-    $Res Function(_$StudentStartedImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of StudentStarted
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$StudentStartedImpl implements _StudentStarted {
-  const _$StudentStartedImpl();
-
-  @override
-  String toString() {
-    return 'StudentStarted()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$StudentStartedImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class _StudentStarted implements StudentStarted {
-  const factory _StudentStarted() = _$StudentStartedImpl;
-}
-
-/// @nodoc
-mixin _$FetchStudents {}
 
 /// @nodoc
 abstract class $FetchStudentsCopyWith<$Res> {
@@ -94,6 +32,8 @@ abstract class $FetchStudentsCopyWith<$Res> {
     FetchStudents value,
     $Res Function(FetchStudents) then,
   ) = _$FetchStudentsCopyWithImpl<$Res, FetchStudents>;
+  @useResult
+  $Res call({String? classId});
 }
 
 /// @nodoc
@@ -108,14 +48,31 @@ class _$FetchStudentsCopyWithImpl<$Res, $Val extends FetchStudents>
 
   /// Create a copy of FetchStudents
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? classId = freezed}) {
+    return _then(
+      _value.copyWith(
+            classId: freezed == classId
+                ? _value.classId
+                : classId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
 }
 
 /// @nodoc
-abstract class _$$FetchStudentsImplCopyWith<$Res> {
+abstract class _$$FetchStudentsImplCopyWith<$Res>
+    implements $FetchStudentsCopyWith<$Res> {
   factory _$$FetchStudentsImplCopyWith(
     _$FetchStudentsImpl value,
     $Res Function(_$FetchStudentsImpl) then,
   ) = __$$FetchStudentsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? classId});
 }
 
 /// @nodoc
@@ -129,112 +86,15 @@ class __$$FetchStudentsImplCopyWithImpl<$Res>
 
   /// Create a copy of FetchStudents
   /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$FetchStudentsImpl implements _FetchStudents {
-  const _$FetchStudentsImpl();
-
-  @override
-  String toString() {
-    return 'FetchStudents()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FetchStudentsImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class _FetchStudents implements FetchStudents {
-  const factory _FetchStudents() = _$FetchStudentsImpl;
-}
-
-/// @nodoc
-mixin _$FetchStudentById {
-  int get id => throw _privateConstructorUsedError;
-
-  /// Create a copy of FetchStudentById
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $FetchStudentByIdCopyWith<FetchStudentById> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $FetchStudentByIdCopyWith<$Res> {
-  factory $FetchStudentByIdCopyWith(
-    FetchStudentById value,
-    $Res Function(FetchStudentById) then,
-  ) = _$FetchStudentByIdCopyWithImpl<$Res, FetchStudentById>;
-  @useResult
-  $Res call({int id});
-}
-
-/// @nodoc
-class _$FetchStudentByIdCopyWithImpl<$Res, $Val extends FetchStudentById>
-    implements $FetchStudentByIdCopyWith<$Res> {
-  _$FetchStudentByIdCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of FetchStudentById
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? id = null}) {
+  $Res call({Object? classId = freezed}) {
     return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as int,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$FetchStudentByIdImplCopyWith<$Res>
-    implements $FetchStudentByIdCopyWith<$Res> {
-  factory _$$FetchStudentByIdImplCopyWith(
-    _$FetchStudentByIdImpl value,
-    $Res Function(_$FetchStudentByIdImpl) then,
-  ) = __$$FetchStudentByIdImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int id});
-}
-
-/// @nodoc
-class __$$FetchStudentByIdImplCopyWithImpl<$Res>
-    extends _$FetchStudentByIdCopyWithImpl<$Res, _$FetchStudentByIdImpl>
-    implements _$$FetchStudentByIdImplCopyWith<$Res> {
-  __$$FetchStudentByIdImplCopyWithImpl(
-    _$FetchStudentByIdImpl _value,
-    $Res Function(_$FetchStudentByIdImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of FetchStudentById
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? id = null}) {
-    return _then(
-      _$FetchStudentByIdImpl(
-        null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as int,
+      _$FetchStudentsImpl(
+        classId: freezed == classId
+            ? _value.classId
+            : classId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -242,56 +102,61 @@ class __$$FetchStudentByIdImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FetchStudentByIdImpl implements _FetchStudentById {
-  const _$FetchStudentByIdImpl(this.id);
+class _$FetchStudentsImpl implements _FetchStudents {
+  const _$FetchStudentsImpl({this.classId});
 
   @override
-  final int id;
+  final String? classId;
 
   @override
   String toString() {
-    return 'FetchStudentById(id: $id)';
+    return 'FetchStudents(classId: $classId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FetchStudentByIdImpl &&
-            (identical(other.id, id) || other.id == id));
+            other is _$FetchStudentsImpl &&
+            (identical(other.classId, classId) || other.classId == classId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, classId);
 
-  /// Create a copy of FetchStudentById
+  /// Create a copy of FetchStudents
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FetchStudentByIdImplCopyWith<_$FetchStudentByIdImpl> get copyWith =>
-      __$$FetchStudentByIdImplCopyWithImpl<_$FetchStudentByIdImpl>(
-        this,
-        _$identity,
-      );
+  _$$FetchStudentsImplCopyWith<_$FetchStudentsImpl> get copyWith =>
+      __$$FetchStudentsImplCopyWithImpl<_$FetchStudentsImpl>(this, _$identity);
 }
 
-abstract class _FetchStudentById implements FetchStudentById {
-  const factory _FetchStudentById(final int id) = _$FetchStudentByIdImpl;
+abstract class _FetchStudents implements FetchStudents {
+  const factory _FetchStudents({final String? classId}) = _$FetchStudentsImpl;
 
   @override
-  int get id;
+  String? get classId;
 
-  /// Create a copy of FetchStudentById
+  /// Create a copy of FetchStudents
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FetchStudentByIdImplCopyWith<_$FetchStudentByIdImpl> get copyWith =>
+  _$$FetchStudentsImplCopyWith<_$FetchStudentsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$RefreshStudents {}
+mixin _$RefreshStudents {
+  String? get classId => throw _privateConstructorUsedError;
+
+  /// Create a copy of RefreshStudents
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $RefreshStudentsCopyWith<RefreshStudents> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $RefreshStudentsCopyWith<$Res> {
@@ -299,6 +164,8 @@ abstract class $RefreshStudentsCopyWith<$Res> {
     RefreshStudents value,
     $Res Function(RefreshStudents) then,
   ) = _$RefreshStudentsCopyWithImpl<$Res, RefreshStudents>;
+  @useResult
+  $Res call({String? classId});
 }
 
 /// @nodoc
@@ -313,14 +180,31 @@ class _$RefreshStudentsCopyWithImpl<$Res, $Val extends RefreshStudents>
 
   /// Create a copy of RefreshStudents
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? classId = freezed}) {
+    return _then(
+      _value.copyWith(
+            classId: freezed == classId
+                ? _value.classId
+                : classId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
 }
 
 /// @nodoc
-abstract class _$$RefreshStudentsImplCopyWith<$Res> {
+abstract class _$$RefreshStudentsImplCopyWith<$Res>
+    implements $RefreshStudentsCopyWith<$Res> {
   factory _$$RefreshStudentsImplCopyWith(
     _$RefreshStudentsImpl value,
     $Res Function(_$RefreshStudentsImpl) then,
   ) = __$$RefreshStudentsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? classId});
 }
 
 /// @nodoc
@@ -334,121 +218,15 @@ class __$$RefreshStudentsImplCopyWithImpl<$Res>
 
   /// Create a copy of RefreshStudents
   /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$RefreshStudentsImpl implements _RefreshStudents {
-  const _$RefreshStudentsImpl();
-
-  @override
-  String toString() {
-    return 'RefreshStudents()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$RefreshStudentsImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class _RefreshStudents implements RefreshStudents {
-  const factory _RefreshStudents() = _$RefreshStudentsImpl;
-}
-
-/// @nodoc
-mixin _$UpdateStudent {
-  int get id => throw _privateConstructorUsedError;
-  Map<String, dynamic> get data => throw _privateConstructorUsedError;
-
-  /// Create a copy of UpdateStudent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $UpdateStudentCopyWith<UpdateStudent> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $UpdateStudentCopyWith<$Res> {
-  factory $UpdateStudentCopyWith(
-    UpdateStudent value,
-    $Res Function(UpdateStudent) then,
-  ) = _$UpdateStudentCopyWithImpl<$Res, UpdateStudent>;
-  @useResult
-  $Res call({int id, Map<String, dynamic> data});
-}
-
-/// @nodoc
-class _$UpdateStudentCopyWithImpl<$Res, $Val extends UpdateStudent>
-    implements $UpdateStudentCopyWith<$Res> {
-  _$UpdateStudentCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of UpdateStudent
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? id = null, Object? data = null}) {
+  $Res call({Object? classId = freezed}) {
     return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as int,
-            data: null == data
-                ? _value.data
-                : data // ignore: cast_nullable_to_non_nullable
-                      as Map<String, dynamic>,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$UpdateStudentImplCopyWith<$Res>
-    implements $UpdateStudentCopyWith<$Res> {
-  factory _$$UpdateStudentImplCopyWith(
-    _$UpdateStudentImpl value,
-    $Res Function(_$UpdateStudentImpl) then,
-  ) = __$$UpdateStudentImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({int id, Map<String, dynamic> data});
-}
-
-/// @nodoc
-class __$$UpdateStudentImplCopyWithImpl<$Res>
-    extends _$UpdateStudentCopyWithImpl<$Res, _$UpdateStudentImpl>
-    implements _$$UpdateStudentImplCopyWith<$Res> {
-  __$$UpdateStudentImplCopyWithImpl(
-    _$UpdateStudentImpl _value,
-    $Res Function(_$UpdateStudentImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of UpdateStudent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? id = null, Object? data = null}) {
-    return _then(
-      _$UpdateStudentImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as int,
-        data: null == data
-            ? _value._data
-            : data // ignore: cast_nullable_to_non_nullable
-                  as Map<String, dynamic>,
+      _$RefreshStudentsImpl(
+        classId: freezed == classId
+            ? _value.classId
+            : classId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -456,65 +234,331 @@ class __$$UpdateStudentImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UpdateStudentImpl implements _UpdateStudent {
-  const _$UpdateStudentImpl({
-    required this.id,
-    required final Map<String, dynamic> data,
-  }) : _data = data;
+class _$RefreshStudentsImpl implements _RefreshStudents {
+  const _$RefreshStudentsImpl({this.classId});
 
   @override
-  final int id;
-  final Map<String, dynamic> _data;
-  @override
-  Map<String, dynamic> get data {
-    if (_data is EqualUnmodifiableMapView) return _data;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_data);
-  }
+  final String? classId;
 
   @override
   String toString() {
-    return 'UpdateStudent(id: $id, data: $data)';
+    return 'RefreshStudents(classId: $classId)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UpdateStudentImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other._data, _data));
+            other is _$RefreshStudentsImpl &&
+            (identical(other.classId, classId) || other.classId == classId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, const DeepCollectionEquality().hash(_data));
+  int get hashCode => Object.hash(runtimeType, classId);
 
-  /// Create a copy of UpdateStudent
+  /// Create a copy of RefreshStudents
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UpdateStudentImplCopyWith<_$UpdateStudentImpl> get copyWith =>
-      __$$UpdateStudentImplCopyWithImpl<_$UpdateStudentImpl>(this, _$identity);
+  _$$RefreshStudentsImplCopyWith<_$RefreshStudentsImpl> get copyWith =>
+      __$$RefreshStudentsImplCopyWithImpl<_$RefreshStudentsImpl>(
+        this,
+        _$identity,
+      );
 }
 
-abstract class _UpdateStudent implements UpdateStudent {
-  const factory _UpdateStudent({
-    required final int id,
-    required final Map<String, dynamic> data,
-  }) = _$UpdateStudentImpl;
+abstract class _RefreshStudents implements RefreshStudents {
+  const factory _RefreshStudents({final String? classId}) =
+      _$RefreshStudentsImpl;
 
   @override
-  int get id;
-  @override
-  Map<String, dynamic> get data;
+  String? get classId;
 
-  /// Create a copy of UpdateStudent
+  /// Create a copy of RefreshStudents
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UpdateStudentImplCopyWith<_$UpdateStudentImpl> get copyWith =>
+  _$$RefreshStudentsImplCopyWith<_$RefreshStudentsImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ChangeStudentGenderFilter {
+  int get index => throw _privateConstructorUsedError;
+
+  /// Create a copy of ChangeStudentGenderFilter
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ChangeStudentGenderFilterCopyWith<ChangeStudentGenderFilter> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChangeStudentGenderFilterCopyWith<$Res> {
+  factory $ChangeStudentGenderFilterCopyWith(
+    ChangeStudentGenderFilter value,
+    $Res Function(ChangeStudentGenderFilter) then,
+  ) = _$ChangeStudentGenderFilterCopyWithImpl<$Res, ChangeStudentGenderFilter>;
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class _$ChangeStudentGenderFilterCopyWithImpl<
+  $Res,
+  $Val extends ChangeStudentGenderFilter
+>
+    implements $ChangeStudentGenderFilterCopyWith<$Res> {
+  _$ChangeStudentGenderFilterCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ChangeStudentGenderFilter
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? index = null}) {
+    return _then(
+      _value.copyWith(
+            index: null == index
+                ? _value.index
+                : index // ignore: cast_nullable_to_non_nullable
+                      as int,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$ChangeStudentGenderFilterImplCopyWith<$Res>
+    implements $ChangeStudentGenderFilterCopyWith<$Res> {
+  factory _$$ChangeStudentGenderFilterImplCopyWith(
+    _$ChangeStudentGenderFilterImpl value,
+    $Res Function(_$ChangeStudentGenderFilterImpl) then,
+  ) = __$$ChangeStudentGenderFilterImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class __$$ChangeStudentGenderFilterImplCopyWithImpl<$Res>
+    extends
+        _$ChangeStudentGenderFilterCopyWithImpl<
+          $Res,
+          _$ChangeStudentGenderFilterImpl
+        >
+    implements _$$ChangeStudentGenderFilterImplCopyWith<$Res> {
+  __$$ChangeStudentGenderFilterImplCopyWithImpl(
+    _$ChangeStudentGenderFilterImpl _value,
+    $Res Function(_$ChangeStudentGenderFilterImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ChangeStudentGenderFilter
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? index = null}) {
+    return _then(
+      _$ChangeStudentGenderFilterImpl(
+        index: null == index
+            ? _value.index
+            : index // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$ChangeStudentGenderFilterImpl implements _ChangeStudentGenderFilter {
+  const _$ChangeStudentGenderFilterImpl({required this.index});
+
+  @override
+  final int index;
+
+  @override
+  String toString() {
+    return 'ChangeStudentGenderFilter(index: $index)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeStudentGenderFilterImpl &&
+            (identical(other.index, index) || other.index == index));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, index);
+
+  /// Create a copy of ChangeStudentGenderFilter
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeStudentGenderFilterImplCopyWith<_$ChangeStudentGenderFilterImpl>
+  get copyWith =>
+      __$$ChangeStudentGenderFilterImplCopyWithImpl<
+        _$ChangeStudentGenderFilterImpl
+      >(this, _$identity);
+}
+
+abstract class _ChangeStudentGenderFilter implements ChangeStudentGenderFilter {
+  const factory _ChangeStudentGenderFilter({required final int index}) =
+      _$ChangeStudentGenderFilterImpl;
+
+  @override
+  int get index;
+
+  /// Create a copy of ChangeStudentGenderFilter
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ChangeStudentGenderFilterImplCopyWith<_$ChangeStudentGenderFilterImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$SearchStudents {
+  String get query => throw _privateConstructorUsedError;
+
+  /// Create a copy of SearchStudents
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SearchStudentsCopyWith<SearchStudents> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SearchStudentsCopyWith<$Res> {
+  factory $SearchStudentsCopyWith(
+    SearchStudents value,
+    $Res Function(SearchStudents) then,
+  ) = _$SearchStudentsCopyWithImpl<$Res, SearchStudents>;
+  @useResult
+  $Res call({String query});
+}
+
+/// @nodoc
+class _$SearchStudentsCopyWithImpl<$Res, $Val extends SearchStudents>
+    implements $SearchStudentsCopyWith<$Res> {
+  _$SearchStudentsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of SearchStudents
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? query = null}) {
+    return _then(
+      _value.copyWith(
+            query: null == query
+                ? _value.query
+                : query // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$SearchStudentsImplCopyWith<$Res>
+    implements $SearchStudentsCopyWith<$Res> {
+  factory _$$SearchStudentsImplCopyWith(
+    _$SearchStudentsImpl value,
+    $Res Function(_$SearchStudentsImpl) then,
+  ) = __$$SearchStudentsImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String query});
+}
+
+/// @nodoc
+class __$$SearchStudentsImplCopyWithImpl<$Res>
+    extends _$SearchStudentsCopyWithImpl<$Res, _$SearchStudentsImpl>
+    implements _$$SearchStudentsImplCopyWith<$Res> {
+  __$$SearchStudentsImplCopyWithImpl(
+    _$SearchStudentsImpl _value,
+    $Res Function(_$SearchStudentsImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of SearchStudents
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? query = null}) {
+    return _then(
+      _$SearchStudentsImpl(
+        query: null == query
+            ? _value.query
+            : query // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$SearchStudentsImpl implements _SearchStudents {
+  const _$SearchStudentsImpl({required this.query});
+
+  @override
+  final String query;
+
+  @override
+  String toString() {
+    return 'SearchStudents(query: $query)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SearchStudentsImpl &&
+            (identical(other.query, query) || other.query == query));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, query);
+
+  /// Create a copy of SearchStudents
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SearchStudentsImplCopyWith<_$SearchStudentsImpl> get copyWith =>
+      __$$SearchStudentsImplCopyWithImpl<_$SearchStudentsImpl>(
+        this,
+        _$identity,
+      );
+}
+
+abstract class _SearchStudents implements SearchStudents {
+  const factory _SearchStudents({required final String query}) =
+      _$SearchStudentsImpl;
+
+  @override
+  String get query;
+
+  /// Create a copy of SearchStudents
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SearchStudentsImplCopyWith<_$SearchStudentsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -522,8 +566,12 @@ abstract class _UpdateStudent implements UpdateStudent {
 mixin _$StudentState {
   List<Student> get students => throw _privateConstructorUsedError;
   Student? get currentStudent => throw _privateConstructorUsedError;
+  StudentClassStats? get stats => throw _privateConstructorUsedError;
+  StudentGenderFilter get genderFilter => throw _privateConstructorUsedError;
+  String get searchKeyword => throw _privateConstructorUsedError;
   String get onPageError => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  String? get classId => throw _privateConstructorUsedError;
 
   /// Create a copy of StudentState
   /// with the given fields replaced by the non-null parameter values.
@@ -542,11 +590,16 @@ abstract class $StudentStateCopyWith<$Res> {
   $Res call({
     List<Student> students,
     Student? currentStudent,
+    StudentClassStats? stats,
+    StudentGenderFilter genderFilter,
+    String searchKeyword,
     String onPageError,
     bool isLoading,
+    String? classId,
   });
 
   $StudentCopyWith<$Res>? get currentStudent;
+  $StudentClassStatsCopyWith<$Res>? get stats;
 }
 
 /// @nodoc
@@ -566,8 +619,12 @@ class _$StudentStateCopyWithImpl<$Res, $Val extends StudentState>
   $Res call({
     Object? students = null,
     Object? currentStudent = freezed,
+    Object? stats = freezed,
+    Object? genderFilter = null,
+    Object? searchKeyword = null,
     Object? onPageError = null,
     Object? isLoading = null,
+    Object? classId = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -579,6 +636,18 @@ class _$StudentStateCopyWithImpl<$Res, $Val extends StudentState>
                 ? _value.currentStudent
                 : currentStudent // ignore: cast_nullable_to_non_nullable
                       as Student?,
+            stats: freezed == stats
+                ? _value.stats
+                : stats // ignore: cast_nullable_to_non_nullable
+                      as StudentClassStats?,
+            genderFilter: null == genderFilter
+                ? _value.genderFilter
+                : genderFilter // ignore: cast_nullable_to_non_nullable
+                      as StudentGenderFilter,
+            searchKeyword: null == searchKeyword
+                ? _value.searchKeyword
+                : searchKeyword // ignore: cast_nullable_to_non_nullable
+                      as String,
             onPageError: null == onPageError
                 ? _value.onPageError
                 : onPageError // ignore: cast_nullable_to_non_nullable
@@ -587,6 +656,10 @@ class _$StudentStateCopyWithImpl<$Res, $Val extends StudentState>
                 ? _value.isLoading
                 : isLoading // ignore: cast_nullable_to_non_nullable
                       as bool,
+            classId: freezed == classId
+                ? _value.classId
+                : classId // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -605,6 +678,20 @@ class _$StudentStateCopyWithImpl<$Res, $Val extends StudentState>
       return _then(_value.copyWith(currentStudent: value) as $Val);
     });
   }
+
+  /// Create a copy of StudentState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StudentClassStatsCopyWith<$Res>? get stats {
+    if (_value.stats == null) {
+      return null;
+    }
+
+    return $StudentClassStatsCopyWith<$Res>(_value.stats!, (value) {
+      return _then(_value.copyWith(stats: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -619,12 +706,18 @@ abstract class _$$StudentStateImplCopyWith<$Res>
   $Res call({
     List<Student> students,
     Student? currentStudent,
+    StudentClassStats? stats,
+    StudentGenderFilter genderFilter,
+    String searchKeyword,
     String onPageError,
     bool isLoading,
+    String? classId,
   });
 
   @override
   $StudentCopyWith<$Res>? get currentStudent;
+  @override
+  $StudentClassStatsCopyWith<$Res>? get stats;
 }
 
 /// @nodoc
@@ -643,8 +736,12 @@ class __$$StudentStateImplCopyWithImpl<$Res>
   $Res call({
     Object? students = null,
     Object? currentStudent = freezed,
+    Object? stats = freezed,
+    Object? genderFilter = null,
+    Object? searchKeyword = null,
     Object? onPageError = null,
     Object? isLoading = null,
+    Object? classId = freezed,
   }) {
     return _then(
       _$StudentStateImpl(
@@ -656,6 +753,18 @@ class __$$StudentStateImplCopyWithImpl<$Res>
             ? _value.currentStudent
             : currentStudent // ignore: cast_nullable_to_non_nullable
                   as Student?,
+        stats: freezed == stats
+            ? _value.stats
+            : stats // ignore: cast_nullable_to_non_nullable
+                  as StudentClassStats?,
+        genderFilter: null == genderFilter
+            ? _value.genderFilter
+            : genderFilter // ignore: cast_nullable_to_non_nullable
+                  as StudentGenderFilter,
+        searchKeyword: null == searchKeyword
+            ? _value.searchKeyword
+            : searchKeyword // ignore: cast_nullable_to_non_nullable
+                  as String,
         onPageError: null == onPageError
             ? _value.onPageError
             : onPageError // ignore: cast_nullable_to_non_nullable
@@ -664,6 +773,10 @@ class __$$StudentStateImplCopyWithImpl<$Res>
             ? _value.isLoading
             : isLoading // ignore: cast_nullable_to_non_nullable
                   as bool,
+        classId: freezed == classId
+            ? _value.classId
+            : classId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -675,8 +788,12 @@ class _$StudentStateImpl implements _StudentState {
   const _$StudentStateImpl({
     final List<Student> students = const [],
     this.currentStudent,
+    this.stats,
+    this.genderFilter = StudentGenderFilter.all,
+    this.searchKeyword = '',
     this.onPageError = '',
     this.isLoading = false,
+    this.classId,
   }) : _students = students;
 
   final List<Student> _students;
@@ -691,15 +808,25 @@ class _$StudentStateImpl implements _StudentState {
   @override
   final Student? currentStudent;
   @override
+  final StudentClassStats? stats;
+  @override
+  @JsonKey()
+  final StudentGenderFilter genderFilter;
+  @override
+  @JsonKey()
+  final String searchKeyword;
+  @override
   @JsonKey()
   final String onPageError;
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  final String? classId;
 
   @override
   String toString() {
-    return 'StudentState(students: $students, currentStudent: $currentStudent, onPageError: $onPageError, isLoading: $isLoading)';
+    return 'StudentState(students: $students, currentStudent: $currentStudent, stats: $stats, genderFilter: $genderFilter, searchKeyword: $searchKeyword, onPageError: $onPageError, isLoading: $isLoading, classId: $classId)';
   }
 
   @override
@@ -710,10 +837,16 @@ class _$StudentStateImpl implements _StudentState {
             const DeepCollectionEquality().equals(other._students, _students) &&
             (identical(other.currentStudent, currentStudent) ||
                 other.currentStudent == currentStudent) &&
+            (identical(other.stats, stats) || other.stats == stats) &&
+            (identical(other.genderFilter, genderFilter) ||
+                other.genderFilter == genderFilter) &&
+            (identical(other.searchKeyword, searchKeyword) ||
+                other.searchKeyword == searchKeyword) &&
             (identical(other.onPageError, onPageError) ||
                 other.onPageError == onPageError) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.classId, classId) || other.classId == classId));
   }
 
   @override
@@ -721,8 +854,12 @@ class _$StudentStateImpl implements _StudentState {
     runtimeType,
     const DeepCollectionEquality().hash(_students),
     currentStudent,
+    stats,
+    genderFilter,
+    searchKeyword,
     onPageError,
     isLoading,
+    classId,
   );
 
   /// Create a copy of StudentState
@@ -738,8 +875,12 @@ abstract class _StudentState implements StudentState {
   const factory _StudentState({
     final List<Student> students,
     final Student? currentStudent,
+    final StudentClassStats? stats,
+    final StudentGenderFilter genderFilter,
+    final String searchKeyword,
     final String onPageError,
     final bool isLoading,
+    final String? classId,
   }) = _$StudentStateImpl;
 
   @override
@@ -747,9 +888,17 @@ abstract class _StudentState implements StudentState {
   @override
   Student? get currentStudent;
   @override
+  StudentClassStats? get stats;
+  @override
+  StudentGenderFilter get genderFilter;
+  @override
+  String get searchKeyword;
+  @override
   String get onPageError;
   @override
   bool get isLoading;
+  @override
+  String? get classId;
 
   /// Create a copy of StudentState
   /// with the given fields replaced by the non-null parameter values.

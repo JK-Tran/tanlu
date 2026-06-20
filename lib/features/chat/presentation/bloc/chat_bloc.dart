@@ -9,8 +9,8 @@ import 'package:tanlu_management/features/chat/domain/entity/conversation.dart';
 import 'package:tanlu_management/features/chat/domain/entity/contact.dart';
 import 'package:tanlu_management/features/chat/domain/entity/message.dart';
 import 'package:tanlu_management/features/chat/domain/entity/chat_user.dart';
-import 'package:tanlu_management/features/chat/data/model/message_data.dart';
-import 'package:tanlu_management/features/chat/data/mapper/message_data_mapper.dart';
+// import 'package:tanlu_management/features/chat/data/model/message_data.dart';
+// import 'package:tanlu_management/features/chat/data/mapper/message_data_mapper.dart';
 import 'package:tanlu_management/features/chat/domain/usecases/get_conversations_use_case.dart';
 import 'package:tanlu_management/features/chat/domain/usecases/get_contacts_use_case.dart';
 import 'package:tanlu_management/features/chat/domain/usecases/get_messages_use_case.dart';
@@ -34,7 +34,7 @@ class ChatBloc extends BaseBloc<ChatEvent, ChatState> {
     this._createConversationUseCase,
     this._markMessagesAsReadUseCase,
     this._socketService,
-    this._messageDataMapper,
+    // this._messageDataMapper,
   ) : super(const ChatState()) {
     on<ChatStarted>(_onStarted);
     on<ClearChat>(_onClearChat);
@@ -57,50 +57,50 @@ class ChatBloc extends BaseBloc<ChatEvent, ChatState> {
   final CreateConversationUseCase _createConversationUseCase;
   final MarkMessagesAsReadUseCase _markMessagesAsReadUseCase;
   final SocketService _socketService;
-  final MessageDataMapper _messageDataMapper;
+  // final MessageDataMapper _messageDataMapper;
 
   Future<void> _onStarted(ChatStarted event, Emitter<ChatState> emit) async {
-    add(const FetchContacts());
-    add(const FetchConversations());
+    // add(const FetchContacts());
+    // add(const FetchConversations());
 
-    _socketService.offNewMessage();
-    _socketService.onNewMessage((data) {
-      appLogger.i('💬 [Socket] Received new message data: $data');
-      if (data != null && data is Map<String, dynamic>) {
-        try {
-          final messageData = MessageData.fromJson(data);
-          final message = _messageDataMapper.mapToEntity(messageData);
-          add(ReceiveMessage(message));
-        } catch (e) {
-          // Bỏ qua nếu có lỗi parse dữ liệu socket
-        }
-      }
-    });
+    // _socketService.offNewMessage();
+    // _socketService.onNewMessage((data) {
+    //   appLogger.i('💬 [Socket] Received new message data: $data');
+    //   if (data != null && data is Map<String, dynamic>) {
+    //     try {
+    //       final messageData = MessageData.fromJson(data);
+    //       final message = _messageDataMapper.mapToEntity(messageData);
+    //       add(ReceiveMessage(message));
+    //     } catch (e) {
+    //       // Bỏ qua nếu có lỗi parse dữ liệu socket
+    //     }
+    //   }
+    // });
 
-    _socketService.onUserOnline((data) {
-      if (data != null && data['userId'] != null) {
-        add(ChatUserOnline(data['userId'] as int));
-      }
-    });
+    // _socketService.onUserOnline((data) {
+    //   if (data != null && data['userId'] != null) {
+    //     add(ChatUserOnline(data['userId'] as int));
+    //   }
+    // });
 
-    _socketService.onUserOffline((data) {
-      if (data != null && data['userId'] != null) {
-        add(ChatUserOffline(data['userId'] as int));
-      }
-    });
+    // _socketService.onUserOffline((data) {
+    //   if (data != null && data['userId'] != null) {
+    //     add(ChatUserOffline(data['userId'] as int));
+    //   }
+    // });
 
-    _socketService.onMessagesRead((data) {
-      if (data != null &&
-          data['conversationId'] != null &&
-          data['readBy'] != null) {
-        add(
-          MessagesRead(
-            conversationId: data['conversationId'] as int,
-            readBy: data['readBy'] as int,
-          ),
-        );
-      }
-    });
+    // _socketService.onMessagesRead((data) {
+    //   if (data != null &&
+    //       data['conversationId'] != null &&
+    //       data['readBy'] != null) {
+    //     add(
+    //       MessagesRead(
+    //         conversationId: data['conversationId'] as int,
+    //         readBy: data['readBy'] as int,
+    //       ),
+    //     );
+    //   }
+    // });
   }
 
   Future<void> _onClearChat(ClearChat event, Emitter<ChatState> emit) async {

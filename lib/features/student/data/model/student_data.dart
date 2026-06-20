@@ -1,9 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tanlu_management/features/auth/data/model/user_data.dart';
-import 'package:tanlu_management/features/student/data/model/student_parent_data.dart';
-import 'package:tanlu_management/features/student/data/model/student_teacher_data.dart';
-import 'package:tanlu_management/features/student/data/model/screening_result_data.dart';
-import 'package:tanlu_management/features/student/data/model/development_result_data.dart';
+import 'contact_data.dart';
 
 part 'student_data.freezed.dart';
 part 'student_data.g.dart';
@@ -11,67 +7,38 @@ part 'student_data.g.dart';
 @freezed
 class StudentData with _$StudentData {
   const factory StudentData({
-    @JsonKey() int? id,
-    @JsonKey() int? classId,
-    @JsonKey() String? fullName,
-    @JsonKey() String? nickname,
-    @JsonKey() String? gender,
-    @JsonKey() String? dateOfBirth,
-    @JsonKey() String? avatarFileId,
-    @JsonKey() String? studentCode,
-    @JsonKey() String? enrollmentDate,
-    @JsonKey() String? status,
-    @JsonKey() String? initialReason,
-    @JsonKey() String? diagnosisSummary,
-    @JsonKey() int? developmentAgeMonth,
-    @JsonKey() String? supportLevel,
-    @JsonKey() String? note,
-    @JsonKey() String? createdAt,
-    @JsonKey() String? updatedAt,
-    @JsonKey() ClassroomData? classroom,
-    @JsonKey() List<StudentParentData>? studentParents,
-    @JsonKey() List<StudentTeacherData>? studentTeachers,
-    @JsonKey() List<ScreeningResultData>? screeningResults,
-    @JsonKey() List<DevelopmentResultData>? developmentResults,
+    @JsonKey(name: 'id', includeToJson: false) String? id, // ID thường được lấy từ Document ID
+    @JsonKey(name: 'classId') String? classId,
+    @JsonKey(name: 'fullName') String? fullName,
+    @JsonKey(name: 'nickname') String? nickname,
+    @JsonKey(name: 'gender') String? gender,
+    @JsonKey(name: 'dob') String? dob,
+    @JsonKey(name: 'dateOfBirth') String? dateOfBirth,
+    @JsonKey(name: 'avatarUrl') String? avatarUrl,
+    @JsonKey(name: 'studentCode') String? studentCode,
+    @JsonKey(name: 'status') String? status,
+    @JsonKey(name: 'parentUserId') String? parentUserId,
+    @JsonKey(name: 'address') String? address,
+    @JsonKey(name: 'contacts') List<ContactData>? contacts,
+    
+    // Y tế & Thể chất
+    @JsonKey(name: 'birthHistory') String? birthHistory,
+    @JsonKey(name: 'diagnosis') String? diagnosis,
+    @JsonKey(name: 'allergies') String? allergies,
+    @JsonKey(name: 'currentMedications') String? currentMedications,
+    @JsonKey(name: 'bloodType') String? bloodType,
+
+    // Hành vi & Sở thích
+    @JsonKey(name: 'likes') String? likes,
+    @JsonKey(name: 'dislikesOrTriggers') String? dislikesOrTriggers,
+    @JsonKey(name: 'selfCareSkills') String? selfCareSkills,
+
+    // Cũ / Tương thích ngược
+    @JsonKey(name: 'initialReason') String? initialReason,
+    @JsonKey(name: 'diagnosisSummary') String? diagnosisSummary,
+    @JsonKey(name: 'developmentAgeMonth') int? developmentAgeMonth,
+    @JsonKey(name: 'supportLevel') String? supportLevel,
   }) = _StudentData;
 
-  const StudentData._();
-
-  factory StudentData.fromJson(Map<String, dynamic> json) =>
-      _$StudentDataFromJson(json);
-}
-
-@freezed
-class ClassroomData with _$ClassroomData {
-  const factory ClassroomData({
-    @Default(0) int? id,
-    @Default('') String? name,
-    @Default('') String? code,
-    @Default(CenterData()) CenterData center,
-  }) = _ClassroomData;
-
-  const ClassroomData._();
-
-  factory ClassroomData.fromJson(Map<String, dynamic> json) =>
-      _$ClassroomDataFromJson(json);
-}
-
-@freezed
-class StudentsResponseData with _$StudentsResponseData {
-  const factory StudentsResponseData({
-    @JsonKey(name: 'students') required List<StudentData> students,
-  }) = _StudentsResponseData;
-
-  factory StudentsResponseData.fromJson(Map<String, dynamic> json) =>
-      _$StudentsResponseDataFromJson(json);
-}
-
-@freezed
-class StudentResponseData with _$StudentResponseData {
-  const factory StudentResponseData({
-    @JsonKey(name: 'student') required StudentData student,
-  }) = _StudentResponseData;
-
-  factory StudentResponseData.fromJson(Map<String, dynamic> json) =>
-      _$StudentResponseDataFromJson(json);
+  factory StudentData.fromJson(Map<String, dynamic> json) => _$StudentDataFromJson(json);
 }

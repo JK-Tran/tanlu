@@ -19,6 +19,7 @@ abstract final class AppColors {
   static const Color progressLight = Color(0xFFFFEAEA);
 
   static const Color reward = Color(0xFFFFA502); // Vàng cam ấm
+  static const Color orange = Color(0xFFFFA500);
   static const Color rewardLight = Color(0xFFFFF6E5);
 
   // --- 2. Neutral Colors (Màu Nền 60% & Text 30%) ---

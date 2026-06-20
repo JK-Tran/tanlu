@@ -27,13 +27,7 @@ class LoginBody extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppColors.primary, AppColors.accent],
-          ),
-        ),
+        decoration: BoxDecoration(color: AppColors.white),
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(

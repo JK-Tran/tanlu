@@ -10,6 +10,7 @@ import 'package:tanlu_management/features/auth/presentation/login/pages/login_pa
 import 'package:tanlu_management/features/home/presentation/pages/home_page.dart';
 
 import 'package:tanlu_management/features/student/presentation/pages/student_page.dart';
+import 'package:tanlu_management/features/student/presentation/pages/student_detail/student_detail_page.dart';
 
 import 'package:tanlu_management/features/person/presentation/pages/person_page.dart';
 import 'package:tanlu_management/features/person/presentation/pages/settings_page.dart';
@@ -18,9 +19,9 @@ import 'package:tanlu_management/features/feed/pages/feed_page.dart';
 
 import 'package:tanlu_management/features/activity/presentation/pages/activity_page.dart';
 import 'package:tanlu_management/features/chat/presentation/pages/chat_page.dart';
-import 'package:tanlu_management/features/chat/presentation/pages/chat_detail_page.dart';
 import 'package:tanlu_management/features/chat/presentation/bloc/chat_bloc.dart';
-import 'package:tanlu_management/features/chat/domain/entity/conversation.dart';
+import 'package:tanlu_management/features/attendance/presentation/enums/attendance_tab.dart';
+import 'package:tanlu_management/features/attendance/presentation/pages/attendance_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
   debugLabel: 'root',
@@ -33,6 +34,7 @@ class AppRouter {
   static const String root = '/';
   static const String login = '/login';
   static const String student = '/student';
+  static const String studentDetail = '/student-detail';
   static const String report = '/report';
   static const String programs = '/programs';
   static const String progress = '/progress';
@@ -42,6 +44,7 @@ class AppRouter {
   static const String settings = '/settings';
   static const String overview = '/overview';
   static const String feed = '/feed';
+  static const String attendance = '/attendance';
 
   static GoRouter createRouter(AppBloc appBloc) {
     return GoRouter(
@@ -65,7 +68,7 @@ class AppRouter {
           },
           authenticated: (user) {
             FlutterNativeSplash.remove();
-            final isParent = user.role.code.toUpperCase() == 'PARENT';
+            final isParent = user.role == 'parent';
             if (isOnLogin || isOnRoot) {
               return isParent ? progress : overview;
             }
@@ -88,16 +91,22 @@ class AppRouter {
           builder: (context, state) => const LoginPage(),
         ),
 
+        // GoRoute(
+        //   path: '/chat-detail/:id',
+        //   name: 'chat-detail',
+        //   parentNavigatorKey: _rootNavigatorKey,
+        //   builder: (context, state) {
+        //     final id = state.pathParameters['id']!;
+        //     return ChatDetailPage(conversationId: id);
+        //   },
+        // ),
         GoRoute(
-          path: '/chat-detail',
-          name: 'chat-detail',
+          path: '/student-detail/:id',
+          name: 'student-detail',
           parentNavigatorKey: _rootNavigatorKey,
           builder: (context, state) {
-            final args = state.extra as Map<String, dynamic>;
-            return ChatDetailPage(
-              conversation: args['conversation'] as Conversation,
-              chatBloc: args['chatBloc'] as ChatBloc,
-            );
+            final id = state.pathParameters['id']!;
+            return StudentDetailPage(studentId: id);
           },
         ),
 
@@ -106,6 +115,15 @@ class AppRouter {
           name: 'settings',
           parentNavigatorKey: _rootNavigatorKey,
           builder: (context, state) => const SettingsPage(),
+        ),
+        GoRoute(
+          path: attendance,
+          name: 'attendance',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) {
+            final tab = AttendanceTab.fromQuery(state.uri.queryParameters['tab']);
+            return AttendancePage(initialTab: tab);
+          },
         ),
         // Shell: wraps all tabs inside HomePage (bottom nav)
         StatefulShellRoute.indexedStack(

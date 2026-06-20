@@ -9,7 +9,9 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:firebase_auth/firebase_auth.dart' as _i59;
+import 'package:firebase_messaging/firebase_messaging.dart' as _i892;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -18,12 +20,38 @@ import '../../features/app/data/repositories/app_repository_impl.dart' as _i111;
 import '../../features/app/data/sources/app_api_service.dart' as _i512;
 import '../../features/app/domain/repositories/app_repository.dart' as _i456;
 import '../../features/app/presentation/bloc/app_bloc.dart' as _i120;
-import '../../features/auth/data/mapper/center_data_mapper.dart' as _i443;
-import '../../features/auth/data/mapper/role_data_mapper.dart' as _i337;
+import '../../features/attendance/data/mapper/attendance_data_mapper.dart'
+    as _i532;
+import '../../features/attendance/data/mapper/attendance_session_data_mapper.dart'
+    as _i163;
+import '../../features/attendance/data/mapper/leave_request_data_mapper.dart'
+    as _i536;
+import '../../features/attendance/data/repositories/attendance_repository_impl.dart'
+    as _i719;
+import '../../features/attendance/data/sources/attendance_firebase_source.dart'
+    as _i209;
+import '../../features/attendance/domain/repositories/attendance_repository.dart'
+    as _i477;
+import '../../features/attendance/domain/usecases/get_daily_attendance_use_case.dart'
+    as _i742;
+import '../../features/attendance/domain/usecases/get_student_history_use_case.dart'
+    as _i661;
+import '../../features/attendance/domain/usecases/stream_leave_requests_use_case.dart'
+    as _i141;
+import '../../features/attendance/domain/usecases/submit_complete_check_out_use_case.dart'
+    as _i284;
+import '../../features/attendance/domain/usecases/submit_daily_attendance_use_case.dart'
+    as _i782;
+import '../../features/attendance/domain/usecases/submit_leave_decision_use_case.dart'
+    as _i448;
+import '../../features/attendance/domain/usecases/update_daily_attendance_use_case.dart'
+    as _i336;
+import '../../features/attendance/presentation/bloc/attendance_bloc.dart'
+    as _i700;
 import '../../features/auth/data/mapper/user_data_mapper.dart' as _i702;
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i153;
-import '../../features/auth/data/sources/auth_api_service.dart' as _i587;
+import '../../features/auth/data/sources/auth_firebase_source.dart' as _i412;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
 import '../../features/auth/domain/usecases/login_use_case.dart' as _i37;
 import '../../features/auth/domain/usecases/logout_use_case.dart' as _i711;
@@ -52,38 +80,40 @@ import '../../features/chat/domain/usecases/mark_messages_as_read_use_case.dart'
 import '../../features/chat/domain/usecases/send_message_use_case.dart'
     as _i500;
 import '../../features/chat/presentation/bloc/chat_bloc.dart' as _i65;
-import '../../features/student/data/mapper/classroom_data_mapper.dart' as _i317;
-import '../../features/student/data/mapper/development_assessment_data_mapper.dart'
-    as _i929;
-import '../../features/student/data/mapper/development_result_data_mapper.dart'
-    as _i43;
-import '../../features/student/data/mapper/parent_data_mapper.dart' as _i906;
-import '../../features/student/data/mapper/screening_result_data_mapper.dart'
-    as _i678;
-import '../../features/student/data/mapper/screening_test_data_mapper.dart'
-    as _i563;
+import '../../features/notification/data/mapper/device_token_data_mapper.dart'
+    as _i1002;
+import '../../features/notification/data/repositories/notification_repository_impl.dart'
+    as _i407;
+import '../../features/notification/data/services/push_notification_handler.dart'
+    as _i212;
+import '../../features/notification/data/sources/notification_firebase_source.dart'
+    as _i780;
+import '../../features/notification/domain/repositories/notification_repository.dart'
+    as _i630;
+import '../../features/notification/domain/usecases/register_device_token_use_case.dart'
+    as _i337;
+import '../../features/notification/domain/usecases/unregister_device_token_use_case.dart'
+    as _i946;
+import '../../features/overview/presentation/bloc/overview_bloc.dart' as _i447;
 import '../../features/student/data/mapper/student_data_mapper.dart' as _i67;
-import '../../features/student/data/mapper/student_parent_data_mapper.dart'
-    as _i842;
-import '../../features/student/data/mapper/student_teacher_data_mapper.dart'
-    as _i849;
-import '../../features/student/data/mapper/teacher_data_mapper.dart' as _i437;
 import '../../features/student/data/repositories/student_repository_impl.dart'
     as _i687;
-import '../../features/student/data/sources/student_api_service.dart' as _i374;
+import '../../features/student/data/sources/student_firebase_source.dart'
+    as _i489;
 import '../../features/student/domain/repositories/student_repository.dart'
     as _i215;
-import '../../features/student/domain/usecases/get_student_use_case.dart'
-    as _i696;
-import '../../features/student/domain/usecases/get_students_use_case.dart'
-    as _i386;
-import '../../features/student/domain/usecases/update_student_use_case.dart'
-    as _i778;
+import '../../features/student/domain/usecases/get_all_student_by_class_id.dart'
+    as _i151;
+import '../../features/student/domain/usecases/get_student_class_stats_use_case.dart'
+    as _i230;
 import '../../features/student/presentation/bloc/student_bloc.dart' as _i510;
 import '../../shared/helper/app_info.dart' as _i80;
 import '../../shared/helper/device_info.dart' as _i303;
 import '../../shared/network/api_client.dart' as _i757;
 import '../../shared/network/dio_client.dart' as _i833;
+import '../../shared/services/firebase/fcm_messaging.dart' as _i907;
+import '../../shared/services/firebase/local_notification_service.dart'
+    as _i809;
 import '../../shared/services/google_auth_service.dart' as _i175;
 import '../../shared/services/local_storage/app_preferences.dart' as _i531;
 import '../../shared/services/socket_io/socket.dart' as _i46;
@@ -104,19 +134,30 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
-    gh.factory<_i443.CenterDataMapper>(() => _i443.CenterDataMapper());
-    gh.factory<_i337.RoleDataMapper>(() => _i337.RoleDataMapper());
+    gh.factory<_i532.AttendanceDataMapper>(() => _i532.AttendanceDataMapper());
+    gh.factory<_i163.AttendanceSessionDataMapper>(
+      () => _i163.AttendanceSessionDataMapper(),
+    );
+    gh.factory<_i536.LeaveRequestDataMapper>(
+      () => _i536.LeaveRequestDataMapper(),
+    );
+    gh.factory<_i702.UserDataMapper>(() => _i702.UserDataMapper());
     gh.factory<_i182.ChatUserDataMapper>(() => _i182.ChatUserDataMapper());
     gh.factory<_i203.ContactDataMapper>(() => _i203.ContactDataMapper());
-    gh.factory<_i929.DevelopmentAssessmentDataMapper>(
-      () => _i929.DevelopmentAssessmentDataMapper(),
+    gh.factory<_i1002.DeviceTokenDataMapper>(
+      () => _i1002.DeviceTokenDataMapper(),
     );
-    gh.factory<_i563.ScreeningTestDataMapper>(
-      () => _i563.ScreeningTestDataMapper(),
-    );
+    gh.factory<_i67.StudentDataMapper>(() => _i67.StudentDataMapper());
     gh.lazySingleton<_i59.FirebaseAuth>(() => registerModule.firebaseAuth);
+    gh.lazySingleton<_i974.FirebaseFirestore>(() => registerModule.firestore);
+    gh.lazySingleton<_i892.FirebaseMessaging>(
+      () => registerModule.firebaseMessaging,
+    );
     gh.lazySingleton<_i303.DeviceInfo>(() => registerModule.deviceInfo());
     gh.lazySingleton<_i80.AppInfo>(() => _i80.AppInfo());
+    gh.lazySingleton<_i809.LocalNotificationService>(
+      () => _i809.LocalNotificationService(),
+    );
     gh.lazySingleton<_i964.SharedPrefsHelper>(
       () => _i964.SharedPrefsHelper(gh<_i460.SharedPreferences>()),
     );
@@ -141,14 +182,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i456.AppRepository>(
       () => _i111.AppRepositoryImpl(gh<_i531.AppPreferences>()),
     );
-    gh.factory<_i702.UserDataMapper>(
-      () => _i702.UserDataMapper(
-        centerDataMapper: gh<_i443.CenterDataMapper>(),
-        roleDataMapper: gh<_i337.RoleDataMapper>(),
-      ),
+    gh.lazySingleton<_i209.AttendanceFirebaseSource>(
+      () => _i209.AttendanceFirebaseSource(gh<_i974.FirebaseFirestore>()),
     );
-    gh.factory<_i317.ClassroomDataMapper>(
-      () => _i317.ClassroomDataMapper(gh<_i443.CenterDataMapper>()),
+    gh.lazySingleton<_i780.NotificationFirebaseSource>(
+      () => _i780.NotificationFirebaseSource(gh<_i974.FirebaseFirestore>()),
+    );
+    gh.lazySingleton<_i489.StudentFirebaseSource>(
+      () => _i489.StudentFirebaseSource(gh<_i974.FirebaseFirestore>()),
+    );
+    gh.lazySingleton<_i630.NotificationRepository>(
+      () => _i407.NotificationRepositoryImpl(
+        gh<_i531.AppPreferences>(),
+        gh<_i780.NotificationFirebaseSource>(),
+        gh<_i1002.DeviceTokenDataMapper>(),
+      ),
     );
     gh.lazySingleton<_i833.DioClient>(
       () => registerModule.dioClient(gh<_i964.SharedPrefsHelper>()),
@@ -156,41 +204,94 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i175.GoogleAuthService>(
       () => _i175.GoogleAuthService(gh<_i59.FirebaseAuth>()),
     );
-    gh.factory<_i43.DevelopmentResultDataMapper>(
-      () => _i43.DevelopmentResultDataMapper(
-        gh<_i929.DevelopmentAssessmentDataMapper>(),
-        gh<_i702.UserDataMapper>(),
-      ),
-    );
     gh.lazySingleton<_i757.ApiClient>(
       () => _i757.ApiClient(gh<_i833.DioClient>()),
     );
-    gh.factory<_i906.ParentDataMapper>(
-      () => _i906.ParentDataMapper(gh<_i702.UserDataMapper>()),
-    );
-    gh.factory<_i437.TeacherDataMapper>(
-      () => _i437.TeacherDataMapper(gh<_i702.UserDataMapper>()),
-    );
-    gh.factory<_i678.ScreeningResultDataMapper>(
-      () => _i678.ScreeningResultDataMapper(
-        gh<_i563.ScreeningTestDataMapper>(),
-        gh<_i702.UserDataMapper>(),
+    gh.lazySingleton<_i215.StudentRepository>(
+      () => _i687.StudentRepositoryImpl(
+        gh<_i489.StudentFirebaseSource>(),
+        gh<_i67.StudentDataMapper>(),
       ),
     );
-    gh.factory<_i842.StudentParentDataMapper>(
-      () => _i842.StudentParentDataMapper(gh<_i906.ParentDataMapper>()),
+    gh.lazySingleton<_i212.PushNotificationHandler>(
+      () => _i212.PushNotificationHandler(gh<_i809.LocalNotificationService>()),
     );
-    gh.lazySingleton<_i587.AuthApiService>(
-      () => _i587.AuthApiService(gh<_i757.ApiClient>()),
+    gh.lazySingleton<_i477.AttendanceRepository>(
+      () => _i719.AttendanceRepositoryImpl(
+        gh<_i209.AttendanceFirebaseSource>(),
+        gh<_i215.StudentRepository>(),
+        gh<_i532.AttendanceDataMapper>(),
+        gh<_i163.AttendanceSessionDataMapper>(),
+        gh<_i536.LeaveRequestDataMapper>(),
+      ),
+    );
+    gh.factory<_i151.GetAllStudentByClassIdUseCase>(
+      () => _i151.GetAllStudentByClassIdUseCase(gh<_i215.StudentRepository>()),
+    );
+    gh.lazySingleton<_i412.AuthFirebaseSource>(
+      () => _i412.AuthFirebaseSource(
+        gh<_i59.FirebaseAuth>(),
+        gh<_i974.FirebaseFirestore>(),
+        gh<_i175.GoogleAuthService>(),
+      ),
+    );
+    gh.factory<_i337.RegisterDeviceTokenUseCase>(
+      () =>
+          _i337.RegisterDeviceTokenUseCase(gh<_i630.NotificationRepository>()),
+    );
+    gh.factory<_i946.UnregisterDeviceTokenUseCase>(
+      () => _i946.UnregisterDeviceTokenUseCase(
+        gh<_i630.NotificationRepository>(),
+      ),
     );
     gh.lazySingleton<_i958.ChatApiService>(
       () => _i958.ChatApiService(gh<_i757.ApiClient>()),
     );
-    gh.lazySingleton<_i374.StudentApiService>(
-      () => _i374.StudentApiService(gh<_i757.ApiClient>()),
+    gh.factory<_i230.GetStudentClassStatsUseCase>(
+      () => _i230.GetStudentClassStatsUseCase(gh<_i215.StudentRepository>()),
     );
-    gh.factory<_i849.StudentTeacherDataMapper>(
-      () => _i849.StudentTeacherDataMapper(gh<_i437.TeacherDataMapper>()),
+    gh.factory<_i510.StudentBloc>(
+      () => _i510.StudentBloc(
+        gh<_i151.GetAllStudentByClassIdUseCase>(),
+        gh<_i230.GetStudentClassStatsUseCase>(),
+      ),
+    );
+    gh.factory<_i742.GetDailyAttendanceUseCase>(
+      () => _i742.GetDailyAttendanceUseCase(gh<_i477.AttendanceRepository>()),
+    );
+    gh.factory<_i661.GetStudentHistoryUseCase>(
+      () => _i661.GetStudentHistoryUseCase(gh<_i477.AttendanceRepository>()),
+    );
+    gh.factory<_i141.StreamLeaveRequestsUseCase>(
+      () => _i141.StreamLeaveRequestsUseCase(gh<_i477.AttendanceRepository>()),
+    );
+    gh.factory<_i284.SubmitCompleteCheckOutUseCase>(
+      () =>
+          _i284.SubmitCompleteCheckOutUseCase(gh<_i477.AttendanceRepository>()),
+    );
+    gh.factory<_i782.SubmitDailyAttendanceUseCase>(
+      () =>
+          _i782.SubmitDailyAttendanceUseCase(gh<_i477.AttendanceRepository>()),
+    );
+    gh.factory<_i448.SubmitLeaveDecisionUseCase>(
+      () => _i448.SubmitLeaveDecisionUseCase(gh<_i477.AttendanceRepository>()),
+    );
+    gh.factory<_i336.UpdateDailyAttendanceUseCase>(
+      () =>
+          _i336.UpdateDailyAttendanceUseCase(gh<_i477.AttendanceRepository>()),
+    );
+    gh.lazySingleton<_i907.FcmMessaging>(
+      () => _i907.FcmMessaging(
+        gh<_i892.FirebaseMessaging>(),
+        gh<_i212.PushNotificationHandler>(),
+      ),
+    );
+    gh.lazySingleton<_i787.AuthRepository>(
+      () => _i153.AuthRepositoryImpl(
+        gh<_i531.AppPreferences>(),
+        gh<_i702.UserDataMapper>(),
+        gh<_i412.AuthFirebaseSource>(),
+      ),
     );
     gh.lazySingleton<_i420.ChatRepository>(
       () => _i504.ChatRepositoryImpl(
@@ -218,26 +319,38 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i500.SendMessageUseCase>(
       () => _i500.SendMessageUseCase(gh<_i420.ChatRepository>()),
     );
-    gh.lazySingleton<_i787.AuthRepository>(
-      () => _i153.AuthRepositoryImpl(
-        gh<_i587.AuthApiService>(),
+    gh.factory<_i37.LoginUseCase>(
+      () => _i37.LoginUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i711.LogoutUseCase>(
+      () => _i711.LogoutUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i546.SaveCurrentUserUseCase>(
+      () => _i546.SaveCurrentUserUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i700.AttendanceBloc>(
+      () => _i700.AttendanceBloc(
+        gh<_i742.GetDailyAttendanceUseCase>(),
+        gh<_i782.SubmitDailyAttendanceUseCase>(),
+        gh<_i336.UpdateDailyAttendanceUseCase>(),
+        gh<_i284.SubmitCompleteCheckOutUseCase>(),
+        gh<_i448.SubmitLeaveDecisionUseCase>(),
+        gh<_i141.StreamLeaveRequestsUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i120.AppBloc>(
+      () => _i120.AppBloc(
+        gh<_i787.AuthRepository>(),
         gh<_i531.AppPreferences>(),
-        gh<_i702.UserDataMapper>(),
+        gh<_i907.FcmMessaging>(),
+        gh<_i337.RegisterDeviceTokenUseCase>(),
+        gh<_i946.UnregisterDeviceTokenUseCase>(),
       ),
     );
-    gh.factory<_i67.StudentDataMapper>(
-      () => _i67.StudentDataMapper(
-        gh<_i317.ClassroomDataMapper>(),
-        gh<_i842.StudentParentDataMapper>(),
-        gh<_i849.StudentTeacherDataMapper>(),
-        gh<_i678.ScreeningResultDataMapper>(),
-        gh<_i43.DevelopmentResultDataMapper>(),
-      ),
-    );
-    gh.lazySingleton<_i215.StudentRepository>(
-      () => _i687.StudentRepositoryImpl(
-        gh<_i374.StudentApiService>(),
-        gh<_i67.StudentDataMapper>(),
+    gh.factory<_i447.OverviewBloc>(
+      () => _i447.OverviewBloc(
+        gh<_i141.StreamLeaveRequestsUseCase>(),
+        gh<_i151.GetAllStudentByClassIdUseCase>(),
       ),
     );
     gh.lazySingleton<_i65.ChatBloc>(
@@ -249,39 +362,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i441.CreateConversationUseCase>(),
         gh<_i29.MarkMessagesAsReadUseCase>(),
         gh<_i46.SocketService>(),
-        gh<_i1071.MessageDataMapper>(),
-      ),
-    );
-    gh.lazySingleton<_i120.AppBloc>(
-      () => _i120.AppBloc(
-        gh<_i787.AuthRepository>(),
-        gh<_i531.AppPreferences>(),
-        gh<_i46.SocketService>(),
-      ),
-    );
-    gh.factory<_i37.LoginUseCase>(
-      () => _i37.LoginUseCase(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i711.LogoutUseCase>(
-      () => _i711.LogoutUseCase(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i546.SaveCurrentUserUseCase>(
-      () => _i546.SaveCurrentUserUseCase(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i386.GetStudentsUseCase>(
-      () => _i386.GetStudentsUseCase(gh<_i215.StudentRepository>()),
-    );
-    gh.factory<_i696.GetStudentUseCase>(
-      () => _i696.GetStudentUseCase(gh<_i215.StudentRepository>()),
-    );
-    gh.factory<_i778.UpdateStudentUseCase>(
-      () => _i778.UpdateStudentUseCase(gh<_i215.StudentRepository>()),
-    );
-    gh.factory<_i510.StudentBloc>(
-      () => _i510.StudentBloc(
-        gh<_i386.GetStudentsUseCase>(),
-        gh<_i696.GetStudentUseCase>(),
-        gh<_i778.UpdateStudentUseCase>(),
       ),
     );
     gh.factory<_i204.LoginBloc>(() => _i204.LoginBloc(gh<_i37.LoginUseCase>()));

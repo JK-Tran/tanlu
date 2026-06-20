@@ -1,11 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tanlu_management/core/router/app_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
+import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/features/overview/presentation/bloc/overview_bloc.dart';
+import 'package:tanlu_management/shared/utils/date_time_utils.dart';
 
 class OverviewRequestCards extends StatelessWidget {
   const OverviewRequestCards({super.key});
+
+  String _formatLeaveDate(DateTime? date) {
+    if (date == null) return 'Hôm nay';
+    final now = DateTime.now();
+    if (date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day) {
+      return 'Hôm nay';
+    }
+    return DateTimeUtils.formatDateHeader(date);
+  }
+
+  String _studentDisplayName(LeaveRequest request) {
+    return request.studentName.isNotEmpty ? request.studentName : 'Không rõ';
+  }
+
+  String _studentNickname(LeaveRequest request) {
+    final name = request.studentName;
+    return name.isNotEmpty ? name : '?';
+  }
+
+  /// Ưu tiên avatar trên doc `leave_requests`, sau đó `students.avatarUrl`.
+  String? _resolveStudentAvatarUrl(LeaveRequest request, OverviewState state) {
+    if (request.studentAvatarUrl.isNotEmpty) {
+      return request.studentAvatarUrl;
+    }
+    final fromStudent = state.studentAvatarUrls[request.studentId];
+    if (fromStudent != null && fromStudent.isNotEmpty) {
+      return fromStudent;
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +54,21 @@ class OverviewRequestCards extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(child: _buildLeaveRequestCard()),
-            SizedBox(width: 12.w),
-            Expanded(child: _buildParentRequestCard()),
+            Expanded(
+              child: BlocBuilder<OverviewBloc, OverviewState>(
+                buildWhen: (previous, current) =>
+                    previous.pendingLeaveRequests !=
+                        current.pendingLeaveRequests ||
+                    previous.isLoadingLeaveRequests !=
+                        current.isLoadingLeaveRequests ||
+                    previous.studentAvatarUrls != current.studentAvatarUrls,
+                builder: (context, state) {
+                  return _buildLeaveRequestCard(context, state);
+                },
+              ),
+            ),
+            SizedBox(width: 8.w),
+            Expanded(child: _buildParentRequestCard(context)),
           ],
         ),
       ),
@@ -32,6 +83,7 @@ class OverviewRequestCards extends StatelessWidget {
     required String title,
     required String subtitle,
     required Widget contentArea,
+    VoidCallback? onViewDetails,
   }) {
     return Container(
       decoration: BoxDecoration(
@@ -59,13 +111,13 @@ class OverviewRequestCards extends StatelessWidget {
                     Container(
                       width: 32.w,
                       height: 32.w,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
                       ),
                       alignment: Alignment.center,
                       child: Transform.scale(
-                        scale: 3,
+                        scale: 4,
                         child: Image.asset(
                           iconPath,
                           width: 20.w,
@@ -74,7 +126,7 @@ class OverviewRequestCards extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 6.w),
+                    SizedBox(width: 4.w),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,8 +142,8 @@ class OverviewRequestCards extends StatelessWidget {
                           SizedBox(height: 2.h),
                           AppText.b2(
                             subtitle,
-                            color: AppColors.grayDark80,
-                            fontSize: 10.sp,
+                            color: AppColors.grayMedium,
+                            fontSize: 12.sp,
                           ),
                         ],
                       ),
@@ -125,7 +177,7 @@ class OverviewRequestCards extends StatelessWidget {
               color: lightBgColor,
               borderRadius: BorderRadius.circular(8.r),
               child: InkWell(
-                onTap: () {},
+                onTap: onViewDetails,
                 borderRadius: BorderRadius.circular(8.r),
                 splashColor: primaryColor.withValues(alpha: 0.2),
                 highlightColor: primaryColor.withValues(alpha: 0.1),
@@ -159,20 +211,45 @@ class OverviewRequestCards extends StatelessWidget {
     );
   }
 
-  Widget _buildContentArea(
-    int count,
-    Color primaryColor, {
-    String? singleName,
-    String? singleSub,
+  Widget _buildLeaveContentArea(
+    BuildContext context, {
+    required bool isLoading,
+    required List<LeaveRequest> requests,
+    required OverviewState overviewState,
+    required Color primaryColor,
   }) {
-    if (count == 1) {
+    if (isLoading) {
+      return Center(
+        child: SizedBox(
+          width: 20.w,
+          height: 20.w,
+          child: CircularProgressIndicator(strokeWidth: 2, color: primaryColor),
+        ),
+      );
+    }
+
+    if (requests.isEmpty) {
+      return Center(
+        child: AppText.b2(
+          'Không có yêu cầu',
+          color: AppColors.grayMedium,
+          fontSize: 12.sp,
+        ),
+      );
+    }
+
+    if (requests.length == 1) {
+      final request = requests.first;
+      final displayName = _studentDisplayName(request);
+      final dateLabel = _formatLeaveDate(request.date);
+
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 20.r,
-            backgroundColor: Colors.white,
-            child: Icon(Icons.face, size: 24.w, color: Colors.blue.shade300),
+          AttendanceAvatar(
+            nickname: _studentNickname(request),
+            imageUrl: _resolveStudentAvatarUrl(request, overviewState),
+            size: 40,
           ),
           SizedBox(width: 8.w),
           Expanded(
@@ -181,7 +258,7 @@ class OverviewRequestCards extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AppText.b2(
-                  singleName ?? 'Minh Anh',
+                  displayName,
                   color: const Color(0xFF1F2937),
                   fontWeight: FontWeight.bold,
                   fontSize: 13.sp,
@@ -193,13 +270,12 @@ class OverviewRequestCards extends StatelessWidget {
                   text: TextSpan(
                     style: TextStyle(
                       fontSize: 11.sp,
-                      fontFamily: 'Inter',
                       color: const Color(0xFF6B7280),
                     ),
                     children: [
                       const TextSpan(text: 'Nghỉ: '),
                       TextSpan(
-                        text: singleSub ?? 'Hôm nay',
+                        text: dateLabel,
                         style: const TextStyle(color: Color(0xFF4B5563)),
                       ),
                     ],
@@ -231,33 +307,26 @@ class OverviewRequestCards extends StatelessWidget {
       );
     }
 
-    // Multiple users layout
-    int displayCount = count > 3 ? 3 : count;
-    int extraCount = count > 3 ? count - 3 : 0;
+    final count = requests.length;
+    final displayCount = count > 3 ? 3 : count;
+    final extraCount = count > 3 ? count - 3 : 0;
 
-    List<Widget> avatars = [];
-    List<IconData> icons = [Icons.face, Icons.face_4, Icons.face_6];
-    List<Color> colors = [
-      Colors.blue.shade300,
-      Colors.pink.shade300,
-      Colors.green.shade300,
-    ];
-
-    for (int i = 0; i < displayCount; i++) {
+    final avatars = <Widget>[];
+    for (var i = 0; i < displayCount; i++) {
       avatars.add(
         Align(
           widthFactor: (i == displayCount - 1 && extraCount == 0) ? 1.0 : 0.7,
           alignment: Alignment.centerLeft,
           child: Container(
-            width: 32.r,
-            height: 32.r,
             decoration: BoxDecoration(
-              color: colors[i % 3].withValues(alpha: 0.1),
               shape: BoxShape.circle,
               border: Border.all(color: Colors.white, width: 2),
             ),
-            alignment: Alignment.center,
-            child: Icon(icons[i % 3], size: 16.w, color: colors[i % 3]),
+            child: AttendanceAvatar(
+              nickname: _studentNickname(requests[i]),
+              imageUrl: _resolveStudentAvatarUrl(requests[i], overviewState),
+              size: 32,
+            ),
           ),
         ),
       );
@@ -295,32 +364,44 @@ class OverviewRequestCards extends StatelessWidget {
     );
   }
 
-  Widget _buildLeaveRequestCard() {
+  Widget _buildLeaveRequestCard(BuildContext context, OverviewState state) {
+    const primaryColor = Color(0xFFF94A70);
+    final pending = state.pendingLeaveRequests;
+    final count = pending.length;
+
     return _buildUnifiedCard(
-      primaryColor: const Color(0xFFF94A70),
-      lightBgColor: const Color(0xFFF94A70).withValues(alpha: 0.1),
+      primaryColor: primaryColor,
+      lightBgColor: primaryColor.withValues(alpha: 0.1),
       iconPath: 'assets/images/overview/img-calender.png',
-      count: 3,
-      title: 'Đơn xin nghỉ',
+      count: count,
+      title: 'Yêu cầu xin nghỉ',
       subtitle: 'Chờ xác nhận',
-      contentArea: _buildContentArea(
-        3,
-        const Color(0xFFF94A70),
-        singleName: 'Minh Anh',
-        singleSub: 'Hôm nay',
+      onViewDetails: () => context.push('${AppRouter.attendance}?tab=leave'),
+      contentArea: _buildLeaveContentArea(
+        context,
+        isLoading: state.isLoadingLeaveRequests,
+        requests: pending,
+        overviewState: state,
+        primaryColor: primaryColor,
       ),
     );
   }
 
-  Widget _buildParentRequestCard() {
+  Widget _buildParentRequestCard(BuildContext context) {
     return _buildUnifiedCard(
       primaryColor: const Color(0xFFF28C28),
       lightBgColor: const Color(0xFFF28C28).withValues(alpha: 0.1),
       iconPath: 'assets/images/overview/img-chat-nontification.png',
-      count: 4,
+      count: 0,
       title: 'Yêu cầu phụ huynh',
       subtitle: 'Chờ phản hồi',
-      contentArea: _buildContentArea(4, const Color(0xFFF28C28)),
+      contentArea: Center(
+        child: AppText.b2(
+          'Sắp ra mắt',
+          color: AppColors.grayMedium,
+          fontSize: 12.sp,
+        ),
+      ),
     );
   }
 }

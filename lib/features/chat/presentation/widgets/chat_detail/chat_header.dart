@@ -21,7 +21,7 @@ class ChatDetailHeader extends StatelessWidget {
     final chatState = context.watch<ChatBloc>().state;
     final onlineUserIds = chatState.onlineUserIds;
 
-    final otherParticipant = conversation.participants.firstWhereOrNull((p) => p.userId != currentUser?.id);
+    final otherParticipant = conversation.participants.firstWhereOrNull((p) => p.userId.toString() != currentUser?.id);
     String name = conversation.name;
     if (name.isEmpty) {
       name = otherParticipant?.user?.fullName ?? 'Khách';

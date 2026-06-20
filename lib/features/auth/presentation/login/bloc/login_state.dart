@@ -22,8 +22,8 @@ class LoginState with _$LoginState {
 
   static LoginState get debugInit {
     return const LoginState(
-      username: 'teacher.lan@anhduong.edu.vn',
-      password: 'Teacher@123456',
+      username: 'teacher@tanlu.com',
+      password: '123456',
       isLoginButtonEnabled: true,
     );
   }

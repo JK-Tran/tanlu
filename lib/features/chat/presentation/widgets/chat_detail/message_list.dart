@@ -30,7 +30,7 @@ class MessageList extends StatelessWidget {
       itemBuilder: (context, index) {
         final message = messages[index];
         final currentUser = context.read<AppBloc>().currentUser;
-        final isMe = message.senderId == currentUser?.id;
+        final isMe = message.senderId.toString() == currentUser?.id;
 
         // Show date separator "Hôm nay" logic (simplified)
         final isLast = index == messages.length - 1;
