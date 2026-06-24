@@ -73,6 +73,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
     Emitter<AttendanceState> emit,
   ) async {
     await runBlocCatching(
+      handleLoading: false,
       action: () async {
         emit(state.copyWith(isLoading: true, onPageError: ''));
 

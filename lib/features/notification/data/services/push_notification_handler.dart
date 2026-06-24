@@ -81,7 +81,7 @@ class PushNotificationHandler {
         senderAvatarUrl: data['senderAvatarUrl'] as String?,
         payload: PushNavigationPayload.fromDisplay(
           type: type,
-          postId: data['postId'] as String?,
+          feedId: data['feedId'] as String?,
         ).encode(),
         notificationId: message.hashCode,
       ),

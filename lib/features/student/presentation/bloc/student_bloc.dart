@@ -67,7 +67,12 @@ class StudentBloc extends BaseBloc<StudentEvent, StudentState> {
     emit(
       state.copyWith(genderFilter: StudentGenderFilter.fromIndex(event.index)),
     );
-    await _loadStudents(emit, classId: classId, withStats: false);
+    await _loadStudents(
+      emit,
+      classId: classId,
+      withStats: false,
+      clearList: false,
+    );
   }
 
   Future<void> _onSearchStudents(
@@ -78,7 +83,13 @@ class StudentBloc extends BaseBloc<StudentEvent, StudentState> {
     if (classId == null || classId.isEmpty) return;
 
     emit(state.copyWith(searchKeyword: event.query.trim()));
-    await _loadStudents(emit, classId: classId, withStats: false);
+    await _loadStudents(
+      emit,
+      classId: classId,
+      withStats: false,
+      showLoading: false,
+      clearList: false,
+    );
   }
 
   Future<void> _loadStudents(
@@ -86,16 +97,23 @@ class StudentBloc extends BaseBloc<StudentEvent, StudentState> {
     required String classId,
     required bool withStats,
     bool showLoading = true,
+    bool clearList = true,
   }) async {
     await runBlocCatching(
       action: () async {
         emit(
-          state.copyWith(
-            isLoading: showLoading,
-            onPageError: '',
-            students: [],
-            classId: classId,
-          ),
+          clearList
+              ? state.copyWith(
+                  isLoading: showLoading,
+                  onPageError: '',
+                  students: const [],
+                  classId: classId,
+                )
+              : state.copyWith(
+                  isLoading: showLoading,
+                  onPageError: '',
+                  classId: classId,
+                ),
         );
 
         if (withStats) {
@@ -123,12 +141,7 @@ class StudentBloc extends BaseBloc<StudentEvent, StudentState> {
           _listInput(classId),
         );
 
-        emit(
-          state.copyWith(
-            isLoading: false,
-            students: listOutput.students,
-          ),
-        );
+        emit(state.copyWith(isLoading: false, students: listOutput.students));
       },
       doOnError: (e) {
         emit(state.copyWith(isLoading: false, onPageError: e.toString()));
@@ -148,6 +161,7 @@ class StudentBloc extends BaseBloc<StudentEvent, StudentState> {
       classId: classId,
       withStats: true,
       showLoading: false,
+      clearList: false,
     );
   }
 }

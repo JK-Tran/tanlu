@@ -21,9 +21,20 @@ class StudentRepositoryImpl implements StudentRepository {
     final data = await _firebaseSource.getStudentsByClassId(
       classId: classId,
       gender: gender,
-      searchKeyword: searchKeyword,
     );
-    return _studentDataMapper.mapToListEntity(data);
+    final students = _studentDataMapper.mapToListEntity(data);
+
+    final keyword = searchKeyword?.trim();
+    if (keyword == null || keyword.isEmpty) return students;
+
+    final q = keyword.toLowerCase();
+    return students
+        .where(
+          (s) =>
+              s.fullName.toLowerCase().contains(q) ||
+              s.nickname.toLowerCase().contains(q),
+        )
+        .toList();
   }
 
   @override

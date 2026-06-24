@@ -325,6 +325,14 @@ mixin _$OverviewState {
   bool get isLoadingLeaveRequests => throw _privateConstructorUsedError;
   Map<String, String> get studentAvatarUrls =>
       throw _privateConstructorUsedError;
+  bool get isLoadingAttendance => throw _privateConstructorUsedError;
+  bool get isMorningCheckInCompleted => throw _privateConstructorUsedError;
+  int get attendanceTotal => throw _privateConstructorUsedError;
+  int get attendancePresentCount => throw _privateConstructorUsedError;
+  int get attendanceAbsentCount => throw _privateConstructorUsedError;
+  int get attendanceExcusedCount => throw _privateConstructorUsedError;
+  List<OverviewMarkedStudent> get markedAttendanceStudents =>
+      throw _privateConstructorUsedError;
   String? get classId => throw _privateConstructorUsedError;
 
   /// Create a copy of OverviewState
@@ -345,6 +353,13 @@ abstract class $OverviewStateCopyWith<$Res> {
     List<LeaveRequest> pendingLeaveRequests,
     bool isLoadingLeaveRequests,
     Map<String, String> studentAvatarUrls,
+    bool isLoadingAttendance,
+    bool isMorningCheckInCompleted,
+    int attendanceTotal,
+    int attendancePresentCount,
+    int attendanceAbsentCount,
+    int attendanceExcusedCount,
+    List<OverviewMarkedStudent> markedAttendanceStudents,
     String? classId,
   });
 }
@@ -367,6 +382,13 @@ class _$OverviewStateCopyWithImpl<$Res, $Val extends OverviewState>
     Object? pendingLeaveRequests = null,
     Object? isLoadingLeaveRequests = null,
     Object? studentAvatarUrls = null,
+    Object? isLoadingAttendance = null,
+    Object? isMorningCheckInCompleted = null,
+    Object? attendanceTotal = null,
+    Object? attendancePresentCount = null,
+    Object? attendanceAbsentCount = null,
+    Object? attendanceExcusedCount = null,
+    Object? markedAttendanceStudents = null,
     Object? classId = freezed,
   }) {
     return _then(
@@ -383,6 +405,34 @@ class _$OverviewStateCopyWithImpl<$Res, $Val extends OverviewState>
                 ? _value.studentAvatarUrls
                 : studentAvatarUrls // ignore: cast_nullable_to_non_nullable
                       as Map<String, String>,
+            isLoadingAttendance: null == isLoadingAttendance
+                ? _value.isLoadingAttendance
+                : isLoadingAttendance // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isMorningCheckInCompleted: null == isMorningCheckInCompleted
+                ? _value.isMorningCheckInCompleted
+                : isMorningCheckInCompleted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            attendanceTotal: null == attendanceTotal
+                ? _value.attendanceTotal
+                : attendanceTotal // ignore: cast_nullable_to_non_nullable
+                      as int,
+            attendancePresentCount: null == attendancePresentCount
+                ? _value.attendancePresentCount
+                : attendancePresentCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            attendanceAbsentCount: null == attendanceAbsentCount
+                ? _value.attendanceAbsentCount
+                : attendanceAbsentCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            attendanceExcusedCount: null == attendanceExcusedCount
+                ? _value.attendanceExcusedCount
+                : attendanceExcusedCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            markedAttendanceStudents: null == markedAttendanceStudents
+                ? _value.markedAttendanceStudents
+                : markedAttendanceStudents // ignore: cast_nullable_to_non_nullable
+                      as List<OverviewMarkedStudent>,
             classId: freezed == classId
                 ? _value.classId
                 : classId // ignore: cast_nullable_to_non_nullable
@@ -406,6 +456,13 @@ abstract class _$$OverviewStateImplCopyWith<$Res>
     List<LeaveRequest> pendingLeaveRequests,
     bool isLoadingLeaveRequests,
     Map<String, String> studentAvatarUrls,
+    bool isLoadingAttendance,
+    bool isMorningCheckInCompleted,
+    int attendanceTotal,
+    int attendancePresentCount,
+    int attendanceAbsentCount,
+    int attendanceExcusedCount,
+    List<OverviewMarkedStudent> markedAttendanceStudents,
     String? classId,
   });
 }
@@ -427,6 +484,13 @@ class __$$OverviewStateImplCopyWithImpl<$Res>
     Object? pendingLeaveRequests = null,
     Object? isLoadingLeaveRequests = null,
     Object? studentAvatarUrls = null,
+    Object? isLoadingAttendance = null,
+    Object? isMorningCheckInCompleted = null,
+    Object? attendanceTotal = null,
+    Object? attendancePresentCount = null,
+    Object? attendanceAbsentCount = null,
+    Object? attendanceExcusedCount = null,
+    Object? markedAttendanceStudents = null,
     Object? classId = freezed,
   }) {
     return _then(
@@ -443,6 +507,34 @@ class __$$OverviewStateImplCopyWithImpl<$Res>
             ? _value._studentAvatarUrls
             : studentAvatarUrls // ignore: cast_nullable_to_non_nullable
                   as Map<String, String>,
+        isLoadingAttendance: null == isLoadingAttendance
+            ? _value.isLoadingAttendance
+            : isLoadingAttendance // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isMorningCheckInCompleted: null == isMorningCheckInCompleted
+            ? _value.isMorningCheckInCompleted
+            : isMorningCheckInCompleted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        attendanceTotal: null == attendanceTotal
+            ? _value.attendanceTotal
+            : attendanceTotal // ignore: cast_nullable_to_non_nullable
+                  as int,
+        attendancePresentCount: null == attendancePresentCount
+            ? _value.attendancePresentCount
+            : attendancePresentCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        attendanceAbsentCount: null == attendanceAbsentCount
+            ? _value.attendanceAbsentCount
+            : attendanceAbsentCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        attendanceExcusedCount: null == attendanceExcusedCount
+            ? _value.attendanceExcusedCount
+            : attendanceExcusedCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        markedAttendanceStudents: null == markedAttendanceStudents
+            ? _value._markedAttendanceStudents
+            : markedAttendanceStudents // ignore: cast_nullable_to_non_nullable
+                  as List<OverviewMarkedStudent>,
         classId: freezed == classId
             ? _value.classId
             : classId // ignore: cast_nullable_to_non_nullable
@@ -459,9 +551,17 @@ class _$OverviewStateImpl implements _OverviewState {
     final List<LeaveRequest> pendingLeaveRequests = const [],
     this.isLoadingLeaveRequests = true,
     final Map<String, String> studentAvatarUrls = const {},
+    this.isLoadingAttendance = true,
+    this.isMorningCheckInCompleted = false,
+    this.attendanceTotal = 0,
+    this.attendancePresentCount = 0,
+    this.attendanceAbsentCount = 0,
+    this.attendanceExcusedCount = 0,
+    final List<OverviewMarkedStudent> markedAttendanceStudents = const [],
     this.classId,
   }) : _pendingLeaveRequests = pendingLeaveRequests,
-       _studentAvatarUrls = studentAvatarUrls;
+       _studentAvatarUrls = studentAvatarUrls,
+       _markedAttendanceStudents = markedAttendanceStudents;
 
   final List<LeaveRequest> _pendingLeaveRequests;
   @override
@@ -487,11 +587,39 @@ class _$OverviewStateImpl implements _OverviewState {
   }
 
   @override
+  @JsonKey()
+  final bool isLoadingAttendance;
+  @override
+  @JsonKey()
+  final bool isMorningCheckInCompleted;
+  @override
+  @JsonKey()
+  final int attendanceTotal;
+  @override
+  @JsonKey()
+  final int attendancePresentCount;
+  @override
+  @JsonKey()
+  final int attendanceAbsentCount;
+  @override
+  @JsonKey()
+  final int attendanceExcusedCount;
+  final List<OverviewMarkedStudent> _markedAttendanceStudents;
+  @override
+  @JsonKey()
+  List<OverviewMarkedStudent> get markedAttendanceStudents {
+    if (_markedAttendanceStudents is EqualUnmodifiableListView)
+      return _markedAttendanceStudents;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_markedAttendanceStudents);
+  }
+
+  @override
   final String? classId;
 
   @override
   String toString() {
-    return 'OverviewState(pendingLeaveRequests: $pendingLeaveRequests, isLoadingLeaveRequests: $isLoadingLeaveRequests, studentAvatarUrls: $studentAvatarUrls, classId: $classId)';
+    return 'OverviewState(pendingLeaveRequests: $pendingLeaveRequests, isLoadingLeaveRequests: $isLoadingLeaveRequests, studentAvatarUrls: $studentAvatarUrls, isLoadingAttendance: $isLoadingAttendance, isMorningCheckInCompleted: $isMorningCheckInCompleted, attendanceTotal: $attendanceTotal, attendancePresentCount: $attendancePresentCount, attendanceAbsentCount: $attendanceAbsentCount, attendanceExcusedCount: $attendanceExcusedCount, markedAttendanceStudents: $markedAttendanceStudents, classId: $classId)';
   }
 
   @override
@@ -509,6 +637,25 @@ class _$OverviewStateImpl implements _OverviewState {
               other._studentAvatarUrls,
               _studentAvatarUrls,
             ) &&
+            (identical(other.isLoadingAttendance, isLoadingAttendance) ||
+                other.isLoadingAttendance == isLoadingAttendance) &&
+            (identical(
+                  other.isMorningCheckInCompleted,
+                  isMorningCheckInCompleted,
+                ) ||
+                other.isMorningCheckInCompleted == isMorningCheckInCompleted) &&
+            (identical(other.attendanceTotal, attendanceTotal) ||
+                other.attendanceTotal == attendanceTotal) &&
+            (identical(other.attendancePresentCount, attendancePresentCount) ||
+                other.attendancePresentCount == attendancePresentCount) &&
+            (identical(other.attendanceAbsentCount, attendanceAbsentCount) ||
+                other.attendanceAbsentCount == attendanceAbsentCount) &&
+            (identical(other.attendanceExcusedCount, attendanceExcusedCount) ||
+                other.attendanceExcusedCount == attendanceExcusedCount) &&
+            const DeepCollectionEquality().equals(
+              other._markedAttendanceStudents,
+              _markedAttendanceStudents,
+            ) &&
             (identical(other.classId, classId) || other.classId == classId));
   }
 
@@ -518,6 +665,13 @@ class _$OverviewStateImpl implements _OverviewState {
     const DeepCollectionEquality().hash(_pendingLeaveRequests),
     isLoadingLeaveRequests,
     const DeepCollectionEquality().hash(_studentAvatarUrls),
+    isLoadingAttendance,
+    isMorningCheckInCompleted,
+    attendanceTotal,
+    attendancePresentCount,
+    attendanceAbsentCount,
+    attendanceExcusedCount,
+    const DeepCollectionEquality().hash(_markedAttendanceStudents),
     classId,
   );
 
@@ -535,6 +689,13 @@ abstract class _OverviewState implements OverviewState {
     final List<LeaveRequest> pendingLeaveRequests,
     final bool isLoadingLeaveRequests,
     final Map<String, String> studentAvatarUrls,
+    final bool isLoadingAttendance,
+    final bool isMorningCheckInCompleted,
+    final int attendanceTotal,
+    final int attendancePresentCount,
+    final int attendanceAbsentCount,
+    final int attendanceExcusedCount,
+    final List<OverviewMarkedStudent> markedAttendanceStudents,
     final String? classId,
   }) = _$OverviewStateImpl;
 
@@ -544,6 +705,20 @@ abstract class _OverviewState implements OverviewState {
   bool get isLoadingLeaveRequests;
   @override
   Map<String, String> get studentAvatarUrls;
+  @override
+  bool get isLoadingAttendance;
+  @override
+  bool get isMorningCheckInCompleted;
+  @override
+  int get attendanceTotal;
+  @override
+  int get attendancePresentCount;
+  @override
+  int get attendanceAbsentCount;
+  @override
+  int get attendanceExcusedCount;
+  @override
+  List<OverviewMarkedStudent> get markedAttendanceStudents;
   @override
   String? get classId;
 

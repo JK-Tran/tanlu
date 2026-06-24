@@ -33,7 +33,7 @@ class AuthRepositoryImpl extends AuthRepository {
     final uid = _firebaseSource.currentFirebaseUser!.uid;
     final userData = await _firebaseSource.getUserById(uid);
 
-    final user = _userDataMapper.mapToEntity(userData);
+    final user = _withAuthPhotoFallback(_userDataMapper.mapToEntity(userData));
     await saveCurrentUser(user);
     return user;
   }
@@ -44,7 +44,7 @@ class AuthRepositoryImpl extends AuthRepository {
       final userData = UserData.fromJson(
         json.decode(_appPreferences.currentUser!) as JSON,
       );
-      return _userDataMapper.mapToEntity(userData);
+      return _withAuthPhotoFallback(_userDataMapper.mapToEntity(userData));
     }
     return _userDataMapper.mapToEntity(null);
   }
@@ -55,8 +55,18 @@ class AuthRepositoryImpl extends AuthRepository {
 
     final userData = await _firebaseSource.getUserById(uid!);
 
-    final user = _userDataMapper.mapToEntity(userData);
+    final user = _withAuthPhotoFallback(_userDataMapper.mapToEntity(userData));
     await saveCurrentUser(user);
+    return user;
+  }
+
+  User _withAuthPhotoFallback(User user) {
+    final photoUrl = _firebaseSource.currentFirebaseUser?.photoURL?.trim();
+    if ((user.avatar == null || user.avatar!.isEmpty) &&
+        photoUrl != null &&
+        photoUrl.isNotEmpty) {
+      return user.copyWith(avatar: photoUrl);
+    }
     return user;
   }
 

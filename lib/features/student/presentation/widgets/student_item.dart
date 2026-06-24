@@ -81,20 +81,19 @@ class StudentItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppText.t1(
-                    name,
-                    color: AppColors.grayDark,
-                    fontWeight: FontWeight.w800,
+                  AppText.b2(
+                    fullName,
+                    color: AppColors.grayDark80,
+                    fontWeight: FontWeight.w700,
                     fontSize: 14.sp,
                   ),
-                  if (fullName.isNotEmpty && fullName != name) ...[
-                    SizedBox(height: 2.h),
-                    AppText.b2(
-                      fullName,
-                      color: AppColors.grayMedium,
-                      fontSize: 12.sp,
-                    ),
-                  ],
+                  SizedBox(height: 2.h),
+                  AppText.t1(
+                    name,
+                    color: AppColors.grayMedium,
+
+                    fontSize: 12.sp,
+                  ),
                 ],
               ),
             ),

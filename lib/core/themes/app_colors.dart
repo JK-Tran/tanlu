@@ -39,10 +39,12 @@ abstract final class AppColors {
   static const Color black = Color(0xFF000000);
 
   // --- 3. Semantic Colors (Giữ tone Pastel nhưng phù hợp với Đỏ) ---
-  static const Color success = Color(0xFF2ED573); // Xanh lá
+  static const Color success = Color(
+    0xFF2ED573,
+  ); // Xanh lá tươi — nút xác nhận, trạng thái OK
   static const Color successDark = Color(
     0xFF38B28B,
-  ); // Xanh lá đậm (giống icon điểm danh)
+  ); // Xanh lá đậm hơn — thẻ, icon điểm danh
   static const Color successLight = Color(0xFFEBFDF2);
 
   static const Color error = Color(
@@ -55,6 +57,10 @@ abstract final class AppColors {
 
   static const Color info = Color(0xFF1E90FF); // Xanh da trời
   static const Color infoLight = Color(0xFFF0F4FF);
+
+  // Media actions (ảnh / video / cảm xúc trên feed)
+  static const Color mediaVideo = Color(0xFF6C5CE7);
+  static const Color mediaVideoLight = Color(0xFFF0EDFF);
 
   // --- 4. Dashboard Card Colors (Phối màu Tương đồng & Tương phản nhẹ) ---
   // Thẻ Đỏ/Hồng (Tương đồng với Primary)

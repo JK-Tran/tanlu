@@ -10,8 +10,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
+import 'package:cloud_functions/cloud_functions.dart' as _i809;
 import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:firebase_messaging/firebase_messaging.dart' as _i892;
+import 'package:firebase_storage/firebase_storage.dart' as _i457;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -80,6 +82,42 @@ import '../../features/chat/domain/usecases/mark_messages_as_read_use_case.dart'
 import '../../features/chat/domain/usecases/send_message_use_case.dart'
     as _i500;
 import '../../features/chat/presentation/bloc/chat_bloc.dart' as _i65;
+import '../../features/feed/data/mapper/comment_data_mapper.dart' as _i774;
+import '../../features/feed/data/mapper/feed_data_mapper.dart' as _i176;
+import '../../features/feed/data/mapper/feed_like_data_mapper.dart' as _i82;
+import '../../features/feed/data/repositories/feed_repository_impl.dart'
+    as _i452;
+import '../../features/feed/data/sources/feed_firestore_source.dart' as _i546;
+import '../../features/feed/data/sources/feed_storage_source.dart' as _i872;
+import '../../features/feed/domain/repositories/feed_repository.dart' as _i430;
+import '../../features/feed/domain/usecases/delete_feed_comment_use_case.dart'
+    as _i609;
+import '../../features/feed/domain/usecases/delete_feed_use_case.dart' as _i404;
+import '../../features/feed/domain/usecases/get_class_feeds_use_case.dart'
+    as _i866;
+import '../../features/feed/domain/usecases/get_explore_feeds_use_case.dart'
+    as _i947;
+import '../../features/feed/domain/usecases/get_feed_likes_use_case.dart'
+    as _i92;
+import '../../features/feed/domain/usecases/get_feed_use_case.dart' as _i1007;
+import '../../features/feed/domain/usecases/stream_feed_comments_use_case.dart'
+    as _i710;
+import '../../features/feed/domain/usecases/submit_feed_comment_like_use_case.dart'
+    as _i15;
+import '../../features/feed/domain/usecases/submit_feed_comment_use_case.dart'
+    as _i491;
+import '../../features/feed/domain/usecases/submit_feed_like_use_case.dart'
+    as _i187;
+import '../../features/feed/domain/usecases/submit_feed_use_case.dart' as _i822;
+import '../../features/feed/domain/usecases/update_feed_comment_use_case.dart'
+    as _i160;
+import '../../features/feed/domain/usecases/update_feed_use_case.dart' as _i659;
+import '../../features/feed/presentation/create_feed/bloc/create_feed_bloc.dart'
+    as _i967;
+import '../../features/feed/presentation/feed_detail/bloc/feed_detail_bloc.dart'
+    as _i60;
+import '../../features/feed/presentation/feed_page/bloc/feed_bloc.dart'
+    as _i242;
 import '../../features/notification/data/mapper/device_token_data_mapper.dart'
     as _i1002;
 import '../../features/notification/data/repositories/notification_repository_impl.dart'
@@ -95,6 +133,10 @@ import '../../features/notification/domain/usecases/register_device_token_use_ca
 import '../../features/notification/domain/usecases/unregister_device_token_use_case.dart'
     as _i946;
 import '../../features/overview/presentation/bloc/overview_bloc.dart' as _i447;
+import '../../features/person/data/sources/person_firestore_source.dart'
+    as _i42;
+import '../../features/person/domain/usecases/get_class_name_use_case.dart'
+    as _i805;
 import '../../features/student/data/mapper/student_data_mapper.dart' as _i67;
 import '../../features/student/data/repositories/student_repository_impl.dart'
     as _i687;
@@ -144,12 +186,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i702.UserDataMapper>(() => _i702.UserDataMapper());
     gh.factory<_i182.ChatUserDataMapper>(() => _i182.ChatUserDataMapper());
     gh.factory<_i203.ContactDataMapper>(() => _i203.ContactDataMapper());
+    gh.factory<_i774.CommentDataMapper>(() => _i774.CommentDataMapper());
     gh.factory<_i1002.DeviceTokenDataMapper>(
       () => _i1002.DeviceTokenDataMapper(),
     );
     gh.factory<_i67.StudentDataMapper>(() => _i67.StudentDataMapper());
+    gh.factory<_i176.FeedDataMapper>(() => _i176.FeedDataMapper());
+    gh.factory<_i82.FeedLikeDataMapper>(() => _i82.FeedLikeDataMapper());
     gh.lazySingleton<_i59.FirebaseAuth>(() => registerModule.firebaseAuth);
     gh.lazySingleton<_i974.FirebaseFirestore>(() => registerModule.firestore);
+    gh.lazySingleton<_i457.FirebaseStorage>(
+      () => registerModule.firebaseStorage,
+    );
+    gh.lazySingleton<_i809.FirebaseFunctions>(
+      () => registerModule.firebaseFunctions,
+    );
     gh.lazySingleton<_i892.FirebaseMessaging>(
       () => registerModule.firebaseMessaging,
     );
@@ -157,6 +208,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i80.AppInfo>(() => _i80.AppInfo());
     gh.lazySingleton<_i809.LocalNotificationService>(
       () => _i809.LocalNotificationService(),
+    );
+    gh.lazySingleton<_i872.FeedStorageSource>(
+      () => _i872.FeedStorageSource(gh<_i457.FirebaseStorage>()),
     );
     gh.lazySingleton<_i964.SharedPrefsHelper>(
       () => _i964.SharedPrefsHelper(gh<_i460.SharedPreferences>()),
@@ -188,8 +242,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i780.NotificationFirebaseSource>(
       () => _i780.NotificationFirebaseSource(gh<_i974.FirebaseFirestore>()),
     );
+    gh.lazySingleton<_i42.PersonFirestoreSource>(
+      () => _i42.PersonFirestoreSource(gh<_i974.FirebaseFirestore>()),
+    );
     gh.lazySingleton<_i489.StudentFirebaseSource>(
       () => _i489.StudentFirebaseSource(gh<_i974.FirebaseFirestore>()),
+    );
+    gh.lazySingleton<_i546.FeedFirestoreSource>(
+      () => _i546.FeedFirestoreSource(gh<_i974.FirebaseFirestore>()),
     );
     gh.lazySingleton<_i630.NotificationRepository>(
       () => _i407.NotificationRepositoryImpl(
@@ -213,6 +273,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i67.StudentDataMapper>(),
       ),
     );
+    gh.lazySingleton<_i412.AuthFirebaseSource>(
+      () => _i412.AuthFirebaseSource(
+        gh<_i59.FirebaseAuth>(),
+        gh<_i974.FirebaseFirestore>(),
+        gh<_i809.FirebaseFunctions>(),
+        gh<_i175.GoogleAuthService>(),
+      ),
+    );
     gh.lazySingleton<_i212.PushNotificationHandler>(
       () => _i212.PushNotificationHandler(gh<_i809.LocalNotificationService>()),
     );
@@ -228,12 +296,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i151.GetAllStudentByClassIdUseCase>(
       () => _i151.GetAllStudentByClassIdUseCase(gh<_i215.StudentRepository>()),
     );
-    gh.lazySingleton<_i412.AuthFirebaseSource>(
-      () => _i412.AuthFirebaseSource(
-        gh<_i59.FirebaseAuth>(),
-        gh<_i974.FirebaseFirestore>(),
-        gh<_i175.GoogleAuthService>(),
-      ),
+    gh.factory<_i805.GetClassNameUseCase>(
+      () => _i805.GetClassNameUseCase(gh<_i42.PersonFirestoreSource>()),
     );
     gh.factory<_i337.RegisterDeviceTokenUseCase>(
       () =>
@@ -242,6 +306,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i946.UnregisterDeviceTokenUseCase>(
       () => _i946.UnregisterDeviceTokenUseCase(
         gh<_i630.NotificationRepository>(),
+      ),
+    );
+    gh.lazySingleton<_i430.FeedRepository>(
+      () => _i452.FeedRepositoryImpl(
+        gh<_i546.FeedFirestoreSource>(),
+        gh<_i872.FeedStorageSource>(),
+        gh<_i42.PersonFirestoreSource>(),
+        gh<_i176.FeedDataMapper>(),
+        gh<_i774.CommentDataMapper>(),
+        gh<_i82.FeedLikeDataMapper>(),
       ),
     );
     gh.lazySingleton<_i958.ChatApiService>(
@@ -301,6 +375,45 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i203.ContactDataMapper>(),
       ),
     );
+    gh.factory<_i866.GetClassFeedsUseCase>(
+      () => _i866.GetClassFeedsUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i947.GetExploreFeedsUseCase>(
+      () => _i947.GetExploreFeedsUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i92.GetFeedLikesUseCase>(
+      () => _i92.GetFeedLikesUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i1007.GetFeedUseCase>(
+      () => _i1007.GetFeedUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i710.StreamFeedCommentsUseCase>(
+      () => _i710.StreamFeedCommentsUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i15.SubmitFeedCommentLikeUseCase>(
+      () => _i15.SubmitFeedCommentLikeUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i491.SubmitFeedCommentUseCase>(
+      () => _i491.SubmitFeedCommentUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i187.SubmitFeedLikeUseCase>(
+      () => _i187.SubmitFeedLikeUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i822.SubmitFeedUseCase>(
+      () => _i822.SubmitFeedUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i609.DeleteFeedCommentUseCase>(
+      () => _i609.DeleteFeedCommentUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i404.DeleteFeedUseCase>(
+      () => _i404.DeleteFeedUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i160.UpdateFeedCommentUseCase>(
+      () => _i160.UpdateFeedCommentUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i659.UpdateFeedUseCase>(
+      () => _i659.UpdateFeedUseCase(gh<_i430.FeedRepository>()),
+    );
     gh.factory<_i441.CreateConversationUseCase>(
       () => _i441.CreateConversationUseCase(gh<_i420.ChatRepository>()),
     );
@@ -338,6 +451,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i141.StreamLeaveRequestsUseCase>(),
       ),
     );
+    gh.factory<_i447.OverviewBloc>(
+      () => _i447.OverviewBloc(
+        gh<_i141.StreamLeaveRequestsUseCase>(),
+        gh<_i151.GetAllStudentByClassIdUseCase>(),
+        gh<_i742.GetDailyAttendanceUseCase>(),
+      ),
+    );
     gh.lazySingleton<_i120.AppBloc>(
       () => _i120.AppBloc(
         gh<_i787.AuthRepository>(),
@@ -345,12 +465,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i907.FcmMessaging>(),
         gh<_i337.RegisterDeviceTokenUseCase>(),
         gh<_i946.UnregisterDeviceTokenUseCase>(),
-      ),
-    );
-    gh.factory<_i447.OverviewBloc>(
-      () => _i447.OverviewBloc(
-        gh<_i141.StreamLeaveRequestsUseCase>(),
-        gh<_i151.GetAllStudentByClassIdUseCase>(),
       ),
     );
     gh.lazySingleton<_i65.ChatBloc>(
@@ -364,7 +478,33 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i46.SocketService>(),
       ),
     );
+    gh.factory<_i242.FeedBloc>(
+      () => _i242.FeedBloc(
+        gh<_i866.GetClassFeedsUseCase>(),
+        gh<_i947.GetExploreFeedsUseCase>(),
+        gh<_i187.SubmitFeedLikeUseCase>(),
+        gh<_i430.FeedRepository>(),
+      ),
+    );
     gh.factory<_i204.LoginBloc>(() => _i204.LoginBloc(gh<_i37.LoginUseCase>()));
+    gh.factory<_i967.CreateFeedBloc>(
+      () => _i967.CreateFeedBloc(
+        gh<_i822.SubmitFeedUseCase>(),
+        gh<_i805.GetClassNameUseCase>(),
+      ),
+    );
+    gh.factory<_i60.FeedDetailBloc>(
+      () => _i60.FeedDetailBloc(
+        gh<_i430.FeedRepository>(),
+        gh<_i187.SubmitFeedLikeUseCase>(),
+        gh<_i710.StreamFeedCommentsUseCase>(),
+        gh<_i491.SubmitFeedCommentUseCase>(),
+        gh<_i15.SubmitFeedCommentLikeUseCase>(),
+        gh<_i160.UpdateFeedCommentUseCase>(),
+        gh<_i609.DeleteFeedCommentUseCase>(),
+        gh<_i404.DeleteFeedUseCase>(),
+      ),
+    );
     return this;
   }
 }

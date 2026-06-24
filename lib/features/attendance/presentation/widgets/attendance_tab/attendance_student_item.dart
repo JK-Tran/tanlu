@@ -13,7 +13,6 @@ class AttendanceStudentItem extends StatelessWidget {
     super.key,
     required this.student,
     required this.attendance,
-    required this.displayName,
     required this.onOpenSheet,
     this.leaveReason,
     this.onCheckOut,
@@ -23,12 +22,14 @@ class AttendanceStudentItem extends StatelessWidget {
 
   final Student student;
   final Attendance attendance;
-  final String displayName;
   final String? leaveReason;
   final VoidCallback onOpenSheet;
   final VoidCallback? onCheckOut;
   final bool draftMode;
   final VoidCallback? onTogglePresent;
+
+  String get _nickname =>
+      student.nickname.isNotEmpty ? student.nickname : student.fullName;
 
   bool get _canCheckOut {
     final status = attendance.uiStatus;
@@ -67,7 +68,7 @@ class AttendanceStudentItem extends StatelessWidget {
         child: Row(
           children: [
             AttendanceAvatar(
-              nickname: displayName,
+              nickname: _nickname,
               imageUrl: student.avatarUrl.isNotEmpty ? student.avatarUrl : null,
             ),
             SizedBox(width: 12.w),
@@ -82,7 +83,7 @@ class AttendanceStudentItem extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                   ),
                   AppText.b1(
-                    '($displayName)',
+                    '($_nickname)',
                     color: AppColors.grayMedium,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w700,
@@ -149,9 +150,18 @@ class AttendanceStudentItem extends StatelessWidget {
             ),
             if (!draftMode) _buildTrailing(status, checkInStr, checkOutStr),
             if (draftMode) ...[
-              _MarkRadio(
-                status: status,
-                onTap: _canTogglePresent ? onTogglePresent! : onOpenSheet,
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: _canTogglePresent ? onTogglePresent! : onOpenSheet,
+                  customBorder: const CircleBorder(),
+                  splashColor: AppColors.success.withValues(alpha: 0.2),
+                  highlightColor: AppColors.successLight.withValues(alpha: 0.5),
+                  child: Padding(
+                    padding: EdgeInsets.all(6.w),
+                    child: _markIcon(status),
+                  ),
+                ),
               ),
               IconButton(
                 onPressed: onOpenSheet,
@@ -193,6 +203,36 @@ class AttendanceStudentItem extends StatelessWidget {
       Icons.radio_button_unchecked,
       size: 20.w,
       color: AppColors.grayMedium,
+    );
+  }
+
+  Widget _markIcon(AttendanceStatus status) {
+    if (status == AttendanceStatus.present) {
+      return Icon(
+        Icons.check_circle_rounded,
+        color: AppColors.success,
+        size: 26.w,
+      );
+    }
+    if (status != AttendanceStatus.notMarked) {
+      return Container(
+        width: 24.w,
+        height: 24.w,
+        decoration: BoxDecoration(
+          color: status.bgColor,
+          shape: BoxShape.circle,
+          border: Border.all(color: status.color, width: 2),
+        ),
+        child: Icon(status.icon, color: status.color, size: 14.w),
+      );
+    }
+    return Container(
+      width: 24.w,
+      height: 24.w,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: AppColors.grayMedium, width: 2),
+      ),
     );
   }
 }
@@ -283,69 +323,6 @@ class _CheckOutButton extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _MarkRadio extends StatelessWidget {
-  const _MarkRadio({required this.status, required this.onTap});
-
-  final AttendanceStatus status;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        customBorder: const CircleBorder(),
-        splashColor: AppColors.success.withValues(alpha: 0.2),
-        highlightColor: AppColors.successLight.withValues(alpha: 0.5),
-        child: Padding(
-          padding: EdgeInsets.all(6.w),
-          child: _MarkRadioIcon(status: status),
-        ),
-      ),
-    );
-  }
-}
-
-class _MarkRadioIcon extends StatelessWidget {
-  const _MarkRadioIcon({required this.status});
-
-  final AttendanceStatus status;
-
-  @override
-  Widget build(BuildContext context) {
-    if (status == AttendanceStatus.present) {
-      return Icon(
-        Icons.check_circle_rounded,
-        color: AppColors.success,
-        size: 26.w,
-      );
-    }
-
-    if (status != AttendanceStatus.notMarked) {
-      return Container(
-        width: 24.w,
-        height: 24.w,
-        decoration: BoxDecoration(
-          color: status.bgColor,
-          shape: BoxShape.circle,
-          border: Border.all(color: status.color, width: 2),
-        ),
-        child: Icon(status.icon, color: status.color, size: 14.w),
-      );
-    }
-
-    return Container(
-      width: 24.w,
-      height: 24.w,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: AppColors.grayMedium, width: 2),
       ),
     );
   }

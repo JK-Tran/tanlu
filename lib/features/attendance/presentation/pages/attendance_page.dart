@@ -103,10 +103,9 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
   void dispose() {
     _tabController.removeListener(_onTabChanged);
     _tabController.dispose();
+    bloc.close();
     super.dispose();
   }
-
-  bool _shouldConfirmExit(AttendanceState state) => state.hasUnsavedChanges;
 
   void _navigateBack() {
     if (context.canPop()) {
@@ -117,8 +116,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
   }
 
   Future<void> _handleExit() async {
-    final state = bloc.state;
-    if (!_shouldConfirmExit(state)) {
+    if (!bloc.state.hasUnsavedChanges) {
       if (mounted) _navigateBack();
       return;
     }
@@ -147,7 +145,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
         if (saveSucceeded) {
           if (!_sessionWasCompleted && sessionCompleted) {
             final attendances = state.attendances;
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => AttendanceSuccessDialog(
                   presentCount: attendances
@@ -194,8 +192,10 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
               : att.uiStatus == AttendanceStatus.notMarked;
         }).length;
 
-        final isSessionCompleted = state.session?.isCheckInCompleted == true;
-        final isCheckOutCompleted = state.session?.isCheckOutCompleted == true;
+        final markedCount = state.students.length - notMarkedCount;
+        final total = state.students.length;
+        final checkInDone = state.session?.isCheckInCompleted == true;
+        final checkOutDone = state.session?.isCheckOutCompleted == true;
         final missingCheckOutCount = state.attendances
             .where(
               (a) =>
@@ -203,14 +203,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                   a.checkOutTime == null,
             )
             .length;
-        final showFirstSaveBar = _currentTab == 0 && !isSessionCompleted;
-        final showUpdateBar =
-            _currentTab == 0 && isSessionCompleted && state.hasUnsavedChanges;
-        final showCheckOutBar =
-            _currentTab == 0 &&
-            isSessionCompleted &&
-            !isCheckOutCompleted &&
-            !state.hasUnsavedChanges;
+        final morningReady = notMarkedCount == 0 && !state.isSaving;
 
         return PopScope(
           canPop: false,
@@ -228,6 +221,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                       SliverPersistentHeader(
                         pinned: true,
                         delegate: AttendanceTabBarDelegate(
+                          extent: AttendanceTabBar.headerExtent,
                           child: AttendanceTabBar(
                             controller: _tabController,
                             pendingLeaveCount: pendingLeaveCount,
@@ -237,6 +231,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                     ],
                     body: TabBarView(
                       controller: _tabController,
+                      physics: const NeverScrollableScrollPhysics(),
                       children: const [
                         AttendanceBody(),
                         LeaveBody(),
@@ -245,34 +240,50 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                     ),
                   ),
                 ),
-                if (showFirstSaveBar)
+                if (_currentTab == 0 &&
+                    !checkInDone &&
+                    !(state.isLoading && state.students.isEmpty))
                   AttendanceSaveBar(
-                    markedCount: state.students.length - notMarkedCount,
-                    total: state.students.length,
-                    notMarkedCount: notMarkedCount,
+                    title: 'Đã chọn $markedCount/$total',
+                    subtitle: notMarkedCount > 0
+                        ? 'Còn $notMarkedCount bé chưa chọn — bấm ○ để đánh dấu có mặt'
+                        : 'Sẵn sàng lưu điểm danh sáng',
+                    buttonLabel: 'Lưu điểm danh sáng',
+                    titleColor: morningReady
+                        ? AppColors.success
+                        : AppColors.grayDark,
+                    canSave: morningReady,
                     isSaving: state.isSaving,
-                    isMorningDraft: true,
                     onSave: () =>
                         bloc.add(const CompleteAttendanceSessionEvent()),
                   ),
-                if (showUpdateBar)
+                if (_currentTab == 0 && checkInDone && state.hasUnsavedChanges)
                   AttendanceSaveBar(
-                    markedCount: state.students.length - notMarkedCount,
-                    total: state.students.length,
-                    notMarkedCount: notMarkedCount,
-                    missingCheckOutCount: missingCheckOutCount,
+                    title: 'Có thay đổi chưa lưu',
+                    subtitle: missingCheckOutCount > 0
+                        ? 'Còn $missingCheckOutCount bé chưa ghi giờ về'
+                        : 'Sửa điểm danh — bấm Cập nhật',
+                    buttonLabel: 'Cập nhật',
+                    titleColor: !state.isSaving
+                        ? AppColors.success
+                        : AppColors.grayDark,
+                    canSave: !state.isSaving,
                     isSaving: state.isSaving,
-                    isUpdateMode: true,
                     onSave: () => bloc.add(const UpdateDailyAttendanceEvent()),
                   ),
-                if (showCheckOutBar)
+                if (_currentTab == 0 &&
+                    checkInDone &&
+                    !state.hasUnsavedChanges &&
+                    !checkOutDone)
                   AttendanceSaveBar(
-                    markedCount: state.students.length - notMarkedCount,
-                    total: state.students.length,
-                    notMarkedCount: notMarkedCount,
-                    missingCheckOutCount: missingCheckOutCount,
+                    title: 'Chốt cuối ngày',
+                    subtitle: missingCheckOutCount > 0
+                        ? 'Sẽ ghi giờ về cho $missingCheckOutCount bé còn lại'
+                        : 'Giáo viên xác nhận chốt điểm danh cuối ngày',
+                    buttonLabel: 'Chốt điểm danh',
+                    titleColor: AppColors.primary,
+                    canSave: !state.isSaving,
                     isSaving: state.isSaving,
-                    isCheckOutMode: true,
                     onSave: () => _handleCompleteCheckOut(missingCheckOutCount),
                   ),
               ],

@@ -16,6 +16,7 @@ class AppActionButton extends StatelessWidget {
     this.type = AppButtonType.solid,
     this.borderRadius = 12.0,
     this.padding = const EdgeInsets.symmetric(vertical: 12),
+    this.expanded = false,
   });
 
   final String label;
@@ -27,6 +28,7 @@ class AppActionButton extends StatelessWidget {
   final AppButtonType type;
   final double borderRadius;
   final EdgeInsetsGeometry padding;
+  final bool expanded;
 
   Widget _buildContent(Color textColor) {
     if (icon == null) {
@@ -56,6 +58,7 @@ class AppActionButton extends StatelessWidget {
           padding: padding,
           backgroundColor: Colors.white,
           side: BorderSide(color: effectiveBorderColor),
+          minimumSize: expanded ? Size(double.infinity, 0) : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
@@ -70,6 +73,7 @@ class AppActionButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         padding: padding,
         backgroundColor: effectiveColor,
+        minimumSize: expanded ? Size(double.infinity, 0) : null,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius),
         ),

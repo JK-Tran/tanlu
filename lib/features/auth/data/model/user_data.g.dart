@@ -14,7 +14,7 @@ _$UserDataImpl _$$UserDataImplFromJson(Map<String, dynamic> json) =>
       role: json['role'] as String?,
       centerId: json['centerId'] as String?,
       phone: json['phone'] as String?,
-      avatar: json['avatar'] as String?,
+      avatar: _readUserAvatar(json, 'avatar') as String?,
       classId: json['classId'] as String?,
     );
 

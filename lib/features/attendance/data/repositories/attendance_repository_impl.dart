@@ -42,12 +42,27 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
       getSession(classId, date),
     ]);
 
-    final students = results[0] as List<Student>;
-    final existingAttendances = results[1] as List<Attendance>;
-    final leaveRequests = results[2] as List<LeaveRequest>;
-    final session = results[3] as AttendanceSession?;
+    return _mergeDaily(
+      students: results[0] as List<Student>,
+      existingAttendances: results[1] as List<Attendance>,
+      leaveRequests: results[2] as List<LeaveRequest>,
+      session: results[3] as AttendanceSession?,
+      classId: classId,
+      date: parsedDate,
+    );
+  }
 
-    final attendanceMap = {for (final a in existingAttendances) a.studentId: a};
+  DailyAttendance _mergeDaily({
+    required List<Student> students,
+    required List<Attendance> existingAttendances,
+    required List<LeaveRequest> leaveRequests,
+    required AttendanceSession? session,
+    required String classId,
+    required DateTime? date,
+  }) {
+    final attendanceMap = {
+      for (final a in existingAttendances) a.studentId: a,
+    };
 
     final attendances = students.map((student) {
       if (attendanceMap.containsKey(student.id)) {
@@ -61,7 +76,7 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
       return Attendance(
         studentId: student.id,
         classId: classId,
-        date: parsedDate,
+        date: date,
         status: hasApprovedLeave ? 'absent_excused' : 'not_marked',
       );
     }).toList();

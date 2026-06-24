@@ -13,9 +13,12 @@ import 'package:tanlu_management/features/student/presentation/pages/student_pag
 import 'package:tanlu_management/features/student/presentation/pages/student_detail/student_detail_page.dart';
 
 import 'package:tanlu_management/features/person/presentation/pages/person_page.dart';
-import 'package:tanlu_management/features/person/presentation/pages/settings_page.dart';
+import 'package:tanlu_management/features/person/presentation/pages/person_about_page.dart';
 import 'package:tanlu_management/features/overview/presentation/pages/overview_page.dart';
-import 'package:tanlu_management/features/feed/pages/feed_page.dart';
+import 'package:tanlu_management/features/feed/presentation/feed_page/pages/feed_page.dart';
+import 'package:tanlu_management/features/feed/presentation/create_feed/pages/create_feed_page.dart';
+import 'package:tanlu_management/features/feed/domain/entity/feed.dart';
+import 'package:tanlu_management/features/feed/presentation/feed_detail/pages/feed_detail_page.dart';
 
 import 'package:tanlu_management/features/activity/presentation/pages/activity_page.dart';
 import 'package:tanlu_management/features/chat/presentation/pages/chat_page.dart';
@@ -44,6 +47,8 @@ class AppRouter {
   static const String settings = '/settings';
   static const String overview = '/overview';
   static const String feed = '/feed';
+  static const String createFeed = '/feed/create';
+  static const String feedDetail = '/feed/detail';
   static const String attendance = '/attendance';
 
   static GoRouter createRouter(AppBloc appBloc) {
@@ -114,15 +119,37 @@ class AppRouter {
           path: settings,
           name: 'settings',
           parentNavigatorKey: _rootNavigatorKey,
-          builder: (context, state) => const SettingsPage(),
+          builder: (context, state) => const PersonAboutPage(),
         ),
         GoRoute(
           path: attendance,
           name: 'attendance',
           parentNavigatorKey: _rootNavigatorKey,
           builder: (context, state) {
-            final tab = AttendanceTab.fromQuery(state.uri.queryParameters['tab']);
+            final tab = AttendanceTab.fromQuery(
+              state.uri.queryParameters['tab'],
+            );
             return AttendancePage(initialTab: tab);
+          },
+        ),
+        GoRoute(
+          path: createFeed,
+          name: 'create-feed',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) => const CreateFeedPage(),
+        ),
+        GoRoute(
+          path: feedDetail,
+          name: 'feed-detail',
+          parentNavigatorKey: _rootNavigatorKey,
+          pageBuilder: (context, state) {
+            final extra = state.extra! as ({Feed feed, bool openComments});
+            return SlideTransitionPage(
+              child: FeedDetailPage(
+                feed: extra.feed,
+                openComments: extra.openComments,
+              ),
+            );
           },
         ),
         // Shell: wraps all tabs inside HomePage (bottom nav)

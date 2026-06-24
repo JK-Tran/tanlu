@@ -9,6 +9,42 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 class FileDownloadHelper {
   static final Dio _dio = Dio();
 
+  static String fileNameFromUrl(String url, {required bool isVideo}) {
+    final uri = Uri.tryParse(url);
+    final path = uri?.path ?? url;
+    final segment = path.split('/').where((s) => s.isNotEmpty).lastOrNull;
+    if (segment != null && segment.contains('.')) {
+      return segment.split('?').first;
+    }
+
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    return isVideo ? 'tanlu_$timestamp.mp4' : 'tanlu_$timestamp.jpg';
+  }
+
+  static Future<void> saveImageToGallery({
+    required BuildContext context,
+    required String url,
+  }) {
+    return downloadFile(
+      context: context,
+      url: url,
+      fileName: fileNameFromUrl(url, isVideo: false),
+      fileType: 'image',
+    );
+  }
+
+  static Future<void> saveVideoToGallery({
+    required BuildContext context,
+    required String url,
+  }) {
+    return downloadFile(
+      context: context,
+      url: url,
+      fileName: fileNameFromUrl(url, isVideo: true),
+      fileType: 'video',
+    );
+  }
+
   static Future<void> downloadFile({
     required BuildContext context,
     required String url,

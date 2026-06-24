@@ -16,3 +16,7 @@ class PendingLeaveRequestsUpdatedEvent extends OverviewEvent
     List<LeaveRequest> leaveRequests,
   ) = _PendingLeaveRequestsUpdatedEvent;
 }
+
+class RefreshOverviewAttendanceEvent extends OverviewEvent {
+  const RefreshOverviewAttendanceEvent();
+}

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/router/app_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/features/overview/presentation/bloc/overview_bloc.dart';
 
 class OverviewActionCard extends StatelessWidget {
   const OverviewActionCard({super.key});
@@ -16,7 +18,7 @@ class OverviewActionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -34,8 +36,13 @@ class OverviewActionCard extends StatelessWidget {
                 borderRadius: BorderRadius.horizontal(
                   left: Radius.circular(8.r),
                 ),
-                onTap: () {
-                  context.push(AppRouter.attendance);
+                onTap: () async {
+                  await context.push(AppRouter.attendance);
+                  if (context.mounted) {
+                    context.read<OverviewBloc>().add(
+                      const RefreshOverviewAttendanceEvent(),
+                    );
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

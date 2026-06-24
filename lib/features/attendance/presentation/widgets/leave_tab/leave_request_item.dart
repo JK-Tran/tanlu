@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_confirm_dialog.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/core/widgets/buttons/app_action_button.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/attendance.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
@@ -19,12 +20,14 @@ class LeaveRequestItem extends StatelessWidget {
     required this.studentName,
     required this.studentNickname,
     required this.onDecision,
+    this.studentAvatarUrl,
     this.isPending = false,
   });
 
   final LeaveRequest request;
   final String studentName;
   final String studentNickname;
+  final String? studentAvatarUrl;
   final bool isPending;
   final void Function(bool isApproved) onDecision;
 
@@ -41,29 +44,48 @@ class LeaveRequestItem extends StatelessWidget {
     final nickname = student?.nickname.isNotEmpty == true
         ? student!.nickname
         : request.studentName;
+    final avatarUrl = request.studentAvatarUrl.isNotEmpty
+        ? request.studentAvatarUrl
+        : (student?.avatarUrl.isNotEmpty == true ? student!.avatarUrl : null);
 
     return LeaveRequestItem(
       request: request,
       studentName: displayName,
       studentNickname: nickname.isNotEmpty ? nickname : '?',
+      studentAvatarUrl: avatarUrl,
       isPending: !readOnly,
       onDecision: (isApproved) async {
         if (!isApproved) {
-          if (!context.mounted) return;
+          final confirmed = await AppConfirmDialog.show(
+            context,
+            title: 'Từ chối đơn xin nghỉ?',
+            content: 'Bạn có chắc muốn từ chối đơn xin nghỉ của $displayName?',
+            cancelLabel: 'Huỷ',
+            confirmLabel: 'Từ chối',
+            type: AppConfirmDialogType.warning,
+          );
+          if (confirmed != true || !context.mounted) return;
           context.read<AttendanceBloc>().add(
-            SubmitLeaveDecisionEvent(
-              requestId: request.id,
-              isApproved: false,
-            ),
+            SubmitLeaveDecisionEvent(requestId: request.id, isApproved: false),
           );
           return;
         }
+
+        final confirmed = await AppConfirmDialog.show(
+          context,
+          title: 'Duyệt đơn xin nghỉ?',
+          content: 'Bạn có chắc muốn duyệt đơn xin nghỉ của $displayName?',
+          cancelLabel: 'Huỷ',
+          confirmLabel: 'Đồng ý',
+          type: AppConfirmDialogType.success,
+        );
+        if (confirmed != true || !context.mounted) return;
 
         var confirmOverride = false;
         final status = attendance?.status ?? 'not_marked';
         if (status == 'present' || status == 'late') {
           final label = status == 'present' ? 'có mặt' : 'đi trễ';
-          final confirmed = await AppConfirmDialog.show(
+          final overrideConfirmed = await AppConfirmDialog.show(
             context,
             title: 'Ghi đè điểm danh?',
             content:
@@ -72,7 +94,7 @@ class LeaveRequestItem extends StatelessWidget {
             confirmLabel: 'Đồng ý',
             type: AppConfirmDialogType.warning,
           );
-          if (confirmed != true || !context.mounted) return;
+          if (overrideConfirmed != true || !context.mounted) return;
           confirmOverride = true;
         }
 
@@ -98,14 +120,13 @@ class LeaveRequestItem extends StatelessWidget {
     final sentAt = request.submittedAt != null
         ? DateTimeUtils.formatDateTimeType2(request.submittedAt)?.trim()
         : null;
-    final avatarSize = isPending ? 40.0 : 36.0;
 
     return Container(
       margin: EdgeInsets.only(bottom: isPending ? 10.h : 8.h),
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(isPending ? 12.r : 10.r),
+        borderRadius: BorderRadius.circular(8.r),
         border: isPending
             ? null
             : Border.all(color: AppColors.grayLight.withValues(alpha: 0.8)),
@@ -125,7 +146,11 @@ class LeaveRequestItem extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AttendanceAvatar(nickname: studentNickname, size: avatarSize),
+              AttendanceAvatar(
+                nickname: studentNickname,
+                imageUrl: studentAvatarUrl,
+                size: isPending ? 40.0 : 36.0,
+              ),
               SizedBox(width: 10.w),
               Expanded(child: _studentNameRow()),
               if (!isPending)
@@ -185,41 +210,28 @@ class LeaveRequestItem extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
+                  child: AppActionButton(
+                    label: 'Từ chối',
                     onPressed: () => onDecision(false),
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 9.h),
-                      side: const BorderSide(color: AppColors.grayLight),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                    ),
-                    child: AppText.b2(
-                      'Từ chối',
-                      color: AppColors.grayMedium,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    type: AppButtonType.outlined,
+                    color: AppColors.white,
+                    borderColor: AppColors.grayLight,
+                    textColor: AppColors.grayDark80,
+                    borderRadius: 8.r,
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    expanded: true,
                   ),
                 ),
                 SizedBox(width: 8.w),
                 Expanded(
-                  flex: 2,
-                  child: FilledButton(
+                  child: AppActionButton(
+                    label: 'Đồng ý',
                     onPressed: () => onDecision(true),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.success,
-                      padding: EdgeInsets.symmetric(vertical: 9.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                    ),
-                    child: AppText.b2(
-                      'Đồng ý',
-                      color: Colors.white,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    color: AppColors.success,
+                    textColor: Colors.white,
+                    borderRadius: 8.r,
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    expanded: true,
                   ),
                 ),
               ],

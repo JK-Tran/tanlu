@@ -1,0 +1,35 @@
+---
+description: Chuẩn thiết kế UI Flutter — AppColors, AppText, borderRadius, card shadow, widget tái sử dụng
+globs: lib/**/presentation/**/*.dart,lib/core/widgets/**/*.dart
+alwaysApply: false
+---
+
+# UI Design Standards (Tanlu Management)
+
+Khi thiết kế hoặc sửa UI, đọc `docs/UI_DESIGN_GUIDELINES.md` và tuân thủ:
+
+## Màu
+- Chỉ `AppColors` từ `lib/core/themes/app_colors.dart`
+- Không hard-code `Color(0xFF...)` trong presentation
+- Thiếu màu → thêm vào `AppColors` trước
+
+## Typography — `AppText` only
+| Vai trò | Style | fontSize |
+|---------|-------|----------|
+| AppBar title | `AppText.h2` | `18.sp`, `w800`, `grayDark` |
+| Tiêu đề trong màn | `AppText.b1` | `14.sp`, `w600`–`w700`, `grayDark` |
+| Nội dung | `AppText.b1` | `12.sp`, `grayDark` |
+| Phụ / caption | `AppText.b2` | `10.sp`–`12.sp`, `grayMedium` |
+
+## Shape
+- `borderRadius`: **luôn `8.r`** cho khung/card mới
+- **Card** trên `grayBg`: nền `white`, viền `grayLight` nhạt, **bắt buộc boxShadow**:
+  `Colors.black.withValues(alpha: 0.04)`, `blurRadius: 6`, `offset: Offset(0, 2)`
+
+## Widget tái sử dụng
+Ưu tiên: `AppText`, `AppIconButton`, `FeedAppBar`, `AttendanceAvatar`, `AppSnackbar` — tìm `lib/core/widgets/` trước khi tạo mới.
+
+## Cấu trúc & đặt tên
+- Page mỏng; UI trong `widgets/` với tên `{Feature}{Role}` (vd. `CreatePostBody`, `FeedPostCard`)
+- Private helper: `_MediaIcon`, `_ClassChip`
+- Spacing: ngang `16.w`, gap section `12.h`, padding card `12.w`

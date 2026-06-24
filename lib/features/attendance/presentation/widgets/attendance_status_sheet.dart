@@ -18,11 +18,12 @@ class AttendanceStatusSheet extends StatelessWidget {
   final Student student;
   final Attendance attendance;
 
-  String get _displayName =>
-      student.nickname.isNotEmpty ? student.nickname : student.fullName;
-
   @override
   Widget build(BuildContext context) {
+    final nickname = student.nickname.isNotEmpty
+        ? student.nickname
+        : student.fullName;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -38,7 +39,7 @@ class AttendanceStatusSheet extends StatelessWidget {
             child: Row(
               children: [
                 AttendanceAvatar(
-                  nickname: _displayName,
+                  nickname: nickname,
                   imageUrl: student.avatarUrl.isNotEmpty
                       ? student.avatarUrl
                       : null,
@@ -58,7 +59,7 @@ class AttendanceStatusSheet extends StatelessWidget {
                       ),
                       SizedBox(width: 4.w),
                       AppText.b1(
-                        '($_displayName)',
+                        '($nickname)',
                         color: AppColors.grayMedium,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w700,

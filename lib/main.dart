@@ -15,6 +15,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:tanlu_management/core/router/push_navigation_helper.dart';
 import 'package:tanlu_management/core/session/session_expired_helper.dart';
+import 'package:tanlu_management/shared/services/firebase/app_check_service.dart';
 import 'package:tanlu_management/shared/services/firebase/fcm_messaging.dart';
 import 'package:tanlu_management/shared/services/firebase/local_notification_service.dart';
 
@@ -23,6 +24,7 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp();
+  await AppCheckService.activate();
 
   await initInjection();
   await sl<FcmMessaging>().initialize();

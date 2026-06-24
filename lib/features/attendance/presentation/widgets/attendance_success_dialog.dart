@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tanlu_management/core/router/app_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 
-/// Dialog/screen thành công sau khi lưu điểm danh
+/// Màn hình thành công sau khi lưu điểm danh sáng.
+/// Pop về [AttendancePage] phía dưới trong stack.
 class AttendanceSuccessDialog extends StatelessWidget {
   const AttendanceSuccessDialog({
     super.key,
@@ -24,21 +24,12 @@ class AttendanceSuccessDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,
-              size: 20.w, color: AppColors.grayDark),
-          onPressed: () => context.pop(),
-        ),
-      ),
-      body: Center(
+      body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 32.w),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Spacer(),
               Container(
                 width: 120.w,
                 height: 120.w,
@@ -64,8 +55,11 @@ class AttendanceSuccessDialog extends StatelessWidget {
                       left: 12.w,
                       child: _Star(color: AppColors.primary, size: 8.w),
                     ),
-                    Icon(Icons.assignment_turned_in_rounded,
-                        size: 60.w, color: AppColors.success),
+                    Icon(
+                      Icons.assignment_turned_in_rounded,
+                      size: 60.w,
+                      color: AppColors.success,
+                    ),
                   ],
                 ),
               ),
@@ -113,36 +107,28 @@ class AttendanceSuccessDialog extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 36.h),
+              const Spacer(),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => context.pop(),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.success,
                     elevation: 0,
                     padding: EdgeInsets.symmetric(vertical: 16.h),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14.r)),
+                      borderRadius: BorderRadius.circular(14.r),
+                    ),
                   ),
                   child: AppText.b1(
-                    'Xem chi tiết',
+                    'Quay lại',
                     color: Colors.white,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-              SizedBox(height: 14.h),
-              TextButton(
-                onPressed: () => context.go(AppRouter.overview),
-                child: AppText.b1(
-                  'Quay về trang chủ',
-                  color: AppColors.grayMedium,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              SizedBox(height: 24.h),
             ],
           ),
         ),

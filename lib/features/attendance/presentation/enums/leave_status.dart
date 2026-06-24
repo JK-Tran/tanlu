@@ -23,9 +23,9 @@ extension LeaveStatusUi on LeaveStatus {
       };
 
   Color get color => switch (this) {
-        LeaveStatus.pending => AppColors.primary,
+        LeaveStatus.pending => AppColors.warning,
         LeaveStatus.approved => AppColors.success,
-        LeaveStatus.rejected => AppColors.warning,
+        LeaveStatus.rejected => AppColors.primary,
       };
 }
 

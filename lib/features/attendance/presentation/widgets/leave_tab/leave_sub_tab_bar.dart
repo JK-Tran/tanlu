@@ -65,16 +65,16 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: selected ? AppColors.primary : AppColors.white,
-      borderRadius: BorderRadius.circular(20.r),
+      color: selected ? color : AppColors.white,
+      borderRadius: BorderRadius.circular(8.r),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(8.r),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.r),
-            border: Border.all(color: AppColors.white),
+            borderRadius: BorderRadius.circular(8.r),
+            border: Border.all(color: selected ? color : AppColors.grayLight),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -93,12 +93,12 @@ class _FilterChip extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
                   decoration: BoxDecoration(
-                    color: (selected ? AppColors.white : AppColors.grayMedium),
+                    color: selected ? AppColors.white : color,
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: AppText.l2(
                     '$count',
-                    color: selected ? AppColors.primary : AppColors.white,
+                    color: selected ? color : AppColors.white,
                     fontSize: 8.sp,
                     fontWeight: FontWeight.w700,
                   ),

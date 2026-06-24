@@ -33,7 +33,7 @@ mixin _$UserData {
   String? get centerId => throw _privateConstructorUsedError;
   @JsonKey(name: 'phone')
   String? get phone => throw _privateConstructorUsedError;
-  @JsonKey(name: 'avatar')
+  @JsonKey(readValue: _readUserAvatar)
   String? get avatar => throw _privateConstructorUsedError;
   @JsonKey(name: 'classId')
   String? get classId => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $UserDataCopyWith<$Res> {
     @JsonKey(name: 'role') String? role,
     @JsonKey(name: 'centerId') String? centerId,
     @JsonKey(name: 'phone') String? phone,
-    @JsonKey(name: 'avatar') String? avatar,
+    @JsonKey(readValue: _readUserAvatar) String? avatar,
     @JsonKey(name: 'classId') String? classId,
   });
 }
@@ -145,7 +145,7 @@ abstract class _$$UserDataImplCopyWith<$Res>
     @JsonKey(name: 'role') String? role,
     @JsonKey(name: 'centerId') String? centerId,
     @JsonKey(name: 'phone') String? phone,
-    @JsonKey(name: 'avatar') String? avatar,
+    @JsonKey(readValue: _readUserAvatar) String? avatar,
     @JsonKey(name: 'classId') String? classId,
   });
 }
@@ -222,7 +222,7 @@ class _$UserDataImpl extends _UserData {
     @JsonKey(name: 'role') this.role,
     @JsonKey(name: 'centerId') this.centerId,
     @JsonKey(name: 'phone') this.phone,
-    @JsonKey(name: 'avatar') this.avatar,
+    @JsonKey(readValue: _readUserAvatar) this.avatar,
     @JsonKey(name: 'classId') this.classId,
   }) : super._();
 
@@ -248,7 +248,7 @@ class _$UserDataImpl extends _UserData {
   @JsonKey(name: 'phone')
   final String? phone;
   @override
-  @JsonKey(name: 'avatar')
+  @JsonKey(readValue: _readUserAvatar)
   final String? avatar;
   @override
   @JsonKey(name: 'classId')
@@ -312,7 +312,7 @@ abstract class _UserData extends UserData {
     @JsonKey(name: 'role') final String? role,
     @JsonKey(name: 'centerId') final String? centerId,
     @JsonKey(name: 'phone') final String? phone,
-    @JsonKey(name: 'avatar') final String? avatar,
+    @JsonKey(readValue: _readUserAvatar) final String? avatar,
     @JsonKey(name: 'classId') final String? classId,
   }) = _$UserDataImpl;
   const _UserData._() : super._();
@@ -339,7 +339,7 @@ abstract class _UserData extends UserData {
   @JsonKey(name: 'phone')
   String? get phone;
   @override
-  @JsonKey(name: 'avatar')
+  @JsonKey(readValue: _readUserAvatar)
   String? get avatar;
   @override
   @JsonKey(name: 'classId')

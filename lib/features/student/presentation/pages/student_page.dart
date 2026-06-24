@@ -62,40 +62,35 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
             AppSnackbar.showError(context, message: state.onPageError);
           },
           builder: (context, state) {
-            final isInitialLoading =
-                state.isLoading && state.students.isEmpty;
             final stats = state.stats;
+            final isFirstLoad = state.isLoading && stats == null;
 
-            return AbsorbPointer(
-              absorbing: isInitialLoading,
-              child: AppRefreshList(
-                isLoading: isInitialLoading,
-                shimmer: const ShimmerList(),
-                isEmpty: false,
-                onRefresh: _onRefresh,
-                child: CustomScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  slivers: [
+            return AppRefreshList(
+              isLoading: false,
+              onRefresh: _onRefresh,
+              child: CustomScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: StudentHeader(onSearchChanged: _onSearchChanged),
+                  ),
+                  if (stats != null)
                     SliverToBoxAdapter(
-                      child: StudentHeader(onSearchChanged: _onSearchChanged),
-                    ),
-                    if (stats != null)
-                      SliverToBoxAdapter(
-                        child: StudentStats(
-                          total: stats.total,
-                          male: stats.male,
-                          female: stats.female,
-                          selectedIndex: state.genderFilter.tabIndex,
-                          onIndexChanged: (index) {
-                            bloc.add(
-                              ChangeStudentGenderFilter(index: index),
-                            );
-                          },
-                        ),
+                      child: StudentStats(
+                        total: stats.total,
+                        male: stats.male,
+                        female: stats.female,
+                        selectedIndex: state.genderFilter.tabIndex,
+                        onIndexChanged: (index) {
+                          bloc.add(ChangeStudentGenderFilter(index: index));
+                        },
                       ),
+                    ),
+                  if (isFirstLoad)
+                    const SliverToBoxAdapter(child: ShimmerList())
+                  else
                     const StudentBody(),
-                  ],
-                ),
+                ],
               ),
             );
           },

@@ -18,7 +18,6 @@ class StudentFirebaseSource {
   Future<List<StudentData>> getStudentsByClassId({
     required String classId,
     String? gender,
-    String? searchKeyword,
   }) async {
     Query<Map<String, dynamic>> query = _students.where(
       'classId',
@@ -29,22 +28,12 @@ class StudentFirebaseSource {
       query = query.where('gender', isEqualTo: gender);
     }
 
-    final keyword = searchKeyword?.trim();
-    if (keyword != null && keyword.isNotEmpty) {
-      query = query.orderBy('fullName').startAt([keyword]).endAt([
-        '$keyword\uf8ff',
-      ]);
-    } else {
-      query = query.orderBy('fullName');
-    }
+    query = query.orderBy('fullName').orderBy(FieldPath.documentId);
 
-    query = query.orderBy(FieldPath.documentId);
-
-    final path = 'students?classId=$classId&gender=$gender&search=$keyword';
+    final path = 'students?classId=$classId&gender=$gender';
     final requestMeta = {
       'classId': classId,
       'gender': gender,
-      'searchKeyword': keyword,
       'limit': PagingConstants.maxStudentsPerClass,
     };
 
