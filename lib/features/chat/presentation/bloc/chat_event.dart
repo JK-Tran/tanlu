@@ -6,7 +6,14 @@ abstract class ChatEvent {
 
 @freezed
 class ChatStarted extends ChatEvent with _$ChatStarted {
-  const factory ChatStarted() = _ChatStarted;
+  const factory ChatStarted({
+    required String userId,
+    required String classId,
+    @Default('') String centerId,
+    @Default('') String fullName,
+    @Default('') String avatar,
+    @Default('') String role,
+  }) = _ChatStarted;
 }
 
 @freezed
@@ -20,58 +27,86 @@ class FetchContacts extends ChatEvent with _$FetchContacts {
 }
 
 @freezed
-class FetchConversations extends ChatEvent with _$FetchConversations {
-  const factory FetchConversations() = _FetchConversations;
-}
-
-@freezed
 class SelectConversation extends ChatEvent with _$SelectConversation {
-  const factory SelectConversation(Conversation conversation) = _SelectConversation;
+  const factory SelectConversation(Conversation conversation) =
+      _SelectConversation;
 }
 
 @freezed
-class FetchMessages extends ChatEvent with _$FetchMessages {
-  const factory FetchMessages(int conversationId) = _FetchMessages;
+class ClearCurrentConversation extends ChatEvent with _$ClearCurrentConversation {
+  const factory ClearCurrentConversation() = _ClearCurrentConversation;
 }
 
 @freezed
 class SendChatMessage extends ChatEvent with _$SendChatMessage {
   const factory SendChatMessage({
-    required int conversationId,
+    required String conversationId,
     required String text,
-    dynamic file,
+    String? receiverId,
+    @Default('text') String type,
     String? fileUrl,
   }) = _SendChatMessage;
 }
 
 @freezed
-class ReceiveMessage extends ChatEvent with _$ReceiveMessage {
-  const factory ReceiveMessage(Message message) = _ReceiveMessage;
+class OpenDirectChat extends ChatEvent with _$OpenDirectChat {
+  const factory OpenDirectChat({required Contact contact}) = _OpenDirectChat;
 }
 
 @freezed
 class CreateChatConversation extends ChatEvent with _$CreateChatConversation {
   const factory CreateChatConversation({
-    required List<int> participantIds,
+    required List<String> participantIds,
     required String type,
     String? name,
   }) = _CreateChatConversation;
 }
 
 @freezed
-class ChatUserOnline extends ChatEvent with _$ChatUserOnline {
-  const factory ChatUserOnline(int userId) = _ChatUserOnline;
+class SubmitFriendRequest extends ChatEvent with _$SubmitFriendRequest {
+  const factory SubmitFriendRequest({required String toUserId}) =
+      _SubmitFriendRequest;
 }
 
 @freezed
-class ChatUserOffline extends ChatEvent with _$ChatUserOffline {
-  const factory ChatUserOffline(int userId) = _ChatUserOffline;
+class SubmitFriendDecision extends ChatEvent with _$SubmitFriendDecision {
+  const factory SubmitFriendDecision({
+    required String requestId,
+    required bool accept,
+  }) = _SubmitFriendDecision;
 }
 
 @freezed
-class MessagesRead extends ChatEvent with _$MessagesRead {
-  const factory MessagesRead({
-    required int conversationId,
-    required int readBy,
-  }) = _MessagesRead;
+class LoadOlderMessages extends ChatEvent with _$LoadOlderMessages {
+  const factory LoadOlderMessages() = _LoadOlderMessages;
+}
+
+@freezed
+class OpenConversationFromPush extends ChatEvent with _$OpenConversationFromPush {
+  const factory OpenConversationFromPush({
+    required String conversationId,
+  }) = _OpenConversationFromPush;
+}
+
+@freezed
+class ClearPresentConversationFlag extends ChatEvent
+    with _$ClearPresentConversationFlag {
+  const factory ClearPresentConversationFlag() = _ClearPresentConversationFlag;
+}
+
+@freezed
+class _ConversationsUpdated extends ChatEvent with _$ConversationsUpdated {
+  const factory _ConversationsUpdated(List<Conversation> conversations) =
+      __ConversationsUpdated;
+}
+
+@freezed
+class _MessagesUpdated extends ChatEvent with _$MessagesUpdated {
+  const factory _MessagesUpdated(List<Message> messages) = __MessagesUpdated;
+}
+
+@freezed
+class _FriendRequestsUpdated extends ChatEvent with _$FriendRequestsUpdated {
+  const factory _FriendRequestsUpdated(List<FriendRequest> requests) =
+      __FriendRequestsUpdated;
 }

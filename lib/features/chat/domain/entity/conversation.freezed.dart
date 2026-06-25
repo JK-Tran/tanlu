@@ -17,12 +17,18 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Conversation {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  String? get classId => throw _privateConstructorUsedError;
+  String? get centerId => throw _privateConstructorUsedError;
+  List<String> get memberIds => throw _privateConstructorUsedError;
+  String get lastMessageText => throw _privateConstructorUsedError;
+  String get lastMessageSenderId => throw _privateConstructorUsedError;
+  DateTime? get lastMessageAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  List<Participant> get participants => throw _privateConstructorUsedError;
-  List<Message> get messages => throw _privateConstructorUsedError;
+  int get unreadCount => throw _privateConstructorUsedError;
+  List<Participant> get members => throw _privateConstructorUsedError;
 
   /// Create a copy of Conversation
   /// with the given fields replaced by the non-null parameter values.
@@ -39,12 +45,18 @@ abstract class $ConversationCopyWith<$Res> {
   ) = _$ConversationCopyWithImpl<$Res, Conversation>;
   @useResult
   $Res call({
-    int id,
+    String id,
     String name,
     String type,
+    String? classId,
+    String? centerId,
+    List<String> memberIds,
+    String lastMessageText,
+    String lastMessageSenderId,
+    DateTime? lastMessageAt,
     DateTime? updatedAt,
-    List<Participant> participants,
-    List<Message> messages,
+    int unreadCount,
+    List<Participant> members,
   });
 }
 
@@ -66,16 +78,22 @@ class _$ConversationCopyWithImpl<$Res, $Val extends Conversation>
     Object? id = null,
     Object? name = null,
     Object? type = null,
+    Object? classId = freezed,
+    Object? centerId = freezed,
+    Object? memberIds = null,
+    Object? lastMessageText = null,
+    Object? lastMessageSenderId = null,
+    Object? lastMessageAt = freezed,
     Object? updatedAt = freezed,
-    Object? participants = null,
-    Object? messages = null,
+    Object? unreadCount = null,
+    Object? members = null,
   }) {
     return _then(
       _value.copyWith(
             id: null == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as int,
+                      as String,
             name: null == name
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
@@ -84,18 +102,42 @@ class _$ConversationCopyWithImpl<$Res, $Val extends Conversation>
                 ? _value.type
                 : type // ignore: cast_nullable_to_non_nullable
                       as String,
+            classId: freezed == classId
+                ? _value.classId
+                : classId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            centerId: freezed == centerId
+                ? _value.centerId
+                : centerId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            memberIds: null == memberIds
+                ? _value.memberIds
+                : memberIds // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+            lastMessageText: null == lastMessageText
+                ? _value.lastMessageText
+                : lastMessageText // ignore: cast_nullable_to_non_nullable
+                      as String,
+            lastMessageSenderId: null == lastMessageSenderId
+                ? _value.lastMessageSenderId
+                : lastMessageSenderId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            lastMessageAt: freezed == lastMessageAt
+                ? _value.lastMessageAt
+                : lastMessageAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
             updatedAt: freezed == updatedAt
                 ? _value.updatedAt
                 : updatedAt // ignore: cast_nullable_to_non_nullable
                       as DateTime?,
-            participants: null == participants
-                ? _value.participants
-                : participants // ignore: cast_nullable_to_non_nullable
+            unreadCount: null == unreadCount
+                ? _value.unreadCount
+                : unreadCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            members: null == members
+                ? _value.members
+                : members // ignore: cast_nullable_to_non_nullable
                       as List<Participant>,
-            messages: null == messages
-                ? _value.messages
-                : messages // ignore: cast_nullable_to_non_nullable
-                      as List<Message>,
           )
           as $Val,
     );
@@ -112,12 +154,18 @@ abstract class _$$ConversationImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    int id,
+    String id,
     String name,
     String type,
+    String? classId,
+    String? centerId,
+    List<String> memberIds,
+    String lastMessageText,
+    String lastMessageSenderId,
+    DateTime? lastMessageAt,
     DateTime? updatedAt,
-    List<Participant> participants,
-    List<Message> messages,
+    int unreadCount,
+    List<Participant> members,
   });
 }
 
@@ -138,16 +186,22 @@ class __$$ConversationImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? type = null,
+    Object? classId = freezed,
+    Object? centerId = freezed,
+    Object? memberIds = null,
+    Object? lastMessageText = null,
+    Object? lastMessageSenderId = null,
+    Object? lastMessageAt = freezed,
     Object? updatedAt = freezed,
-    Object? participants = null,
-    Object? messages = null,
+    Object? unreadCount = null,
+    Object? members = null,
   }) {
     return _then(
       _$ConversationImpl(
         id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as String,
         name: null == name
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
@@ -156,18 +210,42 @@ class __$$ConversationImplCopyWithImpl<$Res>
             ? _value.type
             : type // ignore: cast_nullable_to_non_nullable
                   as String,
+        classId: freezed == classId
+            ? _value.classId
+            : classId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        centerId: freezed == centerId
+            ? _value.centerId
+            : centerId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        memberIds: null == memberIds
+            ? _value._memberIds
+            : memberIds // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+        lastMessageText: null == lastMessageText
+            ? _value.lastMessageText
+            : lastMessageText // ignore: cast_nullable_to_non_nullable
+                  as String,
+        lastMessageSenderId: null == lastMessageSenderId
+            ? _value.lastMessageSenderId
+            : lastMessageSenderId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        lastMessageAt: freezed == lastMessageAt
+            ? _value.lastMessageAt
+            : lastMessageAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
         updatedAt: freezed == updatedAt
             ? _value.updatedAt
             : updatedAt // ignore: cast_nullable_to_non_nullable
                   as DateTime?,
-        participants: null == participants
-            ? _value._participants
-            : participants // ignore: cast_nullable_to_non_nullable
+        unreadCount: null == unreadCount
+            ? _value.unreadCount
+            : unreadCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        members: null == members
+            ? _value._members
+            : members // ignore: cast_nullable_to_non_nullable
                   as List<Participant>,
-        messages: null == messages
-            ? _value._messages
-            : messages // ignore: cast_nullable_to_non_nullable
-                  as List<Message>,
       ),
     );
   }
@@ -177,18 +255,24 @@ class __$$ConversationImplCopyWithImpl<$Res>
 
 class _$ConversationImpl implements _Conversation {
   const _$ConversationImpl({
-    this.id = 0,
+    this.id = '',
     this.name = '',
-    this.type = '',
+    this.type = 'direct',
+    this.classId,
+    this.centerId,
+    final List<String> memberIds = const [],
+    this.lastMessageText = '',
+    this.lastMessageSenderId = '',
+    this.lastMessageAt,
     this.updatedAt,
-    final List<Participant> participants = const [],
-    final List<Message> messages = const [],
-  }) : _participants = participants,
-       _messages = messages;
+    this.unreadCount = 0,
+    final List<Participant> members = const [],
+  }) : _memberIds = memberIds,
+       _members = members;
 
   @override
   @JsonKey()
-  final int id;
+  final String id;
   @override
   @JsonKey()
   final String name;
@@ -196,28 +280,43 @@ class _$ConversationImpl implements _Conversation {
   @JsonKey()
   final String type;
   @override
-  final DateTime? updatedAt;
-  final List<Participant> _participants;
+  final String? classId;
+  @override
+  final String? centerId;
+  final List<String> _memberIds;
   @override
   @JsonKey()
-  List<Participant> get participants {
-    if (_participants is EqualUnmodifiableListView) return _participants;
+  List<String> get memberIds {
+    if (_memberIds is EqualUnmodifiableListView) return _memberIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_participants);
+    return EqualUnmodifiableListView(_memberIds);
   }
 
-  final List<Message> _messages;
   @override
   @JsonKey()
-  List<Message> get messages {
-    if (_messages is EqualUnmodifiableListView) return _messages;
+  final String lastMessageText;
+  @override
+  @JsonKey()
+  final String lastMessageSenderId;
+  @override
+  final DateTime? lastMessageAt;
+  @override
+  final DateTime? updatedAt;
+  @override
+  @JsonKey()
+  final int unreadCount;
+  final List<Participant> _members;
+  @override
+  @JsonKey()
+  List<Participant> get members {
+    if (_members is EqualUnmodifiableListView) return _members;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_messages);
+    return EqualUnmodifiableListView(_members);
   }
 
   @override
   String toString() {
-    return 'Conversation(id: $id, name: $name, type: $type, updatedAt: $updatedAt, participants: $participants, messages: $messages)';
+    return 'Conversation(id: $id, name: $name, type: $type, classId: $classId, centerId: $centerId, memberIds: $memberIds, lastMessageText: $lastMessageText, lastMessageSenderId: $lastMessageSenderId, lastMessageAt: $lastMessageAt, updatedAt: $updatedAt, unreadCount: $unreadCount, members: $members)';
   }
 
   @override
@@ -228,13 +327,24 @@ class _$ConversationImpl implements _Conversation {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type) &&
+            (identical(other.classId, classId) || other.classId == classId) &&
+            (identical(other.centerId, centerId) ||
+                other.centerId == centerId) &&
+            const DeepCollectionEquality().equals(
+              other._memberIds,
+              _memberIds,
+            ) &&
+            (identical(other.lastMessageText, lastMessageText) ||
+                other.lastMessageText == lastMessageText) &&
+            (identical(other.lastMessageSenderId, lastMessageSenderId) ||
+                other.lastMessageSenderId == lastMessageSenderId) &&
+            (identical(other.lastMessageAt, lastMessageAt) ||
+                other.lastMessageAt == lastMessageAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
-            const DeepCollectionEquality().equals(
-              other._participants,
-              _participants,
-            ) &&
-            const DeepCollectionEquality().equals(other._messages, _messages));
+            (identical(other.unreadCount, unreadCount) ||
+                other.unreadCount == unreadCount) &&
+            const DeepCollectionEquality().equals(other._members, _members));
   }
 
   @override
@@ -243,9 +353,15 @@ class _$ConversationImpl implements _Conversation {
     id,
     name,
     type,
+    classId,
+    centerId,
+    const DeepCollectionEquality().hash(_memberIds),
+    lastMessageText,
+    lastMessageSenderId,
+    lastMessageAt,
     updatedAt,
-    const DeepCollectionEquality().hash(_participants),
-    const DeepCollectionEquality().hash(_messages),
+    unreadCount,
+    const DeepCollectionEquality().hash(_members),
   );
 
   /// Create a copy of Conversation
@@ -259,26 +375,44 @@ class _$ConversationImpl implements _Conversation {
 
 abstract class _Conversation implements Conversation {
   const factory _Conversation({
-    final int id,
+    final String id,
     final String name,
     final String type,
+    final String? classId,
+    final String? centerId,
+    final List<String> memberIds,
+    final String lastMessageText,
+    final String lastMessageSenderId,
+    final DateTime? lastMessageAt,
     final DateTime? updatedAt,
-    final List<Participant> participants,
-    final List<Message> messages,
+    final int unreadCount,
+    final List<Participant> members,
   }) = _$ConversationImpl;
 
   @override
-  int get id;
+  String get id;
   @override
   String get name;
   @override
   String get type;
   @override
+  String? get classId;
+  @override
+  String? get centerId;
+  @override
+  List<String> get memberIds;
+  @override
+  String get lastMessageText;
+  @override
+  String get lastMessageSenderId;
+  @override
+  DateTime? get lastMessageAt;
+  @override
   DateTime? get updatedAt;
   @override
-  List<Participant> get participants;
+  int get unreadCount;
   @override
-  List<Message> get messages;
+  List<Participant> get members;
 
   /// Create a copy of Conversation
   /// with the given fields replaced by the non-null parameter values.

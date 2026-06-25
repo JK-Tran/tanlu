@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/features/notification/data/model/device_token_data.dart';
 import 'package:tanlu_management/shared/services/firebase/firebase_logger.dart';
+import 'package:tanlu_management/shared/services/firebase/firestore_json.dart';
 
 @lazySingleton
 class NotificationFirebaseSource {
@@ -22,7 +23,7 @@ class NotificationFirebaseSource {
       body,
       () => _firestore.collection('users').doc(userId).set({
         'fcmToken': data.fcmToken,
-        'fcmTokenUpdatedAt': FieldValue.serverTimestamp(),
+        'fcmTokenUpdatedAt': FirestoreJson.writeTimestamp(),
       }, SetOptions(merge: true)),
     );
   }

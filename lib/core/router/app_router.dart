@@ -21,7 +21,7 @@ import 'package:tanlu_management/features/feed/domain/entity/feed.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_detail/pages/feed_detail_page.dart';
 
 import 'package:tanlu_management/features/activity/presentation/pages/activity_page.dart';
-import 'package:tanlu_management/features/chat/presentation/pages/chat_page.dart';
+import 'package:tanlu_management/features/chat/presentation/chat_page/pages/chat_page.dart';
 import 'package:tanlu_management/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:tanlu_management/features/attendance/presentation/enums/attendance_tab.dart';
 import 'package:tanlu_management/features/attendance/presentation/pages/attendance_page.dart';

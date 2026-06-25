@@ -69,8 +69,8 @@ class FeedFirestoreSource {
     final path = 'feeds/$id';
     final payload = {
       ...data.toJson(),
-      'createdAt': FieldValue.serverTimestamp(),
-      'updatedAt': FieldValue.serverTimestamp(),
+      'createdAt': FirestoreJson.writeTimestamp(),
+      'updatedAt': FirestoreJson.writeTimestamp(),
     };
 
     await FirebaseLogger.write('SET', path, payload, () => docRef.set(payload));
@@ -187,7 +187,7 @@ class FeedFirestoreSource {
           if (isLiked) {
             transaction.update(likeRef, {
               'status': 'deleted',
-              'updatedAt': FieldValue.serverTimestamp(),
+              'updatedAt': FirestoreJson.writeTimestamp(),
             });
             final nextCount = currentCount > 0 ? currentCount - 1 : 0;
             transaction.update(feedRef, {'likeCount': nextCount});
@@ -198,14 +198,14 @@ class FeedFirestoreSource {
             transaction.update(likeRef, {
               ...likeData.toJson(),
               'status': 'active',
-              'updatedAt': FieldValue.serverTimestamp(),
+              'updatedAt': FirestoreJson.writeTimestamp(),
             });
           } else {
             transaction.set(likeRef, {
               ...likeData.toJson(),
               'status': 'active',
-              'createdAt': FieldValue.serverTimestamp(),
-              'updatedAt': FieldValue.serverTimestamp(),
+              'createdAt': FirestoreJson.writeTimestamp(),
+              'updatedAt': FirestoreJson.writeTimestamp(),
             });
           }
 
@@ -285,7 +285,7 @@ class FeedFirestoreSource {
     final path = 'feeds/$feedId/comments/$commentId';
     final payload = {
       'content': content,
-      'updatedAt': FieldValue.serverTimestamp(),
+      'updatedAt': FirestoreJson.writeTimestamp(),
     };
 
     await FirebaseLogger.write('UPDATE', path, payload, () => ref.update(payload));
@@ -319,7 +319,7 @@ class FeedFirestoreSource {
 
         transaction.update(commentRef, {
           'status': 'deleted',
-          'updatedAt': FieldValue.serverTimestamp(),
+          'updatedAt': FirestoreJson.writeTimestamp(),
         });
         transaction.update(feedRef, {
           'commentCount': currentCount > 0 ? currentCount - 1 : 0,
@@ -333,7 +333,7 @@ class FeedFirestoreSource {
     final path = 'feeds/$feedId';
     final payload = {
       'status': 'deleted',
-      'updatedAt': FieldValue.serverTimestamp(),
+      'updatedAt': FirestoreJson.writeTimestamp(),
     };
 
     await FirebaseLogger.write('UPDATE', path, payload, () => ref.update(payload));
@@ -355,7 +355,7 @@ class FeedFirestoreSource {
       'videos': videos,
       'isPublic': isPublic,
       'allowComments': allowComments,
-      'updatedAt': FieldValue.serverTimestamp(),
+      'updatedAt': FirestoreJson.writeTimestamp(),
     };
 
     await FirebaseLogger.write('UPDATE', path, payload, () => ref.update(payload));
@@ -423,7 +423,7 @@ class FeedFirestoreSource {
         transaction.set(commentRef, {
           ...comment.toJson(),
           'status': 'active',
-          'createdAt': FieldValue.serverTimestamp(),
+          'createdAt': FirestoreJson.writeTimestamp(),
         });
         transaction.update(feedRef, {'commentCount': currentCount + 1});
       });
@@ -461,7 +461,7 @@ class FeedFirestoreSource {
           if (isLiked) {
             transaction.update(likeRef, {
               'status': 'deleted',
-              'updatedAt': FieldValue.serverTimestamp(),
+              'updatedAt': FirestoreJson.writeTimestamp(),
             });
             final nextCount = currentCount > 0 ? currentCount - 1 : 0;
             transaction.update(commentRef, {'likeCount': nextCount});
@@ -472,14 +472,14 @@ class FeedFirestoreSource {
             transaction.update(likeRef, {
               ...likeData.toJson(),
               'status': 'active',
-              'updatedAt': FieldValue.serverTimestamp(),
+              'updatedAt': FirestoreJson.writeTimestamp(),
             });
           } else {
             transaction.set(likeRef, {
               ...likeData.toJson(),
               'status': 'active',
-              'createdAt': FieldValue.serverTimestamp(),
-              'updatedAt': FieldValue.serverTimestamp(),
+              'createdAt': FirestoreJson.writeTimestamp(),
+              'updatedAt': FirestoreJson.writeTimestamp(),
             });
           }
 

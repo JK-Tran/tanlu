@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MarkMessagesAsReadInput {
-  int get conversationId => throw _privateConstructorUsedError;
+  String get conversationId => throw _privateConstructorUsedError;
+  String get currentUserId => throw _privateConstructorUsedError;
 
   /// Create a copy of MarkMessagesAsReadInput
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +34,7 @@ abstract class $MarkMessagesAsReadInputCopyWith<$Res> {
     $Res Function(MarkMessagesAsReadInput) then,
   ) = _$MarkMessagesAsReadInputCopyWithImpl<$Res, MarkMessagesAsReadInput>;
   @useResult
-  $Res call({int conversationId});
+  $Res call({String conversationId, String currentUserId});
 }
 
 /// @nodoc
@@ -53,13 +54,17 @@ class _$MarkMessagesAsReadInputCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? conversationId = null}) {
+  $Res call({Object? conversationId = null, Object? currentUserId = null}) {
     return _then(
       _value.copyWith(
             conversationId: null == conversationId
                 ? _value.conversationId
                 : conversationId // ignore: cast_nullable_to_non_nullable
-                      as int,
+                      as String,
+            currentUserId: null == currentUserId
+                ? _value.currentUserId
+                : currentUserId // ignore: cast_nullable_to_non_nullable
+                      as String,
           )
           as $Val,
     );
@@ -75,7 +80,7 @@ abstract class _$$MarkMessagesAsReadInputImplCopyWith<$Res>
   ) = __$$MarkMessagesAsReadInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int conversationId});
+  $Res call({String conversationId, String currentUserId});
 }
 
 /// @nodoc
@@ -95,13 +100,17 @@ class __$$MarkMessagesAsReadInputImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? conversationId = null}) {
+  $Res call({Object? conversationId = null, Object? currentUserId = null}) {
     return _then(
       _$MarkMessagesAsReadInputImpl(
         conversationId: null == conversationId
             ? _value.conversationId
             : conversationId // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as String,
+        currentUserId: null == currentUserId
+            ? _value.currentUserId
+            : currentUserId // ignore: cast_nullable_to_non_nullable
+                  as String,
       ),
     );
   }
@@ -109,15 +118,31 @@ class __$$MarkMessagesAsReadInputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MarkMessagesAsReadInputImpl implements _MarkMessagesAsReadInput {
-  const _$MarkMessagesAsReadInputImpl({required this.conversationId});
+class _$MarkMessagesAsReadInputImpl
+    with DiagnosticableTreeMixin
+    implements _MarkMessagesAsReadInput {
+  const _$MarkMessagesAsReadInputImpl({
+    required this.conversationId,
+    required this.currentUserId,
+  });
 
   @override
-  final int conversationId;
+  final String conversationId;
+  @override
+  final String currentUserId;
 
   @override
-  String toString() {
-    return 'MarkMessagesAsReadInput(conversationId: $conversationId)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'MarkMessagesAsReadInput(conversationId: $conversationId, currentUserId: $currentUserId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'MarkMessagesAsReadInput'))
+      ..add(DiagnosticsProperty('conversationId', conversationId))
+      ..add(DiagnosticsProperty('currentUserId', currentUserId));
   }
 
   @override
@@ -126,11 +151,13 @@ class _$MarkMessagesAsReadInputImpl implements _MarkMessagesAsReadInput {
         (other.runtimeType == runtimeType &&
             other is _$MarkMessagesAsReadInputImpl &&
             (identical(other.conversationId, conversationId) ||
-                other.conversationId == conversationId));
+                other.conversationId == conversationId) &&
+            (identical(other.currentUserId, currentUserId) ||
+                other.currentUserId == currentUserId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, conversationId);
+  int get hashCode => Object.hash(runtimeType, conversationId, currentUserId);
 
   /// Create a copy of MarkMessagesAsReadInput
   /// with the given fields replaced by the non-null parameter values.
@@ -145,11 +172,15 @@ class _$MarkMessagesAsReadInputImpl implements _MarkMessagesAsReadInput {
 }
 
 abstract class _MarkMessagesAsReadInput implements MarkMessagesAsReadInput {
-  const factory _MarkMessagesAsReadInput({required final int conversationId}) =
-      _$MarkMessagesAsReadInputImpl;
+  const factory _MarkMessagesAsReadInput({
+    required final String conversationId,
+    required final String currentUserId,
+  }) = _$MarkMessagesAsReadInputImpl;
 
   @override
-  int get conversationId;
+  String get conversationId;
+  @override
+  String get currentUserId;
 
   /// Create a copy of MarkMessagesAsReadInput
   /// with the given fields replaced by the non-null parameter values.
@@ -214,12 +245,20 @@ class __$$MarkMessagesAsReadOutputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MarkMessagesAsReadOutputImpl implements _MarkMessagesAsReadOutput {
+class _$MarkMessagesAsReadOutputImpl
+    with DiagnosticableTreeMixin
+    implements _MarkMessagesAsReadOutput {
   const _$MarkMessagesAsReadOutputImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'MarkMessagesAsReadOutput()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'MarkMessagesAsReadOutput'));
   }
 
   @override

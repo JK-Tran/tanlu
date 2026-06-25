@@ -4,18 +4,54 @@ import 'package:tanlu_management/shared/services/firebase/push/push_navigation_p
 import 'package:tanlu_management/shared/services/firebase/push/push_notification_display.dart';
 import 'package:tanlu_management/shared/services/firebase/push/push_notification_type.dart';
 import 'package:tanlu_management/shared/services/firebase/local_notification_service.dart';
+import 'package:tanlu_management/shared/services/notification/notification_preferences.dart';
 
 @lazySingleton
 class PushNotificationHandler {
-  PushNotificationHandler(this._localNotificationService);
+  PushNotificationHandler(
+    this._localNotificationService,
+    this._notificationPreferences,
+  );
 
   final LocalNotificationService _localNotificationService;
+  final NotificationPreferences _notificationPreferences;
 
   Future<void> initialize() => _localNotificationService.initialize();
 
   Future<void> handleRemoteMessage(RemoteMessage message) async {
+    if (!_notificationPreferences.isEnabled) return;
+
     final display = _displayFromRemoteMessage(message);
+    final type = PushNotificationType.fromValue(message.data['type']);
+
+    // Foreground: Firestore stream đã hiện banner — bỏ qua FCM để tránh trùng.
+    if (type == PushNotificationType.chatMessage) {
+      return;
+    }
+
     await show(display);
+  }
+
+  Future<void> showChatMessage({
+    required int id,
+    required String senderName,
+    required String preview,
+    required String conversationId,
+    String? senderAvatarUrl,
+  }) {
+    return show(
+      PushNotificationDisplay(
+        type: PushNotificationType.chatMessage,
+        title: senderName,
+        body: preview,
+        senderAvatarUrl: senderAvatarUrl,
+        payload: PushNavigationPayload.fromDisplay(
+          type: PushNotificationType.chatMessage,
+          conversationId: conversationId,
+        ).encode(),
+        notificationId: id,
+      ),
+    );
   }
 
   Future<void> showLeaveRequest({
@@ -43,6 +79,7 @@ class PushNotificationHandler {
   }
 
   Future<void> show(PushNotificationDisplay display) {
+    if (!_notificationPreferences.isEnabled) return Future.value();
     return _localNotificationService.show(display);
   }
 
@@ -65,7 +102,10 @@ class PushNotificationHandler {
       ),
       PushNotificationType.chatMessage => PushNotificationDisplay(
         type: type,
-        title: notification?.title ?? 'Tin nhắn mới',
+        title:
+            notification?.title ??
+            (data['senderName'] as String?)?.trim() ??
+            'Tin nhắn mới',
         body: notification?.body ?? data['preview'] as String? ?? '',
         senderAvatarUrl: data['senderAvatarUrl'] as String?,
         payload: PushNavigationPayload.fromDisplay(

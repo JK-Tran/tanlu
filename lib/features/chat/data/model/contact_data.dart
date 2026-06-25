@@ -6,26 +6,13 @@ part 'contact_data.g.dart';
 @freezed
 class ContactData with _$ContactData {
   const factory ContactData({
-    @JsonKey() int? id,
-    @JsonKey() String? fullName,
-    @JsonKey() String? avatarFileId,
-    @JsonKey() RoleData? role,
+    @JsonKey(name: 'id', includeToJson: false) String? id,
+    @JsonKey(name: 'fullName') String? fullName,
+    @JsonKey(name: 'role') String? role,
+    @JsonKey(name: 'avatar') String? avatar,
+    @JsonKey(name: 'classId') String? classId,
   }) = _ContactData;
-
-  const ContactData._();
 
   factory ContactData.fromJson(Map<String, dynamic> json) =>
       _$ContactDataFromJson(json);
-}
-
-@freezed
-class RoleData with _$RoleData {
-  const factory RoleData({
-    @JsonKey() String? code,
-  }) = _RoleData;
-
-  const RoleData._();
-
-  factory RoleData.fromJson(Map<String, dynamic> json) =>
-      _$RoleDataFromJson(json);
 }

@@ -8,6 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:tanlu_management/core/utils/app_logger.dart';
 import 'package:tanlu_management/core/router/push_navigation_helper.dart';
 import 'package:tanlu_management/features/notification/data/services/push_notification_handler.dart';
+import 'package:tanlu_management/shared/services/notification/notification_preferences.dart';
 
 /// Handler khi app ở background/terminated. Phải là top-level function.
 @pragma('vm:entry-point')
@@ -23,10 +24,15 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 /// Wrapper Firebase Messaging SDK — không chứa business logic.
 @lazySingleton
 class FcmMessaging {
-  FcmMessaging(this._messaging, this._pushNotificationHandler);
+  FcmMessaging(
+    this._messaging,
+    this._pushNotificationHandler,
+    this._notificationPreferences,
+  );
 
   final FirebaseMessaging _messaging;
   final PushNotificationHandler _pushNotificationHandler;
+  final NotificationPreferences _notificationPreferences;
   bool _initialized = false;
 
   Stream<RemoteMessage> get onMessage => FirebaseMessaging.onMessage;
@@ -44,10 +50,10 @@ class FcmMessaging {
     await _pushNotificationHandler.initialize();
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      await Permission.notification.request();
+    if (!_notificationPreferences.permissionPrompted) {
+      await _notificationPreferences.markPermissionPrompted();
+      await requestOsPermission();
     }
-    await requestPermission();
 
     FirebaseMessaging.onMessage.listen(_onForegroundMessage);
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
@@ -65,6 +71,8 @@ class FcmMessaging {
   }
 
   void _onForegroundMessage(RemoteMessage message) {
+    if (!_notificationPreferences.isEnabled) return;
+
     final notification = message.notification;
     appLogger.i(
       'FCM foreground: ${notification?.title} | '
@@ -72,6 +80,13 @@ class FcmMessaging {
     );
 
     _pushNotificationHandler.handleRemoteMessage(message);
+  }
+
+  Future<NotificationSettings> requestOsPermission() async {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      await Permission.notification.request();
+    }
+    return requestPermission();
   }
 
   Future<NotificationSettings> requestPermission() async {

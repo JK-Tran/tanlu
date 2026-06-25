@@ -109,7 +109,7 @@ class AttendanceFirebaseSource {
 
         batch.set(
           _firestore.collection('attendance_sessions').doc(sessionId),
-          {...session.toJson(), 'updatedAt': FieldValue.serverTimestamp()},
+          {...session.toJson(), 'updatedAt': FirestoreJson.writeTimestamp()},
           SetOptions(merge: true),
         );
 
@@ -127,7 +127,7 @@ class AttendanceFirebaseSource {
             _firestore
                 .collection('attendances')
                 .doc(_attendanceDocId(studentId, attendanceDate)),
-            {...attendance.toJson(), 'updatedAt': FieldValue.serverTimestamp()},
+            {...attendance.toJson(), 'updatedAt': FirestoreJson.writeTimestamp()},
             SetOptions(merge: true),
           );
         }
@@ -161,7 +161,7 @@ class AttendanceFirebaseSource {
             _firestore
                 .collection('attendances')
                 .doc(_attendanceDocId(studentId, attendanceDate)),
-            {...attendance.toJson(), 'updatedAt': FieldValue.serverTimestamp()},
+            {...attendance.toJson(), 'updatedAt': FirestoreJson.writeTimestamp()},
             SetOptions(merge: true),
           );
         }
@@ -196,7 +196,7 @@ class AttendanceFirebaseSource {
           {
             ...session.toJson(),
             'isCheckOutCompleted': true,
-            'updatedAt': FieldValue.serverTimestamp(),
+            'updatedAt': FirestoreJson.writeTimestamp(),
           },
           SetOptions(merge: true),
         );
@@ -215,7 +215,7 @@ class AttendanceFirebaseSource {
             _firestore
                 .collection('attendances')
                 .doc(_attendanceDocId(studentId, attendanceDate)),
-            {...attendance.toJson(), 'updatedAt': FieldValue.serverTimestamp()},
+            {...attendance.toJson(), 'updatedAt': FirestoreJson.writeTimestamp()},
             SetOptions(merge: true),
           );
         }
@@ -245,7 +245,7 @@ class AttendanceFirebaseSource {
           batch.update(_firestore.collection('leave_requests').doc(leaveId), {
             'status': status,
             'reviewedBy': reviewedBy,
-            'updatedAt': FieldValue.serverTimestamp(),
+            'updatedAt': FirestoreJson.writeTimestamp(),
           });
         }
 
@@ -266,7 +266,7 @@ class AttendanceFirebaseSource {
                 'checkInTime': FieldValue.delete(),
                 'checkOutTime': FieldValue.delete(),
                 'recordedBy': reviewedBy,
-                'updatedAt': FieldValue.serverTimestamp(),
+                'updatedAt': FirestoreJson.writeTimestamp(),
               },
               SetOptions(merge: true),
             );

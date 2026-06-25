@@ -22,18 +22,21 @@ mixin _$AppEvent {
     required TResult Function() started,
     required TResult Function(User user) loggedIn,
     required TResult Function() loggedOut,
+    required TResult Function(bool enabled) notificationsEnabledChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
     TResult? Function(User user)? loggedIn,
     TResult? Function()? loggedOut,
+    TResult? Function(bool enabled)? notificationsEnabledChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
     TResult Function(User user)? loggedIn,
     TResult Function()? loggedOut,
+    TResult Function(bool enabled)? notificationsEnabledChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,18 +44,24 @@ mixin _$AppEvent {
     required TResult Function(_Started value) started,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NotificationsEnabledChanged value)
+    notificationsEnabledChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
     TResult? Function(_LoggedIn value)? loggedIn,
     TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -123,6 +132,7 @@ class _$StartedImpl implements _Started {
     required TResult Function() started,
     required TResult Function(User user) loggedIn,
     required TResult Function() loggedOut,
+    required TResult Function(bool enabled) notificationsEnabledChanged,
   }) {
     return started();
   }
@@ -133,6 +143,7 @@ class _$StartedImpl implements _Started {
     TResult? Function()? started,
     TResult? Function(User user)? loggedIn,
     TResult? Function()? loggedOut,
+    TResult? Function(bool enabled)? notificationsEnabledChanged,
   }) {
     return started?.call();
   }
@@ -143,6 +154,7 @@ class _$StartedImpl implements _Started {
     TResult Function()? started,
     TResult Function(User user)? loggedIn,
     TResult Function()? loggedOut,
+    TResult Function(bool enabled)? notificationsEnabledChanged,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -157,6 +169,8 @@ class _$StartedImpl implements _Started {
     required TResult Function(_Started value) started,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NotificationsEnabledChanged value)
+    notificationsEnabledChanged,
   }) {
     return started(this);
   }
@@ -167,6 +181,8 @@ class _$StartedImpl implements _Started {
     TResult? Function(_Started value)? started,
     TResult? Function(_LoggedIn value)? loggedIn,
     TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
   }) {
     return started?.call(this);
   }
@@ -177,6 +193,8 @@ class _$StartedImpl implements _Started {
     TResult Function(_Started value)? started,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -275,6 +293,7 @@ class _$LoggedInImpl implements _LoggedIn {
     required TResult Function() started,
     required TResult Function(User user) loggedIn,
     required TResult Function() loggedOut,
+    required TResult Function(bool enabled) notificationsEnabledChanged,
   }) {
     return loggedIn(user);
   }
@@ -285,6 +304,7 @@ class _$LoggedInImpl implements _LoggedIn {
     TResult? Function()? started,
     TResult? Function(User user)? loggedIn,
     TResult? Function()? loggedOut,
+    TResult? Function(bool enabled)? notificationsEnabledChanged,
   }) {
     return loggedIn?.call(user);
   }
@@ -295,6 +315,7 @@ class _$LoggedInImpl implements _LoggedIn {
     TResult Function()? started,
     TResult Function(User user)? loggedIn,
     TResult Function()? loggedOut,
+    TResult Function(bool enabled)? notificationsEnabledChanged,
     required TResult orElse(),
   }) {
     if (loggedIn != null) {
@@ -309,6 +330,8 @@ class _$LoggedInImpl implements _LoggedIn {
     required TResult Function(_Started value) started,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NotificationsEnabledChanged value)
+    notificationsEnabledChanged,
   }) {
     return loggedIn(this);
   }
@@ -319,6 +342,8 @@ class _$LoggedInImpl implements _LoggedIn {
     TResult? Function(_Started value)? started,
     TResult? Function(_LoggedIn value)? loggedIn,
     TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
   }) {
     return loggedIn?.call(this);
   }
@@ -329,6 +354,8 @@ class _$LoggedInImpl implements _LoggedIn {
     TResult Function(_Started value)? started,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
     required TResult orElse(),
   }) {
     if (loggedIn != null) {
@@ -396,6 +423,7 @@ class _$LoggedOutImpl implements _LoggedOut {
     required TResult Function() started,
     required TResult Function(User user) loggedIn,
     required TResult Function() loggedOut,
+    required TResult Function(bool enabled) notificationsEnabledChanged,
   }) {
     return loggedOut();
   }
@@ -406,6 +434,7 @@ class _$LoggedOutImpl implements _LoggedOut {
     TResult? Function()? started,
     TResult? Function(User user)? loggedIn,
     TResult? Function()? loggedOut,
+    TResult? Function(bool enabled)? notificationsEnabledChanged,
   }) {
     return loggedOut?.call();
   }
@@ -416,6 +445,7 @@ class _$LoggedOutImpl implements _LoggedOut {
     TResult Function()? started,
     TResult Function(User user)? loggedIn,
     TResult Function()? loggedOut,
+    TResult Function(bool enabled)? notificationsEnabledChanged,
     required TResult orElse(),
   }) {
     if (loggedOut != null) {
@@ -430,6 +460,8 @@ class _$LoggedOutImpl implements _LoggedOut {
     required TResult Function(_Started value) started,
     required TResult Function(_LoggedIn value) loggedIn,
     required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NotificationsEnabledChanged value)
+    notificationsEnabledChanged,
   }) {
     return loggedOut(this);
   }
@@ -440,6 +472,8 @@ class _$LoggedOutImpl implements _LoggedOut {
     TResult? Function(_Started value)? started,
     TResult? Function(_LoggedIn value)? loggedIn,
     TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
   }) {
     return loggedOut?.call(this);
   }
@@ -450,6 +484,8 @@ class _$LoggedOutImpl implements _LoggedOut {
     TResult Function(_Started value)? started,
     TResult Function(_LoggedIn value)? loggedIn,
     TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
     required TResult orElse(),
   }) {
     if (loggedOut != null) {
@@ -461,6 +497,168 @@ class _$LoggedOutImpl implements _LoggedOut {
 
 abstract class _LoggedOut implements AppEvent {
   const factory _LoggedOut() = _$LoggedOutImpl;
+}
+
+/// @nodoc
+abstract class _$$NotificationsEnabledChangedImplCopyWith<$Res> {
+  factory _$$NotificationsEnabledChangedImplCopyWith(
+    _$NotificationsEnabledChangedImpl value,
+    $Res Function(_$NotificationsEnabledChangedImpl) then,
+  ) = __$$NotificationsEnabledChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool enabled});
+}
+
+/// @nodoc
+class __$$NotificationsEnabledChangedImplCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$NotificationsEnabledChangedImpl>
+    implements _$$NotificationsEnabledChangedImplCopyWith<$Res> {
+  __$$NotificationsEnabledChangedImplCopyWithImpl(
+    _$NotificationsEnabledChangedImpl _value,
+    $Res Function(_$NotificationsEnabledChangedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of AppEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? enabled = null}) {
+    return _then(
+      _$NotificationsEnabledChangedImpl(
+        null == enabled
+            ? _value.enabled
+            : enabled // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$NotificationsEnabledChangedImpl
+    implements _NotificationsEnabledChanged {
+  const _$NotificationsEnabledChangedImpl(this.enabled);
+
+  @override
+  final bool enabled;
+
+  @override
+  String toString() {
+    return 'AppEvent.notificationsEnabledChanged(enabled: $enabled)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NotificationsEnabledChangedImpl &&
+            (identical(other.enabled, enabled) || other.enabled == enabled));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, enabled);
+
+  /// Create a copy of AppEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NotificationsEnabledChangedImplCopyWith<_$NotificationsEnabledChangedImpl>
+  get copyWith =>
+      __$$NotificationsEnabledChangedImplCopyWithImpl<
+        _$NotificationsEnabledChangedImpl
+      >(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() started,
+    required TResult Function(User user) loggedIn,
+    required TResult Function() loggedOut,
+    required TResult Function(bool enabled) notificationsEnabledChanged,
+  }) {
+    return notificationsEnabledChanged(enabled);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? started,
+    TResult? Function(User user)? loggedIn,
+    TResult? Function()? loggedOut,
+    TResult? Function(bool enabled)? notificationsEnabledChanged,
+  }) {
+    return notificationsEnabledChanged?.call(enabled);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? started,
+    TResult Function(User user)? loggedIn,
+    TResult Function()? loggedOut,
+    TResult Function(bool enabled)? notificationsEnabledChanged,
+    required TResult orElse(),
+  }) {
+    if (notificationsEnabledChanged != null) {
+      return notificationsEnabledChanged(enabled);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Started value) started,
+    required TResult Function(_LoggedIn value) loggedIn,
+    required TResult Function(_LoggedOut value) loggedOut,
+    required TResult Function(_NotificationsEnabledChanged value)
+    notificationsEnabledChanged,
+  }) {
+    return notificationsEnabledChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Started value)? started,
+    TResult? Function(_LoggedIn value)? loggedIn,
+    TResult? Function(_LoggedOut value)? loggedOut,
+    TResult? Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
+  }) {
+    return notificationsEnabledChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Started value)? started,
+    TResult Function(_LoggedIn value)? loggedIn,
+    TResult Function(_LoggedOut value)? loggedOut,
+    TResult Function(_NotificationsEnabledChanged value)?
+    notificationsEnabledChanged,
+    required TResult orElse(),
+  }) {
+    if (notificationsEnabledChanged != null) {
+      return notificationsEnabledChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NotificationsEnabledChanged implements AppEvent {
+  const factory _NotificationsEnabledChanged(final bool enabled) =
+      _$NotificationsEnabledChangedImpl;
+
+  bool get enabled;
+
+  /// Create a copy of AppEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$NotificationsEnabledChangedImplCopyWith<_$NotificationsEnabledChangedImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc

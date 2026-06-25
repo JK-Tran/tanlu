@@ -60,27 +60,37 @@ import '../../features/auth/domain/usecases/logout_use_case.dart' as _i711;
 import '../../features/auth/domain/usecases/save_current_user_use_case.dart'
     as _i546;
 import '../../features/auth/presentation/login/bloc/login_bloc.dart' as _i204;
-import '../../features/chat/data/mapper/chat_user_data_mapper.dart' as _i182;
 import '../../features/chat/data/mapper/contact_data_mapper.dart' as _i203;
 import '../../features/chat/data/mapper/conversation_data_mapper.dart' as _i808;
+import '../../features/chat/data/mapper/friend_request_data_mapper.dart'
+    as _i471;
+import '../../features/chat/data/mapper/friendship_data_mapper.dart' as _i1058;
+import '../../features/chat/data/mapper/member_data_mapper.dart' as _i666;
 import '../../features/chat/data/mapper/message_data_mapper.dart' as _i1071;
-import '../../features/chat/data/mapper/participant_data_mapper.dart' as _i50;
 import '../../features/chat/data/repositories/chat_repository_impl.dart'
     as _i504;
-import '../../features/chat/data/sources/chat_api_service.dart' as _i958;
+import '../../features/chat/data/sources/chat_firestore_source.dart' as _i693;
+import '../../features/chat/data/sources/chat_storage_source.dart' as _i1024;
 import '../../features/chat/domain/repositories/chat_repository.dart' as _i420;
 import '../../features/chat/domain/usecases/create_conversation_use_case.dart'
     as _i441;
 import '../../features/chat/domain/usecases/get_contacts_use_case.dart'
     as _i444;
-import '../../features/chat/domain/usecases/get_conversations_use_case.dart'
-    as _i890;
-import '../../features/chat/domain/usecases/get_messages_use_case.dart'
-    as _i671;
+import '../../features/chat/domain/usecases/get_friends_use_case.dart' as _i860;
 import '../../features/chat/domain/usecases/mark_messages_as_read_use_case.dart'
     as _i29;
-import '../../features/chat/domain/usecases/send_message_use_case.dart'
-    as _i500;
+import '../../features/chat/domain/usecases/stream_conversations_use_case.dart'
+    as _i796;
+import '../../features/chat/domain/usecases/stream_friend_requests_use_case.dart'
+    as _i630;
+import '../../features/chat/domain/usecases/stream_messages_use_case.dart'
+    as _i795;
+import '../../features/chat/domain/usecases/submit_friend_decision_use_case.dart'
+    as _i892;
+import '../../features/chat/domain/usecases/submit_friend_request_use_case.dart'
+    as _i408;
+import '../../features/chat/domain/usecases/submit_message_use_case.dart'
+    as _i396;
 import '../../features/chat/presentation/bloc/chat_bloc.dart' as _i65;
 import '../../features/feed/data/mapper/comment_data_mapper.dart' as _i774;
 import '../../features/feed/data/mapper/feed_data_mapper.dart' as _i176;
@@ -156,8 +166,15 @@ import '../../shared/network/dio_client.dart' as _i833;
 import '../../shared/services/firebase/fcm_messaging.dart' as _i907;
 import '../../shared/services/firebase/local_notification_service.dart'
     as _i809;
+import '../../shared/services/firebase/push/chat_incoming_banner_service.dart'
+    as _i916;
+import '../../shared/services/firebase/push/chat_push_opener.dart' as _i963;
+import '../../shared/services/firebase/push/in_app_push_banner_controller.dart'
+    as _i35;
 import '../../shared/services/google_auth_service.dart' as _i175;
 import '../../shared/services/local_storage/app_preferences.dart' as _i531;
+import '../../shared/services/notification/notification_preferences.dart'
+    as _i796;
 import '../../shared/services/socket_io/socket.dart' as _i46;
 import '../base/default_bloc.dart' as _i841;
 import '../utils/shared_prefs_helper.dart' as _i964;
@@ -184,15 +201,25 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i536.LeaveRequestDataMapper(),
     );
     gh.factory<_i702.UserDataMapper>(() => _i702.UserDataMapper());
-    gh.factory<_i182.ChatUserDataMapper>(() => _i182.ChatUserDataMapper());
     gh.factory<_i203.ContactDataMapper>(() => _i203.ContactDataMapper());
+    gh.factory<_i808.ConversationDataMapper>(
+      () => _i808.ConversationDataMapper(),
+    );
+    gh.factory<_i1058.FriendshipDataMapper>(
+      () => _i1058.FriendshipDataMapper(),
+    );
+    gh.factory<_i471.FriendRequestDataMapper>(
+      () => _i471.FriendRequestDataMapper(),
+    );
+    gh.factory<_i666.MemberDataMapper>(() => _i666.MemberDataMapper());
+    gh.factory<_i1071.MessageDataMapper>(() => _i1071.MessageDataMapper());
     gh.factory<_i774.CommentDataMapper>(() => _i774.CommentDataMapper());
+    gh.factory<_i176.FeedDataMapper>(() => _i176.FeedDataMapper());
+    gh.factory<_i82.FeedLikeDataMapper>(() => _i82.FeedLikeDataMapper());
     gh.factory<_i1002.DeviceTokenDataMapper>(
       () => _i1002.DeviceTokenDataMapper(),
     );
     gh.factory<_i67.StudentDataMapper>(() => _i67.StudentDataMapper());
-    gh.factory<_i176.FeedDataMapper>(() => _i176.FeedDataMapper());
-    gh.factory<_i82.FeedLikeDataMapper>(() => _i82.FeedLikeDataMapper());
     gh.lazySingleton<_i59.FirebaseAuth>(() => registerModule.firebaseAuth);
     gh.lazySingleton<_i974.FirebaseFirestore>(() => registerModule.firestore);
     gh.lazySingleton<_i457.FirebaseStorage>(
@@ -206,8 +233,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i303.DeviceInfo>(() => registerModule.deviceInfo());
     gh.lazySingleton<_i80.AppInfo>(() => _i80.AppInfo());
-    gh.lazySingleton<_i809.LocalNotificationService>(
-      () => _i809.LocalNotificationService(),
+    gh.lazySingleton<_i963.ChatPushOpener>(() => _i963.ChatPushOpener());
+    gh.lazySingleton<_i35.InAppPushBannerController>(
+      () => _i35.InAppPushBannerController(),
+    );
+    gh.lazySingleton<_i1024.ChatStorageSource>(
+      () => _i1024.ChatStorageSource(gh<_i457.FirebaseStorage>()),
     );
     gh.lazySingleton<_i872.FeedStorageSource>(
       () => _i872.FeedStorageSource(gh<_i457.FirebaseStorage>()),
@@ -218,26 +249,32 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i46.SocketService>(
       () => _i46.SocketService(gh<_i460.SharedPreferences>()),
     );
-    gh.factory<_i1071.MessageDataMapper>(
-      () => _i1071.MessageDataMapper(gh<_i182.ChatUserDataMapper>()),
-    );
-    gh.factory<_i50.ParticipantDataMapper>(
-      () => _i50.ParticipantDataMapper(gh<_i182.ChatUserDataMapper>()),
-    );
-    gh.factory<_i808.ConversationDataMapper>(
-      () => _i808.ConversationDataMapper(
-        gh<_i50.ParticipantDataMapper>(),
-        gh<_i1071.MessageDataMapper>(),
-      ),
-    );
     gh.lazySingleton<_i531.AppPreferences>(
       () => _i512.AppApiService(gh<_i964.SharedPrefsHelper>()),
+    );
+    gh.lazySingleton<_i796.NotificationPreferences>(
+      () => _i796.NotificationPreferences(gh<_i964.SharedPrefsHelper>()),
     );
     gh.lazySingleton<_i456.AppRepository>(
       () => _i111.AppRepositoryImpl(gh<_i531.AppPreferences>()),
     );
+    gh.lazySingleton<_i916.ChatIncomingBannerService>(
+      () => _i916.ChatIncomingBannerService(
+        gh<_i35.InAppPushBannerController>(),
+        gh<_i796.NotificationPreferences>(),
+      ),
+    );
+    gh.lazySingleton<_i809.LocalNotificationService>(
+      () => _i809.LocalNotificationService(gh<_i796.NotificationPreferences>()),
+    );
     gh.lazySingleton<_i209.AttendanceFirebaseSource>(
       () => _i209.AttendanceFirebaseSource(gh<_i974.FirebaseFirestore>()),
+    );
+    gh.lazySingleton<_i693.ChatFirestoreSource>(
+      () => _i693.ChatFirestoreSource(gh<_i974.FirebaseFirestore>()),
+    );
+    gh.lazySingleton<_i546.FeedFirestoreSource>(
+      () => _i546.FeedFirestoreSource(gh<_i974.FirebaseFirestore>()),
     );
     gh.lazySingleton<_i780.NotificationFirebaseSource>(
       () => _i780.NotificationFirebaseSource(gh<_i974.FirebaseFirestore>()),
@@ -247,9 +284,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i489.StudentFirebaseSource>(
       () => _i489.StudentFirebaseSource(gh<_i974.FirebaseFirestore>()),
-    );
-    gh.lazySingleton<_i546.FeedFirestoreSource>(
-      () => _i546.FeedFirestoreSource(gh<_i974.FirebaseFirestore>()),
     );
     gh.lazySingleton<_i630.NotificationRepository>(
       () => _i407.NotificationRepositoryImpl(
@@ -282,7 +316,10 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.lazySingleton<_i212.PushNotificationHandler>(
-      () => _i212.PushNotificationHandler(gh<_i809.LocalNotificationService>()),
+      () => _i212.PushNotificationHandler(
+        gh<_i809.LocalNotificationService>(),
+        gh<_i796.NotificationPreferences>(),
+      ),
     );
     gh.lazySingleton<_i477.AttendanceRepository>(
       () => _i719.AttendanceRepositoryImpl(
@@ -318,8 +355,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i82.FeedLikeDataMapper>(),
       ),
     );
-    gh.lazySingleton<_i958.ChatApiService>(
-      () => _i958.ChatApiService(gh<_i757.ApiClient>()),
+    gh.lazySingleton<_i907.FcmMessaging>(
+      () => _i907.FcmMessaging(
+        gh<_i892.FirebaseMessaging>(),
+        gh<_i212.PushNotificationHandler>(),
+        gh<_i796.NotificationPreferences>(),
+      ),
     );
     gh.factory<_i230.GetStudentClassStatsUseCase>(
       () => _i230.GetStudentClassStatsUseCase(gh<_i215.StudentRepository>()),
@@ -328,6 +369,16 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i510.StudentBloc(
         gh<_i151.GetAllStudentByClassIdUseCase>(),
         gh<_i230.GetStudentClassStatsUseCase>(),
+      ),
+    );
+    gh.lazySingleton<_i420.ChatRepository>(
+      () => _i504.ChatRepositoryImpl(
+        gh<_i693.ChatFirestoreSource>(),
+        gh<_i1024.ChatStorageSource>(),
+        gh<_i203.ContactDataMapper>(),
+        gh<_i808.ConversationDataMapper>(),
+        gh<_i1071.MessageDataMapper>(),
+        gh<_i471.FriendRequestDataMapper>(),
       ),
     );
     gh.factory<_i742.GetDailyAttendanceUseCase>(
@@ -354,12 +405,6 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i336.UpdateDailyAttendanceUseCase(gh<_i477.AttendanceRepository>()),
     );
-    gh.lazySingleton<_i907.FcmMessaging>(
-      () => _i907.FcmMessaging(
-        gh<_i892.FirebaseMessaging>(),
-        gh<_i212.PushNotificationHandler>(),
-      ),
-    );
     gh.lazySingleton<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
         gh<_i531.AppPreferences>(),
@@ -367,13 +412,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i412.AuthFirebaseSource>(),
       ),
     );
-    gh.lazySingleton<_i420.ChatRepository>(
-      () => _i504.ChatRepositoryImpl(
-        gh<_i958.ChatApiService>(),
-        gh<_i808.ConversationDataMapper>(),
-        gh<_i1071.MessageDataMapper>(),
-        gh<_i203.ContactDataMapper>(),
-      ),
+    gh.factory<_i609.DeleteFeedCommentUseCase>(
+      () => _i609.DeleteFeedCommentUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i404.DeleteFeedUseCase>(
+      () => _i404.DeleteFeedUseCase(gh<_i430.FeedRepository>()),
     );
     gh.factory<_i866.GetClassFeedsUseCase>(
       () => _i866.GetClassFeedsUseCase(gh<_i430.FeedRepository>()),
@@ -402,12 +445,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i822.SubmitFeedUseCase>(
       () => _i822.SubmitFeedUseCase(gh<_i430.FeedRepository>()),
     );
-    gh.factory<_i609.DeleteFeedCommentUseCase>(
-      () => _i609.DeleteFeedCommentUseCase(gh<_i430.FeedRepository>()),
-    );
-    gh.factory<_i404.DeleteFeedUseCase>(
-      () => _i404.DeleteFeedUseCase(gh<_i430.FeedRepository>()),
-    );
     gh.factory<_i160.UpdateFeedCommentUseCase>(
       () => _i160.UpdateFeedCommentUseCase(gh<_i430.FeedRepository>()),
     );
@@ -420,17 +457,29 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i444.GetContactsUseCase>(
       () => _i444.GetContactsUseCase(gh<_i420.ChatRepository>()),
     );
-    gh.factory<_i890.GetConversationsUseCase>(
-      () => _i890.GetConversationsUseCase(gh<_i420.ChatRepository>()),
-    );
-    gh.factory<_i671.GetMessagesUseCase>(
-      () => _i671.GetMessagesUseCase(gh<_i420.ChatRepository>()),
+    gh.factory<_i860.GetFriendsUseCase>(
+      () => _i860.GetFriendsUseCase(gh<_i420.ChatRepository>()),
     );
     gh.factory<_i29.MarkMessagesAsReadUseCase>(
       () => _i29.MarkMessagesAsReadUseCase(gh<_i420.ChatRepository>()),
     );
-    gh.factory<_i500.SendMessageUseCase>(
-      () => _i500.SendMessageUseCase(gh<_i420.ChatRepository>()),
+    gh.factory<_i796.StreamConversationsUseCase>(
+      () => _i796.StreamConversationsUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i630.StreamFriendRequestsUseCase>(
+      () => _i630.StreamFriendRequestsUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i795.StreamMessagesUseCase>(
+      () => _i795.StreamMessagesUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i892.SubmitFriendDecisionUseCase>(
+      () => _i892.SubmitFriendDecisionUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i408.SubmitFriendRequestUseCase>(
+      () => _i408.SubmitFriendRequestUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i396.SubmitMessageUseCase>(
+      () => _i396.SubmitMessageUseCase(gh<_i420.ChatRepository>()),
     );
     gh.factory<_i37.LoginUseCase>(
       () => _i37.LoginUseCase(gh<_i787.AuthRepository>()),
@@ -458,24 +507,19 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i742.GetDailyAttendanceUseCase>(),
       ),
     );
-    gh.lazySingleton<_i120.AppBloc>(
-      () => _i120.AppBloc(
-        gh<_i787.AuthRepository>(),
-        gh<_i531.AppPreferences>(),
-        gh<_i907.FcmMessaging>(),
-        gh<_i337.RegisterDeviceTokenUseCase>(),
-        gh<_i946.UnregisterDeviceTokenUseCase>(),
-      ),
-    );
     gh.lazySingleton<_i65.ChatBloc>(
       () => _i65.ChatBloc(
-        gh<_i890.GetConversationsUseCase>(),
         gh<_i444.GetContactsUseCase>(),
-        gh<_i671.GetMessagesUseCase>(),
-        gh<_i500.SendMessageUseCase>(),
+        gh<_i796.StreamConversationsUseCase>(),
+        gh<_i795.StreamMessagesUseCase>(),
+        gh<_i630.StreamFriendRequestsUseCase>(),
         gh<_i441.CreateConversationUseCase>(),
+        gh<_i396.SubmitMessageUseCase>(),
         gh<_i29.MarkMessagesAsReadUseCase>(),
-        gh<_i46.SocketService>(),
+        gh<_i408.SubmitFriendRequestUseCase>(),
+        gh<_i892.SubmitFriendDecisionUseCase>(),
+        gh<_i420.ChatRepository>(),
+        gh<_i916.ChatIncomingBannerService>(),
       ),
     );
     gh.factory<_i242.FeedBloc>(
@@ -487,6 +531,17 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i204.LoginBloc>(() => _i204.LoginBloc(gh<_i37.LoginUseCase>()));
+    gh.lazySingleton<_i120.AppBloc>(
+      () => _i120.AppBloc(
+        gh<_i787.AuthRepository>(),
+        gh<_i531.AppPreferences>(),
+        gh<_i907.FcmMessaging>(),
+        gh<_i337.RegisterDeviceTokenUseCase>(),
+        gh<_i946.UnregisterDeviceTokenUseCase>(),
+        gh<_i65.ChatBloc>(),
+        gh<_i796.NotificationPreferences>(),
+      ),
+    );
     gh.factory<_i967.CreateFeedBloc>(
       () => _i967.CreateFeedBloc(
         gh<_i822.SubmitFeedUseCase>(),

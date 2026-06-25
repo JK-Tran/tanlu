@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
+import 'package:tanlu_management/core/di/injection_container.dart';
 import 'package:tanlu_management/core/router/app_router.dart';
 import 'package:tanlu_management/core/utils/app_logger.dart';
+import 'package:tanlu_management/shared/services/firebase/push/chat_push_opener.dart';
 import 'package:tanlu_management/shared/services/firebase/push/push_navigation_payload.dart';
 import 'package:tanlu_management/shared/services/firebase/push/push_notification_type.dart';
 
@@ -58,11 +60,40 @@ abstract final class PushNavigationHelper {
       case PushNotificationType.leaveRequest:
         _navigateToLeaveRequest(router);
       case PushNotificationType.chatMessage:
-        router.go(AppRouter.message);
+        _navigateToChatMessage(router, payload.conversationId);
       case PushNotificationType.feedPost:
         router.go(AppRouter.feed);
       case PushNotificationType.general:
         break;
+    }
+  }
+
+  static void openChatConversation(String conversationId) {
+    navigate(
+      PushNavigationPayload.fromDisplay(
+        type: PushNotificationType.chatMessage,
+        conversationId: conversationId,
+      ),
+    );
+  }
+
+  static void _navigateToChatMessage(
+    GoRouter router,
+    String? conversationId,
+  ) {
+    final current = router.state.matchedLocation;
+    appLogger.i('Push navigate → chat (conversationId=$conversationId)');
+
+    if (current == AppRouter.root || current == AppRouter.login) {
+      router.go(AppRouter.overview);
+    }
+
+    if (current != AppRouter.message) {
+      router.go(AppRouter.message);
+    }
+
+    if (conversationId != null && conversationId.isNotEmpty) {
+      sl<ChatPushOpener>().openConversation(conversationId);
     }
   }
 

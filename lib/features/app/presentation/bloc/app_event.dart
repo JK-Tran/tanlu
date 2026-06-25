@@ -10,4 +10,8 @@ class AppEvent with _$AppEvent {
 
   /// Đăng xuất
   const factory AppEvent.loggedOut() = _LoggedOut;
+
+  /// Bật/tắt thông báo trong app
+  const factory AppEvent.notificationsEnabledChanged(bool enabled) =
+      _NotificationsEnabledChanged;
 }

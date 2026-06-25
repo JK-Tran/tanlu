@@ -16,6 +16,9 @@ abstract final class StorageKeys {
   static const String deviceToken = 'device_token';
   static const String isFirstLogin = 'is_first_login';
   static const String isFirstLaunchApp = 'is_first_launch_app';
+  static const String notificationsEnabled = 'notifications_enabled';
+  static const String notificationPermissionAsked =
+      'notification_permission_asked';
   static const String subUser = 'sub_user';
   static const String zaloAccessToken = 'zalo_access_token';
   static const String zaloRefreshToken = 'zalo_refresh_token';

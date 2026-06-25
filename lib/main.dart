@@ -18,6 +18,7 @@ import 'package:tanlu_management/core/session/session_expired_helper.dart';
 import 'package:tanlu_management/shared/services/firebase/app_check_service.dart';
 import 'package:tanlu_management/shared/services/firebase/fcm_messaging.dart';
 import 'package:tanlu_management/shared/services/firebase/local_notification_service.dart';
+import 'package:tanlu_management/shared/services/firebase/push/in_app_push_banner_overlay.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -119,12 +120,14 @@ class _MyAppState extends State<MyApp> {
                 routerConfig: _router,
                 debugShowCheckedModeBanner: false,
                 builder: (context, child) {
-                  if (flavor == 'production') return child ?? const SizedBox();
+                  final content = child ?? const SizedBox();
+                  final wrapped = InAppPushBannerOverlay(child: content);
+                  if (flavor == 'production') return wrapped;
                   return Banner(
                     location: BannerLocation.topStart,
                     message: flavor.toUpperCase(),
                     color: flavor == 'stg' ? Colors.orange : Colors.green,
-                    child: child,
+                    child: wrapped,
                   );
                 },
               ),

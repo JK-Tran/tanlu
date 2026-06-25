@@ -21,22 +21,30 @@ MessageData _$MessageDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MessageData {
-  @JsonKey()
-  int? get id => throw _privateConstructorUsedError;
-  @JsonKey()
-  int? get conversationId => throw _privateConstructorUsedError;
-  @JsonKey()
-  int? get senderId => throw _privateConstructorUsedError;
-  @JsonKey()
+  @JsonKey(name: 'id', includeToJson: false)
+  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'senderId')
+  String? get senderId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'receiverId')
+  String? get receiverId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'fullName')
+  String? get fullName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'avatar')
+  String? get avatar => throw _privateConstructorUsedError;
+  @JsonKey(name: 'type')
+  String? get type => throw _privateConstructorUsedError;
+  @JsonKey(name: 'text')
   String? get text => throw _privateConstructorUsedError;
-  @JsonKey()
-  bool? get isRead => throw _privateConstructorUsedError;
-  @JsonKey()
+  @JsonKey(name: 'fileUrl')
   String? get fileUrl => throw _privateConstructorUsedError;
-  @JsonKey()
-  String? get createdAt => throw _privateConstructorUsedError;
-  @JsonKey()
-  ChatUserData? get sender => throw _privateConstructorUsedError;
+  @JsonKey(name: 'status')
+  String? get status => throw _privateConstructorUsedError;
+  @JsonKey(
+    name: 'createdAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Serializes this MessageData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,17 +64,22 @@ abstract class $MessageDataCopyWith<$Res> {
   ) = _$MessageDataCopyWithImpl<$Res, MessageData>;
   @useResult
   $Res call({
-    @JsonKey() int? id,
-    @JsonKey() int? conversationId,
-    @JsonKey() int? senderId,
-    @JsonKey() String? text,
-    @JsonKey() bool? isRead,
-    @JsonKey() String? fileUrl,
-    @JsonKey() String? createdAt,
-    @JsonKey() ChatUserData? sender,
+    @JsonKey(name: 'id', includeToJson: false) String? id,
+    @JsonKey(name: 'senderId') String? senderId,
+    @JsonKey(name: 'receiverId') String? receiverId,
+    @JsonKey(name: 'fullName') String? fullName,
+    @JsonKey(name: 'avatar') String? avatar,
+    @JsonKey(name: 'type') String? type,
+    @JsonKey(name: 'text') String? text,
+    @JsonKey(name: 'fileUrl') String? fileUrl,
+    @JsonKey(name: 'status') String? status,
+    @JsonKey(
+      name: 'createdAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    DateTime? createdAt,
   });
-
-  $ChatUserDataCopyWith<$Res>? get sender;
 }
 
 /// @nodoc
@@ -85,65 +98,61 @@ class _$MessageDataCopyWithImpl<$Res, $Val extends MessageData>
   @override
   $Res call({
     Object? id = freezed,
-    Object? conversationId = freezed,
     Object? senderId = freezed,
+    Object? receiverId = freezed,
+    Object? fullName = freezed,
+    Object? avatar = freezed,
+    Object? type = freezed,
     Object? text = freezed,
-    Object? isRead = freezed,
     Object? fileUrl = freezed,
+    Object? status = freezed,
     Object? createdAt = freezed,
-    Object? sender = freezed,
   }) {
     return _then(
       _value.copyWith(
             id: freezed == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            conversationId: freezed == conversationId
-                ? _value.conversationId
-                : conversationId // ignore: cast_nullable_to_non_nullable
-                      as int?,
+                      as String?,
             senderId: freezed == senderId
                 ? _value.senderId
                 : senderId // ignore: cast_nullable_to_non_nullable
-                      as int?,
+                      as String?,
+            receiverId: freezed == receiverId
+                ? _value.receiverId
+                : receiverId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            fullName: freezed == fullName
+                ? _value.fullName
+                : fullName // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            avatar: freezed == avatar
+                ? _value.avatar
+                : avatar // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            type: freezed == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as String?,
             text: freezed == text
                 ? _value.text
                 : text // ignore: cast_nullable_to_non_nullable
                       as String?,
-            isRead: freezed == isRead
-                ? _value.isRead
-                : isRead // ignore: cast_nullable_to_non_nullable
-                      as bool?,
             fileUrl: freezed == fileUrl
                 ? _value.fileUrl
                 : fileUrl // ignore: cast_nullable_to_non_nullable
                       as String?,
+            status: freezed == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as String?,
             createdAt: freezed == createdAt
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            sender: freezed == sender
-                ? _value.sender
-                : sender // ignore: cast_nullable_to_non_nullable
-                      as ChatUserData?,
+                      as DateTime?,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of MessageData
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ChatUserDataCopyWith<$Res>? get sender {
-    if (_value.sender == null) {
-      return null;
-    }
-
-    return $ChatUserDataCopyWith<$Res>(_value.sender!, (value) {
-      return _then(_value.copyWith(sender: value) as $Val);
-    });
   }
 }
 
@@ -157,18 +166,22 @@ abstract class _$$MessageDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey() int? id,
-    @JsonKey() int? conversationId,
-    @JsonKey() int? senderId,
-    @JsonKey() String? text,
-    @JsonKey() bool? isRead,
-    @JsonKey() String? fileUrl,
-    @JsonKey() String? createdAt,
-    @JsonKey() ChatUserData? sender,
+    @JsonKey(name: 'id', includeToJson: false) String? id,
+    @JsonKey(name: 'senderId') String? senderId,
+    @JsonKey(name: 'receiverId') String? receiverId,
+    @JsonKey(name: 'fullName') String? fullName,
+    @JsonKey(name: 'avatar') String? avatar,
+    @JsonKey(name: 'type') String? type,
+    @JsonKey(name: 'text') String? text,
+    @JsonKey(name: 'fileUrl') String? fileUrl,
+    @JsonKey(name: 'status') String? status,
+    @JsonKey(
+      name: 'createdAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    DateTime? createdAt,
   });
-
-  @override
-  $ChatUserDataCopyWith<$Res>? get sender;
 }
 
 /// @nodoc
@@ -186,48 +199,58 @@ class __$$MessageDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? conversationId = freezed,
     Object? senderId = freezed,
+    Object? receiverId = freezed,
+    Object? fullName = freezed,
+    Object? avatar = freezed,
+    Object? type = freezed,
     Object? text = freezed,
-    Object? isRead = freezed,
     Object? fileUrl = freezed,
+    Object? status = freezed,
     Object? createdAt = freezed,
-    Object? sender = freezed,
   }) {
     return _then(
       _$MessageDataImpl(
         id: freezed == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        conversationId: freezed == conversationId
-            ? _value.conversationId
-            : conversationId // ignore: cast_nullable_to_non_nullable
-                  as int?,
+                  as String?,
         senderId: freezed == senderId
             ? _value.senderId
             : senderId // ignore: cast_nullable_to_non_nullable
-                  as int?,
+                  as String?,
+        receiverId: freezed == receiverId
+            ? _value.receiverId
+            : receiverId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        fullName: freezed == fullName
+            ? _value.fullName
+            : fullName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        avatar: freezed == avatar
+            ? _value.avatar
+            : avatar // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        type: freezed == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as String?,
         text: freezed == text
             ? _value.text
             : text // ignore: cast_nullable_to_non_nullable
                   as String?,
-        isRead: freezed == isRead
-            ? _value.isRead
-            : isRead // ignore: cast_nullable_to_non_nullable
-                  as bool?,
         fileUrl: freezed == fileUrl
             ? _value.fileUrl
             : fileUrl // ignore: cast_nullable_to_non_nullable
                   as String?,
+        status: freezed == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as String?,
         createdAt: freezed == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        sender: freezed == sender
-            ? _value.sender
-            : sender // ignore: cast_nullable_to_non_nullable
-                  as ChatUserData?,
+                  as DateTime?,
       ),
     );
   }
@@ -235,49 +258,66 @@ class __$$MessageDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MessageDataImpl extends _MessageData {
+class _$MessageDataImpl implements _MessageData {
   const _$MessageDataImpl({
-    @JsonKey() this.id,
-    @JsonKey() this.conversationId,
-    @JsonKey() this.senderId,
-    @JsonKey() this.text,
-    @JsonKey() this.isRead,
-    @JsonKey() this.fileUrl,
-    @JsonKey() this.createdAt,
-    @JsonKey() this.sender,
-  }) : super._();
+    @JsonKey(name: 'id', includeToJson: false) this.id,
+    @JsonKey(name: 'senderId') this.senderId,
+    @JsonKey(name: 'receiverId') this.receiverId,
+    @JsonKey(name: 'fullName') this.fullName,
+    @JsonKey(name: 'avatar') this.avatar,
+    @JsonKey(name: 'type') this.type,
+    @JsonKey(name: 'text') this.text,
+    @JsonKey(name: 'fileUrl') this.fileUrl,
+    @JsonKey(name: 'status') this.status,
+    @JsonKey(
+      name: 'createdAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    this.createdAt,
+  });
 
   factory _$MessageDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$MessageDataImplFromJson(json);
 
   @override
-  @JsonKey()
-  final int? id;
+  @JsonKey(name: 'id', includeToJson: false)
+  final String? id;
   @override
-  @JsonKey()
-  final int? conversationId;
+  @JsonKey(name: 'senderId')
+  final String? senderId;
   @override
-  @JsonKey()
-  final int? senderId;
+  @JsonKey(name: 'receiverId')
+  final String? receiverId;
   @override
-  @JsonKey()
+  @JsonKey(name: 'fullName')
+  final String? fullName;
+  @override
+  @JsonKey(name: 'avatar')
+  final String? avatar;
+  @override
+  @JsonKey(name: 'type')
+  final String? type;
+  @override
+  @JsonKey(name: 'text')
   final String? text;
   @override
-  @JsonKey()
-  final bool? isRead;
-  @override
-  @JsonKey()
+  @JsonKey(name: 'fileUrl')
   final String? fileUrl;
   @override
-  @JsonKey()
-  final String? createdAt;
+  @JsonKey(name: 'status')
+  final String? status;
   @override
-  @JsonKey()
-  final ChatUserData? sender;
+  @JsonKey(
+    name: 'createdAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'MessageData(id: $id, conversationId: $conversationId, senderId: $senderId, text: $text, isRead: $isRead, fileUrl: $fileUrl, createdAt: $createdAt, sender: $sender)';
+    return 'MessageData(id: $id, senderId: $senderId, receiverId: $receiverId, fullName: $fullName, avatar: $avatar, type: $type, text: $text, fileUrl: $fileUrl, status: $status, createdAt: $createdAt)';
   }
 
   @override
@@ -286,16 +326,19 @@ class _$MessageDataImpl extends _MessageData {
         (other.runtimeType == runtimeType &&
             other is _$MessageDataImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.conversationId, conversationId) ||
-                other.conversationId == conversationId) &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
+            (identical(other.receiverId, receiverId) ||
+                other.receiverId == receiverId) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.text, text) || other.text == text) &&
-            (identical(other.isRead, isRead) || other.isRead == isRead) &&
             (identical(other.fileUrl, fileUrl) || other.fileUrl == fileUrl) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.sender, sender) || other.sender == sender));
+                other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -303,13 +346,15 @@ class _$MessageDataImpl extends _MessageData {
   int get hashCode => Object.hash(
     runtimeType,
     id,
-    conversationId,
     senderId,
+    receiverId,
+    fullName,
+    avatar,
+    type,
     text,
-    isRead,
     fileUrl,
+    status,
     createdAt,
-    sender,
   );
 
   /// Create a copy of MessageData
@@ -326,46 +371,62 @@ class _$MessageDataImpl extends _MessageData {
   }
 }
 
-abstract class _MessageData extends MessageData {
+abstract class _MessageData implements MessageData {
   const factory _MessageData({
-    @JsonKey() final int? id,
-    @JsonKey() final int? conversationId,
-    @JsonKey() final int? senderId,
-    @JsonKey() final String? text,
-    @JsonKey() final bool? isRead,
-    @JsonKey() final String? fileUrl,
-    @JsonKey() final String? createdAt,
-    @JsonKey() final ChatUserData? sender,
+    @JsonKey(name: 'id', includeToJson: false) final String? id,
+    @JsonKey(name: 'senderId') final String? senderId,
+    @JsonKey(name: 'receiverId') final String? receiverId,
+    @JsonKey(name: 'fullName') final String? fullName,
+    @JsonKey(name: 'avatar') final String? avatar,
+    @JsonKey(name: 'type') final String? type,
+    @JsonKey(name: 'text') final String? text,
+    @JsonKey(name: 'fileUrl') final String? fileUrl,
+    @JsonKey(name: 'status') final String? status,
+    @JsonKey(
+      name: 'createdAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    final DateTime? createdAt,
   }) = _$MessageDataImpl;
-  const _MessageData._() : super._();
 
   factory _MessageData.fromJson(Map<String, dynamic> json) =
       _$MessageDataImpl.fromJson;
 
   @override
-  @JsonKey()
-  int? get id;
+  @JsonKey(name: 'id', includeToJson: false)
+  String? get id;
   @override
-  @JsonKey()
-  int? get conversationId;
+  @JsonKey(name: 'senderId')
+  String? get senderId;
   @override
-  @JsonKey()
-  int? get senderId;
+  @JsonKey(name: 'receiverId')
+  String? get receiverId;
   @override
-  @JsonKey()
+  @JsonKey(name: 'fullName')
+  String? get fullName;
+  @override
+  @JsonKey(name: 'avatar')
+  String? get avatar;
+  @override
+  @JsonKey(name: 'type')
+  String? get type;
+  @override
+  @JsonKey(name: 'text')
   String? get text;
   @override
-  @JsonKey()
-  bool? get isRead;
-  @override
-  @JsonKey()
+  @JsonKey(name: 'fileUrl')
   String? get fileUrl;
   @override
-  @JsonKey()
-  String? get createdAt;
+  @JsonKey(name: 'status')
+  String? get status;
   @override
-  @JsonKey()
-  ChatUserData? get sender;
+  @JsonKey(
+    name: 'createdAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  DateTime? get createdAt;
 
   /// Create a copy of MessageData
   /// with the given fields replaced by the non-null parameter values.

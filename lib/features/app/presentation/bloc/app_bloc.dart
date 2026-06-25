@@ -6,10 +6,12 @@ import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/core/base/base_bloc.dart';
 import 'package:tanlu_management/features/auth/domain/entity/user.dart';
 import 'package:tanlu_management/features/auth/domain/repositories/auth_repository.dart';
+import 'package:tanlu_management/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:tanlu_management/features/notification/domain/usecases/register_device_token_use_case.dart';
 import 'package:tanlu_management/features/notification/domain/usecases/unregister_device_token_use_case.dart';
 import 'package:tanlu_management/shared/services/firebase/fcm_messaging.dart';
 import 'package:tanlu_management/shared/services/local_storage/app_preferences.dart';
+import 'package:tanlu_management/shared/services/notification/notification_preferences.dart';
 
 part 'app_bloc.freezed.dart';
 part 'app_event.dart';
@@ -23,10 +25,13 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
     this._fcmMessaging,
     this._registerDeviceTokenUseCase,
     this._unregisterDeviceTokenUseCase,
+    this._chatBloc,
+    this._notificationPreferences,
   ) : super(const AppState.loading()) {
     on<_Started>(_onStarted);
     on<_LoggedIn>(_onLoggedIn);
     on<_LoggedOut>(_onLoggedOut);
+    on<_NotificationsEnabledChanged>(_onNotificationsEnabledChanged);
   }
 
   final AuthRepository _authRepository;
@@ -34,6 +39,8 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
   final FcmMessaging _fcmMessaging;
   final RegisterDeviceTokenUseCase _registerDeviceTokenUseCase;
   final UnregisterDeviceTokenUseCase _unregisterDeviceTokenUseCase;
+  final ChatBloc _chatBloc;
+  final NotificationPreferences _notificationPreferences;
 
   String? _registeredUserId;
   StreamSubscription<String>? _tokenRefreshSub;
@@ -75,6 +82,7 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
       handleLoading: false,
       action: () async {
         await _unregisterDeviceToken();
+        _chatBloc.add(const ClearChat());
         await _authRepository.logout();
         emit(const AppState.unauthenticated());
       },
@@ -82,8 +90,30 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
     );
   }
 
+  FutureOr<void> _onNotificationsEnabledChanged(
+    _NotificationsEnabledChanged event,
+    Emitter<AppState> emit,
+  ) async {
+    await runBlocCatching(
+      handleLoading: false,
+      action: () async {
+        await _notificationPreferences.setEnabled(event.enabled);
+        if (!event.enabled) {
+          await _unregisterDeviceToken();
+          return;
+        }
+
+        await _fcmMessaging.requestOsPermission();
+        final user = currentUser;
+        if (user != null && user.id.isNotEmpty) {
+          await _registerDeviceToken(user.id);
+        }
+      },
+    );
+  }
+
   Future<void> _registerDeviceToken(String userId) async {
-    if (userId.isEmpty) return;
+    if (userId.isEmpty || !_notificationPreferences.isEnabled) return;
 
     if (_registeredUserId != null && _registeredUserId != userId) {
       await _unregisterDeviceToken(userId: _registeredUserId);

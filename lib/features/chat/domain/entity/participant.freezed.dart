@@ -17,9 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Participant {
-  int get userId => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
+  String get fullName => throw _privateConstructorUsedError;
+  String get avatar => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
-  ChatUser? get user => throw _privateConstructorUsedError;
+  int get unreadCount => throw _privateConstructorUsedError;
+  DateTime? get lastReadAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Participant
   /// with the given fields replaced by the non-null parameter values.
@@ -35,9 +38,14 @@ abstract class $ParticipantCopyWith<$Res> {
     $Res Function(Participant) then,
   ) = _$ParticipantCopyWithImpl<$Res, Participant>;
   @useResult
-  $Res call({int userId, String role, ChatUser? user});
-
-  $ChatUserCopyWith<$Res>? get user;
+  $Res call({
+    String userId,
+    String fullName,
+    String avatar,
+    String role,
+    int unreadCount,
+    DateTime? lastReadAt,
+  });
 }
 
 /// @nodoc
@@ -56,40 +64,41 @@ class _$ParticipantCopyWithImpl<$Res, $Val extends Participant>
   @override
   $Res call({
     Object? userId = null,
+    Object? fullName = null,
+    Object? avatar = null,
     Object? role = null,
-    Object? user = freezed,
+    Object? unreadCount = null,
+    Object? lastReadAt = freezed,
   }) {
     return _then(
       _value.copyWith(
             userId: null == userId
                 ? _value.userId
                 : userId // ignore: cast_nullable_to_non_nullable
-                      as int,
+                      as String,
+            fullName: null == fullName
+                ? _value.fullName
+                : fullName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            avatar: null == avatar
+                ? _value.avatar
+                : avatar // ignore: cast_nullable_to_non_nullable
+                      as String,
             role: null == role
                 ? _value.role
                 : role // ignore: cast_nullable_to_non_nullable
                       as String,
-            user: freezed == user
-                ? _value.user
-                : user // ignore: cast_nullable_to_non_nullable
-                      as ChatUser?,
+            unreadCount: null == unreadCount
+                ? _value.unreadCount
+                : unreadCount // ignore: cast_nullable_to_non_nullable
+                      as int,
+            lastReadAt: freezed == lastReadAt
+                ? _value.lastReadAt
+                : lastReadAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of Participant
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ChatUserCopyWith<$Res>? get user {
-    if (_value.user == null) {
-      return null;
-    }
-
-    return $ChatUserCopyWith<$Res>(_value.user!, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
   }
 }
 
@@ -102,10 +111,14 @@ abstract class _$$ParticipantImplCopyWith<$Res>
   ) = __$$ParticipantImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int userId, String role, ChatUser? user});
-
-  @override
-  $ChatUserCopyWith<$Res>? get user;
+  $Res call({
+    String userId,
+    String fullName,
+    String avatar,
+    String role,
+    int unreadCount,
+    DateTime? lastReadAt,
+  });
 }
 
 /// @nodoc
@@ -123,23 +136,38 @@ class __$$ParticipantImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userId = null,
+    Object? fullName = null,
+    Object? avatar = null,
     Object? role = null,
-    Object? user = freezed,
+    Object? unreadCount = null,
+    Object? lastReadAt = freezed,
   }) {
     return _then(
       _$ParticipantImpl(
         userId: null == userId
             ? _value.userId
             : userId // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as String,
+        fullName: null == fullName
+            ? _value.fullName
+            : fullName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        avatar: null == avatar
+            ? _value.avatar
+            : avatar // ignore: cast_nullable_to_non_nullable
+                  as String,
         role: null == role
             ? _value.role
             : role // ignore: cast_nullable_to_non_nullable
                   as String,
-        user: freezed == user
-            ? _value.user
-            : user // ignore: cast_nullable_to_non_nullable
-                  as ChatUser?,
+        unreadCount: null == unreadCount
+            ? _value.unreadCount
+            : unreadCount // ignore: cast_nullable_to_non_nullable
+                  as int,
+        lastReadAt: freezed == lastReadAt
+            ? _value.lastReadAt
+            : lastReadAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
       ),
     );
   }
@@ -148,20 +176,36 @@ class __$$ParticipantImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ParticipantImpl implements _Participant {
-  const _$ParticipantImpl({this.userId = 0, this.role = '', this.user});
+  const _$ParticipantImpl({
+    this.userId = '',
+    this.fullName = '',
+    this.avatar = '',
+    this.role = '',
+    this.unreadCount = 0,
+    this.lastReadAt,
+  });
 
   @override
   @JsonKey()
-  final int userId;
+  final String userId;
+  @override
+  @JsonKey()
+  final String fullName;
+  @override
+  @JsonKey()
+  final String avatar;
   @override
   @JsonKey()
   final String role;
   @override
-  final ChatUser? user;
+  @JsonKey()
+  final int unreadCount;
+  @override
+  final DateTime? lastReadAt;
 
   @override
   String toString() {
-    return 'Participant(userId: $userId, role: $role, user: $user)';
+    return 'Participant(userId: $userId, fullName: $fullName, avatar: $avatar, role: $role, unreadCount: $unreadCount, lastReadAt: $lastReadAt)';
   }
 
   @override
@@ -170,12 +214,26 @@ class _$ParticipantImpl implements _Participant {
         (other.runtimeType == runtimeType &&
             other is _$ParticipantImpl &&
             (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.role, role) || other.role == role) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.unreadCount, unreadCount) ||
+                other.unreadCount == unreadCount) &&
+            (identical(other.lastReadAt, lastReadAt) ||
+                other.lastReadAt == lastReadAt));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId, role, user);
+  int get hashCode => Object.hash(
+    runtimeType,
+    userId,
+    fullName,
+    avatar,
+    role,
+    unreadCount,
+    lastReadAt,
+  );
 
   /// Create a copy of Participant
   /// with the given fields replaced by the non-null parameter values.
@@ -188,17 +246,26 @@ class _$ParticipantImpl implements _Participant {
 
 abstract class _Participant implements Participant {
   const factory _Participant({
-    final int userId,
+    final String userId,
+    final String fullName,
+    final String avatar,
     final String role,
-    final ChatUser? user,
+    final int unreadCount,
+    final DateTime? lastReadAt,
   }) = _$ParticipantImpl;
 
   @override
-  int get userId;
+  String get userId;
+  @override
+  String get fullName;
+  @override
+  String get avatar;
   @override
   String get role;
   @override
-  ChatUser? get user;
+  int get unreadCount;
+  @override
+  DateTime? get lastReadAt;
 
   /// Create a copy of Participant
   /// with the given fields replaced by the non-null parameter values.

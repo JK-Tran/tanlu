@@ -6,12 +6,14 @@ import 'package:tanlu_management/core/utils/app_logger.dart';
 import 'package:tanlu_management/core/router/push_navigation_helper.dart';
 import 'package:tanlu_management/shared/services/firebase/push/push_notification_display.dart';
 import 'package:tanlu_management/shared/services/firebase/push/push_notification_type.dart';
+import 'package:tanlu_management/shared/services/notification/notification_preferences.dart';
 
 /// Hiển thị notification trên thiết bị (foreground FCM + test).
 @lazySingleton
 class LocalNotificationService {
-  LocalNotificationService() : _dio = Dio();
+  LocalNotificationService(this._notificationPreferences) : _dio = Dio();
 
+  final NotificationPreferences _notificationPreferences;
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
   final Dio _dio;
@@ -79,6 +81,7 @@ class LocalNotificationService {
   }
 
   Future<void> show(PushNotificationDisplay display) async {
+    if (!_notificationPreferences.isEnabled) return;
     if (!_initialized) await initialize();
 
     final largeIconBytes = await _loadImageBytes(display.senderAvatarUrl);

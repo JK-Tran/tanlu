@@ -9,25 +9,32 @@ part of 'conversation_data.dart';
 _$ConversationDataImpl _$$ConversationDataImplFromJson(
   Map<String, dynamic> json,
 ) => _$ConversationDataImpl(
-  id: (json['id'] as num?)?.toInt(),
+  id: json['id'] as String?,
   name: json['name'] as String?,
   type: json['type'] as String?,
-  updatedAt: json['updatedAt'] as String?,
-  participants: (json['participants'] as List<dynamic>?)
-      ?.map((e) => ParticipantData.fromJson(e as Map<String, dynamic>))
+  classId: json['classId'] as String?,
+  centerId: json['centerId'] as String?,
+  memberIds: (json['memberIds'] as List<dynamic>?)
+      ?.map((e) => e as String)
       .toList(),
-  messages: (json['messages'] as List<dynamic>?)
-      ?.map((e) => MessageData.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  lastMessageText: json['lastMessageText'] as String?,
+  lastMessageSenderId: json['lastMessageSenderId'] as String?,
+  lastMessageAt: FirestoreJson.toDateTime(json['lastMessageAt']),
+  createdAt: FirestoreJson.toDateTime(json['createdAt']),
+  updatedAt: FirestoreJson.toDateTime(json['updatedAt']),
 );
 
 Map<String, dynamic> _$$ConversationDataImplToJson(
   _$ConversationDataImpl instance,
 ) => <String, dynamic>{
-  'id': instance.id,
   'name': instance.name,
   'type': instance.type,
-  'updatedAt': instance.updatedAt,
-  'participants': instance.participants,
-  'messages': instance.messages,
+  'classId': instance.classId,
+  'centerId': instance.centerId,
+  'memberIds': instance.memberIds,
+  'lastMessageText': instance.lastMessageText,
+  'lastMessageSenderId': instance.lastMessageSenderId,
+  'lastMessageAt': FirestoreJson.dateTimeToFirestore(instance.lastMessageAt),
+  'createdAt': FirestoreJson.dateTimeToFirestore(instance.createdAt),
+  'updatedAt': FirestoreJson.dateTimeToFirestore(instance.updatedAt),
 };

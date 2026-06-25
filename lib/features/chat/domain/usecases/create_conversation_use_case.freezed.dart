@@ -17,9 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CreateConversationInput {
-  List<int> get participantIds => throw _privateConstructorUsedError;
+  Author get currentUser => throw _privateConstructorUsedError;
+  List<String> get participantIds => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
+  String? get classId => throw _privateConstructorUsedError;
+  String? get centerId => throw _privateConstructorUsedError;
 
   /// Create a copy of CreateConversationInput
   /// with the given fields replaced by the non-null parameter values.
@@ -35,7 +38,16 @@ abstract class $CreateConversationInputCopyWith<$Res> {
     $Res Function(CreateConversationInput) then,
   ) = _$CreateConversationInputCopyWithImpl<$Res, CreateConversationInput>;
   @useResult
-  $Res call({List<int> participantIds, String type, String? name});
+  $Res call({
+    Author currentUser,
+    List<String> participantIds,
+    String type,
+    String? name,
+    String? classId,
+    String? centerId,
+  });
+
+  $AuthorCopyWith<$Res> get currentUser;
 }
 
 /// @nodoc
@@ -56,16 +68,23 @@ class _$CreateConversationInputCopyWithImpl<
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? currentUser = null,
     Object? participantIds = null,
     Object? type = null,
     Object? name = freezed,
+    Object? classId = freezed,
+    Object? centerId = freezed,
   }) {
     return _then(
       _value.copyWith(
+            currentUser: null == currentUser
+                ? _value.currentUser
+                : currentUser // ignore: cast_nullable_to_non_nullable
+                      as Author,
             participantIds: null == participantIds
                 ? _value.participantIds
                 : participantIds // ignore: cast_nullable_to_non_nullable
-                      as List<int>,
+                      as List<String>,
             type: null == type
                 ? _value.type
                 : type // ignore: cast_nullable_to_non_nullable
@@ -74,9 +93,27 @@ class _$CreateConversationInputCopyWithImpl<
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
                       as String?,
+            classId: freezed == classId
+                ? _value.classId
+                : classId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            centerId: freezed == centerId
+                ? _value.centerId
+                : centerId // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of CreateConversationInput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AuthorCopyWith<$Res> get currentUser {
+    return $AuthorCopyWith<$Res>(_value.currentUser, (value) {
+      return _then(_value.copyWith(currentUser: value) as $Val);
+    });
   }
 }
 
@@ -89,7 +126,17 @@ abstract class _$$CreateConversationInputImplCopyWith<$Res>
   ) = __$$CreateConversationInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<int> participantIds, String type, String? name});
+  $Res call({
+    Author currentUser,
+    List<String> participantIds,
+    String type,
+    String? name,
+    String? classId,
+    String? centerId,
+  });
+
+  @override
+  $AuthorCopyWith<$Res> get currentUser;
 }
 
 /// @nodoc
@@ -110,16 +157,23 @@ class __$$CreateConversationInputImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? currentUser = null,
     Object? participantIds = null,
     Object? type = null,
     Object? name = freezed,
+    Object? classId = freezed,
+    Object? centerId = freezed,
   }) {
     return _then(
       _$CreateConversationInputImpl(
+        currentUser: null == currentUser
+            ? _value.currentUser
+            : currentUser // ignore: cast_nullable_to_non_nullable
+                  as Author,
         participantIds: null == participantIds
             ? _value._participantIds
             : participantIds // ignore: cast_nullable_to_non_nullable
-                  as List<int>,
+                  as List<String>,
         type: null == type
             ? _value.type
             : type // ignore: cast_nullable_to_non_nullable
@@ -128,6 +182,14 @@ class __$$CreateConversationInputImplCopyWithImpl<$Res>
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
                   as String?,
+        classId: freezed == classId
+            ? _value.classId
+            : classId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        centerId: freezed == centerId
+            ? _value.centerId
+            : centerId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -135,16 +197,23 @@ class __$$CreateConversationInputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CreateConversationInputImpl implements _CreateConversationInput {
+class _$CreateConversationInputImpl
+    with DiagnosticableTreeMixin
+    implements _CreateConversationInput {
   const _$CreateConversationInputImpl({
-    required final List<int> participantIds,
+    required this.currentUser,
+    required final List<String> participantIds,
     required this.type,
     this.name,
+    this.classId,
+    this.centerId,
   }) : _participantIds = participantIds;
 
-  final List<int> _participantIds;
   @override
-  List<int> get participantIds {
+  final Author currentUser;
+  final List<String> _participantIds;
+  @override
+  List<String> get participantIds {
     if (_participantIds is EqualUnmodifiableListView) return _participantIds;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_participantIds);
@@ -154,10 +223,27 @@ class _$CreateConversationInputImpl implements _CreateConversationInput {
   final String type;
   @override
   final String? name;
+  @override
+  final String? classId;
+  @override
+  final String? centerId;
 
   @override
-  String toString() {
-    return 'CreateConversationInput(participantIds: $participantIds, type: $type, name: $name)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'CreateConversationInput(currentUser: $currentUser, participantIds: $participantIds, type: $type, name: $name, classId: $classId, centerId: $centerId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CreateConversationInput'))
+      ..add(DiagnosticsProperty('currentUser', currentUser))
+      ..add(DiagnosticsProperty('participantIds', participantIds))
+      ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('classId', classId))
+      ..add(DiagnosticsProperty('centerId', centerId));
   }
 
   @override
@@ -165,20 +251,28 @@ class _$CreateConversationInputImpl implements _CreateConversationInput {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateConversationInputImpl &&
+            (identical(other.currentUser, currentUser) ||
+                other.currentUser == currentUser) &&
             const DeepCollectionEquality().equals(
               other._participantIds,
               _participantIds,
             ) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.classId, classId) || other.classId == classId) &&
+            (identical(other.centerId, centerId) ||
+                other.centerId == centerId));
   }
 
   @override
   int get hashCode => Object.hash(
     runtimeType,
+    currentUser,
     const DeepCollectionEquality().hash(_participantIds),
     type,
     name,
+    classId,
+    centerId,
   );
 
   /// Create a copy of CreateConversationInput
@@ -195,17 +289,26 @@ class _$CreateConversationInputImpl implements _CreateConversationInput {
 
 abstract class _CreateConversationInput implements CreateConversationInput {
   const factory _CreateConversationInput({
-    required final List<int> participantIds,
+    required final Author currentUser,
+    required final List<String> participantIds,
     required final String type,
     final String? name,
+    final String? classId,
+    final String? centerId,
   }) = _$CreateConversationInputImpl;
 
   @override
-  List<int> get participantIds;
+  Author get currentUser;
+  @override
+  List<String> get participantIds;
   @override
   String get type;
   @override
   String? get name;
+  @override
+  String? get classId;
+  @override
+  String? get centerId;
 
   /// Create a copy of CreateConversationInput
   /// with the given fields replaced by the non-null parameter values.
@@ -313,7 +416,7 @@ class __$$CreateConversationOutputImplCopyWithImpl<$Res>
   $Res call({Object? conversation = null}) {
     return _then(
       _$CreateConversationOutputImpl(
-        null == conversation
+        conversation: null == conversation
             ? _value.conversation
             : conversation // ignore: cast_nullable_to_non_nullable
                   as Conversation,
@@ -324,15 +427,25 @@ class __$$CreateConversationOutputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CreateConversationOutputImpl implements _CreateConversationOutput {
-  const _$CreateConversationOutputImpl(this.conversation);
+class _$CreateConversationOutputImpl
+    with DiagnosticableTreeMixin
+    implements _CreateConversationOutput {
+  const _$CreateConversationOutputImpl({required this.conversation});
 
   @override
   final Conversation conversation;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'CreateConversationOutput(conversation: $conversation)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CreateConversationOutput'))
+      ..add(DiagnosticsProperty('conversation', conversation));
   }
 
   @override
@@ -360,8 +473,9 @@ class _$CreateConversationOutputImpl implements _CreateConversationOutput {
 }
 
 abstract class _CreateConversationOutput implements CreateConversationOutput {
-  const factory _CreateConversationOutput(final Conversation conversation) =
-      _$CreateConversationOutputImpl;
+  const factory _CreateConversationOutput({
+    required final Conversation conversation,
+  }) = _$CreateConversationOutputImpl;
 
   @override
   Conversation get conversation;

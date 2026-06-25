@@ -1,22 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tanlu_management/core/constants/storage_keys.dart';
+import 'package:tanlu_management/core/di/injection_container.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
+import 'package:tanlu_management/core/utils/shared_prefs_helper.dart';
+import 'package:tanlu_management/core/widgets/app_confirm_dialog.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/core/widgets/buttons/app_primary_button.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/features/person/presentation/pages/person_about_page.dart';
-import 'package:tanlu_management/features/person/presentation/pages/person_notifications_page.dart';
-import 'package:tanlu_management/features/person/presentation/pages/person_preferences_page.dart';
+import 'package:tanlu_management/features/person/domain/usecases/get_class_name_use_case.dart';
+import 'package:tanlu_management/features/person/presentation/pages/person_language_page.dart';
 import 'package:tanlu_management/features/person/presentation/pages/person_profile_page.dart';
 import 'package:tanlu_management/features/person/presentation/pages/person_security_page.dart';
 import 'package:tanlu_management/features/person/presentation/widgets/person_menu_tile.dart';
 import 'package:tanlu_management/features/person/presentation/widgets/person_profile_header.dart';
 
-class PersonPage extends StatelessWidget {
+class PersonPage extends StatefulWidget {
   const PersonPage({super.key});
 
-  void _open(BuildContext context, Widget page) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => page));
+  @override
+  State<PersonPage> createState() => _PersonPageState();
+}
+
+class _PersonPageState extends State<PersonPage> {
+  String? _className;
+  bool _notificationsEnabled = true;
+  String _languageLabel = 'Tiếng Việt';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _load());
+  }
+
+  Future<void> _load() async {
+    final prefs = sl<SharedPrefsHelper>();
+    final locale = prefs.getString(StorageKeys.locale) ?? 'vi';
+    final notifications =
+        prefs.getBool(StorageKeys.notificationsEnabled) ?? true;
+
+    final user = context.read<AppBloc>().currentUser;
+    var className = '';
+    final classId = user?.classId;
+    if (classId != null && classId.isNotEmpty) {
+      final output = await sl<GetClassNameUseCase>().execute(
+        GetClassNameInput(classId: classId),
+      );
+      className = output.className;
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _className = className.isEmpty ? null : className;
+      _notificationsEnabled = notifications;
+      _languageLabel = locale == 'en' ? 'English' : 'Tiếng Việt';
+    });
+  }
+
+  void _open(Widget page) {
+    Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(builder: (_) => page),
+    );
+  }
+
+  Future<void> _openLanguage() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const PersonLanguagePage()),
+    );
+    _load();
+  }
+
+  Future<void> _onNotificationsChanged(bool enabled) async {
+    context.read<AppBloc>().add(
+      AppEvent.notificationsEnabledChanged(enabled),
+    );
+    if (!mounted) return;
+    setState(() => _notificationsEnabled = enabled);
+  }
+
+  Future<void> _logout() async {
+    final confirmed = await AppConfirmDialog.show(
+      context,
+      title: 'Đăng xuất',
+      content: 'Bạn có chắc chắn muốn đăng xuất không?',
+      cancelLabel: 'Hủy',
+      confirmLabel: 'Đăng xuất',
+      type: AppConfirmDialogType.warning,
+    );
+    if (confirmed == true && mounted) {
+      context.read<AppBloc>().add(const AppEvent.loggedOut());
+    }
   }
 
   @override
@@ -27,47 +101,43 @@ class PersonPage extends StatelessWidget {
       backgroundColor: AppColors.grayBg,
       body: Column(
         children: [
-          PersonProfileHeader(user: user),
+          PersonProfileHeader(
+            user: user,
+            className: _className,
+            onEditTap: () => _open(
+              PersonProfilePage(user: user, className: _className),
+            ),
+          ),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 24.h),
+              padding: EdgeInsets.fromLTRB(16.w, 4.h, 16.w, 16.h),
               children: [
-                _AccountCard(
-                  onTap: () => _open(context, PersonProfilePage(user: user)),
-                ),
-                SizedBox(height: 16.h),
                 PersonMenuGroup(
                   children: [
                     PersonMenuTile(
                       icon: Icons.person_outline_rounded,
                       title: 'Thông tin cá nhân',
-                      showDivider: true,
-                      onTap: () => _open(context, PersonProfilePage(user: user)),
+                      onTap: () => _open(
+                        PersonProfilePage(user: user, className: _className),
+                      ),
                     ),
                     PersonMenuTile(
                       icon: Icons.shield_outlined,
                       title: 'Tài khoản và bảo mật',
-                      showDivider: true,
-                      onTap: () => _open(context, const PersonSecurityPage()),
+                      onTap: () => _open(const PersonSecurityPage()),
                     ),
-                    PersonMenuTile(
+                    PersonMenuSwitchTile(
                       icon: Icons.notifications_none_rounded,
                       title: 'Thông báo',
-                      showDivider: true,
-                      onTap: () => _open(context, const PersonNotificationsPage()),
+                      value: _notificationsEnabled,
+                      onChanged: _onNotificationsChanged,
                     ),
                     PersonMenuTile(
-                      icon: Icons.tune_rounded,
-                      title: 'Ngôn ngữ & giao diện',
-                      value: 'Tiếng Việt · Sáng',
-                      showDivider: true,
-                      onTap: () => _open(context, const PersonPreferencesPage()),
-                    ),
-                    PersonMenuTile(
-                      icon: Icons.info_outline_rounded,
-                      title: 'Giới thiệu ứng dụng',
+                      icon: Icons.language_rounded,
+                      title: 'Ngôn ngữ',
+                      value: _languageLabel,
                       showDivider: false,
-                      onTap: () => _open(context, const PersonAboutPage()),
+                      onTap: _openLanguage,
                     ),
                   ],
                 ),
@@ -82,62 +152,14 @@ class PersonPage extends StatelessWidget {
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class _AccountCard extends StatelessWidget {
-  const _AccountCard({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(14.r),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Row(
-            children: [
-              Container(
-                width: 44.w,
-                height: 44.w,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryLight,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Icon(Icons.badge_outlined, color: AppColors.primary),
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppText.b1(
-                      'Tài khoản của bạn',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15.sp,
-                      color: AppColors.grayDark,
-                    ),
-                    SizedBox(height: 2.h),
-                    AppText.b2(
-                      'Xem và quản lý thông tin cá nhân',
-                      color: AppColors.grayMedium,
-                      fontSize: 12.sp,
-                    ),
-                  ],
-                ),
-              ),
-              Icon(Icons.chevron_right_rounded, color: AppColors.grayLight),
-            ],
+          Padding(
+            padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 24.h),
+            child: AppPrimaryButton(
+              label: 'Đăng xuất',
+              onPressed: _logout,
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

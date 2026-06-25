@@ -8,15 +8,20 @@ import 'package:tanlu_management/features/person/presentation/widgets/person_men
 import 'package:tanlu_management/features/person/presentation/widgets/person_sub_page_bar.dart';
 
 class PersonProfilePage extends StatelessWidget {
-  const PersonProfilePage({super.key, required this.user});
+  const PersonProfilePage({
+    super.key,
+    required this.user,
+    this.className,
+  });
 
   final User? user;
+  final String? className;
 
   @override
   Widget build(BuildContext context) {
-    final name = user?.fullName.isNotEmpty == true
+    final name = user?.fullName.trim().isNotEmpty == true
         ? user!.fullName
-        : 'Nguyễn Thị Mai';
+        : '—';
 
     return Scaffold(
       backgroundColor: AppColors.grayBg,
@@ -42,16 +47,16 @@ class PersonProfilePage extends StatelessWidget {
               PersonInfoTile(
                 icon: Icons.phone_outlined,
                 label: 'Số điện thoại',
-                value: user?.phone?.isNotEmpty == true
+                value: user?.phone?.trim().isNotEmpty == true
                     ? user!.phone!
-                    : '0901 234 567',
+                    : '—',
               ),
               PersonInfoTile(
                 icon: Icons.email_outlined,
                 label: 'Email',
-                value: user?.email.isNotEmpty == true
+                value: user?.email.trim().isNotEmpty == true
                     ? user!.email
-                    : 'mai.nguyen@tanlu.edu.vn',
+                    : '—',
               ),
               PersonInfoTile(
                 icon: Icons.school_outlined,
@@ -60,8 +65,8 @@ class PersonProfilePage extends StatelessWidget {
               ),
               PersonInfoTile(
                 icon: Icons.class_outlined,
-                label: 'Lớp phụ trách',
-                value: 'Lớp Mầm 2 - SUNFLOWER',
+                label: user?.role == 'parent' ? 'Lớp' : 'Lớp phụ trách',
+                value: className?.trim().isNotEmpty == true ? className! : '—',
                 showDivider: false,
               ),
             ],
