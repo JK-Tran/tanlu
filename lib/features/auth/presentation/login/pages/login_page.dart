@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
 import 'package:tanlu_management/core/dimensions/app_dimens.dart';
-import 'package:tanlu_management/core/router/app_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
 import 'package:tanlu_management/features/auth/domain/repositories/auth_repository.dart';
@@ -26,7 +24,6 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
   @override
   void initState() {
     super.initState();
-    // Đồng bộ controller với state debug (nếu kDebugMode)
     _usernameController.text = bloc.state.username;
     _passwordController.text = bloc.state.password;
   }
@@ -54,13 +51,6 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
         if (state.loginSuccess == true) {
           final user = GetIt.instance.get<AuthRepository>().getCurrentUser();
           context.read<AppBloc>().add(AppEvent.loggedIn(user));
-          
-          final isParent = user.role.code.toUpperCase() == 'PARENT';
-          if (isParent) {
-            context.go(AppRouter.progress);
-          } else {
-            context.go(AppRouter.student);
-          }
           return;
         }
         // Lắng nghe lỗi cụ thể của trang (onPageError) → hiển thị SnackBar

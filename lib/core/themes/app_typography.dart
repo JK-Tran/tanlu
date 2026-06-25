@@ -10,7 +10,7 @@ abstract final class AppTypography {
     required Color onSurface,
     required Color onSurfaceVariant,
   }) {
-    final base = GoogleFonts.plusJakartaSansTextTheme();
+    final base = GoogleFonts.beVietnamProTextTheme();
 
     return base.copyWith(
       displayLarge: base.displayLarge?.copyWith(

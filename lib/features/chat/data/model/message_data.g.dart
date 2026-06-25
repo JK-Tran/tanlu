@@ -8,26 +8,27 @@ part of 'message_data.dart';
 
 _$MessageDataImpl _$$MessageDataImplFromJson(Map<String, dynamic> json) =>
     _$MessageDataImpl(
-      id: (json['id'] as num?)?.toInt(),
-      conversationId: (json['conversationId'] as num?)?.toInt(),
-      senderId: (json['senderId'] as num?)?.toInt(),
+      id: json['id'] as String?,
+      senderId: json['senderId'] as String?,
+      receiverId: json['receiverId'] as String?,
+      fullName: json['fullName'] as String?,
+      avatar: json['avatar'] as String?,
+      type: json['type'] as String?,
       text: json['text'] as String?,
-      isRead: json['isRead'] as bool?,
       fileUrl: json['fileUrl'] as String?,
-      createdAt: json['createdAt'] as String?,
-      sender: json['sender'] == null
-          ? null
-          : ChatUserData.fromJson(json['sender'] as Map<String, dynamic>),
+      status: json['status'] as String?,
+      createdAt: FirestoreJson.toDateTime(json['createdAt']),
     );
 
 Map<String, dynamic> _$$MessageDataImplToJson(_$MessageDataImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'conversationId': instance.conversationId,
       'senderId': instance.senderId,
+      'receiverId': instance.receiverId,
+      'fullName': instance.fullName,
+      'avatar': instance.avatar,
+      'type': instance.type,
       'text': instance.text,
-      'isRead': instance.isRead,
       'fileUrl': instance.fileUrl,
-      'createdAt': instance.createdAt,
-      'sender': instance.sender,
+      'status': instance.status,
+      'createdAt': FirestoreJson.dateTimeToFirestore(instance.createdAt),
     };

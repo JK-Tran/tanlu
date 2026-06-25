@@ -10,9 +10,9 @@ class LogoSection extends StatelessWidget {
     return Column(
       children: [
         Transform.scale(
-          scale: 2.5,
+          scale: 1.5,
           child: Image.asset(
-            'assets/images/playstore.png',
+            'assets/images/logo-tanlu.png',
             width: 120.w,
             height: 120.h,
             fit: BoxFit.contain,

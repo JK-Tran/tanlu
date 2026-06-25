@@ -21,18 +21,40 @@ ConversationData _$ConversationDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ConversationData {
-  @JsonKey()
-  int? get id => throw _privateConstructorUsedError;
-  @JsonKey()
+  @JsonKey(name: 'id', includeToJson: false)
+  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'name')
   String? get name => throw _privateConstructorUsedError;
-  @JsonKey()
+  @JsonKey(name: 'type')
   String? get type => throw _privateConstructorUsedError;
-  @JsonKey()
-  String? get updatedAt => throw _privateConstructorUsedError;
-  @JsonKey()
-  List<ParticipantData>? get participants => throw _privateConstructorUsedError;
-  @JsonKey()
-  List<MessageData>? get messages => throw _privateConstructorUsedError;
+  @JsonKey(name: 'classId')
+  String? get classId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'centerId')
+  String? get centerId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'memberIds')
+  List<String>? get memberIds => throw _privateConstructorUsedError;
+  @JsonKey(name: 'lastMessageText')
+  String? get lastMessageText => throw _privateConstructorUsedError;
+  @JsonKey(name: 'lastMessageSenderId')
+  String? get lastMessageSenderId => throw _privateConstructorUsedError;
+  @JsonKey(
+    name: 'lastMessageAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  DateTime? get lastMessageAt => throw _privateConstructorUsedError;
+  @JsonKey(
+    name: 'createdAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(
+    name: 'updatedAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this ConversationData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,12 +74,32 @@ abstract class $ConversationDataCopyWith<$Res> {
   ) = _$ConversationDataCopyWithImpl<$Res, ConversationData>;
   @useResult
   $Res call({
-    @JsonKey() int? id,
-    @JsonKey() String? name,
-    @JsonKey() String? type,
-    @JsonKey() String? updatedAt,
-    @JsonKey() List<ParticipantData>? participants,
-    @JsonKey() List<MessageData>? messages,
+    @JsonKey(name: 'id', includeToJson: false) String? id,
+    @JsonKey(name: 'name') String? name,
+    @JsonKey(name: 'type') String? type,
+    @JsonKey(name: 'classId') String? classId,
+    @JsonKey(name: 'centerId') String? centerId,
+    @JsonKey(name: 'memberIds') List<String>? memberIds,
+    @JsonKey(name: 'lastMessageText') String? lastMessageText,
+    @JsonKey(name: 'lastMessageSenderId') String? lastMessageSenderId,
+    @JsonKey(
+      name: 'lastMessageAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    DateTime? lastMessageAt,
+    @JsonKey(
+      name: 'createdAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    DateTime? createdAt,
+    @JsonKey(
+      name: 'updatedAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    DateTime? updatedAt,
   });
 }
 
@@ -79,16 +121,21 @@ class _$ConversationDataCopyWithImpl<$Res, $Val extends ConversationData>
     Object? id = freezed,
     Object? name = freezed,
     Object? type = freezed,
+    Object? classId = freezed,
+    Object? centerId = freezed,
+    Object? memberIds = freezed,
+    Object? lastMessageText = freezed,
+    Object? lastMessageSenderId = freezed,
+    Object? lastMessageAt = freezed,
+    Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? participants = freezed,
-    Object? messages = freezed,
   }) {
     return _then(
       _value.copyWith(
             id: freezed == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as int?,
+                      as String?,
             name: freezed == name
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
@@ -97,18 +144,38 @@ class _$ConversationDataCopyWithImpl<$Res, $Val extends ConversationData>
                 ? _value.type
                 : type // ignore: cast_nullable_to_non_nullable
                       as String?,
+            classId: freezed == classId
+                ? _value.classId
+                : classId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            centerId: freezed == centerId
+                ? _value.centerId
+                : centerId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            memberIds: freezed == memberIds
+                ? _value.memberIds
+                : memberIds // ignore: cast_nullable_to_non_nullable
+                      as List<String>?,
+            lastMessageText: freezed == lastMessageText
+                ? _value.lastMessageText
+                : lastMessageText // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            lastMessageSenderId: freezed == lastMessageSenderId
+                ? _value.lastMessageSenderId
+                : lastMessageSenderId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            lastMessageAt: freezed == lastMessageAt
+                ? _value.lastMessageAt
+                : lastMessageAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
             updatedAt: freezed == updatedAt
                 ? _value.updatedAt
                 : updatedAt // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            participants: freezed == participants
-                ? _value.participants
-                : participants // ignore: cast_nullable_to_non_nullable
-                      as List<ParticipantData>?,
-            messages: freezed == messages
-                ? _value.messages
-                : messages // ignore: cast_nullable_to_non_nullable
-                      as List<MessageData>?,
+                      as DateTime?,
           )
           as $Val,
     );
@@ -125,12 +192,32 @@ abstract class _$$ConversationDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey() int? id,
-    @JsonKey() String? name,
-    @JsonKey() String? type,
-    @JsonKey() String? updatedAt,
-    @JsonKey() List<ParticipantData>? participants,
-    @JsonKey() List<MessageData>? messages,
+    @JsonKey(name: 'id', includeToJson: false) String? id,
+    @JsonKey(name: 'name') String? name,
+    @JsonKey(name: 'type') String? type,
+    @JsonKey(name: 'classId') String? classId,
+    @JsonKey(name: 'centerId') String? centerId,
+    @JsonKey(name: 'memberIds') List<String>? memberIds,
+    @JsonKey(name: 'lastMessageText') String? lastMessageText,
+    @JsonKey(name: 'lastMessageSenderId') String? lastMessageSenderId,
+    @JsonKey(
+      name: 'lastMessageAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    DateTime? lastMessageAt,
+    @JsonKey(
+      name: 'createdAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    DateTime? createdAt,
+    @JsonKey(
+      name: 'updatedAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    DateTime? updatedAt,
   });
 }
 
@@ -151,16 +238,21 @@ class __$$ConversationDataImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? type = freezed,
+    Object? classId = freezed,
+    Object? centerId = freezed,
+    Object? memberIds = freezed,
+    Object? lastMessageText = freezed,
+    Object? lastMessageSenderId = freezed,
+    Object? lastMessageAt = freezed,
+    Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? participants = freezed,
-    Object? messages = freezed,
   }) {
     return _then(
       _$ConversationDataImpl(
         id: freezed == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as int?,
+                  as String?,
         name: freezed == name
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
@@ -169,18 +261,38 @@ class __$$ConversationDataImplCopyWithImpl<$Res>
             ? _value.type
             : type // ignore: cast_nullable_to_non_nullable
                   as String?,
+        classId: freezed == classId
+            ? _value.classId
+            : classId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        centerId: freezed == centerId
+            ? _value.centerId
+            : centerId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        memberIds: freezed == memberIds
+            ? _value._memberIds
+            : memberIds // ignore: cast_nullable_to_non_nullable
+                  as List<String>?,
+        lastMessageText: freezed == lastMessageText
+            ? _value.lastMessageText
+            : lastMessageText // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        lastMessageSenderId: freezed == lastMessageSenderId
+            ? _value.lastMessageSenderId
+            : lastMessageSenderId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        lastMessageAt: freezed == lastMessageAt
+            ? _value.lastMessageAt
+            : lastMessageAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
         updatedAt: freezed == updatedAt
             ? _value.updatedAt
             : updatedAt // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        participants: freezed == participants
-            ? _value._participants
-            : participants // ignore: cast_nullable_to_non_nullable
-                  as List<ParticipantData>?,
-        messages: freezed == messages
-            ? _value._messages
-            : messages // ignore: cast_nullable_to_non_nullable
-                  as List<MessageData>?,
+                  as DateTime?,
       ),
     );
   }
@@ -188,58 +300,96 @@ class __$$ConversationDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ConversationDataImpl extends _ConversationData {
+class _$ConversationDataImpl implements _ConversationData {
   const _$ConversationDataImpl({
-    @JsonKey() this.id,
-    @JsonKey() this.name,
-    @JsonKey() this.type,
-    @JsonKey() this.updatedAt,
-    @JsonKey() final List<ParticipantData>? participants,
-    @JsonKey() final List<MessageData>? messages,
-  }) : _participants = participants,
-       _messages = messages,
-       super._();
+    @JsonKey(name: 'id', includeToJson: false) this.id,
+    @JsonKey(name: 'name') this.name,
+    @JsonKey(name: 'type') this.type,
+    @JsonKey(name: 'classId') this.classId,
+    @JsonKey(name: 'centerId') this.centerId,
+    @JsonKey(name: 'memberIds') final List<String>? memberIds,
+    @JsonKey(name: 'lastMessageText') this.lastMessageText,
+    @JsonKey(name: 'lastMessageSenderId') this.lastMessageSenderId,
+    @JsonKey(
+      name: 'lastMessageAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    this.lastMessageAt,
+    @JsonKey(
+      name: 'createdAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    this.createdAt,
+    @JsonKey(
+      name: 'updatedAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    this.updatedAt,
+  }) : _memberIds = memberIds;
 
   factory _$ConversationDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConversationDataImplFromJson(json);
 
   @override
-  @JsonKey()
-  final int? id;
+  @JsonKey(name: 'id', includeToJson: false)
+  final String? id;
   @override
-  @JsonKey()
+  @JsonKey(name: 'name')
   final String? name;
   @override
-  @JsonKey()
+  @JsonKey(name: 'type')
   final String? type;
   @override
-  @JsonKey()
-  final String? updatedAt;
-  final List<ParticipantData>? _participants;
+  @JsonKey(name: 'classId')
+  final String? classId;
   @override
-  @JsonKey()
-  List<ParticipantData>? get participants {
-    final value = _participants;
+  @JsonKey(name: 'centerId')
+  final String? centerId;
+  final List<String>? _memberIds;
+  @override
+  @JsonKey(name: 'memberIds')
+  List<String>? get memberIds {
+    final value = _memberIds;
     if (value == null) return null;
-    if (_participants is EqualUnmodifiableListView) return _participants;
+    if (_memberIds is EqualUnmodifiableListView) return _memberIds;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
-  final List<MessageData>? _messages;
   @override
-  @JsonKey()
-  List<MessageData>? get messages {
-    final value = _messages;
-    if (value == null) return null;
-    if (_messages is EqualUnmodifiableListView) return _messages;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
+  @JsonKey(name: 'lastMessageText')
+  final String? lastMessageText;
+  @override
+  @JsonKey(name: 'lastMessageSenderId')
+  final String? lastMessageSenderId;
+  @override
+  @JsonKey(
+    name: 'lastMessageAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  final DateTime? lastMessageAt;
+  @override
+  @JsonKey(
+    name: 'createdAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  final DateTime? createdAt;
+  @override
+  @JsonKey(
+    name: 'updatedAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'ConversationData(id: $id, name: $name, type: $type, updatedAt: $updatedAt, participants: $participants, messages: $messages)';
+    return 'ConversationData(id: $id, name: $name, type: $type, classId: $classId, centerId: $centerId, memberIds: $memberIds, lastMessageText: $lastMessageText, lastMessageSenderId: $lastMessageSenderId, lastMessageAt: $lastMessageAt, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -250,13 +400,23 @@ class _$ConversationDataImpl extends _ConversationData {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
+            (identical(other.classId, classId) || other.classId == classId) &&
+            (identical(other.centerId, centerId) ||
+                other.centerId == centerId) &&
             const DeepCollectionEquality().equals(
-              other._participants,
-              _participants,
+              other._memberIds,
+              _memberIds,
             ) &&
-            const DeepCollectionEquality().equals(other._messages, _messages));
+            (identical(other.lastMessageText, lastMessageText) ||
+                other.lastMessageText == lastMessageText) &&
+            (identical(other.lastMessageSenderId, lastMessageSenderId) ||
+                other.lastMessageSenderId == lastMessageSenderId) &&
+            (identical(other.lastMessageAt, lastMessageAt) ||
+                other.lastMessageAt == lastMessageAt) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -266,9 +426,14 @@ class _$ConversationDataImpl extends _ConversationData {
     id,
     name,
     type,
+    classId,
+    centerId,
+    const DeepCollectionEquality().hash(_memberIds),
+    lastMessageText,
+    lastMessageSenderId,
+    lastMessageAt,
+    createdAt,
     updatedAt,
-    const DeepCollectionEquality().hash(_participants),
-    const DeepCollectionEquality().hash(_messages),
   );
 
   /// Create a copy of ConversationData
@@ -288,38 +453,84 @@ class _$ConversationDataImpl extends _ConversationData {
   }
 }
 
-abstract class _ConversationData extends ConversationData {
+abstract class _ConversationData implements ConversationData {
   const factory _ConversationData({
-    @JsonKey() final int? id,
-    @JsonKey() final String? name,
-    @JsonKey() final String? type,
-    @JsonKey() final String? updatedAt,
-    @JsonKey() final List<ParticipantData>? participants,
-    @JsonKey() final List<MessageData>? messages,
+    @JsonKey(name: 'id', includeToJson: false) final String? id,
+    @JsonKey(name: 'name') final String? name,
+    @JsonKey(name: 'type') final String? type,
+    @JsonKey(name: 'classId') final String? classId,
+    @JsonKey(name: 'centerId') final String? centerId,
+    @JsonKey(name: 'memberIds') final List<String>? memberIds,
+    @JsonKey(name: 'lastMessageText') final String? lastMessageText,
+    @JsonKey(name: 'lastMessageSenderId') final String? lastMessageSenderId,
+    @JsonKey(
+      name: 'lastMessageAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    final DateTime? lastMessageAt,
+    @JsonKey(
+      name: 'createdAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    final DateTime? createdAt,
+    @JsonKey(
+      name: 'updatedAt',
+      fromJson: FirestoreJson.toDateTime,
+      toJson: FirestoreJson.dateTimeToFirestore,
+    )
+    final DateTime? updatedAt,
   }) = _$ConversationDataImpl;
-  const _ConversationData._() : super._();
 
   factory _ConversationData.fromJson(Map<String, dynamic> json) =
       _$ConversationDataImpl.fromJson;
 
   @override
-  @JsonKey()
-  int? get id;
+  @JsonKey(name: 'id', includeToJson: false)
+  String? get id;
   @override
-  @JsonKey()
+  @JsonKey(name: 'name')
   String? get name;
   @override
-  @JsonKey()
+  @JsonKey(name: 'type')
   String? get type;
   @override
-  @JsonKey()
-  String? get updatedAt;
+  @JsonKey(name: 'classId')
+  String? get classId;
   @override
-  @JsonKey()
-  List<ParticipantData>? get participants;
+  @JsonKey(name: 'centerId')
+  String? get centerId;
   @override
-  @JsonKey()
-  List<MessageData>? get messages;
+  @JsonKey(name: 'memberIds')
+  List<String>? get memberIds;
+  @override
+  @JsonKey(name: 'lastMessageText')
+  String? get lastMessageText;
+  @override
+  @JsonKey(name: 'lastMessageSenderId')
+  String? get lastMessageSenderId;
+  @override
+  @JsonKey(
+    name: 'lastMessageAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  DateTime? get lastMessageAt;
+  @override
+  @JsonKey(
+    name: 'createdAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  DateTime? get createdAt;
+  @override
+  @JsonKey(
+    name: 'updatedAt',
+    fromJson: FirestoreJson.toDateTime,
+    toJson: FirestoreJson.dateTimeToFirestore,
+  )
+  DateTime? get updatedAt;
 
   /// Create a copy of ConversationData
   /// with the given fields replaced by the non-null parameter values.

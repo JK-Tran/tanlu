@@ -1,17 +1,22 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tanlu_management/features/chat/domain/entity/participant.dart';
-import 'package:tanlu_management/features/chat/domain/entity/message.dart';
 
 part 'conversation.freezed.dart';
 
 @freezed
 class Conversation with _$Conversation {
   const factory Conversation({
-    @Default(0) int id,
+    @Default('') String id,
     @Default('') String name,
-    @Default('') String type,
+    @Default('direct') String type,
+    String? classId,
+    String? centerId,
+    @Default([]) List<String> memberIds,
+    @Default('') String lastMessageText,
+    @Default('') String lastMessageSenderId,
+    DateTime? lastMessageAt,
     DateTime? updatedAt,
-    @Default([]) List<Participant> participants,
-    @Default([]) List<Message> messages,
+    @Default(0) int unreadCount,
+    @Default([]) List<Participant> members,
   }) = _Conversation;
 }

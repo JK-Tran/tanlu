@@ -37,8 +37,8 @@ class AppConfirmDialog extends StatelessWidget {
   Color get _confirmBtnColor => switch (type) {
     AppConfirmDialogType.error ||
     AppConfirmDialogType.warning => AppColors.error,
-    AppConfirmDialogType.info ||
-    AppConfirmDialogType.success => AppColors.primary,
+    AppConfirmDialogType.success => AppColors.success,
+    AppConfirmDialogType.info => AppColors.primary,
   };
 
   static Future<bool?> show(

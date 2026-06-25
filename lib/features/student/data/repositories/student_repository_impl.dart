@@ -1,31 +1,56 @@
 import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/features/student/data/mapper/student_data_mapper.dart';
-
-import 'package:tanlu_management/features/student/data/sources/student_api_service.dart';
+import 'package:tanlu_management/features/student/data/sources/student_firebase_source.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
+import 'package:tanlu_management/features/student/domain/entity/student_class_stats.dart';
 import 'package:tanlu_management/features/student/domain/repositories/student_repository.dart';
 
 @LazySingleton(as: StudentRepository)
-class StudentRepositoryImpl extends StudentRepository {
-  StudentRepositoryImpl(this._apiService, this._studentDataMapper);
+class StudentRepositoryImpl implements StudentRepository {
+  StudentRepositoryImpl(this._firebaseSource, this._studentDataMapper);
 
-  final StudentApiService _apiService;
+  final StudentFirebaseSource _firebaseSource;
   final StudentDataMapper _studentDataMapper;
+
   @override
-  Future<List<Student>> getStudents() async {
-    final response = await _apiService.getStudents();
-    return _studentDataMapper.mapToListEntity(response?.students);
+  Future<List<Student>> getStudentsByClassId({
+    required String classId,
+    String? gender,
+    String? searchKeyword,
+  }) async {
+    final data = await _firebaseSource.getStudentsByClassId(
+      classId: classId,
+      gender: gender,
+    );
+    final students = _studentDataMapper.mapToListEntity(data);
+
+    final keyword = searchKeyword?.trim();
+    if (keyword == null || keyword.isEmpty) return students;
+
+    final q = keyword.toLowerCase();
+    return students
+        .where(
+          (s) =>
+              s.fullName.toLowerCase().contains(q) ||
+              s.nickname.toLowerCase().contains(q),
+        )
+        .toList();
   }
 
   @override
-  Future<Student> getStudentById(int id) async {
-    final response = await _apiService.getStudentById(id);
-    return _studentDataMapper.mapToEntity(response?.student);
+  Future<StudentClassStats> getClassStats(String classId) async {
+    final stats = await _firebaseSource.getClassStats(classId);
+    return StudentClassStats(
+      total: stats.total,
+      male: stats.male,
+      female: stats.female,
+    );
   }
 
   @override
-  Future<Student> updateStudent(int id, Map<String, dynamic> data) async {
-    final response = await _apiService.updateStudent(id, data);
-    return _studentDataMapper.mapToEntity(response?.student);
+  Future<Student?> getStudentById(String id) async {
+    final data = await _firebaseSource.getStudentById(id);
+    if (data == null) return null;
+    return _studentDataMapper.mapToEntity(data);
   }
 }

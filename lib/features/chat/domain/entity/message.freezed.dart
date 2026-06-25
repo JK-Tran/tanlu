@@ -17,14 +17,17 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Message {
-  int get id => throw _privateConstructorUsedError;
-  int get conversationId => throw _privateConstructorUsedError;
-  int get senderId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get conversationId => throw _privateConstructorUsedError;
+  String get senderId => throw _privateConstructorUsedError;
+  String? get receiverId => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  bool get isRead => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
   String? get fileUrl => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  bool get isRead => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
-  ChatUser? get sender => throw _privateConstructorUsedError;
+  Author? get sender => throw _privateConstructorUsedError;
 
   /// Create a copy of Message
   /// with the given fields replaced by the non-null parameter values.
@@ -38,17 +41,20 @@ abstract class $MessageCopyWith<$Res> {
       _$MessageCopyWithImpl<$Res, Message>;
   @useResult
   $Res call({
-    int id,
-    int conversationId,
-    int senderId,
+    String id,
+    String conversationId,
+    String senderId,
+    String? receiverId,
     String text,
-    bool isRead,
+    String type,
     String? fileUrl,
+    String status,
+    bool isRead,
     DateTime? createdAt,
-    ChatUser? sender,
+    Author? sender,
   });
 
-  $ChatUserCopyWith<$Res>? get sender;
+  $AuthorCopyWith<$Res>? get sender;
 }
 
 /// @nodoc
@@ -69,9 +75,12 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? id = null,
     Object? conversationId = null,
     Object? senderId = null,
+    Object? receiverId = freezed,
     Object? text = null,
-    Object? isRead = null,
+    Object? type = null,
     Object? fileUrl = freezed,
+    Object? status = null,
+    Object? isRead = null,
     Object? createdAt = freezed,
     Object? sender = freezed,
   }) {
@@ -80,27 +89,39 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
             id: null == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as int,
+                      as String,
             conversationId: null == conversationId
                 ? _value.conversationId
                 : conversationId // ignore: cast_nullable_to_non_nullable
-                      as int,
+                      as String,
             senderId: null == senderId
                 ? _value.senderId
                 : senderId // ignore: cast_nullable_to_non_nullable
-                      as int,
+                      as String,
+            receiverId: freezed == receiverId
+                ? _value.receiverId
+                : receiverId // ignore: cast_nullable_to_non_nullable
+                      as String?,
             text: null == text
                 ? _value.text
                 : text // ignore: cast_nullable_to_non_nullable
+                      as String,
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as String,
+            fileUrl: freezed == fileUrl
+                ? _value.fileUrl
+                : fileUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
                       as String,
             isRead: null == isRead
                 ? _value.isRead
                 : isRead // ignore: cast_nullable_to_non_nullable
                       as bool,
-            fileUrl: freezed == fileUrl
-                ? _value.fileUrl
-                : fileUrl // ignore: cast_nullable_to_non_nullable
-                      as String?,
             createdAt: freezed == createdAt
                 ? _value.createdAt
                 : createdAt // ignore: cast_nullable_to_non_nullable
@@ -108,7 +129,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
             sender: freezed == sender
                 ? _value.sender
                 : sender // ignore: cast_nullable_to_non_nullable
-                      as ChatUser?,
+                      as Author?,
           )
           as $Val,
     );
@@ -118,12 +139,12 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ChatUserCopyWith<$Res>? get sender {
+  $AuthorCopyWith<$Res>? get sender {
     if (_value.sender == null) {
       return null;
     }
 
-    return $ChatUserCopyWith<$Res>(_value.sender!, (value) {
+    return $AuthorCopyWith<$Res>(_value.sender!, (value) {
       return _then(_value.copyWith(sender: value) as $Val);
     });
   }
@@ -138,18 +159,21 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
   @override
   @useResult
   $Res call({
-    int id,
-    int conversationId,
-    int senderId,
+    String id,
+    String conversationId,
+    String senderId,
+    String? receiverId,
     String text,
-    bool isRead,
+    String type,
     String? fileUrl,
+    String status,
+    bool isRead,
     DateTime? createdAt,
-    ChatUser? sender,
+    Author? sender,
   });
 
   @override
-  $ChatUserCopyWith<$Res>? get sender;
+  $AuthorCopyWith<$Res>? get sender;
 }
 
 /// @nodoc
@@ -169,9 +193,12 @@ class __$$MessageImplCopyWithImpl<$Res>
     Object? id = null,
     Object? conversationId = null,
     Object? senderId = null,
+    Object? receiverId = freezed,
     Object? text = null,
-    Object? isRead = null,
+    Object? type = null,
     Object? fileUrl = freezed,
+    Object? status = null,
+    Object? isRead = null,
     Object? createdAt = freezed,
     Object? sender = freezed,
   }) {
@@ -180,27 +207,39 @@ class __$$MessageImplCopyWithImpl<$Res>
         id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as String,
         conversationId: null == conversationId
             ? _value.conversationId
             : conversationId // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as String,
         senderId: null == senderId
             ? _value.senderId
             : senderId // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as String,
+        receiverId: freezed == receiverId
+            ? _value.receiverId
+            : receiverId // ignore: cast_nullable_to_non_nullable
+                  as String?,
         text: null == text
             ? _value.text
             : text // ignore: cast_nullable_to_non_nullable
+                  as String,
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as String,
+        fileUrl: freezed == fileUrl
+            ? _value.fileUrl
+            : fileUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
                   as String,
         isRead: null == isRead
             ? _value.isRead
             : isRead // ignore: cast_nullable_to_non_nullable
                   as bool,
-        fileUrl: freezed == fileUrl
-            ? _value.fileUrl
-            : fileUrl // ignore: cast_nullable_to_non_nullable
-                  as String?,
         createdAt: freezed == createdAt
             ? _value.createdAt
             : createdAt // ignore: cast_nullable_to_non_nullable
@@ -208,7 +247,7 @@ class __$$MessageImplCopyWithImpl<$Res>
         sender: freezed == sender
             ? _value.sender
             : sender // ignore: cast_nullable_to_non_nullable
-                  as ChatUser?,
+                  as Author?,
       ),
     );
   }
@@ -218,41 +257,52 @@ class __$$MessageImplCopyWithImpl<$Res>
 
 class _$MessageImpl implements _Message {
   const _$MessageImpl({
-    this.id = 0,
-    this.conversationId = 0,
-    this.senderId = 0,
+    this.id = '',
+    this.conversationId = '',
+    this.senderId = '',
+    this.receiverId,
     this.text = '',
-    this.isRead = false,
+    this.type = 'text',
     this.fileUrl,
+    this.status = 'active',
+    this.isRead = false,
     this.createdAt,
     this.sender,
   });
 
   @override
   @JsonKey()
-  final int id;
+  final String id;
   @override
   @JsonKey()
-  final int conversationId;
+  final String conversationId;
   @override
   @JsonKey()
-  final int senderId;
+  final String senderId;
+  @override
+  final String? receiverId;
   @override
   @JsonKey()
   final String text;
   @override
   @JsonKey()
-  final bool isRead;
+  final String type;
   @override
   final String? fileUrl;
   @override
+  @JsonKey()
+  final String status;
+  @override
+  @JsonKey()
+  final bool isRead;
+  @override
   final DateTime? createdAt;
   @override
-  final ChatUser? sender;
+  final Author? sender;
 
   @override
   String toString() {
-    return 'Message(id: $id, conversationId: $conversationId, senderId: $senderId, text: $text, isRead: $isRead, fileUrl: $fileUrl, createdAt: $createdAt, sender: $sender)';
+    return 'Message(id: $id, conversationId: $conversationId, senderId: $senderId, receiverId: $receiverId, text: $text, type: $type, fileUrl: $fileUrl, status: $status, isRead: $isRead, createdAt: $createdAt, sender: $sender)';
   }
 
   @override
@@ -265,9 +315,13 @@ class _$MessageImpl implements _Message {
                 other.conversationId == conversationId) &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
+            (identical(other.receiverId, receiverId) ||
+                other.receiverId == receiverId) &&
             (identical(other.text, text) || other.text == text) &&
-            (identical(other.isRead, isRead) || other.isRead == isRead) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.fileUrl, fileUrl) || other.fileUrl == fileUrl) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.isRead, isRead) || other.isRead == isRead) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.sender, sender) || other.sender == sender));
@@ -279,9 +333,12 @@ class _$MessageImpl implements _Message {
     id,
     conversationId,
     senderId,
+    receiverId,
     text,
-    isRead,
+    type,
     fileUrl,
+    status,
+    isRead,
     createdAt,
     sender,
   );
@@ -297,32 +354,41 @@ class _$MessageImpl implements _Message {
 
 abstract class _Message implements Message {
   const factory _Message({
-    final int id,
-    final int conversationId,
-    final int senderId,
+    final String id,
+    final String conversationId,
+    final String senderId,
+    final String? receiverId,
     final String text,
-    final bool isRead,
+    final String type,
     final String? fileUrl,
+    final String status,
+    final bool isRead,
     final DateTime? createdAt,
-    final ChatUser? sender,
+    final Author? sender,
   }) = _$MessageImpl;
 
   @override
-  int get id;
+  String get id;
   @override
-  int get conversationId;
+  String get conversationId;
   @override
-  int get senderId;
+  String get senderId;
+  @override
+  String? get receiverId;
   @override
   String get text;
   @override
-  bool get isRead;
+  String get type;
   @override
   String? get fileUrl;
   @override
+  String get status;
+  @override
+  bool get isRead;
+  @override
   DateTime? get createdAt;
   @override
-  ChatUser? get sender;
+  Author? get sender;
 
   /// Create a copy of Message
   /// with the given fields replaced by the non-null parameter values.

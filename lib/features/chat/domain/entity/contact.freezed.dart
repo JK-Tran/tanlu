@@ -17,10 +17,15 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Contact {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
-  String? get avatarFileId => throw _privateConstructorUsedError;
-  String get roleCode => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
+  String get avatar => throw _privateConstructorUsedError;
+  ContactRelation get relation => throw _privateConstructorUsedError;
+  bool get canChat => throw _privateConstructorUsedError;
+
+  /// `pendingSent` | `pendingReceived` | null
+  String? get pendingRequest => throw _privateConstructorUsedError;
 
   /// Create a copy of Contact
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +38,15 @@ abstract class $ContactCopyWith<$Res> {
   factory $ContactCopyWith(Contact value, $Res Function(Contact) then) =
       _$ContactCopyWithImpl<$Res, Contact>;
   @useResult
-  $Res call({int id, String fullName, String? avatarFileId, String roleCode});
+  $Res call({
+    String id,
+    String fullName,
+    String role,
+    String avatar,
+    ContactRelation relation,
+    bool canChat,
+    String? pendingRequest,
+  });
 }
 
 /// @nodoc
@@ -53,27 +66,42 @@ class _$ContactCopyWithImpl<$Res, $Val extends Contact>
   $Res call({
     Object? id = null,
     Object? fullName = null,
-    Object? avatarFileId = freezed,
-    Object? roleCode = null,
+    Object? role = null,
+    Object? avatar = null,
+    Object? relation = null,
+    Object? canChat = null,
+    Object? pendingRequest = freezed,
   }) {
     return _then(
       _value.copyWith(
             id: null == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as int,
+                      as String,
             fullName: null == fullName
                 ? _value.fullName
                 : fullName // ignore: cast_nullable_to_non_nullable
                       as String,
-            avatarFileId: freezed == avatarFileId
-                ? _value.avatarFileId
-                : avatarFileId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            roleCode: null == roleCode
-                ? _value.roleCode
-                : roleCode // ignore: cast_nullable_to_non_nullable
+            role: null == role
+                ? _value.role
+                : role // ignore: cast_nullable_to_non_nullable
                       as String,
+            avatar: null == avatar
+                ? _value.avatar
+                : avatar // ignore: cast_nullable_to_non_nullable
+                      as String,
+            relation: null == relation
+                ? _value.relation
+                : relation // ignore: cast_nullable_to_non_nullable
+                      as ContactRelation,
+            canChat: null == canChat
+                ? _value.canChat
+                : canChat // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            pendingRequest: freezed == pendingRequest
+                ? _value.pendingRequest
+                : pendingRequest // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -88,7 +116,15 @@ abstract class _$$ContactImplCopyWith<$Res> implements $ContactCopyWith<$Res> {
   ) = __$$ContactImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String fullName, String? avatarFileId, String roleCode});
+  $Res call({
+    String id,
+    String fullName,
+    String role,
+    String avatar,
+    ContactRelation relation,
+    bool canChat,
+    String? pendingRequest,
+  });
 }
 
 /// @nodoc
@@ -107,27 +143,42 @@ class __$$ContactImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? fullName = null,
-    Object? avatarFileId = freezed,
-    Object? roleCode = null,
+    Object? role = null,
+    Object? avatar = null,
+    Object? relation = null,
+    Object? canChat = null,
+    Object? pendingRequest = freezed,
   }) {
     return _then(
       _$ContactImpl(
         id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as int,
+                  as String,
         fullName: null == fullName
             ? _value.fullName
             : fullName // ignore: cast_nullable_to_non_nullable
                   as String,
-        avatarFileId: freezed == avatarFileId
-            ? _value.avatarFileId
-            : avatarFileId // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        roleCode: null == roleCode
-            ? _value.roleCode
-            : roleCode // ignore: cast_nullable_to_non_nullable
+        role: null == role
+            ? _value.role
+            : role // ignore: cast_nullable_to_non_nullable
                   as String,
+        avatar: null == avatar
+            ? _value.avatar
+            : avatar // ignore: cast_nullable_to_non_nullable
+                  as String,
+        relation: null == relation
+            ? _value.relation
+            : relation // ignore: cast_nullable_to_non_nullable
+                  as ContactRelation,
+        canChat: null == canChat
+            ? _value.canChat
+            : canChat // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        pendingRequest: freezed == pendingRequest
+            ? _value.pendingRequest
+            : pendingRequest // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -137,27 +188,41 @@ class __$$ContactImplCopyWithImpl<$Res>
 
 class _$ContactImpl implements _Contact {
   const _$ContactImpl({
-    this.id = 0,
+    this.id = '',
     this.fullName = '',
-    this.avatarFileId,
-    this.roleCode = '',
+    this.role = '',
+    this.avatar = '',
+    this.relation = ContactRelation.none,
+    this.canChat = false,
+    this.pendingRequest,
   });
 
   @override
   @JsonKey()
-  final int id;
+  final String id;
   @override
   @JsonKey()
   final String fullName;
   @override
-  final String? avatarFileId;
+  @JsonKey()
+  final String role;
   @override
   @JsonKey()
-  final String roleCode;
+  final String avatar;
+  @override
+  @JsonKey()
+  final ContactRelation relation;
+  @override
+  @JsonKey()
+  final bool canChat;
+
+  /// `pendingSent` | `pendingReceived` | null
+  @override
+  final String? pendingRequest;
 
   @override
   String toString() {
-    return 'Contact(id: $id, fullName: $fullName, avatarFileId: $avatarFileId, roleCode: $roleCode)';
+    return 'Contact(id: $id, fullName: $fullName, role: $role, avatar: $avatar, relation: $relation, canChat: $canChat, pendingRequest: $pendingRequest)';
   }
 
   @override
@@ -168,15 +233,26 @@ class _$ContactImpl implements _Contact {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
-            (identical(other.avatarFileId, avatarFileId) ||
-                other.avatarFileId == avatarFileId) &&
-            (identical(other.roleCode, roleCode) ||
-                other.roleCode == roleCode));
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.relation, relation) ||
+                other.relation == relation) &&
+            (identical(other.canChat, canChat) || other.canChat == canChat) &&
+            (identical(other.pendingRequest, pendingRequest) ||
+                other.pendingRequest == pendingRequest));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, fullName, avatarFileId, roleCode);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    fullName,
+    role,
+    avatar,
+    relation,
+    canChat,
+    pendingRequest,
+  );
 
   /// Create a copy of Contact
   /// with the given fields replaced by the non-null parameter values.
@@ -189,20 +265,31 @@ class _$ContactImpl implements _Contact {
 
 abstract class _Contact implements Contact {
   const factory _Contact({
-    final int id,
+    final String id,
     final String fullName,
-    final String? avatarFileId,
-    final String roleCode,
+    final String role,
+    final String avatar,
+    final ContactRelation relation,
+    final bool canChat,
+    final String? pendingRequest,
   }) = _$ContactImpl;
 
   @override
-  int get id;
+  String get id;
   @override
   String get fullName;
   @override
-  String? get avatarFileId;
+  String get role;
   @override
-  String get roleCode;
+  String get avatar;
+  @override
+  ContactRelation get relation;
+  @override
+  bool get canChat;
+
+  /// `pendingSent` | `pendingReceived` | null
+  @override
+  String? get pendingRequest;
 
   /// Create a copy of Contact
   /// with the given fields replaced by the non-null parameter values.

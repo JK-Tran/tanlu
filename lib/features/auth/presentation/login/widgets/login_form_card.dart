@@ -29,15 +29,12 @@ class LoginFormCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(AppDimens.radiusLg),
-        border: Border.all(
-          color: AppColors.primaryLight.withValues(alpha: 0.5),
-          width: 1.5.w,
-        ),
+
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.05),
-            blurRadius: 30,
-            offset: const Offset(0, 10),
+            color: AppColors.black.withValues(alpha: 0.3),
+            blurRadius: 5,
+            offset: const Offset(0, 2),
           ),
         ],
       ),

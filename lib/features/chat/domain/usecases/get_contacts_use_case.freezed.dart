@@ -16,7 +16,17 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 /// @nodoc
-mixin _$GetContactsInput {}
+mixin _$GetContactsInput {
+  String get currentUserId => throw _privateConstructorUsedError;
+  String get role => throw _privateConstructorUsedError;
+  String? get classId => throw _privateConstructorUsedError;
+
+  /// Create a copy of GetContactsInput
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $GetContactsInputCopyWith<GetContactsInput> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $GetContactsInputCopyWith<$Res> {
@@ -24,6 +34,8 @@ abstract class $GetContactsInputCopyWith<$Res> {
     GetContactsInput value,
     $Res Function(GetContactsInput) then,
   ) = _$GetContactsInputCopyWithImpl<$Res, GetContactsInput>;
+  @useResult
+  $Res call({String currentUserId, String role, String? classId});
 }
 
 /// @nodoc
@@ -38,14 +50,43 @@ class _$GetContactsInputCopyWithImpl<$Res, $Val extends GetContactsInput>
 
   /// Create a copy of GetContactsInput
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? currentUserId = null,
+    Object? role = null,
+    Object? classId = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            currentUserId: null == currentUserId
+                ? _value.currentUserId
+                : currentUserId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            role: null == role
+                ? _value.role
+                : role // ignore: cast_nullable_to_non_nullable
+                      as String,
+            classId: freezed == classId
+                ? _value.classId
+                : classId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
 }
 
 /// @nodoc
-abstract class _$$GetContactsInputImplCopyWith<$Res> {
+abstract class _$$GetContactsInputImplCopyWith<$Res>
+    implements $GetContactsInputCopyWith<$Res> {
   factory _$$GetContactsInputImplCopyWith(
     _$GetContactsInputImpl value,
     $Res Function(_$GetContactsInputImpl) then,
   ) = __$$GetContactsInputImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String currentUserId, String role, String? classId});
 }
 
 /// @nodoc
@@ -59,30 +100,111 @@ class __$$GetContactsInputImplCopyWithImpl<$Res>
 
   /// Create a copy of GetContactsInput
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? currentUserId = null,
+    Object? role = null,
+    Object? classId = freezed,
+  }) {
+    return _then(
+      _$GetContactsInputImpl(
+        currentUserId: null == currentUserId
+            ? _value.currentUserId
+            : currentUserId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        role: null == role
+            ? _value.role
+            : role // ignore: cast_nullable_to_non_nullable
+                  as String,
+        classId: freezed == classId
+            ? _value.classId
+            : classId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
-class _$GetContactsInputImpl implements _GetContactsInput {
-  const _$GetContactsInputImpl();
+class _$GetContactsInputImpl
+    with DiagnosticableTreeMixin
+    implements _GetContactsInput {
+  const _$GetContactsInputImpl({
+    required this.currentUserId,
+    required this.role,
+    this.classId,
+  });
 
   @override
-  String toString() {
-    return 'GetContactsInput()';
+  final String currentUserId;
+  @override
+  final String role;
+  @override
+  final String? classId;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'GetContactsInput(currentUserId: $currentUserId, role: $role, classId: $classId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'GetContactsInput'))
+      ..add(DiagnosticsProperty('currentUserId', currentUserId))
+      ..add(DiagnosticsProperty('role', role))
+      ..add(DiagnosticsProperty('classId', classId));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetContactsInputImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$GetContactsInputImpl &&
+            (identical(other.currentUserId, currentUserId) ||
+                other.currentUserId == currentUserId) &&
+            (identical(other.role, role) || other.role == role) &&
+            (identical(other.classId, classId) || other.classId == classId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, currentUserId, role, classId);
+
+  /// Create a copy of GetContactsInput
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetContactsInputImplCopyWith<_$GetContactsInputImpl> get copyWith =>
+      __$$GetContactsInputImplCopyWithImpl<_$GetContactsInputImpl>(
+        this,
+        _$identity,
+      );
 }
 
 abstract class _GetContactsInput implements GetContactsInput {
-  const factory _GetContactsInput() = _$GetContactsInputImpl;
+  const factory _GetContactsInput({
+    required final String currentUserId,
+    required final String role,
+    final String? classId,
+  }) = _$GetContactsInputImpl;
+
+  @override
+  String get currentUserId;
+  @override
+  String get role;
+  @override
+  String? get classId;
+
+  /// Create a copy of GetContactsInput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GetContactsInputImplCopyWith<_$GetContactsInputImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -161,7 +283,7 @@ class __$$GetContactsOutputImplCopyWithImpl<$Res>
   $Res call({Object? contacts = null}) {
     return _then(
       _$GetContactsOutputImpl(
-        null == contacts
+        contacts: null == contacts
             ? _value._contacts
             : contacts // ignore: cast_nullable_to_non_nullable
                   as List<Contact>,
@@ -172,8 +294,10 @@ class __$$GetContactsOutputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$GetContactsOutputImpl implements _GetContactsOutput {
-  const _$GetContactsOutputImpl(final List<Contact> contacts)
+class _$GetContactsOutputImpl
+    with DiagnosticableTreeMixin
+    implements _GetContactsOutput {
+  const _$GetContactsOutputImpl({required final List<Contact> contacts})
     : _contacts = contacts;
 
   final List<Contact> _contacts;
@@ -185,8 +309,16 @@ class _$GetContactsOutputImpl implements _GetContactsOutput {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'GetContactsOutput(contacts: $contacts)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'GetContactsOutput'))
+      ..add(DiagnosticsProperty('contacts', contacts));
   }
 
   @override
@@ -214,7 +346,7 @@ class _$GetContactsOutputImpl implements _GetContactsOutput {
 }
 
 abstract class _GetContactsOutput implements GetContactsOutput {
-  const factory _GetContactsOutput(final List<Contact> contacts) =
+  const factory _GetContactsOutput({required final List<Contact> contacts}) =
       _$GetContactsOutputImpl;
 
   @override

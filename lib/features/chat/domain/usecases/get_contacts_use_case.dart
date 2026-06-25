@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/features/chat/domain/entity/contact.dart';
@@ -9,7 +10,8 @@ import 'package:tanlu_management/shared/infrastructure/domain/usecase/io/base_ou
 part 'get_contacts_use_case.freezed.dart';
 
 @Injectable()
-class GetContactsUseCase extends BaseFutureUseCase<GetContactsInput, GetContactsOutput> {
+class GetContactsUseCase
+    extends BaseFutureUseCase<GetContactsInput, GetContactsOutput> {
   const GetContactsUseCase(this._repository);
 
   final ChatRepository _repository;
@@ -17,16 +19,26 @@ class GetContactsUseCase extends BaseFutureUseCase<GetContactsInput, GetContacts
   @protected
   @override
   Future<GetContactsOutput> buildUseCase(GetContactsInput input) async {
-    return GetContactsOutput(await _repository.getContacts());
+    final contacts = await _repository.getContacts(
+      currentUserId: input.currentUserId,
+      role: input.role,
+      classId: input.classId,
+    );
+    return GetContactsOutput(contacts: contacts);
   }
 }
 
 @freezed
 class GetContactsInput extends BaseInput with _$GetContactsInput {
-  const factory GetContactsInput() = _GetContactsInput;
+  const factory GetContactsInput({
+    required String currentUserId,
+    required String role,
+    String? classId,
+  }) = _GetContactsInput;
 }
 
 @freezed
 class GetContactsOutput extends BaseOutput with _$GetContactsOutput {
-  const factory GetContactsOutput(List<Contact> contacts) = _GetContactsOutput;
+  const factory GetContactsOutput({required List<Contact> contacts}) =
+      _GetContactsOutput;
 }

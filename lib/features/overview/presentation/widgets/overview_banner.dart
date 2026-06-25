@@ -18,10 +18,6 @@ class OverviewBanner extends StatelessWidget {
             ? currentUser!.fullName
             : 'Giáo viên';
 
-        final className = currentUser?.center.name.isNotEmpty == true
-            ? currentUser!.center.name
-            : 'Lớp Can Thiệp 1';
-
         return Container(
           width: double.infinity,
           height: 180.h,
@@ -52,24 +48,24 @@ class OverviewBanner extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // Lời chào
-                    AppText.h2(
-                      'Xin chào, $displayName 👋',
+                    AppText.b2(
+                      'Xin chào,\n$displayName 👋',
                       color: AppColors.grayDark,
-                      fontSize: 14.sp,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
-                      maxLines: 1,
-                      textOverflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
                     SizedBox(height: 4.h),
 
-                    // Tên lớp / Trung tâm
-                    AppText.b2(
-                      className,
-                      color: AppColors.grayMedium,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    SizedBox(height: 16.h),
+                    // // Tên lớp / Trung tâm
+                    // AppText.b2(
+                    //   className,
+                    //   color: AppColors.grayMedium,
+                    //   maxLines: 2,
+                    //   fontSize: 14.sp,
+                    //   fontWeight: FontWeight.w500,
+                    // ),
+                    SizedBox(height: 10.h),
 
                     // Ngày tháng
                     Container(

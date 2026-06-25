@@ -1,379 +1,162 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tanlu_management/core/constants/storage_keys.dart';
+import 'package:tanlu_management/core/di/injection_container.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
+import 'package:tanlu_management/core/utils/shared_prefs_helper.dart';
+import 'package:tanlu_management/core/widgets/app_confirm_dialog.dart';
+import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/core/widgets/buttons/app_primary_button.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/features/auth/domain/entity/user.dart'
-    hide Center;
+import 'package:tanlu_management/features/person/domain/usecases/get_class_name_use_case.dart';
+import 'package:tanlu_management/features/person/presentation/pages/person_language_page.dart';
+import 'package:tanlu_management/features/person/presentation/pages/person_profile_page.dart';
+import 'package:tanlu_management/features/person/presentation/pages/person_security_page.dart';
+import 'package:tanlu_management/features/person/presentation/widgets/person_menu_tile.dart';
+import 'package:tanlu_management/features/person/presentation/widgets/person_profile_header.dart';
 
-class PersonPage extends StatelessWidget {
+class PersonPage extends StatefulWidget {
   const PersonPage({super.key});
 
   @override
+  State<PersonPage> createState() => _PersonPageState();
+}
+
+class _PersonPageState extends State<PersonPage> {
+  String? _className;
+  bool _notificationsEnabled = true;
+  String _languageLabel = 'Tiếng Việt';
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _load());
+  }
+
+  Future<void> _load() async {
+    final prefs = sl<SharedPrefsHelper>();
+    final locale = prefs.getString(StorageKeys.locale) ?? 'vi';
+    final notifications =
+        prefs.getBool(StorageKeys.notificationsEnabled) ?? true;
+
+    final user = context.read<AppBloc>().currentUser;
+    var className = '';
+    final classId = user?.classId;
+    if (classId != null && classId.isNotEmpty) {
+      final output = await sl<GetClassNameUseCase>().execute(
+        GetClassNameInput(classId: classId),
+      );
+      className = output.className;
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _className = className.isEmpty ? null : className;
+      _notificationsEnabled = notifications;
+      _languageLabel = locale == 'en' ? 'English' : 'Tiếng Việt';
+    });
+  }
+
+  void _open(Widget page) {
+    Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(builder: (_) => page),
+    );
+  }
+
+  Future<void> _openLanguage() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => const PersonLanguagePage()),
+    );
+    _load();
+  }
+
+  Future<void> _onNotificationsChanged(bool enabled) async {
+    context.read<AppBloc>().add(
+      AppEvent.notificationsEnabledChanged(enabled),
+    );
+    if (!mounted) return;
+    setState(() => _notificationsEnabled = enabled);
+  }
+
+  Future<void> _logout() async {
+    final confirmed = await AppConfirmDialog.show(
+      context,
+      title: 'Đăng xuất',
+      content: 'Bạn có chắc chắn muốn đăng xuất không?',
+      cancelLabel: 'Hủy',
+      confirmLabel: 'Đăng xuất',
+      type: AppConfirmDialogType.warning,
+    );
+    if (confirmed == true && mounted) {
+      context.read<AppBloc>().add(const AppEvent.loggedOut());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final currentUser = context.read<AppBloc>().currentUser;
+    final user = context.read<AppBloc>().currentUser;
 
     return Scaffold(
       backgroundColor: AppColors.grayBg,
       body: Column(
         children: [
-          // Fixed Header Background
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(32.r),
-                bottomRight: Radius.circular(32.r),
-              ),
+          PersonProfileHeader(
+            user: user,
+            className: _className,
+            onEditTap: () => _open(
+              PersonProfilePage(user: user, className: _className),
             ),
-            child: SafeArea(
-              bottom: false,
-              child: Column(
-                children: [
-                  // Custom AppBar Row
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.0.w,
-                      vertical: 12.0.h,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Cá nhân',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+          ),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(16.w, 4.h, 16.w, 16.h),
+              children: [
+                PersonMenuGroup(
+                  children: [
+                    PersonMenuTile(
+                      icon: Icons.person_outline_rounded,
+                      title: 'Thông tin cá nhân',
+                      onTap: () => _open(
+                        PersonProfilePage(user: user, className: _className),
                       ),
                     ),
-                  ),
-
-                  // Avatar
-                  Container(
-                    width: 80.w,
-                    height: 80.h,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 3.w),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+                    PersonMenuTile(
+                      icon: Icons.shield_outlined,
+                      title: 'Tài khoản và bảo mật',
+                      onTap: () => _open(const PersonSecurityPage()),
                     ),
-                    alignment: Alignment.center,
-                    child: currentUser?.avatarFileId.isNotEmpty == true
-                        ? ClipOval(
-                            child: Image.network(
-                              currentUser!.avatarFileId,
-                              fit: BoxFit.cover,
-                              width: 80.w,
-                              height: 80.h,
-                            ),
-                          )
-                        : Text(
-                            currentUser?.fullName.isNotEmpty == true
-                                ? currentUser!.fullName
-                                      .split(' ')
-                                      .last[0]
-                                      .toUpperCase()
-                                : 'U',
-                            style: TextStyle(
-                              color: AppColors.primary,
-                              fontSize: 30.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                  ),
-                  SizedBox(height: 16.h),
-                  // Name
-                  Text(
-                    currentUser?.fullName ?? 'Người dùng',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
+                    PersonMenuSwitchTile(
+                      icon: Icons.notifications_none_rounded,
+                      title: 'Thông báo',
+                      value: _notificationsEnabled,
+                      onChanged: _onNotificationsChanged,
                     ),
-                  ),
-                  SizedBox(height: 6.h),
-                  // Role / Job title
-                  Text(
-                    currentUser?.role.name.isNotEmpty == true
-                        ? currentUser!.role.name
-                        : 'Giáo viên',
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.9),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
+                    PersonMenuTile(
+                      icon: Icons.language_rounded,
+                      title: 'Ngôn ngữ',
+                      value: _languageLabel,
+                      showDivider: false,
+                      onTap: _openLanguage,
                     ),
-                  ),
-                  SizedBox(height: 32.h),
-                ],
-              ),
-            ),
-          ),
-
-          // Scrollable Settings List
-          Expanded(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.0.w,
-                vertical: 24.0.h,
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.02),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        _buildSettingRow(
-                          icon: Icons.person_outline_rounded,
-                          title: 'Thông tin cá nhân',
-                          onTap: () =>
-                              _showPersonalInfoModal(context, currentUser),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 16.h),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.02),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: _buildSettingRow(
-                      icon: Icons.logout_rounded,
-                      title: 'Đăng xuất',
-                      iconColor: AppColors.error,
-                      titleColor: AppColors.error,
-                      showChevron: false,
-                      onTap: () => _showLogoutConfirmDialog(context),
-                    ),
-                  ),
-                  SizedBox(height: 32.h),
-                  Text(
+                  ],
+                ),
+                SizedBox(height: 24.h),
+                Center(
+                  child: AppText.b2(
                     'Phiên bản 1.0.0',
-                    style: TextStyle(fontSize: 12.sp, color: Color(0xFF8E8E93)),
+                    color: AppColors.grayMedium,
+                    fontSize: 12.sp,
                   ),
-                  SizedBox(height: 32.h),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSettingRow({
-    required IconData icon,
-    required String title,
-    String? value,
-    Color iconColor = const Color(0xFF8E8E93),
-    Color titleColor = const Color(0xFF1C1C1E),
-    bool showChevron = true,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16.r),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        child: Row(
-          children: [
-            Icon(icon, size: 24, color: iconColor),
-            SizedBox(width: 16.w),
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500,
-                  color: titleColor,
-                ),
-              ),
-            ),
-            if (value != null) ...[
-              Text(
-                value,
-                style: TextStyle(fontSize: 12.sp, color: Color(0xFF8E8E93)),
-              ),
-              SizedBox(width: 8.w),
-            ],
-            if (showChevron)
-              Icon(
-                Icons.chevron_right_rounded,
-                color: Color(0xFFC7C7CC),
-                size: 24,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showPersonalInfoModal(BuildContext context, User? user) {
-    if (user == null) return;
-
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.white,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
-      ),
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            left: 24.0.w,
-            right: 24.0.w,
-            top: 24.0.h,
-            bottom: MediaQuery.of(context).padding.bottom + 24.0,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Thông tin cá nhân',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF1C1C1E),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.close_rounded, color: Color(0xFF8E8E93)),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              _buildInfoDetailRow(
-                Icons.person_outline_rounded,
-                'Họ và tên',
-                user.fullName,
-              ),
-              Divider(height: 32.h, color: Color(0xFFF2F2F7)),
-              _buildInfoDetailRow(
-                Icons.phone_outlined,
-                'Số điện thoại',
-                user.phone.isNotEmpty ? user.phone : 'Chưa cập nhật',
-              ),
-              Divider(height: 32.h, color: Color(0xFFF2F2F7)),
-              _buildInfoDetailRow(
-                Icons.email_outlined,
-                'Email',
-                user.email.isNotEmpty ? user.email : 'Chưa cập nhật',
-              ),
-              Divider(height: 32.h, color: Color(0xFFF2F2F7)),
-              _buildInfoDetailRow(
-                Icons.school_outlined,
-                'Trường',
-                user.center.name.isNotEmpty
-                    ? user.center.name
-                    : 'Chưa cập nhật',
-              ),
-              SizedBox(height: 8.h),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildInfoDetailRow(IconData icon, String title, String value) {
-    return Row(
-      children: [
-        Container(
-          padding: EdgeInsets.all(10.w),
-          decoration: BoxDecoration(
-            color: AppColors.primaryLight,
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: AppColors.primary, size: 22),
-        ),
-        SizedBox(width: 16.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 11.sp,
-                  color: Color(0xFF8E8E93),
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(height: 4.h),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1C1C1E),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _showLogoutConfirmDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        title: Text('Đăng xuất', style: TextStyle(fontWeight: FontWeight.bold)),
-        content: Text('Bạn có chắc chắn muốn đăng xuất không?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFF8E8E93),
-            ),
-            child: Text('Hủy', style: TextStyle(fontWeight: FontWeight.w600)),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              context.read<AppBloc>().add(const AppEvent.loggedOut());
-            },
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(
-              'Đăng xuất',
-              style: TextStyle(fontWeight: FontWeight.bold),
+          Padding(
+            padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 24.h),
+            child: AppPrimaryButton(
+              label: 'Đăng xuất',
+              onPressed: _logout,
             ),
           ),
         ],

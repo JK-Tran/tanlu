@@ -43,3 +43,41 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# --- Internal docs (không public) ---
+/docs/
+lib/**/docs/
+
+# --- Firebase / secrets (không commit lên repo public) ---
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.firebaserc
+firebase.json
+firestore.rules
+firestore.indexes.json
+storage.rules
+**/google-services.json
+**/GoogleService-Info.plist
+lib/firebase_options.dart
+**/*-firebase-adminsdk-*.json
+**/serviceAccountKey.json
+**/service-account*.json
+
+# --- Android signing / keystore ---
+**/*.keystore
+**/*.jks
+**/key.properties
+**/upload-keystore.jks
+
+# --- Env & certs ---
+.env
+.env.*
+**/*.p12
+**/*.p8
+**/*.pem
+
+# Firebase Admin key (seed scripts — legacy path)
+scripts/seed_parents/serviceAccountKey.json
+scripts/seed_parents/node_modules/

@@ -343,6 +343,39 @@ class DateTimeUtils {
     return '$day/$month/$year';
   }
 
+  /// Thứ trong tuần — vd. `Thứ 6`, `CN`.
+  static String formatWeekdayLabel(DateTime? time, {String fallback = ''}) {
+    if (time == null) return fallback;
+    return _weekdayLabels[time.weekday];
+  }
+
+  /// Ngày trong tháng — vd. `19`.
+  static String formatDayOfMonth(DateTime? time, {String fallback = ''}) {
+    if (time == null) return fallback;
+    return time.day.toString().padLeft(2, '0');
+  }
+
+  /// Hiển thị ngày kèm thứ — vd. `Thứ 2, 18/06/2026`.
+  static String formatWeekdayDate(DateTime? time, {String fallback = ''}) {
+    if (time == null) return fallback;
+    return '${formatWeekdayLabel(time)}, ${formatDateHeader(time)}';
+  }
+
+  static const _weekdayLabels = [
+    '',
+    'Thứ 2',
+    'Thứ 3',
+    'Thứ 4',
+    'Thứ 5',
+    'Thứ 6',
+    'Thứ 7',
+    'CN',
+  ];
+
+  /// Giờ:phút — vd. `08:30`. Dùng cho check-in/out.
+  static String? formatHourMinute(DateTime? time) =>
+      formatTime(time, hmOnly: true);
+
   /// Format integer with thousand separator `.` (e.g. 1990000 -> 1.990.000).
   static String formatMinorWithDot(int value) {
     final String digits = value.abs().toString();
@@ -356,6 +389,19 @@ class DateTimeUtils {
     }
     final String formatted = buffer.toString();
     return value < 0 ? '-$formatted' : formatted;
+  }
+
+  /// Phân giải chuỗi ngày sinh (thường từ DB lưu yyyy-MM-dd) thành chuỗi hiển thị (dd/MM/yyyy)
+  static String formatDobString(
+    String? dobString, {
+    String fallback = 'Chưa có dữ liệu',
+  }) {
+    if (dobString == null || dobString.trim().isEmpty) return fallback;
+    final parsed = parseDateTimeDateOnly(dobString.trim());
+    if (parsed != null) {
+      return formatDateHeader(parsed); // Trả về dd/MM/yyyy
+    }
+    return dobString; // Nếu không parse được thì trả về nguyên gốc
   }
 }
 

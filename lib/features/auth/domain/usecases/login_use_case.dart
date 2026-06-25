@@ -30,11 +30,8 @@ class LoginUseCase extends BaseFutureUseCase<LoginInput, LoginOutput> {
       throw const ValidationException('Email hoặc số điện thoại không hợp lệ');
     }
 
-    // 1. Đăng nhập - lưu token + user cơ bản từ response login
-    await _repository.login(username: input.username, password: input.password);
-
-    // 2. Gọi API /me để lấy đầy đủ thông tin user rồi lưu vào local storage
-    final user = await _repository.getMe();
+    // 1. Đăng nhập bằng Email/Password qua Firebase
+    final user = await _repository.loginWithEmail(input.username, input.password);
 
     return LoginOutput(user);
   }

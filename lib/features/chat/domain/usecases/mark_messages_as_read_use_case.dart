@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/features/chat/domain/repositories/chat_repository.dart';
@@ -8,9 +9,8 @@ import 'package:tanlu_management/shared/infrastructure/domain/usecase/io/base_ou
 part 'mark_messages_as_read_use_case.freezed.dart';
 
 @Injectable()
-class MarkMessagesAsReadUseCase
-    extends
-        BaseFutureUseCase<MarkMessagesAsReadInput, MarkMessagesAsReadOutput> {
+class MarkMessagesAsReadUseCase extends BaseFutureUseCase<
+    MarkMessagesAsReadInput, MarkMessagesAsReadOutput> {
   const MarkMessagesAsReadUseCase(this._repository);
 
   final ChatRepository _repository;
@@ -20,15 +20,20 @@ class MarkMessagesAsReadUseCase
   Future<MarkMessagesAsReadOutput> buildUseCase(
     MarkMessagesAsReadInput input,
   ) async {
-    await _repository.markMessagesAsRead(input.conversationId);
+    await _repository.markMessagesAsRead(
+      conversationId: input.conversationId,
+      currentUserId: input.currentUserId,
+    );
     return const MarkMessagesAsReadOutput();
   }
 }
 
 @freezed
 class MarkMessagesAsReadInput extends BaseInput with _$MarkMessagesAsReadInput {
-  const factory MarkMessagesAsReadInput({required int conversationId}) =
-      _MarkMessagesAsReadInput;
+  const factory MarkMessagesAsReadInput({
+    required String conversationId,
+    required String currentUserId,
+  }) = _MarkMessagesAsReadInput;
 }
 
 @freezed

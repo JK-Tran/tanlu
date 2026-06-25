@@ -4,9 +4,15 @@ import 'package:intl/intl.dart';
 class StringUtils {
   const StringUtils._();
   static bool isNullOrBlank(String? s) => s == null || s == '' || s == ' ';
+  static const videoExtensions = ['.mp4', '.mov', '.m4v', '.3gp', '.webm'];
 
   static bool hasMatch(String? value, String pattern) {
     return value == null ? false : RegExp(pattern).hasMatch(value);
+  }
+
+  static bool isVideoPath(String path) {
+    final lower = path.toLowerCase();
+    return videoExtensions.any(lower.endsWith);
   }
 
   /// Capitalize each word inside string
@@ -348,6 +354,23 @@ class StringUtils {
     } else {
       return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
     }
+  }
+
+  static String formatTimeAgo(DateTime? dateTime) {
+    if (dateTime == null) return '';
+    final diff = DateTime.now().difference(dateTime);
+    if (diff.inMinutes < 1) return 'Vừa xong';
+    if (diff.inHours < 1) return '${diff.inMinutes} phút trước';
+    if (diff.inHours < 24) return '${diff.inHours} giờ trước';
+    if (diff.inDays < 7) return '${diff.inDays} ngày trước';
+    return DateFormat('dd/MM/yyyy').format(dateTime);
+  }
+
+  static String formatBytes(int bytes) {
+    if (bytes < 1024 * 1024) {
+      return '${(bytes / 1024).toStringAsFixed(0)} KB';
+    }
+    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
   }
 }
 
