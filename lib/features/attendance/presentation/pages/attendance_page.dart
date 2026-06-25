@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
+import 'package:tanlu_management/core/di/injection_container.dart';
 import 'package:tanlu_management/core/router/app_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_confirm_dialog.dart';
 import 'package:tanlu_management/core/widgets/app_snackbar.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
+import 'package:tanlu_management/features/person/domain/usecases/get_class_name_use_case.dart';
 import 'package:tanlu_management/features/attendance/presentation/enums/attendance_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/enums/attendance_tab.dart';
 import 'package:tanlu_management/features/attendance/presentation/enums/leave_status.dart';
@@ -35,6 +37,19 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
   bool _wasSaving = false;
   bool _sessionWasCompleted = false;
   bool _checkOutWasCompleted = false;
+  String? _className;
+
+  Future<void> _loadClassName() async {
+    final classId = context.read<AppBloc>().currentUser?.classId;
+    if (classId == null || classId.isEmpty) return;
+
+    final output = await sl<GetClassNameUseCase>().execute(
+      GetClassNameInput(classId: classId),
+    );
+    if (!mounted) return;
+    if (output.className.isEmpty) return;
+    setState(() => _className = output.className);
+  }
 
   Future<void> _handleCompleteCheckOut(int missingCheckOutCount) async {
     final content = missingCheckOutCount > 0
@@ -76,6 +91,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
     if (widget.initialTab == AttendanceTab.statistics) {
       _fetchAttendanceHistory();
     }
+    _loadClassName();
   }
 
   void _onTabChanged() {
@@ -157,7 +173,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                   excusedCount: attendances
                       .where((a) => a.uiStatus == AttendanceStatus.excused)
                       .length,
-                  className: 'Lớp Mầm 2 - SUNFLOWER',
+                  className: _className ?? '—',
                 ),
               ),
             );
@@ -217,7 +233,10 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                 Expanded(
                   child: NestedScrollView(
                     headerSliverBuilder: (_, _) => [
-                      AttendanceSliverAppBar(onBack: _handleExit),
+                      AttendanceSliverAppBar(
+                        onBack: _handleExit,
+                        className: _className ?? '',
+                      ),
                       SliverPersistentHeader(
                         pinned: true,
                         delegate: AttendanceTabBarDelegate(

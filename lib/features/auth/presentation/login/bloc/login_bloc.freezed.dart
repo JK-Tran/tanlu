@@ -111,9 +111,7 @@ class __$$UsernameChangedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UsernameChangedImpl
-    with DiagnosticableTreeMixin
-    implements _UsernameChanged {
+class _$UsernameChangedImpl implements _UsernameChanged {
   const _$UsernameChangedImpl(this.v, {required this.username});
 
   @override
@@ -122,17 +120,8 @@ class _$UsernameChangedImpl
   final String username;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'UsernameChanged(v: $v, username: $username)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'UsernameChanged'))
-      ..add(DiagnosticsProperty('v', v))
-      ..add(DiagnosticsProperty('username', username));
   }
 
   @override
@@ -275,9 +264,7 @@ class __$$PasswordChangedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PasswordChangedImpl
-    with DiagnosticableTreeMixin
-    implements _PasswordChanged {
+class _$PasswordChangedImpl implements _PasswordChanged {
   const _$PasswordChangedImpl(this.v, {required this.password});
 
   @override
@@ -286,17 +273,8 @@ class _$PasswordChangedImpl
   final String password;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PasswordChanged(v: $v, password: $password)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PasswordChanged'))
-      ..add(DiagnosticsProperty('v', v))
-      ..add(DiagnosticsProperty('password', password));
   }
 
   @override
@@ -402,20 +380,12 @@ class __$$ShowPassswordButtonPressedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ShowPassswordButtonPressedImpl
-    with DiagnosticableTreeMixin
-    implements _ShowPassswordButtonPressed {
+class _$ShowPassswordButtonPressedImpl implements _ShowPassswordButtonPressed {
   const _$ShowPassswordButtonPressedImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'ShowPassswordButtonPressed()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'ShowPassswordButtonPressed'));
   }
 
   @override
@@ -483,20 +453,12 @@ class __$$LoginButtonPressedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoginButtonPressedImpl
-    with DiagnosticableTreeMixin
-    implements _LoginButtonPressed {
+class _$LoginButtonPressedImpl implements _LoginButtonPressed {
   const _$LoginButtonPressedImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LoginButtonPressed()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'LoginButtonPressed'));
   }
 
   @override
@@ -686,7 +648,7 @@ class __$$LoginStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoginStateImpl with DiagnosticableTreeMixin implements _LoginState {
+class _$LoginStateImpl implements _LoginState {
   const _$LoginStateImpl({
     this.username = '',
     this.password = '',
@@ -719,24 +681,8 @@ class _$LoginStateImpl with DiagnosticableTreeMixin implements _LoginState {
   final bool? loginSuccess;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LoginState(username: $username, password: $password, isLoginButtonEnabled: $isLoginButtonEnabled, obscureText: $obscureText, onPageError: $onPageError, showLoginButtonLoading: $showLoginButtonLoading, loginSuccess: $loginSuccess)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'LoginState'))
-      ..add(DiagnosticsProperty('username', username))
-      ..add(DiagnosticsProperty('password', password))
-      ..add(DiagnosticsProperty('isLoginButtonEnabled', isLoginButtonEnabled))
-      ..add(DiagnosticsProperty('obscureText', obscureText))
-      ..add(DiagnosticsProperty('onPageError', onPageError))
-      ..add(
-        DiagnosticsProperty('showLoginButtonLoading', showLoginButtonLoading),
-      )
-      ..add(DiagnosticsProperty('loginSuccess', loginSuccess));
   }
 
   @override

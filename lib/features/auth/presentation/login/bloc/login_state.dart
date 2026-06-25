@@ -11,20 +11,4 @@ class LoginState with _$LoginState {
     @Default(false) bool showLoginButtonLoading,
     bool? loginSuccess,
   }) = _LoginState;
-
-  // static LoginState get debugInit {
-  //   return const LoginState(
-  //     username: 'parent.minh@gmail.com',
-  //     password: 'Parent@123456',
-  //     isLoginButtonEnabled: true,
-  //   );
-  // }
-
-  static LoginState get debugInit {
-    return const LoginState(
-      username: 'teacher@tanlu.com',
-      password: '123456',
-      isLoginButtonEnabled: true,
-    );
-  }
 }

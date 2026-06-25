@@ -15,8 +15,6 @@ abstract final class AppCheckService {
 
     if (!kDebugMode) return;
 
-    // Token debug secret do Firebase SDK in ra Logcat native (tag DebugAppCheckProvider).
-    // Gọi getToken để kích hoạt — đồng thời in hướng dẫn vào Debug Console của Cursor.
     try {
       await FirebaseAppCheck.instance.getToken(true);
     } catch (e) {

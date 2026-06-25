@@ -24,7 +24,6 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
   @override
   void initState() {
     super.initState();
-    // Đồng bộ controller với state debug (nếu kDebugMode)
     _usernameController.text = bloc.state.username;
     _passwordController.text = bloc.state.password;
   }

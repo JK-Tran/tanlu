@@ -8,7 +8,7 @@ class AttendanceSliverAppBar extends StatelessWidget {
   const AttendanceSliverAppBar({
     super.key,
     required this.onBack,
-    this.className = 'Lớp Mầm 2 - SUNFLOWER',
+    this.className = '',
   });
 
   final VoidCallback onBack;
@@ -82,7 +82,7 @@ class AttendanceSliverAppBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (t > 0)
+                if (t > 0 && className.trim().isNotEmpty)
                   Expanded(
                     child: Opacity(
                       opacity: t,
