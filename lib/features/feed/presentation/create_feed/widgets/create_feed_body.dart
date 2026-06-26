@@ -98,8 +98,8 @@ class CreateFeedBody extends StatelessWidget {
   bool _canAddMoreMedia(CreateFeedState state) {
     final images = state.localMedia.where((item) => !item.isVideo).length;
     final videos = state.localMedia.where((item) => item.isVideo).length;
-    return images < AppMediaLimit.maxImageBytes ||
-        videos < AppMediaLimit.maxVideoBytes;
+    return images < AppMediaLimit.maxImagesPerPost ||
+        videos < AppMediaLimit.maxVideosPerPost;
   }
 }
 

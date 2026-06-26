@@ -36,15 +36,15 @@ class SubmitFeedUseCase
       throw const ValidationException('Nội dung không được để trống');
     }
 
-    if (input.localImagePaths.length > AppMediaLimit.maxImageBytes) {
+    if (input.localImagePaths.length > AppMediaLimit.maxImagesPerPost) {
       throw ValidationException(
-        'Tối đa ${AppMediaLimit.maxImageMegabytes} ảnh mỗi bài',
+        'Tối đa ${AppMediaLimit.maxImagesPerPost} ảnh mỗi bài',
       );
     }
 
-    if (input.localVideoPaths.length > AppMediaLimit.maxVideoBytes) {
+    if (input.localVideoPaths.length > AppMediaLimit.maxVideosPerPost) {
       throw ValidationException(
-        'Tối đa ${AppMediaLimit.maxVideoMegabytes} video mỗi bài',
+        'Tối đa ${AppMediaLimit.maxVideosPerPost} video mỗi bài',
       );
     }
 

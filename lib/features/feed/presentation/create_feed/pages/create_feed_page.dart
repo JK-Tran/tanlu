@@ -58,15 +58,15 @@ class _CreateFeedPageState
     if (bloc.state.isSubmitting) return;
 
     final state = bloc.state;
-    final remainingImages = AppMediaLimit.maxImageBytes - _imageCount(state);
-    final remainingVideos = AppMediaLimit.maxVideoBytes - _videoCount(state);
+    final remainingImages = AppMediaLimit.maxImagesPerPost - _imageCount(state);
+    final remainingVideos = AppMediaLimit.maxVideosPerPost - _videoCount(state);
 
     if (remainingImages <= 0 && remainingVideos <= 0) {
       AppSnackbar.show(
         context,
         message:
-            'Đã đủ ${AppMediaLimit.maxImageBytes} ảnh và '
-            '${AppMediaLimit.maxVideoBytes} video',
+            'Đã đủ ${AppMediaLimit.maxImagesPerPost} ảnh và '
+            '${AppMediaLimit.maxVideosPerPost} video',
         type: AppSnackbarType.warning,
       );
       return;

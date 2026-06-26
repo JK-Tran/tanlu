@@ -30,16 +30,16 @@ class UpdateFeedUseCase
     }
 
     final totalImages = input.keptImageUrls.length + input.localImagePaths.length;
-    if (totalImages > AppMediaLimit.maxImageBytes) {
+    if (totalImages > AppMediaLimit.maxImagesPerPost) {
       throw ValidationException(
-        'Tối đa ${AppMediaLimit.maxImageMegabytes} ảnh mỗi bài',
+        'Tối đa ${AppMediaLimit.maxImagesPerPost} ảnh mỗi bài',
       );
     }
 
     final totalVideos = input.keptVideoUrls.length + input.localVideoPaths.length;
-    if (totalVideos > AppMediaLimit.maxVideoBytes) {
+    if (totalVideos > AppMediaLimit.maxVideosPerPost) {
       throw ValidationException(
-        'Tối đa ${AppMediaLimit.maxVideoMegabytes} video mỗi bài',
+        'Tối đa ${AppMediaLimit.maxVideosPerPost} video mỗi bài',
       );
     }
 

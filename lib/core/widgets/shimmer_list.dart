@@ -32,34 +32,51 @@ class ShimmerList extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(16.r),
           ),
-          padding: EdgeInsets.all(16.w),
-          child: Row(
-            children: [
-              Container(
-                width: 52.w,
-                height: 52.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(14.r),
-                ),
-              ),
-              SizedBox(width: 14.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 16.h,
+          padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 10.h),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final maxHeight = constraints.maxHeight;
+              final avatarSize = (maxHeight * 0.88).clamp(32.0, 52.0);
+              final gap = (maxHeight * 0.12).clamp(4.0, 8.0);
+              final linesHeight = (maxHeight - gap).clamp(20.0, maxHeight);
+              final lineHeight1 = linesHeight * 0.58;
+              final lineHeight2 = linesHeight * 0.42;
+
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: avatarSize,
+                    height: avatarSize,
+                    decoration: BoxDecoration(
                       color: Colors.white,
+                      borderRadius: BorderRadius.circular(14.r),
                     ),
-                    SizedBox(height: 8.h),
-                    Container(width: 100.w, height: 14.h, color: Colors.white),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: lineHeight1,
+                          color: Colors.white,
+                        ),
+                        SizedBox(height: gap),
+                        Container(
+                          width: 100.w,
+                          height: lineHeight2,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

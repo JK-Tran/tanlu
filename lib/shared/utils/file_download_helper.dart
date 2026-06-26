@@ -100,9 +100,9 @@ class FileDownloadHelper {
 
       try {
         // Xin quyền truy cập Thư viện ảnh bằng API thông minh của Gal
-        final hasAccess = await Gal.hasAccess();
+        final hasAccess = await Gal.hasAccess(toAlbum: true);
         if (!hasAccess) {
-          final granted = await Gal.requestAccess();
+          final granted = await Gal.requestAccess(toAlbum: true);
           if (!granted) {
             scaffoldMessenger.clearSnackBars();
             scaffoldMessenger.showSnackBar(

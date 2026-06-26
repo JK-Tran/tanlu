@@ -43,66 +43,69 @@ class OverviewBanner extends StatelessWidget {
               // Nội dung Text bên trái
               Expanded(
                 flex: 6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Lời chào
-                    AppText.b2(
-                      'Xin chào,\n$displayName 👋',
-                      color: AppColors.grayDark,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      maxLines: 2,
-                    ),
-                    SizedBox(height: 4.h),
-
-                    // // Tên lớp / Trung tâm
-                    // AppText.b2(
-                    //   className,
-                    //   color: AppColors.grayMedium,
-                    //   maxLines: 2,
-                    //   fontSize: 14.sp,
-                    //   fontWeight: FontWeight.w500,
-                    // ),
-                    SizedBox(height: 10.h),
-
-                    // Ngày tháng
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 12.w,
-                        vertical: 8.h,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        width: constraints.maxWidth,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            AppText.b2(
+                              'Xin chào,\n$displayName 👋',
+                              color: AppColors.grayDark,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
+                              maxLines: 2,
+                              textOverflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(height: 8.h),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10.w,
+                                vertical: 6.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(6.r),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.05),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.calendar_month_rounded,
+                                    size: 14.sp,
+                                    color: AppColors.grayDark,
+                                  ),
+                                  SizedBox(width: 6.w),
+                                  Flexible(
+                                    child: AppText.b2(
+                                      StringUtils.getFormattedDate(),
+                                      color: AppColors.grayDark,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w600,
+                                      maxLines: 1,
+                                      textOverflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(6.r),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.calendar_month_rounded,
-                            size: 16.w,
-                            color: AppColors.grayDark,
-                          ),
-                          SizedBox(width: 8.w),
-                          AppText.b2(
-                            StringUtils.getFormattedDate(),
-                            color: AppColors.grayDark,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
 

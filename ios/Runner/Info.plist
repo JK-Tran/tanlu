@@ -69,7 +69,7 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Ứng dụng cần quyền truy cập thư viện ảnh để bạn có thể gửi ảnh trong cuộc trò chuyện.</string>
+		<string>Ứng dụng cần quyền truy cập thư viện ảnh để bạn chọn ảnh, video đăng bài và gửi trong cuộc trò chuyện.</string>
 		<key>NSPhotoLibraryAddUsageDescription</key>
 		<string>Ứng dụng cần quyền lưu ảnh và video vào thư viện ảnh của bạn.</string>
 		<key>NSCameraUsageDescription</key>
