@@ -131,10 +131,10 @@ class CreateFeedBloc extends BaseBloc<CreateFeedEvent, CreateFeedState> {
 
     for (final item in event.items) {
       if (item.isVideo) {
-        if (videoCount >= AppMediaLimit.maxVideoBytes) continue;
+        if (videoCount >= AppMediaLimit.maxVideosPerPost) continue;
         videoCount++;
       } else {
-        if (imageCount >= AppMediaLimit.maxImageBytes) continue;
+        if (imageCount >= AppMediaLimit.maxImagesPerPost) continue;
         imageCount++;
       }
       merged.add(item);

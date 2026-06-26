@@ -11,6 +11,7 @@ class ChatInputBar extends StatefulWidget {
     this.onPickGallery,
     this.onPickCamera,
     this.isSubmitting = false,
+    this.isMediaPanelOpen = false,
   });
 
   final TextEditingController controller;
@@ -18,6 +19,7 @@ class ChatInputBar extends StatefulWidget {
   final VoidCallback? onPickGallery;
   final VoidCallback? onPickCamera;
   final bool isSubmitting;
+  final bool isMediaPanelOpen;
 
   @override
   State<ChatInputBar> createState() => _ChatInputBarState();
@@ -87,7 +89,10 @@ class _ChatInputBarState extends State<ChatInputBar> {
               onPressed: actionsEnabled ? widget.onPickCamera : null,
             ),
             _MediaIconButton(
-              icon: Icons.image_outlined,
+              icon: widget.isMediaPanelOpen
+                  ? Icons.keyboard_outlined
+                  : Icons.image_outlined,
+              isActive: widget.isMediaPanelOpen,
               onPressed: actionsEnabled ? widget.onPickGallery : null,
             ),
             SizedBox(width: 4.w),
@@ -102,6 +107,11 @@ class _ChatInputBarState extends State<ChatInputBar> {
                   enabled: actionsEnabled,
                   minLines: 1,
                   maxLines: 4,
+                  onTap: () {
+                    if (widget.isMediaPanelOpen) {
+                      widget.onPickGallery?.call();
+                    }
+                  },
                   style: TextStyle(fontSize: 12.sp, color: AppColors.grayDark),
                   decoration: InputDecoration(
                     hintText: 'Aa',
@@ -148,17 +158,22 @@ class _ChatInputBarState extends State<ChatInputBar> {
 }
 
 class _MediaIconButton extends StatelessWidget {
-  const _MediaIconButton({required this.icon, this.onPressed});
+  const _MediaIconButton({
+    required this.icon,
+    this.onPressed,
+    this.isActive = false,
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
+  final bool isActive;
 
   @override
   Widget build(BuildContext context) {
     return AppIconButton(
       icon: icon,
-      iconColor: AppColors.primary,
-      backgroundColor: Colors.transparent,
+      iconColor: isActive ? AppColors.white : AppColors.primary,
+      backgroundColor: isActive ? AppColors.primary : Colors.transparent,
       size: 36,
       onPressed: onPressed,
     );

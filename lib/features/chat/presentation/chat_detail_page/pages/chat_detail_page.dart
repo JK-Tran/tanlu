@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tanlu_management/core/constants/chat_constants.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_snackbar.dart';
 import 'package:tanlu_management/features/chat/domain/entity/conversation.dart';
 import 'package:tanlu_management/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:tanlu_management/features/chat/presentation/chat_detail_page/widgets/chat_detail_app_bar.dart';
 import 'package:tanlu_management/features/chat/presentation/chat_detail_page/widgets/chat_input_bar.dart';
+import 'package:tanlu_management/features/chat/presentation/chat_detail_page/widgets/chat_media_picker_panel.dart';
 import 'package:tanlu_management/features/chat/presentation/chat_detail_page/widgets/chat_message_list.dart';
 import 'package:tanlu_management/shared/services/firebase/push/chat_foreground_context.dart';
 
@@ -52,7 +54,9 @@ class ChatDetailPage extends StatefulWidget {
 class _ChatDetailPageState extends State<ChatDetailPage> {
   final _inputController = TextEditingController();
   final _imagePicker = ImagePicker();
+  final _mediaPickerKey = GlobalKey<ChatMediaPickerPanelState>();
   late final ChatBloc _chatBloc;
+  bool _isMediaPanelOpen = false;
 
   @override
   void initState() {
@@ -91,6 +95,36 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
       ),
     );
     _inputController.clear();
+  }
+
+  void _toggleMediaPanel() {
+    if (_chatBloc.state.isSubmitting) return;
+
+    FocusManager.instance.primaryFocus?.unfocus();
+    setState(() => _isMediaPanelOpen = !_isMediaPanelOpen);
+  }
+
+  void _closeMediaPanel() {
+    if (!_isMediaPanelOpen) return;
+    setState(() => _isMediaPanelOpen = false);
+  }
+
+  void _sendImages(List<String> paths) {
+    if (paths.isEmpty) return;
+
+    final limited = paths.take(ChatConstants.maxImagesPerSend);
+    for (final path in limited) {
+      _chatBloc.add(
+        SendChatMessage(
+          conversationId: widget.conversation.id,
+          text: '',
+          type: 'image',
+          fileUrl: path,
+          receiverId: _receiverId,
+        ),
+      );
+    }
+    _closeMediaPanel();
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -143,15 +177,26 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             Expanded(
               child: ChatDetailBody(conversation: widget.conversation),
             ),
+            Visibility(
+              visible: _isMediaPanelOpen,
+              maintainState: true,
+              child: ChatMediaPickerPanel(
+                key: _mediaPickerKey,
+                onSend: _sendImages,
+                onClose: _closeMediaPanel,
+                onOpenCamera: () => _pickImage(ImageSource.camera),
+              ),
+            ),
             BlocBuilder<ChatBloc, ChatState>(
               buildWhen: (prev, curr) => prev.isSubmitting != curr.isSubmitting,
               builder: (context, state) {
                 return ChatInputBar(
                   controller: _inputController,
                   onSend: _sendMessage,
-                  onPickGallery: () => _pickImage(ImageSource.gallery),
+                  onPickGallery: _toggleMediaPanel,
                   onPickCamera: () => _pickImage(ImageSource.camera),
                   isSubmitting: state.isSubmitting,
+                  isMediaPanelOpen: _isMediaPanelOpen,
                 );
               },
             ),
