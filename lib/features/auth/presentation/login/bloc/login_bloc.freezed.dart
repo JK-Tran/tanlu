@@ -16,51 +16,46 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 /// @nodoc
-mixin _$UsernameChanged {
-  String get v => throw _privateConstructorUsedError;
-  String get username => throw _privateConstructorUsedError;
+mixin _$EmailChanged {
+  String get email => throw _privateConstructorUsedError;
 
-  /// Create a copy of UsernameChanged
+  /// Create a copy of EmailChanged
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $UsernameChangedCopyWith<UsernameChanged> get copyWith =>
+  $EmailChangedCopyWith<EmailChanged> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UsernameChangedCopyWith<$Res> {
-  factory $UsernameChangedCopyWith(
-    UsernameChanged value,
-    $Res Function(UsernameChanged) then,
-  ) = _$UsernameChangedCopyWithImpl<$Res, UsernameChanged>;
+abstract class $EmailChangedCopyWith<$Res> {
+  factory $EmailChangedCopyWith(
+    EmailChanged value,
+    $Res Function(EmailChanged) then,
+  ) = _$EmailChangedCopyWithImpl<$Res, EmailChanged>;
   @useResult
-  $Res call({String v, String username});
+  $Res call({String email});
 }
 
 /// @nodoc
-class _$UsernameChangedCopyWithImpl<$Res, $Val extends UsernameChanged>
-    implements $UsernameChangedCopyWith<$Res> {
-  _$UsernameChangedCopyWithImpl(this._value, this._then);
+class _$EmailChangedCopyWithImpl<$Res, $Val extends EmailChanged>
+    implements $EmailChangedCopyWith<$Res> {
+  _$EmailChangedCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of UsernameChanged
+  /// Create a copy of EmailChanged
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? v = null, Object? username = null}) {
+  $Res call({Object? email = null}) {
     return _then(
       _value.copyWith(
-            v: null == v
-                ? _value.v
-                : v // ignore: cast_nullable_to_non_nullable
-                      as String,
-            username: null == username
-                ? _value.username
-                : username // ignore: cast_nullable_to_non_nullable
+            email: null == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
                       as String,
           )
           as $Val,
@@ -69,40 +64,36 @@ class _$UsernameChangedCopyWithImpl<$Res, $Val extends UsernameChanged>
 }
 
 /// @nodoc
-abstract class _$$UsernameChangedImplCopyWith<$Res>
-    implements $UsernameChangedCopyWith<$Res> {
-  factory _$$UsernameChangedImplCopyWith(
-    _$UsernameChangedImpl value,
-    $Res Function(_$UsernameChangedImpl) then,
-  ) = __$$UsernameChangedImplCopyWithImpl<$Res>;
+abstract class _$$EmailChangedImplCopyWith<$Res>
+    implements $EmailChangedCopyWith<$Res> {
+  factory _$$EmailChangedImplCopyWith(
+    _$EmailChangedImpl value,
+    $Res Function(_$EmailChangedImpl) then,
+  ) = __$$EmailChangedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String v, String username});
+  $Res call({String email});
 }
 
 /// @nodoc
-class __$$UsernameChangedImplCopyWithImpl<$Res>
-    extends _$UsernameChangedCopyWithImpl<$Res, _$UsernameChangedImpl>
-    implements _$$UsernameChangedImplCopyWith<$Res> {
-  __$$UsernameChangedImplCopyWithImpl(
-    _$UsernameChangedImpl _value,
-    $Res Function(_$UsernameChangedImpl) _then,
+class __$$EmailChangedImplCopyWithImpl<$Res>
+    extends _$EmailChangedCopyWithImpl<$Res, _$EmailChangedImpl>
+    implements _$$EmailChangedImplCopyWith<$Res> {
+  __$$EmailChangedImplCopyWithImpl(
+    _$EmailChangedImpl _value,
+    $Res Function(_$EmailChangedImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of UsernameChanged
+  /// Create a copy of EmailChanged
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? v = null, Object? username = null}) {
+  $Res call({Object? email = null}) {
     return _then(
-      _$UsernameChangedImpl(
-        null == v
-            ? _value.v
-            : v // ignore: cast_nullable_to_non_nullable
-                  as String,
-        username: null == username
-            ? _value.username
-            : username // ignore: cast_nullable_to_non_nullable
+      _$EmailChangedImpl(
+        email: null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
                   as String,
       ),
     );
@@ -111,66 +102,62 @@ class __$$UsernameChangedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$UsernameChangedImpl implements _UsernameChanged {
-  const _$UsernameChangedImpl(this.v, {required this.username});
+class _$EmailChangedImpl with DiagnosticableTreeMixin implements _EmailChanged {
+  const _$EmailChangedImpl({required this.email});
 
   @override
-  final String v;
-  @override
-  final String username;
+  final String email;
 
   @override
-  String toString() {
-    return 'UsernameChanged(v: $v, username: $username)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'EmailChanged(email: $email)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'EmailChanged'))
+      ..add(DiagnosticsProperty('email', email));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$UsernameChangedImpl &&
-            (identical(other.v, v) || other.v == v) &&
-            (identical(other.username, username) ||
-                other.username == username));
+            other is _$EmailChangedImpl &&
+            (identical(other.email, email) || other.email == email));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, v, username);
+  int get hashCode => Object.hash(runtimeType, email);
 
-  /// Create a copy of UsernameChanged
+  /// Create a copy of EmailChanged
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$UsernameChangedImplCopyWith<_$UsernameChangedImpl> get copyWith =>
-      __$$UsernameChangedImplCopyWithImpl<_$UsernameChangedImpl>(
-        this,
-        _$identity,
-      );
+  _$$EmailChangedImplCopyWith<_$EmailChangedImpl> get copyWith =>
+      __$$EmailChangedImplCopyWithImpl<_$EmailChangedImpl>(this, _$identity);
 }
 
-abstract class _UsernameChanged implements UsernameChanged {
-  const factory _UsernameChanged(
-    final String v, {
-    required final String username,
-  }) = _$UsernameChangedImpl;
+abstract class _EmailChanged implements EmailChanged {
+  const factory _EmailChanged({required final String email}) =
+      _$EmailChangedImpl;
 
   @override
-  String get v;
-  @override
-  String get username;
+  String get email;
 
-  /// Create a copy of UsernameChanged
+  /// Create a copy of EmailChanged
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UsernameChangedImplCopyWith<_$UsernameChangedImpl> get copyWith =>
+  _$$EmailChangedImplCopyWith<_$EmailChangedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$PasswordChanged {
-  String get v => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
 
   /// Create a copy of PasswordChanged
@@ -187,7 +174,7 @@ abstract class $PasswordChangedCopyWith<$Res> {
     $Res Function(PasswordChanged) then,
   ) = _$PasswordChangedCopyWithImpl<$Res, PasswordChanged>;
   @useResult
-  $Res call({String v, String password});
+  $Res call({String password});
 }
 
 /// @nodoc
@@ -204,13 +191,9 @@ class _$PasswordChangedCopyWithImpl<$Res, $Val extends PasswordChanged>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? v = null, Object? password = null}) {
+  $Res call({Object? password = null}) {
     return _then(
       _value.copyWith(
-            v: null == v
-                ? _value.v
-                : v // ignore: cast_nullable_to_non_nullable
-                      as String,
             password: null == password
                 ? _value.password
                 : password // ignore: cast_nullable_to_non_nullable
@@ -230,7 +213,7 @@ abstract class _$$PasswordChangedImplCopyWith<$Res>
   ) = __$$PasswordChangedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String v, String password});
+  $Res call({String password});
 }
 
 /// @nodoc
@@ -246,13 +229,9 @@ class __$$PasswordChangedImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? v = null, Object? password = null}) {
+  $Res call({Object? password = null}) {
     return _then(
       _$PasswordChangedImpl(
-        null == v
-            ? _value.v
-            : v // ignore: cast_nullable_to_non_nullable
-                  as String,
         password: null == password
             ? _value.password
             : password // ignore: cast_nullable_to_non_nullable
@@ -264,17 +243,25 @@ class __$$PasswordChangedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PasswordChangedImpl implements _PasswordChanged {
-  const _$PasswordChangedImpl(this.v, {required this.password});
+class _$PasswordChangedImpl
+    with DiagnosticableTreeMixin
+    implements _PasswordChanged {
+  const _$PasswordChangedImpl({required this.password});
 
-  @override
-  final String v;
   @override
   final String password;
 
   @override
-  String toString() {
-    return 'PasswordChanged(v: $v, password: $password)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PasswordChanged(password: $password)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PasswordChanged'))
+      ..add(DiagnosticsProperty('password', password));
   }
 
   @override
@@ -282,13 +269,12 @@ class _$PasswordChangedImpl implements _PasswordChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PasswordChangedImpl &&
-            (identical(other.v, v) || other.v == v) &&
             (identical(other.password, password) ||
                 other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, v, password);
+  int get hashCode => Object.hash(runtimeType, password);
 
   /// Create a copy of PasswordChanged
   /// with the given fields replaced by the non-null parameter values.
@@ -303,13 +289,9 @@ class _$PasswordChangedImpl implements _PasswordChanged {
 }
 
 abstract class _PasswordChanged implements PasswordChanged {
-  const factory _PasswordChanged(
-    final String v, {
-    required final String password,
-  }) = _$PasswordChangedImpl;
+  const factory _PasswordChanged({required final String password}) =
+      _$PasswordChangedImpl;
 
-  @override
-  String get v;
   @override
   String get password;
 
@@ -380,12 +362,20 @@ class __$$ShowPassswordButtonPressedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ShowPassswordButtonPressedImpl implements _ShowPassswordButtonPressed {
+class _$ShowPassswordButtonPressedImpl
+    with DiagnosticableTreeMixin
+    implements _ShowPassswordButtonPressed {
   const _$ShowPassswordButtonPressedImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ShowPassswordButtonPressed()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'ShowPassswordButtonPressed'));
   }
 
   @override
@@ -453,12 +443,20 @@ class __$$LoginButtonPressedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoginButtonPressedImpl implements _LoginButtonPressed {
+class _$LoginButtonPressedImpl
+    with DiagnosticableTreeMixin
+    implements _LoginButtonPressed {
   const _$LoginButtonPressedImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'LoginButtonPressed()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'LoginButtonPressed'));
   }
 
   @override
@@ -477,7 +475,7 @@ abstract class _LoginButtonPressed implements LoginButtonPressed {
 
 /// @nodoc
 mixin _$LoginState {
-  String get username => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   bool get isLoginButtonEnabled => throw _privateConstructorUsedError;
   bool get obscureText => throw _privateConstructorUsedError;
@@ -500,7 +498,7 @@ abstract class $LoginStateCopyWith<$Res> {
   ) = _$LoginStateCopyWithImpl<$Res, LoginState>;
   @useResult
   $Res call({
-    String username,
+    String email,
     String password,
     bool isLoginButtonEnabled,
     bool obscureText,
@@ -525,7 +523,7 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
+    Object? email = null,
     Object? password = null,
     Object? isLoginButtonEnabled = null,
     Object? obscureText = null,
@@ -535,9 +533,9 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   }) {
     return _then(
       _value.copyWith(
-            username: null == username
-                ? _value.username
-                : username // ignore: cast_nullable_to_non_nullable
+            email: null == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
                       as String,
             password: null == password
                 ? _value.password
@@ -579,7 +577,7 @@ abstract class _$$LoginStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    String username,
+    String email,
     String password,
     bool isLoginButtonEnabled,
     bool obscureText,
@@ -603,7 +601,7 @@ class __$$LoginStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
+    Object? email = null,
     Object? password = null,
     Object? isLoginButtonEnabled = null,
     Object? obscureText = null,
@@ -613,9 +611,9 @@ class __$$LoginStateImplCopyWithImpl<$Res>
   }) {
     return _then(
       _$LoginStateImpl(
-        username: null == username
-            ? _value.username
-            : username // ignore: cast_nullable_to_non_nullable
+        email: null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
                   as String,
         password: null == password
             ? _value.password
@@ -648,9 +646,9 @@ class __$$LoginStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoginStateImpl implements _LoginState {
+class _$LoginStateImpl with DiagnosticableTreeMixin implements _LoginState {
   const _$LoginStateImpl({
-    this.username = '',
+    this.email = '',
     this.password = '',
     this.isLoginButtonEnabled = false,
     this.obscureText = true,
@@ -661,7 +659,7 @@ class _$LoginStateImpl implements _LoginState {
 
   @override
   @JsonKey()
-  final String username;
+  final String email;
   @override
   @JsonKey()
   final String password;
@@ -681,8 +679,24 @@ class _$LoginStateImpl implements _LoginState {
   final bool? loginSuccess;
 
   @override
-  String toString() {
-    return 'LoginState(username: $username, password: $password, isLoginButtonEnabled: $isLoginButtonEnabled, obscureText: $obscureText, onPageError: $onPageError, showLoginButtonLoading: $showLoginButtonLoading, loginSuccess: $loginSuccess)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'LoginState(email: $email, password: $password, isLoginButtonEnabled: $isLoginButtonEnabled, obscureText: $obscureText, onPageError: $onPageError, showLoginButtonLoading: $showLoginButtonLoading, loginSuccess: $loginSuccess)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'LoginState'))
+      ..add(DiagnosticsProperty('email', email))
+      ..add(DiagnosticsProperty('password', password))
+      ..add(DiagnosticsProperty('isLoginButtonEnabled', isLoginButtonEnabled))
+      ..add(DiagnosticsProperty('obscureText', obscureText))
+      ..add(DiagnosticsProperty('onPageError', onPageError))
+      ..add(
+        DiagnosticsProperty('showLoginButtonLoading', showLoginButtonLoading),
+      )
+      ..add(DiagnosticsProperty('loginSuccess', loginSuccess));
   }
 
   @override
@@ -690,8 +704,7 @@ class _$LoginStateImpl implements _LoginState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoginStateImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.isLoginButtonEnabled, isLoginButtonEnabled) ||
@@ -709,7 +722,7 @@ class _$LoginStateImpl implements _LoginState {
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    username,
+    email,
     password,
     isLoginButtonEnabled,
     obscureText,
@@ -729,7 +742,7 @@ class _$LoginStateImpl implements _LoginState {
 
 abstract class _LoginState implements LoginState {
   const factory _LoginState({
-    final String username,
+    final String email,
     final String password,
     final bool isLoginButtonEnabled,
     final bool obscureText,
@@ -739,7 +752,7 @@ abstract class _LoginState implements LoginState {
   }) = _$LoginStateImpl;
 
   @override
-  String get username;
+  String get email;
   @override
   String get password;
   @override

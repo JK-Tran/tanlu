@@ -17,8 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SubmitDailyAttendanceInput {
-  AttendanceSession get session => throw _privateConstructorUsedError;
-  List<Attendance> get attendances => throw _privateConstructorUsedError;
+  String get date => throw _privateConstructorUsedError;
+  List<AttendanceStudent> get attendanceStudent =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of SubmitDailyAttendanceInput
   /// with the given fields replaced by the non-null parameter values.
@@ -38,9 +39,7 @@ abstract class $SubmitDailyAttendanceInputCopyWith<$Res> {
         SubmitDailyAttendanceInput
       >;
   @useResult
-  $Res call({AttendanceSession session, List<Attendance> attendances});
-
-  $AttendanceSessionCopyWith<$Res> get session;
+  $Res call({String date, List<AttendanceStudent> attendanceStudent});
 }
 
 /// @nodoc
@@ -60,30 +59,20 @@ class _$SubmitDailyAttendanceInputCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? session = null, Object? attendances = null}) {
+  $Res call({Object? date = null, Object? attendanceStudent = null}) {
     return _then(
       _value.copyWith(
-            session: null == session
-                ? _value.session
-                : session // ignore: cast_nullable_to_non_nullable
-                      as AttendanceSession,
-            attendances: null == attendances
-                ? _value.attendances
-                : attendances // ignore: cast_nullable_to_non_nullable
-                      as List<Attendance>,
+            date: null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                      as String,
+            attendanceStudent: null == attendanceStudent
+                ? _value.attendanceStudent
+                : attendanceStudent // ignore: cast_nullable_to_non_nullable
+                      as List<AttendanceStudent>,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of SubmitDailyAttendanceInput
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AttendanceSessionCopyWith<$Res> get session {
-    return $AttendanceSessionCopyWith<$Res>(_value.session, (value) {
-      return _then(_value.copyWith(session: value) as $Val);
-    });
   }
 }
 
@@ -96,10 +85,7 @@ abstract class _$$SubmitDailyAttendanceInputImplCopyWith<$Res>
   ) = __$$SubmitDailyAttendanceInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AttendanceSession session, List<Attendance> attendances});
-
-  @override
-  $AttendanceSessionCopyWith<$Res> get session;
+  $Res call({String date, List<AttendanceStudent> attendanceStudent});
 }
 
 /// @nodoc
@@ -119,17 +105,17 @@ class __$$SubmitDailyAttendanceInputImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? session = null, Object? attendances = null}) {
+  $Res call({Object? date = null, Object? attendanceStudent = null}) {
     return _then(
       _$SubmitDailyAttendanceInputImpl(
-        session: null == session
-            ? _value.session
-            : session // ignore: cast_nullable_to_non_nullable
-                  as AttendanceSession,
-        attendances: null == attendances
-            ? _value._attendances
-            : attendances // ignore: cast_nullable_to_non_nullable
-                  as List<Attendance>,
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as String,
+        attendanceStudent: null == attendanceStudent
+            ? _value._attendanceStudent
+            : attendanceStudent // ignore: cast_nullable_to_non_nullable
+                  as List<AttendanceStudent>,
       ),
     );
   }
@@ -137,36 +123,26 @@ class __$$SubmitDailyAttendanceInputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SubmitDailyAttendanceInputImpl
-    with DiagnosticableTreeMixin
-    implements _SubmitDailyAttendanceInput {
+class _$SubmitDailyAttendanceInputImpl implements _SubmitDailyAttendanceInput {
   const _$SubmitDailyAttendanceInputImpl({
-    required this.session,
-    required final List<Attendance> attendances,
-  }) : _attendances = attendances;
+    required this.date,
+    required final List<AttendanceStudent> attendanceStudent,
+  }) : _attendanceStudent = attendanceStudent;
 
   @override
-  final AttendanceSession session;
-  final List<Attendance> _attendances;
+  final String date;
+  final List<AttendanceStudent> _attendanceStudent;
   @override
-  List<Attendance> get attendances {
-    if (_attendances is EqualUnmodifiableListView) return _attendances;
+  List<AttendanceStudent> get attendanceStudent {
+    if (_attendanceStudent is EqualUnmodifiableListView)
+      return _attendanceStudent;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_attendances);
+    return EqualUnmodifiableListView(_attendanceStudent);
   }
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SubmitDailyAttendanceInput(session: $session, attendances: $attendances)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SubmitDailyAttendanceInput'))
-      ..add(DiagnosticsProperty('session', session))
-      ..add(DiagnosticsProperty('attendances', attendances));
+  String toString() {
+    return 'SubmitDailyAttendanceInput(date: $date, attendanceStudent: $attendanceStudent)';
   }
 
   @override
@@ -174,18 +150,18 @@ class _$SubmitDailyAttendanceInputImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SubmitDailyAttendanceInputImpl &&
-            (identical(other.session, session) || other.session == session) &&
+            (identical(other.date, date) || other.date == date) &&
             const DeepCollectionEquality().equals(
-              other._attendances,
-              _attendances,
+              other._attendanceStudent,
+              _attendanceStudent,
             ));
   }
 
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    session,
-    const DeepCollectionEquality().hash(_attendances),
+    date,
+    const DeepCollectionEquality().hash(_attendanceStudent),
   );
 
   /// Create a copy of SubmitDailyAttendanceInput
@@ -203,14 +179,14 @@ class _$SubmitDailyAttendanceInputImpl
 abstract class _SubmitDailyAttendanceInput
     implements SubmitDailyAttendanceInput {
   const factory _SubmitDailyAttendanceInput({
-    required final AttendanceSession session,
-    required final List<Attendance> attendances,
+    required final String date,
+    required final List<AttendanceStudent> attendanceStudent,
   }) = _$SubmitDailyAttendanceInputImpl;
 
   @override
-  AttendanceSession get session;
+  String get date;
   @override
-  List<Attendance> get attendances;
+  List<AttendanceStudent> get attendanceStudent;
 
   /// Create a copy of SubmitDailyAttendanceInput
   /// with the given fields replaced by the non-null parameter values.
@@ -279,19 +255,13 @@ class __$$SubmitDailyAttendanceOutputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SubmitDailyAttendanceOutputImpl extends _SubmitDailyAttendanceOutput
-    with DiagnosticableTreeMixin {
-  const _$SubmitDailyAttendanceOutputImpl() : super._();
+class _$SubmitDailyAttendanceOutputImpl
+    implements _SubmitDailyAttendanceOutput {
+  const _$SubmitDailyAttendanceOutputImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SubmitDailyAttendanceOutput()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SubmitDailyAttendanceOutput'));
   }
 
   @override
@@ -306,8 +276,7 @@ class _$SubmitDailyAttendanceOutputImpl extends _SubmitDailyAttendanceOutput
 }
 
 abstract class _SubmitDailyAttendanceOutput
-    extends SubmitDailyAttendanceOutput {
+    implements SubmitDailyAttendanceOutput {
   const factory _SubmitDailyAttendanceOutput() =
       _$SubmitDailyAttendanceOutputImpl;
-  const _SubmitDailyAttendanceOutput._() : super._();
 }

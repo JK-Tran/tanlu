@@ -18,12 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Contact {
   String get name => throw _privateConstructorUsedError;
-  String get relationship =>
-      throw _privateConstructorUsedError; // 'Bố', 'Mẹ', hoặc role khác
+  String get relationship => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   DateTime? get dob => throw _privateConstructorUsedError;
-  String get userId => throw _privateConstructorUsedError;
-  bool get isPrimary => throw _privateConstructorUsedError;
 
   /// Create a copy of Contact
   /// with the given fields replaced by the non-null parameter values.
@@ -36,14 +33,7 @@ abstract class $ContactCopyWith<$Res> {
   factory $ContactCopyWith(Contact value, $Res Function(Contact) then) =
       _$ContactCopyWithImpl<$Res, Contact>;
   @useResult
-  $Res call({
-    String name,
-    String relationship,
-    String phone,
-    DateTime? dob,
-    String userId,
-    bool isPrimary,
-  });
+  $Res call({String name, String relationship, String phone, DateTime? dob});
 }
 
 /// @nodoc
@@ -65,8 +55,6 @@ class _$ContactCopyWithImpl<$Res, $Val extends Contact>
     Object? relationship = null,
     Object? phone = null,
     Object? dob = freezed,
-    Object? userId = null,
-    Object? isPrimary = null,
   }) {
     return _then(
       _value.copyWith(
@@ -86,14 +74,6 @@ class _$ContactCopyWithImpl<$Res, $Val extends Contact>
                 ? _value.dob
                 : dob // ignore: cast_nullable_to_non_nullable
                       as DateTime?,
-            userId: null == userId
-                ? _value.userId
-                : userId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            isPrimary: null == isPrimary
-                ? _value.isPrimary
-                : isPrimary // ignore: cast_nullable_to_non_nullable
-                      as bool,
           )
           as $Val,
     );
@@ -108,14 +88,7 @@ abstract class _$$ContactImplCopyWith<$Res> implements $ContactCopyWith<$Res> {
   ) = __$$ContactImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String name,
-    String relationship,
-    String phone,
-    DateTime? dob,
-    String userId,
-    bool isPrimary,
-  });
+  $Res call({String name, String relationship, String phone, DateTime? dob});
 }
 
 /// @nodoc
@@ -136,8 +109,6 @@ class __$$ContactImplCopyWithImpl<$Res>
     Object? relationship = null,
     Object? phone = null,
     Object? dob = freezed,
-    Object? userId = null,
-    Object? isPrimary = null,
   }) {
     return _then(
       _$ContactImpl(
@@ -157,14 +128,6 @@ class __$$ContactImplCopyWithImpl<$Res>
             ? _value.dob
             : dob // ignore: cast_nullable_to_non_nullable
                   as DateTime?,
-        userId: null == userId
-            ? _value.userId
-            : userId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        isPrimary: null == isPrimary
-            ? _value.isPrimary
-            : isPrimary // ignore: cast_nullable_to_non_nullable
-                  as bool,
       ),
     );
   }
@@ -178,8 +141,6 @@ class _$ContactImpl implements _Contact {
     this.relationship = '',
     this.phone = '',
     this.dob,
-    this.userId = '',
-    this.isPrimary = false,
   });
 
   @override
@@ -188,22 +149,15 @@ class _$ContactImpl implements _Contact {
   @override
   @JsonKey()
   final String relationship;
-  // 'Bố', 'Mẹ', hoặc role khác
   @override
   @JsonKey()
   final String phone;
   @override
   final DateTime? dob;
-  @override
-  @JsonKey()
-  final String userId;
-  @override
-  @JsonKey()
-  final bool isPrimary;
 
   @override
   String toString() {
-    return 'Contact(name: $name, relationship: $relationship, phone: $phone, dob: $dob, userId: $userId, isPrimary: $isPrimary)';
+    return 'Contact(name: $name, relationship: $relationship, phone: $phone, dob: $dob)';
   }
 
   @override
@@ -215,22 +169,11 @@ class _$ContactImpl implements _Contact {
             (identical(other.relationship, relationship) ||
                 other.relationship == relationship) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.isPrimary, isPrimary) ||
-                other.isPrimary == isPrimary));
+            (identical(other.dob, dob) || other.dob == dob));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    name,
-    relationship,
-    phone,
-    dob,
-    userId,
-    isPrimary,
-  );
+  int get hashCode => Object.hash(runtimeType, name, relationship, phone, dob);
 
   /// Create a copy of Contact
   /// with the given fields replaced by the non-null parameter values.
@@ -247,22 +190,16 @@ abstract class _Contact implements Contact {
     final String relationship,
     final String phone,
     final DateTime? dob,
-    final String userId,
-    final bool isPrimary,
   }) = _$ContactImpl;
 
   @override
   String get name;
   @override
-  String get relationship; // 'Bố', 'Mẹ', hoặc role khác
+  String get relationship;
   @override
   String get phone;
   @override
   DateTime? get dob;
-  @override
-  String get userId;
-  @override
-  bool get isPrimary;
 
   /// Create a copy of Contact
   /// with the given fields replaced by the non-null parameter values.

@@ -5,15 +5,13 @@ abstract class LoginEvent {
 }
 
 @freezed
-class UsernameChanged extends LoginEvent with _$UsernameChanged {
-  const factory UsernameChanged(String v, {required String username}) =
-      _UsernameChanged;
+class EmailChanged extends LoginEvent with _$EmailChanged {
+  const factory EmailChanged({required String email}) = _EmailChanged;
 }
 
 @freezed
 class PasswordChanged extends LoginEvent with _$PasswordChanged {
-  const factory PasswordChanged(String v, {required String password}) =
-      _PasswordChanged;
+  const factory PasswordChanged({required String password}) = _PasswordChanged;
 }
 
 @freezed

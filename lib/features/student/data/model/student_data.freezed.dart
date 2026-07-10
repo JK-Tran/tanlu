@@ -21,32 +21,28 @@ StudentData _$StudentDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$StudentData {
-  @JsonKey(name: 'id', includeToJson: false)
-  String? get id => throw _privateConstructorUsedError; // ID thường được lấy từ Document ID
+  @JsonKey(name: 'id')
+  int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'centerId')
+  int? get centerId => throw _privateConstructorUsedError;
   @JsonKey(name: 'classId')
-  String? get classId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'fullName')
-  String? get fullName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'nickname')
-  String? get nickname => throw _privateConstructorUsedError;
-  @JsonKey(name: 'gender')
-  String? get gender => throw _privateConstructorUsedError;
-  @JsonKey(name: 'dob')
-  String? get dob => throw _privateConstructorUsedError;
-  @JsonKey(name: 'dateOfBirth')
-  String? get dateOfBirth => throw _privateConstructorUsedError;
-  @JsonKey(name: 'avatarUrl')
-  String? get avatarUrl => throw _privateConstructorUsedError;
+  int? get classId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'parentId')
+  int? get parentId => throw _privateConstructorUsedError;
   @JsonKey(name: 'studentCode')
   String? get studentCode => throw _privateConstructorUsedError;
+  @JsonKey(name: 'fullName')
+  String? get fullName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'nickName')
+  String? get nickName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'gender')
+  String? get gender => throw _privateConstructorUsedError;
+  @JsonKey(name: 'birthDate')
+  String? get birthDate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'avatarUrl')
+  String? get avatarUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'status')
   String? get status => throw _privateConstructorUsedError;
-  @JsonKey(name: 'parentUserId')
-  String? get parentUserId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'address')
-  String? get address => throw _privateConstructorUsedError;
-  @JsonKey(name: 'contacts')
-  List<ContactData>? get contacts => throw _privateConstructorUsedError; // Y tế & Thể chất
   @JsonKey(name: 'birthHistory')
   String? get birthHistory => throw _privateConstructorUsedError;
   @JsonKey(name: 'diagnosis')
@@ -56,13 +52,13 @@ mixin _$StudentData {
   @JsonKey(name: 'currentMedications')
   String? get currentMedications => throw _privateConstructorUsedError;
   @JsonKey(name: 'bloodType')
-  String? get bloodType => throw _privateConstructorUsedError; // Hành vi & Sở thích
+  String? get bloodType => throw _privateConstructorUsedError;
   @JsonKey(name: 'likes')
   String? get likes => throw _privateConstructorUsedError;
   @JsonKey(name: 'dislikesOrTriggers')
   String? get dislikesOrTriggers => throw _privateConstructorUsedError;
   @JsonKey(name: 'selfCareSkills')
-  String? get selfCareSkills => throw _privateConstructorUsedError; // Cũ / Tương thích ngược
+  String? get selfCareSkills => throw _privateConstructorUsedError;
   @JsonKey(name: 'initialReason')
   String? get initialReason => throw _privateConstructorUsedError;
   @JsonKey(name: 'diagnosisSummary')
@@ -71,6 +67,14 @@ mixin _$StudentData {
   int? get developmentAgeMonth => throw _privateConstructorUsedError;
   @JsonKey(name: 'supportLevel')
   String? get supportLevel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'createdAt')
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'class')
+  ClassInfoData? get classInfo => throw _privateConstructorUsedError;
+  @JsonKey(name: 'parent')
+  ParentData? get parent => throw _privateConstructorUsedError;
+  @JsonKey(name: 'contacts')
+  List<ContactData>? get contacts => throw _privateConstructorUsedError;
 
   /// Serializes this StudentData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -90,19 +94,17 @@ abstract class $StudentDataCopyWith<$Res> {
   ) = _$StudentDataCopyWithImpl<$Res, StudentData>;
   @useResult
   $Res call({
-    @JsonKey(name: 'id', includeToJson: false) String? id,
-    @JsonKey(name: 'classId') String? classId,
-    @JsonKey(name: 'fullName') String? fullName,
-    @JsonKey(name: 'nickname') String? nickname,
-    @JsonKey(name: 'gender') String? gender,
-    @JsonKey(name: 'dob') String? dob,
-    @JsonKey(name: 'dateOfBirth') String? dateOfBirth,
-    @JsonKey(name: 'avatarUrl') String? avatarUrl,
+    @JsonKey(name: 'id') int? id,
+    @JsonKey(name: 'centerId') int? centerId,
+    @JsonKey(name: 'classId') int? classId,
+    @JsonKey(name: 'parentId') int? parentId,
     @JsonKey(name: 'studentCode') String? studentCode,
+    @JsonKey(name: 'fullName') String? fullName,
+    @JsonKey(name: 'nickName') String? nickName,
+    @JsonKey(name: 'gender') String? gender,
+    @JsonKey(name: 'birthDate') String? birthDate,
+    @JsonKey(name: 'avatarUrl') String? avatarUrl,
     @JsonKey(name: 'status') String? status,
-    @JsonKey(name: 'parentUserId') String? parentUserId,
-    @JsonKey(name: 'address') String? address,
-    @JsonKey(name: 'contacts') List<ContactData>? contacts,
     @JsonKey(name: 'birthHistory') String? birthHistory,
     @JsonKey(name: 'diagnosis') String? diagnosis,
     @JsonKey(name: 'allergies') String? allergies,
@@ -115,7 +117,14 @@ abstract class $StudentDataCopyWith<$Res> {
     @JsonKey(name: 'diagnosisSummary') String? diagnosisSummary,
     @JsonKey(name: 'developmentAgeMonth') int? developmentAgeMonth,
     @JsonKey(name: 'supportLevel') String? supportLevel,
+    @JsonKey(name: 'createdAt') DateTime? createdAt,
+    @JsonKey(name: 'class') ClassInfoData? classInfo,
+    @JsonKey(name: 'parent') ParentData? parent,
+    @JsonKey(name: 'contacts') List<ContactData>? contacts,
   });
+
+  $ClassInfoDataCopyWith<$Res>? get classInfo;
+  $ParentDataCopyWith<$Res>? get parent;
 }
 
 /// @nodoc
@@ -134,18 +143,16 @@ class _$StudentDataCopyWithImpl<$Res, $Val extends StudentData>
   @override
   $Res call({
     Object? id = freezed,
+    Object? centerId = freezed,
     Object? classId = freezed,
-    Object? fullName = freezed,
-    Object? nickname = freezed,
-    Object? gender = freezed,
-    Object? dob = freezed,
-    Object? dateOfBirth = freezed,
-    Object? avatarUrl = freezed,
+    Object? parentId = freezed,
     Object? studentCode = freezed,
+    Object? fullName = freezed,
+    Object? nickName = freezed,
+    Object? gender = freezed,
+    Object? birthDate = freezed,
+    Object? avatarUrl = freezed,
     Object? status = freezed,
-    Object? parentUserId = freezed,
-    Object? address = freezed,
-    Object? contacts = freezed,
     Object? birthHistory = freezed,
     Object? diagnosis = freezed,
     Object? allergies = freezed,
@@ -158,61 +165,57 @@ class _$StudentDataCopyWithImpl<$Res, $Val extends StudentData>
     Object? diagnosisSummary = freezed,
     Object? developmentAgeMonth = freezed,
     Object? supportLevel = freezed,
+    Object? createdAt = freezed,
+    Object? classInfo = freezed,
+    Object? parent = freezed,
+    Object? contacts = freezed,
   }) {
     return _then(
       _value.copyWith(
             id: freezed == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as String?,
+                      as int?,
+            centerId: freezed == centerId
+                ? _value.centerId
+                : centerId // ignore: cast_nullable_to_non_nullable
+                      as int?,
             classId: freezed == classId
                 ? _value.classId
                 : classId // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            parentId: freezed == parentId
+                ? _value.parentId
+                : parentId // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            studentCode: freezed == studentCode
+                ? _value.studentCode
+                : studentCode // ignore: cast_nullable_to_non_nullable
                       as String?,
             fullName: freezed == fullName
                 ? _value.fullName
                 : fullName // ignore: cast_nullable_to_non_nullable
                       as String?,
-            nickname: freezed == nickname
-                ? _value.nickname
-                : nickname // ignore: cast_nullable_to_non_nullable
+            nickName: freezed == nickName
+                ? _value.nickName
+                : nickName // ignore: cast_nullable_to_non_nullable
                       as String?,
             gender: freezed == gender
                 ? _value.gender
                 : gender // ignore: cast_nullable_to_non_nullable
                       as String?,
-            dob: freezed == dob
-                ? _value.dob
-                : dob // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            dateOfBirth: freezed == dateOfBirth
-                ? _value.dateOfBirth
-                : dateOfBirth // ignore: cast_nullable_to_non_nullable
+            birthDate: freezed == birthDate
+                ? _value.birthDate
+                : birthDate // ignore: cast_nullable_to_non_nullable
                       as String?,
             avatarUrl: freezed == avatarUrl
                 ? _value.avatarUrl
                 : avatarUrl // ignore: cast_nullable_to_non_nullable
                       as String?,
-            studentCode: freezed == studentCode
-                ? _value.studentCode
-                : studentCode // ignore: cast_nullable_to_non_nullable
-                      as String?,
             status: freezed == status
                 ? _value.status
                 : status // ignore: cast_nullable_to_non_nullable
                       as String?,
-            parentUserId: freezed == parentUserId
-                ? _value.parentUserId
-                : parentUserId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            address: freezed == address
-                ? _value.address
-                : address // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            contacts: freezed == contacts
-                ? _value.contacts
-                : contacts // ignore: cast_nullable_to_non_nullable
-                      as List<ContactData>?,
             birthHistory: freezed == birthHistory
                 ? _value.birthHistory
                 : birthHistory // ignore: cast_nullable_to_non_nullable
@@ -261,9 +264,53 @@ class _$StudentDataCopyWithImpl<$Res, $Val extends StudentData>
                 ? _value.supportLevel
                 : supportLevel // ignore: cast_nullable_to_non_nullable
                       as String?,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            classInfo: freezed == classInfo
+                ? _value.classInfo
+                : classInfo // ignore: cast_nullable_to_non_nullable
+                      as ClassInfoData?,
+            parent: freezed == parent
+                ? _value.parent
+                : parent // ignore: cast_nullable_to_non_nullable
+                      as ParentData?,
+            contacts: freezed == contacts
+                ? _value.contacts
+                : contacts // ignore: cast_nullable_to_non_nullable
+                      as List<ContactData>?,
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of StudentData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ClassInfoDataCopyWith<$Res>? get classInfo {
+    if (_value.classInfo == null) {
+      return null;
+    }
+
+    return $ClassInfoDataCopyWith<$Res>(_value.classInfo!, (value) {
+      return _then(_value.copyWith(classInfo: value) as $Val);
+    });
+  }
+
+  /// Create a copy of StudentData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ParentDataCopyWith<$Res>? get parent {
+    if (_value.parent == null) {
+      return null;
+    }
+
+    return $ParentDataCopyWith<$Res>(_value.parent!, (value) {
+      return _then(_value.copyWith(parent: value) as $Val);
+    });
   }
 }
 
@@ -277,19 +324,17 @@ abstract class _$$StudentDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'id', includeToJson: false) String? id,
-    @JsonKey(name: 'classId') String? classId,
-    @JsonKey(name: 'fullName') String? fullName,
-    @JsonKey(name: 'nickname') String? nickname,
-    @JsonKey(name: 'gender') String? gender,
-    @JsonKey(name: 'dob') String? dob,
-    @JsonKey(name: 'dateOfBirth') String? dateOfBirth,
-    @JsonKey(name: 'avatarUrl') String? avatarUrl,
+    @JsonKey(name: 'id') int? id,
+    @JsonKey(name: 'centerId') int? centerId,
+    @JsonKey(name: 'classId') int? classId,
+    @JsonKey(name: 'parentId') int? parentId,
     @JsonKey(name: 'studentCode') String? studentCode,
+    @JsonKey(name: 'fullName') String? fullName,
+    @JsonKey(name: 'nickName') String? nickName,
+    @JsonKey(name: 'gender') String? gender,
+    @JsonKey(name: 'birthDate') String? birthDate,
+    @JsonKey(name: 'avatarUrl') String? avatarUrl,
     @JsonKey(name: 'status') String? status,
-    @JsonKey(name: 'parentUserId') String? parentUserId,
-    @JsonKey(name: 'address') String? address,
-    @JsonKey(name: 'contacts') List<ContactData>? contacts,
     @JsonKey(name: 'birthHistory') String? birthHistory,
     @JsonKey(name: 'diagnosis') String? diagnosis,
     @JsonKey(name: 'allergies') String? allergies,
@@ -302,7 +347,16 @@ abstract class _$$StudentDataImplCopyWith<$Res>
     @JsonKey(name: 'diagnosisSummary') String? diagnosisSummary,
     @JsonKey(name: 'developmentAgeMonth') int? developmentAgeMonth,
     @JsonKey(name: 'supportLevel') String? supportLevel,
+    @JsonKey(name: 'createdAt') DateTime? createdAt,
+    @JsonKey(name: 'class') ClassInfoData? classInfo,
+    @JsonKey(name: 'parent') ParentData? parent,
+    @JsonKey(name: 'contacts') List<ContactData>? contacts,
   });
+
+  @override
+  $ClassInfoDataCopyWith<$Res>? get classInfo;
+  @override
+  $ParentDataCopyWith<$Res>? get parent;
 }
 
 /// @nodoc
@@ -320,18 +374,16 @@ class __$$StudentDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? centerId = freezed,
     Object? classId = freezed,
-    Object? fullName = freezed,
-    Object? nickname = freezed,
-    Object? gender = freezed,
-    Object? dob = freezed,
-    Object? dateOfBirth = freezed,
-    Object? avatarUrl = freezed,
+    Object? parentId = freezed,
     Object? studentCode = freezed,
+    Object? fullName = freezed,
+    Object? nickName = freezed,
+    Object? gender = freezed,
+    Object? birthDate = freezed,
+    Object? avatarUrl = freezed,
     Object? status = freezed,
-    Object? parentUserId = freezed,
-    Object? address = freezed,
-    Object? contacts = freezed,
     Object? birthHistory = freezed,
     Object? diagnosis = freezed,
     Object? allergies = freezed,
@@ -344,61 +396,57 @@ class __$$StudentDataImplCopyWithImpl<$Res>
     Object? diagnosisSummary = freezed,
     Object? developmentAgeMonth = freezed,
     Object? supportLevel = freezed,
+    Object? createdAt = freezed,
+    Object? classInfo = freezed,
+    Object? parent = freezed,
+    Object? contacts = freezed,
   }) {
     return _then(
       _$StudentDataImpl(
         id: freezed == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                  as int?,
+        centerId: freezed == centerId
+            ? _value.centerId
+            : centerId // ignore: cast_nullable_to_non_nullable
+                  as int?,
         classId: freezed == classId
             ? _value.classId
             : classId // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        parentId: freezed == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        studentCode: freezed == studentCode
+            ? _value.studentCode
+            : studentCode // ignore: cast_nullable_to_non_nullable
                   as String?,
         fullName: freezed == fullName
             ? _value.fullName
             : fullName // ignore: cast_nullable_to_non_nullable
                   as String?,
-        nickname: freezed == nickname
-            ? _value.nickname
-            : nickname // ignore: cast_nullable_to_non_nullable
+        nickName: freezed == nickName
+            ? _value.nickName
+            : nickName // ignore: cast_nullable_to_non_nullable
                   as String?,
         gender: freezed == gender
             ? _value.gender
             : gender // ignore: cast_nullable_to_non_nullable
                   as String?,
-        dob: freezed == dob
-            ? _value.dob
-            : dob // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        dateOfBirth: freezed == dateOfBirth
-            ? _value.dateOfBirth
-            : dateOfBirth // ignore: cast_nullable_to_non_nullable
+        birthDate: freezed == birthDate
+            ? _value.birthDate
+            : birthDate // ignore: cast_nullable_to_non_nullable
                   as String?,
         avatarUrl: freezed == avatarUrl
             ? _value.avatarUrl
             : avatarUrl // ignore: cast_nullable_to_non_nullable
                   as String?,
-        studentCode: freezed == studentCode
-            ? _value.studentCode
-            : studentCode // ignore: cast_nullable_to_non_nullable
-                  as String?,
         status: freezed == status
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
                   as String?,
-        parentUserId: freezed == parentUserId
-            ? _value.parentUserId
-            : parentUserId // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        address: freezed == address
-            ? _value.address
-            : address // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        contacts: freezed == contacts
-            ? _value._contacts
-            : contacts // ignore: cast_nullable_to_non_nullable
-                  as List<ContactData>?,
         birthHistory: freezed == birthHistory
             ? _value.birthHistory
             : birthHistory // ignore: cast_nullable_to_non_nullable
@@ -447,6 +495,22 @@ class __$$StudentDataImplCopyWithImpl<$Res>
             ? _value.supportLevel
             : supportLevel // ignore: cast_nullable_to_non_nullable
                   as String?,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        classInfo: freezed == classInfo
+            ? _value.classInfo
+            : classInfo // ignore: cast_nullable_to_non_nullable
+                  as ClassInfoData?,
+        parent: freezed == parent
+            ? _value.parent
+            : parent // ignore: cast_nullable_to_non_nullable
+                  as ParentData?,
+        contacts: freezed == contacts
+            ? _value._contacts
+            : contacts // ignore: cast_nullable_to_non_nullable
+                  as List<ContactData>?,
       ),
     );
   }
@@ -454,21 +518,19 @@ class __$$StudentDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$StudentDataImpl implements _StudentData {
+class _$StudentDataImpl extends _StudentData {
   const _$StudentDataImpl({
-    @JsonKey(name: 'id', includeToJson: false) this.id,
+    @JsonKey(name: 'id') this.id,
+    @JsonKey(name: 'centerId') this.centerId,
     @JsonKey(name: 'classId') this.classId,
-    @JsonKey(name: 'fullName') this.fullName,
-    @JsonKey(name: 'nickname') this.nickname,
-    @JsonKey(name: 'gender') this.gender,
-    @JsonKey(name: 'dob') this.dob,
-    @JsonKey(name: 'dateOfBirth') this.dateOfBirth,
-    @JsonKey(name: 'avatarUrl') this.avatarUrl,
+    @JsonKey(name: 'parentId') this.parentId,
     @JsonKey(name: 'studentCode') this.studentCode,
+    @JsonKey(name: 'fullName') this.fullName,
+    @JsonKey(name: 'nickName') this.nickName,
+    @JsonKey(name: 'gender') this.gender,
+    @JsonKey(name: 'birthDate') this.birthDate,
+    @JsonKey(name: 'avatarUrl') this.avatarUrl,
     @JsonKey(name: 'status') this.status,
-    @JsonKey(name: 'parentUserId') this.parentUserId,
-    @JsonKey(name: 'address') this.address,
-    @JsonKey(name: 'contacts') final List<ContactData>? contacts,
     @JsonKey(name: 'birthHistory') this.birthHistory,
     @JsonKey(name: 'diagnosis') this.diagnosis,
     @JsonKey(name: 'allergies') this.allergies,
@@ -481,60 +543,49 @@ class _$StudentDataImpl implements _StudentData {
     @JsonKey(name: 'diagnosisSummary') this.diagnosisSummary,
     @JsonKey(name: 'developmentAgeMonth') this.developmentAgeMonth,
     @JsonKey(name: 'supportLevel') this.supportLevel,
-  }) : _contacts = contacts;
+    @JsonKey(name: 'createdAt') this.createdAt,
+    @JsonKey(name: 'class') this.classInfo,
+    @JsonKey(name: 'parent') this.parent,
+    @JsonKey(name: 'contacts') final List<ContactData>? contacts,
+  }) : _contacts = contacts,
+       super._();
 
   factory _$StudentDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$StudentDataImplFromJson(json);
 
   @override
-  @JsonKey(name: 'id', includeToJson: false)
-  final String? id;
-  // ID thường được lấy từ Document ID
+  @JsonKey(name: 'id')
+  final int? id;
+  @override
+  @JsonKey(name: 'centerId')
+  final int? centerId;
   @override
   @JsonKey(name: 'classId')
-  final String? classId;
+  final int? classId;
   @override
-  @JsonKey(name: 'fullName')
-  final String? fullName;
-  @override
-  @JsonKey(name: 'nickname')
-  final String? nickname;
-  @override
-  @JsonKey(name: 'gender')
-  final String? gender;
-  @override
-  @JsonKey(name: 'dob')
-  final String? dob;
-  @override
-  @JsonKey(name: 'dateOfBirth')
-  final String? dateOfBirth;
-  @override
-  @JsonKey(name: 'avatarUrl')
-  final String? avatarUrl;
+  @JsonKey(name: 'parentId')
+  final int? parentId;
   @override
   @JsonKey(name: 'studentCode')
   final String? studentCode;
   @override
+  @JsonKey(name: 'fullName')
+  final String? fullName;
+  @override
+  @JsonKey(name: 'nickName')
+  final String? nickName;
+  @override
+  @JsonKey(name: 'gender')
+  final String? gender;
+  @override
+  @JsonKey(name: 'birthDate')
+  final String? birthDate;
+  @override
+  @JsonKey(name: 'avatarUrl')
+  final String? avatarUrl;
+  @override
   @JsonKey(name: 'status')
   final String? status;
-  @override
-  @JsonKey(name: 'parentUserId')
-  final String? parentUserId;
-  @override
-  @JsonKey(name: 'address')
-  final String? address;
-  final List<ContactData>? _contacts;
-  @override
-  @JsonKey(name: 'contacts')
-  List<ContactData>? get contacts {
-    final value = _contacts;
-    if (value == null) return null;
-    if (_contacts is EqualUnmodifiableListView) return _contacts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  // Y tế & Thể chất
   @override
   @JsonKey(name: 'birthHistory')
   final String? birthHistory;
@@ -550,7 +601,6 @@ class _$StudentDataImpl implements _StudentData {
   @override
   @JsonKey(name: 'bloodType')
   final String? bloodType;
-  // Hành vi & Sở thích
   @override
   @JsonKey(name: 'likes')
   final String? likes;
@@ -560,7 +610,6 @@ class _$StudentDataImpl implements _StudentData {
   @override
   @JsonKey(name: 'selfCareSkills')
   final String? selfCareSkills;
-  // Cũ / Tương thích ngược
   @override
   @JsonKey(name: 'initialReason')
   final String? initialReason;
@@ -573,10 +622,29 @@ class _$StudentDataImpl implements _StudentData {
   @override
   @JsonKey(name: 'supportLevel')
   final String? supportLevel;
+  @override
+  @JsonKey(name: 'createdAt')
+  final DateTime? createdAt;
+  @override
+  @JsonKey(name: 'class')
+  final ClassInfoData? classInfo;
+  @override
+  @JsonKey(name: 'parent')
+  final ParentData? parent;
+  final List<ContactData>? _contacts;
+  @override
+  @JsonKey(name: 'contacts')
+  List<ContactData>? get contacts {
+    final value = _contacts;
+    if (value == null) return null;
+    if (_contacts is EqualUnmodifiableListView) return _contacts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'StudentData(id: $id, classId: $classId, fullName: $fullName, nickname: $nickname, gender: $gender, dob: $dob, dateOfBirth: $dateOfBirth, avatarUrl: $avatarUrl, studentCode: $studentCode, status: $status, parentUserId: $parentUserId, address: $address, contacts: $contacts, birthHistory: $birthHistory, diagnosis: $diagnosis, allergies: $allergies, currentMedications: $currentMedications, bloodType: $bloodType, likes: $likes, dislikesOrTriggers: $dislikesOrTriggers, selfCareSkills: $selfCareSkills, initialReason: $initialReason, diagnosisSummary: $diagnosisSummary, developmentAgeMonth: $developmentAgeMonth, supportLevel: $supportLevel)';
+    return 'StudentData(id: $id, centerId: $centerId, classId: $classId, parentId: $parentId, studentCode: $studentCode, fullName: $fullName, nickName: $nickName, gender: $gender, birthDate: $birthDate, avatarUrl: $avatarUrl, status: $status, birthHistory: $birthHistory, diagnosis: $diagnosis, allergies: $allergies, currentMedications: $currentMedications, bloodType: $bloodType, likes: $likes, dislikesOrTriggers: $dislikesOrTriggers, selfCareSkills: $selfCareSkills, initialReason: $initialReason, diagnosisSummary: $diagnosisSummary, developmentAgeMonth: $developmentAgeMonth, supportLevel: $supportLevel, createdAt: $createdAt, classInfo: $classInfo, parent: $parent, contacts: $contacts)';
   }
 
   @override
@@ -585,24 +653,23 @@ class _$StudentDataImpl implements _StudentData {
         (other.runtimeType == runtimeType &&
             other is _$StudentDataImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.centerId, centerId) ||
+                other.centerId == centerId) &&
             (identical(other.classId, classId) || other.classId == classId) &&
-            (identical(other.fullName, fullName) ||
-                other.fullName == fullName) &&
-            (identical(other.nickname, nickname) ||
-                other.nickname == nickname) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId) &&
             (identical(other.studentCode, studentCode) ||
                 other.studentCode == studentCode) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
+            (identical(other.nickName, nickName) ||
+                other.nickName == nickName) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.birthDate, birthDate) ||
+                other.birthDate == birthDate) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.parentUserId, parentUserId) ||
-                other.parentUserId == parentUserId) &&
-            (identical(other.address, address) || other.address == address) &&
-            const DeepCollectionEquality().equals(other._contacts, _contacts) &&
             (identical(other.birthHistory, birthHistory) ||
                 other.birthHistory == birthHistory) &&
             (identical(other.diagnosis, diagnosis) ||
@@ -625,7 +692,13 @@ class _$StudentDataImpl implements _StudentData {
             (identical(other.developmentAgeMonth, developmentAgeMonth) ||
                 other.developmentAgeMonth == developmentAgeMonth) &&
             (identical(other.supportLevel, supportLevel) ||
-                other.supportLevel == supportLevel));
+                other.supportLevel == supportLevel) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.classInfo, classInfo) ||
+                other.classInfo == classInfo) &&
+            (identical(other.parent, parent) || other.parent == parent) &&
+            const DeepCollectionEquality().equals(other._contacts, _contacts));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -633,18 +706,16 @@ class _$StudentDataImpl implements _StudentData {
   int get hashCode => Object.hashAll([
     runtimeType,
     id,
+    centerId,
     classId,
-    fullName,
-    nickname,
-    gender,
-    dob,
-    dateOfBirth,
-    avatarUrl,
+    parentId,
     studentCode,
+    fullName,
+    nickName,
+    gender,
+    birthDate,
+    avatarUrl,
     status,
-    parentUserId,
-    address,
-    const DeepCollectionEquality().hash(_contacts),
     birthHistory,
     diagnosis,
     allergies,
@@ -657,6 +728,10 @@ class _$StudentDataImpl implements _StudentData {
     diagnosisSummary,
     developmentAgeMonth,
     supportLevel,
+    createdAt,
+    classInfo,
+    parent,
+    const DeepCollectionEquality().hash(_contacts),
   ]);
 
   /// Create a copy of StudentData
@@ -673,21 +748,19 @@ class _$StudentDataImpl implements _StudentData {
   }
 }
 
-abstract class _StudentData implements StudentData {
+abstract class _StudentData extends StudentData {
   const factory _StudentData({
-    @JsonKey(name: 'id', includeToJson: false) final String? id,
-    @JsonKey(name: 'classId') final String? classId,
-    @JsonKey(name: 'fullName') final String? fullName,
-    @JsonKey(name: 'nickname') final String? nickname,
-    @JsonKey(name: 'gender') final String? gender,
-    @JsonKey(name: 'dob') final String? dob,
-    @JsonKey(name: 'dateOfBirth') final String? dateOfBirth,
-    @JsonKey(name: 'avatarUrl') final String? avatarUrl,
+    @JsonKey(name: 'id') final int? id,
+    @JsonKey(name: 'centerId') final int? centerId,
+    @JsonKey(name: 'classId') final int? classId,
+    @JsonKey(name: 'parentId') final int? parentId,
     @JsonKey(name: 'studentCode') final String? studentCode,
+    @JsonKey(name: 'fullName') final String? fullName,
+    @JsonKey(name: 'nickName') final String? nickName,
+    @JsonKey(name: 'gender') final String? gender,
+    @JsonKey(name: 'birthDate') final String? birthDate,
+    @JsonKey(name: 'avatarUrl') final String? avatarUrl,
     @JsonKey(name: 'status') final String? status,
-    @JsonKey(name: 'parentUserId') final String? parentUserId,
-    @JsonKey(name: 'address') final String? address,
-    @JsonKey(name: 'contacts') final List<ContactData>? contacts,
     @JsonKey(name: 'birthHistory') final String? birthHistory,
     @JsonKey(name: 'diagnosis') final String? diagnosis,
     @JsonKey(name: 'allergies') final String? allergies,
@@ -700,50 +773,49 @@ abstract class _StudentData implements StudentData {
     @JsonKey(name: 'diagnosisSummary') final String? diagnosisSummary,
     @JsonKey(name: 'developmentAgeMonth') final int? developmentAgeMonth,
     @JsonKey(name: 'supportLevel') final String? supportLevel,
+    @JsonKey(name: 'createdAt') final DateTime? createdAt,
+    @JsonKey(name: 'class') final ClassInfoData? classInfo,
+    @JsonKey(name: 'parent') final ParentData? parent,
+    @JsonKey(name: 'contacts') final List<ContactData>? contacts,
   }) = _$StudentDataImpl;
+  const _StudentData._() : super._();
 
   factory _StudentData.fromJson(Map<String, dynamic> json) =
       _$StudentDataImpl.fromJson;
 
   @override
-  @JsonKey(name: 'id', includeToJson: false)
-  String? get id; // ID thường được lấy từ Document ID
+  @JsonKey(name: 'id')
+  int? get id;
+  @override
+  @JsonKey(name: 'centerId')
+  int? get centerId;
   @override
   @JsonKey(name: 'classId')
-  String? get classId;
+  int? get classId;
   @override
-  @JsonKey(name: 'fullName')
-  String? get fullName;
-  @override
-  @JsonKey(name: 'nickname')
-  String? get nickname;
-  @override
-  @JsonKey(name: 'gender')
-  String? get gender;
-  @override
-  @JsonKey(name: 'dob')
-  String? get dob;
-  @override
-  @JsonKey(name: 'dateOfBirth')
-  String? get dateOfBirth;
-  @override
-  @JsonKey(name: 'avatarUrl')
-  String? get avatarUrl;
+  @JsonKey(name: 'parentId')
+  int? get parentId;
   @override
   @JsonKey(name: 'studentCode')
   String? get studentCode;
   @override
+  @JsonKey(name: 'fullName')
+  String? get fullName;
+  @override
+  @JsonKey(name: 'nickName')
+  String? get nickName;
+  @override
+  @JsonKey(name: 'gender')
+  String? get gender;
+  @override
+  @JsonKey(name: 'birthDate')
+  String? get birthDate;
+  @override
+  @JsonKey(name: 'avatarUrl')
+  String? get avatarUrl;
+  @override
   @JsonKey(name: 'status')
   String? get status;
-  @override
-  @JsonKey(name: 'parentUserId')
-  String? get parentUserId;
-  @override
-  @JsonKey(name: 'address')
-  String? get address;
-  @override
-  @JsonKey(name: 'contacts')
-  List<ContactData>? get contacts; // Y tế & Thể chất
   @override
   @JsonKey(name: 'birthHistory')
   String? get birthHistory;
@@ -758,7 +830,7 @@ abstract class _StudentData implements StudentData {
   String? get currentMedications;
   @override
   @JsonKey(name: 'bloodType')
-  String? get bloodType; // Hành vi & Sở thích
+  String? get bloodType;
   @override
   @JsonKey(name: 'likes')
   String? get likes;
@@ -767,7 +839,7 @@ abstract class _StudentData implements StudentData {
   String? get dislikesOrTriggers;
   @override
   @JsonKey(name: 'selfCareSkills')
-  String? get selfCareSkills; // Cũ / Tương thích ngược
+  String? get selfCareSkills;
   @override
   @JsonKey(name: 'initialReason')
   String? get initialReason;
@@ -780,6 +852,18 @@ abstract class _StudentData implements StudentData {
   @override
   @JsonKey(name: 'supportLevel')
   String? get supportLevel;
+  @override
+  @JsonKey(name: 'createdAt')
+  DateTime? get createdAt;
+  @override
+  @JsonKey(name: 'class')
+  ClassInfoData? get classInfo;
+  @override
+  @JsonKey(name: 'parent')
+  ParentData? get parent;
+  @override
+  @JsonKey(name: 'contacts')
+  List<ContactData>? get contacts;
 
   /// Create a copy of StudentData
   /// with the given fields replaced by the non-null parameter values.

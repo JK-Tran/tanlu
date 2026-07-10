@@ -17,19 +17,18 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LeaveRequest {
-  String get id => throw _privateConstructorUsedError;
-  String get studentId => throw _privateConstructorUsedError;
-  String get studentName => throw _privateConstructorUsedError;
-  String get classId => throw _privateConstructorUsedError;
-  String get parentId => throw _privateConstructorUsedError;
-  String get senderName => throw _privateConstructorUsedError;
-  String get senderAvatarUrl => throw _privateConstructorUsedError;
-  String get studentAvatarUrl => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  Student get student => throw _privateConstructorUsedError;
+  ClassInfo get classInfo => throw _privateConstructorUsedError;
   DateTime? get date => throw _privateConstructorUsedError;
   String get reason => throw _privateConstructorUsedError;
+  String get note => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
+  Parent get parent => throw _privateConstructorUsedError;
   DateTime? get submittedAt => throw _privateConstructorUsedError;
-  String? get reviewedBy => throw _privateConstructorUsedError;
+  DateTime? get decidedAt => throw _privateConstructorUsedError;
+  int get decidedBy => throw _privateConstructorUsedError;
+  String get decisionNote => throw _privateConstructorUsedError;
 
   /// Create a copy of LeaveRequest
   /// with the given fields replaced by the non-null parameter values.
@@ -46,20 +45,23 @@ abstract class $LeaveRequestCopyWith<$Res> {
   ) = _$LeaveRequestCopyWithImpl<$Res, LeaveRequest>;
   @useResult
   $Res call({
-    String id,
-    String studentId,
-    String studentName,
-    String classId,
-    String parentId,
-    String senderName,
-    String senderAvatarUrl,
-    String studentAvatarUrl,
+    int id,
+    Student student,
+    ClassInfo classInfo,
     DateTime? date,
     String reason,
+    String note,
     String status,
+    Parent parent,
     DateTime? submittedAt,
-    String? reviewedBy,
+    DateTime? decidedAt,
+    int decidedBy,
+    String decisionNote,
   });
+
+  $StudentCopyWith<$Res> get student;
+  $ClassInfoCopyWith<$Res> get classInfo;
+  $ParentCopyWith<$Res> get parent;
 }
 
 /// @nodoc
@@ -78,53 +80,32 @@ class _$LeaveRequestCopyWithImpl<$Res, $Val extends LeaveRequest>
   @override
   $Res call({
     Object? id = null,
-    Object? studentId = null,
-    Object? studentName = null,
-    Object? classId = null,
-    Object? parentId = null,
-    Object? senderName = null,
-    Object? senderAvatarUrl = null,
-    Object? studentAvatarUrl = null,
+    Object? student = null,
+    Object? classInfo = null,
     Object? date = freezed,
     Object? reason = null,
+    Object? note = null,
     Object? status = null,
+    Object? parent = null,
     Object? submittedAt = freezed,
-    Object? reviewedBy = freezed,
+    Object? decidedAt = freezed,
+    Object? decidedBy = null,
+    Object? decisionNote = null,
   }) {
     return _then(
       _value.copyWith(
             id: null == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            studentId: null == studentId
-                ? _value.studentId
-                : studentId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            studentName: null == studentName
-                ? _value.studentName
-                : studentName // ignore: cast_nullable_to_non_nullable
-                      as String,
-            classId: null == classId
-                ? _value.classId
-                : classId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            parentId: null == parentId
-                ? _value.parentId
-                : parentId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            senderName: null == senderName
-                ? _value.senderName
-                : senderName // ignore: cast_nullable_to_non_nullable
-                      as String,
-            senderAvatarUrl: null == senderAvatarUrl
-                ? _value.senderAvatarUrl
-                : senderAvatarUrl // ignore: cast_nullable_to_non_nullable
-                      as String,
-            studentAvatarUrl: null == studentAvatarUrl
-                ? _value.studentAvatarUrl
-                : studentAvatarUrl // ignore: cast_nullable_to_non_nullable
-                      as String,
+                      as int,
+            student: null == student
+                ? _value.student
+                : student // ignore: cast_nullable_to_non_nullable
+                      as Student,
+            classInfo: null == classInfo
+                ? _value.classInfo
+                : classInfo // ignore: cast_nullable_to_non_nullable
+                      as ClassInfo,
             date: freezed == date
                 ? _value.date
                 : date // ignore: cast_nullable_to_non_nullable
@@ -133,21 +114,67 @@ class _$LeaveRequestCopyWithImpl<$Res, $Val extends LeaveRequest>
                 ? _value.reason
                 : reason // ignore: cast_nullable_to_non_nullable
                       as String,
+            note: null == note
+                ? _value.note
+                : note // ignore: cast_nullable_to_non_nullable
+                      as String,
             status: null == status
                 ? _value.status
                 : status // ignore: cast_nullable_to_non_nullable
                       as String,
+            parent: null == parent
+                ? _value.parent
+                : parent // ignore: cast_nullable_to_non_nullable
+                      as Parent,
             submittedAt: freezed == submittedAt
                 ? _value.submittedAt
                 : submittedAt // ignore: cast_nullable_to_non_nullable
                       as DateTime?,
-            reviewedBy: freezed == reviewedBy
-                ? _value.reviewedBy
-                : reviewedBy // ignore: cast_nullable_to_non_nullable
-                      as String?,
+            decidedAt: freezed == decidedAt
+                ? _value.decidedAt
+                : decidedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            decidedBy: null == decidedBy
+                ? _value.decidedBy
+                : decidedBy // ignore: cast_nullable_to_non_nullable
+                      as int,
+            decisionNote: null == decisionNote
+                ? _value.decisionNote
+                : decisionNote // ignore: cast_nullable_to_non_nullable
+                      as String,
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of LeaveRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StudentCopyWith<$Res> get student {
+    return $StudentCopyWith<$Res>(_value.student, (value) {
+      return _then(_value.copyWith(student: value) as $Val);
+    });
+  }
+
+  /// Create a copy of LeaveRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ClassInfoCopyWith<$Res> get classInfo {
+    return $ClassInfoCopyWith<$Res>(_value.classInfo, (value) {
+      return _then(_value.copyWith(classInfo: value) as $Val);
+    });
+  }
+
+  /// Create a copy of LeaveRequest
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ParentCopyWith<$Res> get parent {
+    return $ParentCopyWith<$Res>(_value.parent, (value) {
+      return _then(_value.copyWith(parent: value) as $Val);
+    });
   }
 }
 
@@ -161,20 +188,26 @@ abstract class _$$LeaveRequestImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    String id,
-    String studentId,
-    String studentName,
-    String classId,
-    String parentId,
-    String senderName,
-    String senderAvatarUrl,
-    String studentAvatarUrl,
+    int id,
+    Student student,
+    ClassInfo classInfo,
     DateTime? date,
     String reason,
+    String note,
     String status,
+    Parent parent,
     DateTime? submittedAt,
-    String? reviewedBy,
+    DateTime? decidedAt,
+    int decidedBy,
+    String decisionNote,
   });
+
+  @override
+  $StudentCopyWith<$Res> get student;
+  @override
+  $ClassInfoCopyWith<$Res> get classInfo;
+  @override
+  $ParentCopyWith<$Res> get parent;
 }
 
 /// @nodoc
@@ -192,53 +225,32 @@ class __$$LeaveRequestImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? studentId = null,
-    Object? studentName = null,
-    Object? classId = null,
-    Object? parentId = null,
-    Object? senderName = null,
-    Object? senderAvatarUrl = null,
-    Object? studentAvatarUrl = null,
+    Object? student = null,
+    Object? classInfo = null,
     Object? date = freezed,
     Object? reason = null,
+    Object? note = null,
     Object? status = null,
+    Object? parent = null,
     Object? submittedAt = freezed,
-    Object? reviewedBy = freezed,
+    Object? decidedAt = freezed,
+    Object? decidedBy = null,
+    Object? decisionNote = null,
   }) {
     return _then(
       _$LeaveRequestImpl(
         id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        studentId: null == studentId
-            ? _value.studentId
-            : studentId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        studentName: null == studentName
-            ? _value.studentName
-            : studentName // ignore: cast_nullable_to_non_nullable
-                  as String,
-        classId: null == classId
-            ? _value.classId
-            : classId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        parentId: null == parentId
-            ? _value.parentId
-            : parentId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        senderName: null == senderName
-            ? _value.senderName
-            : senderName // ignore: cast_nullable_to_non_nullable
-                  as String,
-        senderAvatarUrl: null == senderAvatarUrl
-            ? _value.senderAvatarUrl
-            : senderAvatarUrl // ignore: cast_nullable_to_non_nullable
-                  as String,
-        studentAvatarUrl: null == studentAvatarUrl
-            ? _value.studentAvatarUrl
-            : studentAvatarUrl // ignore: cast_nullable_to_non_nullable
-                  as String,
+                  as int,
+        student: null == student
+            ? _value.student
+            : student // ignore: cast_nullable_to_non_nullable
+                  as Student,
+        classInfo: null == classInfo
+            ? _value.classInfo
+            : classInfo // ignore: cast_nullable_to_non_nullable
+                  as ClassInfo,
         date: freezed == date
             ? _value.date
             : date // ignore: cast_nullable_to_non_nullable
@@ -247,18 +259,34 @@ class __$$LeaveRequestImplCopyWithImpl<$Res>
             ? _value.reason
             : reason // ignore: cast_nullable_to_non_nullable
                   as String,
+        note: null == note
+            ? _value.note
+            : note // ignore: cast_nullable_to_non_nullable
+                  as String,
         status: null == status
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
                   as String,
+        parent: null == parent
+            ? _value.parent
+            : parent // ignore: cast_nullable_to_non_nullable
+                  as Parent,
         submittedAt: freezed == submittedAt
             ? _value.submittedAt
             : submittedAt // ignore: cast_nullable_to_non_nullable
                   as DateTime?,
-        reviewedBy: freezed == reviewedBy
-            ? _value.reviewedBy
-            : reviewedBy // ignore: cast_nullable_to_non_nullable
-                  as String?,
+        decidedAt: freezed == decidedAt
+            ? _value.decidedAt
+            : decidedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        decidedBy: null == decidedBy
+            ? _value.decidedBy
+            : decidedBy // ignore: cast_nullable_to_non_nullable
+                  as int,
+        decisionNote: null == decisionNote
+            ? _value.decisionNote
+            : decisionNote // ignore: cast_nullable_to_non_nullable
+                  as String,
       ),
     );
   }
@@ -268,45 +296,29 @@ class __$$LeaveRequestImplCopyWithImpl<$Res>
 
 class _$LeaveRequestImpl implements _LeaveRequest {
   const _$LeaveRequestImpl({
-    this.id = '',
-    this.studentId = '',
-    this.studentName = '',
-    this.classId = '',
-    this.parentId = '',
-    this.senderName = '',
-    this.senderAvatarUrl = '',
-    this.studentAvatarUrl = '',
+    this.id = 0,
+    this.student = const Student(),
+    this.classInfo = const ClassInfo(),
     this.date,
     this.reason = '',
-    this.status = 'pending',
+    this.note = '',
+    this.status = '',
+    this.parent = const Parent(),
     this.submittedAt,
-    this.reviewedBy,
+    this.decidedAt,
+    this.decidedBy = 0,
+    this.decisionNote = '',
   });
 
   @override
   @JsonKey()
-  final String id;
+  final int id;
   @override
   @JsonKey()
-  final String studentId;
+  final Student student;
   @override
   @JsonKey()
-  final String studentName;
-  @override
-  @JsonKey()
-  final String classId;
-  @override
-  @JsonKey()
-  final String parentId;
-  @override
-  @JsonKey()
-  final String senderName;
-  @override
-  @JsonKey()
-  final String senderAvatarUrl;
-  @override
-  @JsonKey()
-  final String studentAvatarUrl;
+  final ClassInfo classInfo;
   @override
   final DateTime? date;
   @override
@@ -314,15 +326,27 @@ class _$LeaveRequestImpl implements _LeaveRequest {
   final String reason;
   @override
   @JsonKey()
+  final String note;
+  @override
+  @JsonKey()
   final String status;
+  @override
+  @JsonKey()
+  final Parent parent;
   @override
   final DateTime? submittedAt;
   @override
-  final String? reviewedBy;
+  final DateTime? decidedAt;
+  @override
+  @JsonKey()
+  final int decidedBy;
+  @override
+  @JsonKey()
+  final String decisionNote;
 
   @override
   String toString() {
-    return 'LeaveRequest(id: $id, studentId: $studentId, studentName: $studentName, classId: $classId, parentId: $parentId, senderName: $senderName, senderAvatarUrl: $senderAvatarUrl, studentAvatarUrl: $studentAvatarUrl, date: $date, reason: $reason, status: $status, submittedAt: $submittedAt, reviewedBy: $reviewedBy)';
+    return 'LeaveRequest(id: $id, student: $student, classInfo: $classInfo, date: $date, reason: $reason, note: $note, status: $status, parent: $parent, submittedAt: $submittedAt, decidedAt: $decidedAt, decidedBy: $decidedBy, decisionNote: $decisionNote)';
   }
 
   @override
@@ -331,44 +355,39 @@ class _$LeaveRequestImpl implements _LeaveRequest {
         (other.runtimeType == runtimeType &&
             other is _$LeaveRequestImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.studentId, studentId) ||
-                other.studentId == studentId) &&
-            (identical(other.studentName, studentName) ||
-                other.studentName == studentName) &&
-            (identical(other.classId, classId) || other.classId == classId) &&
-            (identical(other.parentId, parentId) ||
-                other.parentId == parentId) &&
-            (identical(other.senderName, senderName) ||
-                other.senderName == senderName) &&
-            (identical(other.senderAvatarUrl, senderAvatarUrl) ||
-                other.senderAvatarUrl == senderAvatarUrl) &&
-            (identical(other.studentAvatarUrl, studentAvatarUrl) ||
-                other.studentAvatarUrl == studentAvatarUrl) &&
+            (identical(other.student, student) || other.student == student) &&
+            (identical(other.classInfo, classInfo) ||
+                other.classInfo == classInfo) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.reason, reason) || other.reason == reason) &&
+            (identical(other.note, note) || other.note == note) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.parent, parent) || other.parent == parent) &&
             (identical(other.submittedAt, submittedAt) ||
                 other.submittedAt == submittedAt) &&
-            (identical(other.reviewedBy, reviewedBy) ||
-                other.reviewedBy == reviewedBy));
+            (identical(other.decidedAt, decidedAt) ||
+                other.decidedAt == decidedAt) &&
+            (identical(other.decidedBy, decidedBy) ||
+                other.decidedBy == decidedBy) &&
+            (identical(other.decisionNote, decisionNote) ||
+                other.decisionNote == decisionNote));
   }
 
   @override
   int get hashCode => Object.hash(
     runtimeType,
     id,
-    studentId,
-    studentName,
-    classId,
-    parentId,
-    senderName,
-    senderAvatarUrl,
-    studentAvatarUrl,
+    student,
+    classInfo,
     date,
     reason,
+    note,
     status,
+    parent,
     submittedAt,
-    reviewedBy,
+    decidedAt,
+    decidedBy,
+    decisionNote,
   );
 
   /// Create a copy of LeaveRequest
@@ -382,47 +401,44 @@ class _$LeaveRequestImpl implements _LeaveRequest {
 
 abstract class _LeaveRequest implements LeaveRequest {
   const factory _LeaveRequest({
-    final String id,
-    final String studentId,
-    final String studentName,
-    final String classId,
-    final String parentId,
-    final String senderName,
-    final String senderAvatarUrl,
-    final String studentAvatarUrl,
+    final int id,
+    final Student student,
+    final ClassInfo classInfo,
     final DateTime? date,
     final String reason,
+    final String note,
     final String status,
+    final Parent parent,
     final DateTime? submittedAt,
-    final String? reviewedBy,
+    final DateTime? decidedAt,
+    final int decidedBy,
+    final String decisionNote,
   }) = _$LeaveRequestImpl;
 
   @override
-  String get id;
+  int get id;
   @override
-  String get studentId;
+  Student get student;
   @override
-  String get studentName;
-  @override
-  String get classId;
-  @override
-  String get parentId;
-  @override
-  String get senderName;
-  @override
-  String get senderAvatarUrl;
-  @override
-  String get studentAvatarUrl;
+  ClassInfo get classInfo;
   @override
   DateTime? get date;
   @override
   String get reason;
   @override
+  String get note;
+  @override
   String get status;
+  @override
+  Parent get parent;
   @override
   DateTime? get submittedAt;
   @override
-  String? get reviewedBy;
+  DateTime? get decidedAt;
+  @override
+  int get decidedBy;
+  @override
+  String get decisionNote;
 
   /// Create a copy of LeaveRequest
   /// with the given fields replaced by the non-null parameter values.

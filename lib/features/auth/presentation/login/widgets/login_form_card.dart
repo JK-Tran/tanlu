@@ -12,13 +12,13 @@ class LoginFormCard extends StatelessWidget {
   const LoginFormCard({
     super.key,
     required this.formKey,
-    required this.usernameController,
+    required this.emailController,
     required this.passwordController,
     required this.onLoginPressed,
   });
 
   final GlobalKey<FormState> formKey;
-  final TextEditingController usernameController;
+  final TextEditingController emailController;
   final TextEditingController passwordController;
   final VoidCallback onLoginPressed;
 
@@ -52,20 +52,19 @@ class LoginFormCard extends StatelessWidget {
             SizedBox(height: 20.h),
             // --- Email/SĐT ---
             BlocBuilder<LoginBloc, LoginState>(
-              buildWhen: (p, c) => p.username != c.username,
+              buildWhen: (p, c) => p.email != c.email,
               builder: (context, state) {
                 return AppTextField(
-                  controller: usernameController,
-                  onChanged: (value) => context.read<LoginBloc>().add(
-                    UsernameChanged(value, username: value),
-                  ),
-                  labelText: 'Tài khoản',
-                  hintText: 'Email hoặc Số điện thoại',
+                  controller: emailController,
+                  onChanged: (value) =>
+                      context.read<LoginBloc>().add(EmailChanged(email: value)),
+                  labelText: 'Email',
+                  hintText: 'Nhập email đăng nhập',
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Vui lòng nhập email hoặc số điện thoại';
+                      return 'Vui lòng nhập email';
                     }
                     return null;
                   },
@@ -86,7 +85,7 @@ class LoginFormCard extends StatelessWidget {
                 return AppTextField(
                   controller: passwordController,
                   onChanged: (value) => context.read<LoginBloc>().add(
-                    PasswordChanged(value, password: value),
+                    PasswordChanged(password: value),
                   ),
                   labelText: 'Mật khẩu',
                   hintText: 'Nhập mật khẩu của bạn',

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tanlu_management/core/widgets/app_leave_decision_dialog.dart';
 import 'package:tanlu_management/core/widgets/app_confirm_dialog.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/core/widgets/buttons/app_action_button.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/attendance.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/leave_status.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
+import 'package:tanlu_management/features/attendance/presentation/enums/leave_status_ext.dart';
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/leave_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
-import 'package:tanlu_management/features/student/domain/entity/student.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
 
 class LeaveRequestItem extends StatelessWidget {
@@ -34,19 +35,17 @@ class LeaveRequestItem extends StatelessWidget {
   factory LeaveRequestItem.fromRequest({
     required BuildContext context,
     required LeaveRequest request,
-    Student? student,
-    Attendance? attendance,
     required bool readOnly,
   }) {
-    final displayName = student?.fullName.isNotEmpty == true
-        ? student!.fullName
-        : (request.studentName.isNotEmpty ? request.studentName : 'Không rõ');
-    final nickname = student?.nickname.isNotEmpty == true
-        ? student!.nickname
-        : request.studentName;
-    final avatarUrl = request.studentAvatarUrl.isNotEmpty
-        ? request.studentAvatarUrl
-        : (student?.avatarUrl.isNotEmpty == true ? student!.avatarUrl : null);
+    final displayName = request.student.fullName.isNotEmpty
+        ? request.student.fullName
+        : 'Không rõ';
+    final nickname = request.student.fullName.isNotEmpty
+        ? request.student.fullName
+        : 'Không rõ';
+    final avatarUrl = request.student.avatarUrl.isNotEmpty
+        ? request.student.avatarUrl
+        : null;
 
     return LeaveRequestItem(
       request: request,
@@ -56,7 +55,7 @@ class LeaveRequestItem extends StatelessWidget {
       isPending: !readOnly,
       onDecision: (isApproved) async {
         if (!isApproved) {
-          final confirmed = await AppConfirmDialog.show(
+          final result = await AppLeaveDecisionDialog.show(
             context,
             title: 'Từ chối đơn xin nghỉ?',
             content: 'Bạn có chắc muốn từ chối đơn xin nghỉ của $displayName?',
@@ -64,14 +63,18 @@ class LeaveRequestItem extends StatelessWidget {
             confirmLabel: 'Từ chối',
             type: AppConfirmDialogType.warning,
           );
-          if (confirmed != true || !context.mounted) return;
+          if (result == null || !result.isConfirm || !context.mounted) return;
           context.read<AttendanceBloc>().add(
-            SubmitLeaveDecisionEvent(requestId: request.id, isApproved: false),
+            SubmitLeaveDecisionEvent(
+              requestId: request.id,
+              isApproved: false,
+              decisionNote: result.note,
+            ),
           );
           return;
         }
 
-        final confirmed = await AppConfirmDialog.show(
+        final result = await AppLeaveDecisionDialog.show(
           context,
           title: 'Duyệt đơn xin nghỉ?',
           content: 'Bạn có chắc muốn duyệt đơn xin nghỉ của $displayName?',
@@ -79,30 +82,13 @@ class LeaveRequestItem extends StatelessWidget {
           confirmLabel: 'Đồng ý',
           type: AppConfirmDialogType.success,
         );
-        if (confirmed != true || !context.mounted) return;
-
-        var confirmOverride = false;
-        final status = attendance?.status ?? 'not_marked';
-        if (status == 'present' || status == 'late') {
-          final label = status == 'present' ? 'có mặt' : 'đi trễ';
-          final overrideConfirmed = await AppConfirmDialog.show(
-            context,
-            title: 'Ghi đè điểm danh?',
-            content:
-                'Bé đã được điểm danh $label. Duyệt phép sẽ chuyển sang nghỉ có phép.',
-            cancelLabel: 'Huỷ',
-            confirmLabel: 'Đồng ý',
-            type: AppConfirmDialogType.warning,
-          );
-          if (overrideConfirmed != true || !context.mounted) return;
-          confirmOverride = true;
-        }
+        if (result == null || !result.isConfirm || !context.mounted) return;
 
         context.read<AttendanceBloc>().add(
           SubmitLeaveDecisionEvent(
             requestId: request.id,
             isApproved: true,
-            confirmPresentOverride: confirmOverride,
+            decisionNote: result.note,
           ),
         );
       },
@@ -112,20 +98,20 @@ class LeaveRequestItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final leaveDate = request.date != null
-        ? DateTimeUtils.formatWeekdayDate(request.date)
+        ? DateFormat('EEEE, dd/MM/yyyy').format(request.date!)
         : 'Chưa rõ';
-    final sender = request.senderName.isNotEmpty
-        ? request.senderName
+    final sender = request.parent.fullName.isNotEmpty
+        ? request.parent.fullName
         : 'Phụ huynh';
     final sentAt = request.submittedAt != null
-        ? DateTimeUtils.formatDateTimeType2(request.submittedAt)?.trim()
+        ? DateTimeUtils.formatDateTimeType2(request.submittedAt!)?.trim()
         : null;
 
     return Container(
       margin: EdgeInsets.only(bottom: isPending ? 10.h : 8.h),
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(8.r),
         border: isPending
             ? null
@@ -133,7 +119,7 @@ class LeaveRequestItem extends StatelessWidget {
         boxShadow: isPending
             ? [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.06),
+                  color: AppColors.black.withValues(alpha: 0.06),
                   blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
@@ -153,8 +139,7 @@ class LeaveRequestItem extends StatelessWidget {
               ),
               SizedBox(width: 10.w),
               Expanded(child: _studentNameRow()),
-              if (!isPending)
-                _LeaveStatusPill(status: request.leaveStatus.name),
+              if (!isPending) _LeaveStatusPill(status: request.status),
             ],
           ),
           SizedBox(height: 10.h),
@@ -228,7 +213,7 @@ class LeaveRequestItem extends StatelessWidget {
                     label: 'Đồng ý',
                     onPressed: () => onDecision(true),
                     color: AppColors.success,
-                    textColor: Colors.white,
+                    textColor: AppColors.white,
                     borderRadius: 8.r,
                     padding: EdgeInsets.symmetric(vertical: 10.h),
                     expanded: true,
@@ -350,7 +335,10 @@ class _LeaveStatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final uiStatus = LeaveStatus.fromString(status);
+    final uiStatus = LeaveStatus.values.firstWhere(
+      (e) => e.name == status,
+      orElse: () => LeaveStatus.pending,
+    );
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 3.h),

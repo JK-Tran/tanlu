@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LoginInput {
-  String get username => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
 
   /// Create a copy of LoginInput
@@ -34,7 +34,7 @@ abstract class $LoginInputCopyWith<$Res> {
     $Res Function(LoginInput) then,
   ) = _$LoginInputCopyWithImpl<$Res, LoginInput>;
   @useResult
-  $Res call({String username, String password});
+  $Res call({String email, String password});
 }
 
 /// @nodoc
@@ -51,12 +51,12 @@ class _$LoginInputCopyWithImpl<$Res, $Val extends LoginInput>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? username = null, Object? password = null}) {
+  $Res call({Object? email = null, Object? password = null}) {
     return _then(
       _value.copyWith(
-            username: null == username
-                ? _value.username
-                : username // ignore: cast_nullable_to_non_nullable
+            email: null == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
                       as String,
             password: null == password
                 ? _value.password
@@ -77,7 +77,7 @@ abstract class _$$LoginInputImplCopyWith<$Res>
   ) = __$$LoginInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String username, String password});
+  $Res call({String email, String password});
 }
 
 /// @nodoc
@@ -93,12 +93,12 @@ class __$$LoginInputImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? username = null, Object? password = null}) {
+  $Res call({Object? email = null, Object? password = null}) {
     return _then(
       _$LoginInputImpl(
-        username: null == username
-            ? _value.username
-            : username // ignore: cast_nullable_to_non_nullable
+        email: null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
                   as String,
         password: null == password
             ? _value.password
@@ -112,16 +112,16 @@ class __$$LoginInputImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoginInputImpl implements _LoginInput {
-  const _$LoginInputImpl({required this.username, required this.password});
+  const _$LoginInputImpl({required this.email, required this.password});
 
   @override
-  final String username;
+  final String email;
   @override
   final String password;
 
   @override
   String toString() {
-    return 'LoginInput(username: $username, password: $password)';
+    return 'LoginInput(email: $email, password: $password)';
   }
 
   @override
@@ -129,14 +129,13 @@ class _$LoginInputImpl implements _LoginInput {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoginInputImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, username, password);
+  int get hashCode => Object.hash(runtimeType, email, password);
 
   /// Create a copy of LoginInput
   /// with the given fields replaced by the non-null parameter values.
@@ -149,12 +148,12 @@ class _$LoginInputImpl implements _LoginInput {
 
 abstract class _LoginInput implements LoginInput {
   const factory _LoginInput({
-    required final String username,
+    required final String email,
     required final String password,
   }) = _$LoginInputImpl;
 
   @override
-  String get username;
+  String get email;
   @override
   String get password;
 
@@ -261,7 +260,7 @@ class __$$LoginOutputImplCopyWithImpl<$Res>
   $Res call({Object? user = freezed}) {
     return _then(
       _$LoginOutputImpl(
-        freezed == user
+        user: freezed == user
             ? _value.user
             : user // ignore: cast_nullable_to_non_nullable
                   as User?,
@@ -273,7 +272,7 @@ class __$$LoginOutputImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoginOutputImpl extends _LoginOutput {
-  const _$LoginOutputImpl(this.user) : super._();
+  const _$LoginOutputImpl({this.user}) : super._();
 
   @override
   final User? user;
@@ -304,7 +303,7 @@ class _$LoginOutputImpl extends _LoginOutput {
 }
 
 abstract class _LoginOutput extends LoginOutput {
-  const factory _LoginOutput(final User? user) = _$LoginOutputImpl;
+  const factory _LoginOutput({final User? user}) = _$LoginOutputImpl;
   const _LoginOutput._() : super._();
 
   @override

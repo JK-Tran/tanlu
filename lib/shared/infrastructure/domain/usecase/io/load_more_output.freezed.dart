@@ -26,6 +26,7 @@ mixin _$LoadMoreOutput<T> {
   int get offset => throw _privateConstructorUsedError;
   int get totalPage => throw _privateConstructorUsedError;
   int get itemsPerPage => throw _privateConstructorUsedError;
+  int? get nextCursor => throw _privateConstructorUsedError;
 
   /// Create a copy of LoadMoreOutput
   /// with the given fields replaced by the non-null parameter values.
@@ -51,6 +52,7 @@ abstract class $LoadMoreOutputCopyWith<T, $Res> {
     int offset,
     int totalPage,
     int itemsPerPage,
+    int? nextCursor,
   });
 }
 
@@ -78,6 +80,7 @@ class _$LoadMoreOutputCopyWithImpl<T, $Res, $Val extends LoadMoreOutput<T>>
     Object? offset = null,
     Object? totalPage = null,
     Object? itemsPerPage = null,
+    Object? nextCursor = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -114,6 +117,10 @@ class _$LoadMoreOutputCopyWithImpl<T, $Res, $Val extends LoadMoreOutput<T>>
                 ? _value.itemsPerPage
                 : itemsPerPage // ignore: cast_nullable_to_non_nullable
                       as int,
+            nextCursor: freezed == nextCursor
+                ? _value.nextCursor
+                : nextCursor // ignore: cast_nullable_to_non_nullable
+                      as int?,
           )
           as $Val,
     );
@@ -139,6 +146,7 @@ abstract class _$$LoadMoreOutputImplCopyWith<T, $Res>
     int offset,
     int totalPage,
     int itemsPerPage,
+    int? nextCursor,
   });
 }
 
@@ -165,6 +173,7 @@ class __$$LoadMoreOutputImplCopyWithImpl<T, $Res>
     Object? offset = null,
     Object? totalPage = null,
     Object? itemsPerPage = null,
+    Object? nextCursor = freezed,
   }) {
     return _then(
       _$LoadMoreOutputImpl<T>(
@@ -201,6 +210,10 @@ class __$$LoadMoreOutputImplCopyWithImpl<T, $Res>
             ? _value.itemsPerPage
             : itemsPerPage // ignore: cast_nullable_to_non_nullable
                   as int,
+        nextCursor: freezed == nextCursor
+            ? _value.nextCursor
+            : nextCursor // ignore: cast_nullable_to_non_nullable
+                  as int?,
       ),
     );
   }
@@ -219,6 +232,7 @@ class _$LoadMoreOutputImpl<T> extends _LoadMoreOutput<T> {
     this.offset = 0,
     this.totalPage = 0,
     this.itemsPerPage = 0,
+    this.nextCursor,
   }) : _data = data,
        super._();
 
@@ -254,10 +268,12 @@ class _$LoadMoreOutputImpl<T> extends _LoadMoreOutput<T> {
   @override
   @JsonKey()
   final int itemsPerPage;
+  @override
+  final int? nextCursor;
 
   @override
   String toString() {
-    return 'LoadMoreOutput<$T>(data: $data, otherData: $otherData, page: $page, isRefreshSuccess: $isRefreshSuccess, isLastPage: $isLastPage, totalItems: $totalItems, offset: $offset, totalPage: $totalPage, itemsPerPage: $itemsPerPage)';
+    return 'LoadMoreOutput<$T>(data: $data, otherData: $otherData, page: $page, isRefreshSuccess: $isRefreshSuccess, isLastPage: $isLastPage, totalItems: $totalItems, offset: $offset, totalPage: $totalPage, itemsPerPage: $itemsPerPage, nextCursor: $nextCursor)';
   }
 
   @override
@@ -278,7 +294,9 @@ class _$LoadMoreOutputImpl<T> extends _LoadMoreOutput<T> {
             (identical(other.totalPage, totalPage) ||
                 other.totalPage == totalPage) &&
             (identical(other.itemsPerPage, itemsPerPage) ||
-                other.itemsPerPage == itemsPerPage));
+                other.itemsPerPage == itemsPerPage) &&
+            (identical(other.nextCursor, nextCursor) ||
+                other.nextCursor == nextCursor));
   }
 
   @override
@@ -293,6 +311,7 @@ class _$LoadMoreOutputImpl<T> extends _LoadMoreOutput<T> {
     offset,
     totalPage,
     itemsPerPage,
+    nextCursor,
   );
 
   /// Create a copy of LoadMoreOutput
@@ -318,6 +337,7 @@ abstract class _LoadMoreOutput<T> extends LoadMoreOutput<T> {
     final int offset,
     final int totalPage,
     final int itemsPerPage,
+    final int? nextCursor,
   }) = _$LoadMoreOutputImpl<T>;
   const _LoadMoreOutput._() : super._();
 
@@ -339,6 +359,8 @@ abstract class _LoadMoreOutput<T> extends LoadMoreOutput<T> {
   int get totalPage;
   @override
   int get itemsPerPage;
+  @override
+  int? get nextCursor;
 
   /// Create a copy of LoadMoreOutput
   /// with the given fields replaced by the non-null parameter values.

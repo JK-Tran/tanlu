@@ -4,15 +4,9 @@ import 'package:intl/intl.dart';
 class StringUtils {
   const StringUtils._();
   static bool isNullOrBlank(String? s) => s == null || s == '' || s == ' ';
-  static const videoExtensions = ['.mp4', '.mov', '.m4v', '.3gp', '.webm'];
 
   static bool hasMatch(String? value, String pattern) {
     return value == null ? false : RegExp(pattern).hasMatch(value);
-  }
-
-  static bool isVideoPath(String path) {
-    final lower = path.toLowerCase();
-    return videoExtensions.any(lower.endsWith);
   }
 
   /// Capitalize each word inside string
@@ -43,18 +37,6 @@ class StringUtils {
     }
 
     return s!.replaceAll(' ', '');
-  }
-
-  static String sizeLabel(int? bytes) {
-    if (bytes == null || bytes == 0) return '';
-    if (bytes < 1024 * 1024) return '${(bytes / 1024).toStringAsFixed(1)} KB';
-    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
-  }
-
-  static String formatMonthLabel(String month) {
-    final parts = month.split('-');
-    if (parts.length < 2) return month;
-    return 'Tháng ${int.parse(parts[1])}/${parts[0]}';
   }
 
   /// Camelcase string
@@ -115,24 +97,6 @@ class StringUtils {
         ext.endsWith('.wma') ||
         ext.endsWith('.amr') ||
         ext.endsWith('.ogg');
-  }
-
-  static String getFormattedDate() {
-    final now = DateTime.now();
-    final weekdays = [
-      'Chủ nhật',
-      'Thứ 2',
-      'Thứ 3',
-      'Thứ 4',
-      'Thứ 5',
-      'Thứ 6',
-      'Thứ 7',
-    ];
-    final dayOfWeek = weekdays[now.weekday % 7];
-    final day = now.day.toString().padLeft(2, '0');
-    final month = now.month.toString().padLeft(2, '0');
-    final year = now.year;
-    return '$dayOfWeek, $day/$month/$year';
   }
 
   /// Checks if string is an powerpoint file.
@@ -238,6 +202,11 @@ class StringUtils {
       return trimmed;
     }
     return 'https://$trimmed';
+  }
+
+  static String formatBirthDate(DateTime? birthDate) {
+    if (birthDate == null) return '--';
+    return DateFormat('dd/MM/yyyy').format(birthDate);
   }
 
   static final RegExp urlRegExp = RegExp(
@@ -354,23 +323,6 @@ class StringUtils {
     } else {
       return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
     }
-  }
-
-  static String formatTimeAgo(DateTime? dateTime) {
-    if (dateTime == null) return '';
-    final diff = DateTime.now().difference(dateTime);
-    if (diff.inMinutes < 1) return 'Vừa xong';
-    if (diff.inHours < 1) return '${diff.inMinutes} phút trước';
-    if (diff.inHours < 24) return '${diff.inHours} giờ trước';
-    if (diff.inDays < 7) return '${diff.inDays} ngày trước';
-    return DateFormat('dd/MM/yyyy').format(dateTime);
-  }
-
-  static String formatBytes(int bytes) {
-    if (bytes < 1024 * 1024) {
-      return '${(bytes / 1024).toStringAsFixed(0)} KB';
-    }
-    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
   }
 }
 

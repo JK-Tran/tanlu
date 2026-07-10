@@ -23,21 +23,11 @@ AttendanceSessionData _$AttendanceSessionDataFromJson(
 
 /// @nodoc
 mixin _$AttendanceSessionData {
-  @JsonKey(name: 'id', includeToJson: false)
-  String? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'classId')
-  String? get classId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'date', fromJson: FirestoreJson.toDateString)
-  String? get date => throw _privateConstructorUsedError;
   @JsonKey(name: 'isCheckInCompleted')
   bool? get isCheckInCompleted => throw _privateConstructorUsedError;
   @JsonKey(name: 'isCheckOutCompleted')
   bool? get isCheckOutCompleted => throw _privateConstructorUsedError;
-  @JsonKey(
-    name: 'completedAt',
-    fromJson: FirestoreJson.toDateTime,
-    toJson: FirestoreJson.dateTimeToFirestore,
-  )
+  @JsonKey(name: 'completedAt')
   DateTime? get completedAt => throw _privateConstructorUsedError;
 
   /// Serializes this AttendanceSessionData to a JSON map.
@@ -58,17 +48,9 @@ abstract class $AttendanceSessionDataCopyWith<$Res> {
   ) = _$AttendanceSessionDataCopyWithImpl<$Res, AttendanceSessionData>;
   @useResult
   $Res call({
-    @JsonKey(name: 'id', includeToJson: false) String? id,
-    @JsonKey(name: 'classId') String? classId,
-    @JsonKey(name: 'date', fromJson: FirestoreJson.toDateString) String? date,
     @JsonKey(name: 'isCheckInCompleted') bool? isCheckInCompleted,
     @JsonKey(name: 'isCheckOutCompleted') bool? isCheckOutCompleted,
-    @JsonKey(
-      name: 'completedAt',
-      fromJson: FirestoreJson.toDateTime,
-      toJson: FirestoreJson.dateTimeToFirestore,
-    )
-    DateTime? completedAt,
+    @JsonKey(name: 'completedAt') DateTime? completedAt,
   });
 }
 
@@ -90,27 +72,12 @@ class _$AttendanceSessionDataCopyWithImpl<
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? classId = freezed,
-    Object? date = freezed,
     Object? isCheckInCompleted = freezed,
     Object? isCheckOutCompleted = freezed,
     Object? completedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
-            id: freezed == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            classId: freezed == classId
-                ? _value.classId
-                : classId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            date: freezed == date
-                ? _value.date
-                : date // ignore: cast_nullable_to_non_nullable
-                      as String?,
             isCheckInCompleted: freezed == isCheckInCompleted
                 ? _value.isCheckInCompleted
                 : isCheckInCompleted // ignore: cast_nullable_to_non_nullable
@@ -139,17 +106,9 @@ abstract class _$$AttendanceSessionDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'id', includeToJson: false) String? id,
-    @JsonKey(name: 'classId') String? classId,
-    @JsonKey(name: 'date', fromJson: FirestoreJson.toDateString) String? date,
     @JsonKey(name: 'isCheckInCompleted') bool? isCheckInCompleted,
     @JsonKey(name: 'isCheckOutCompleted') bool? isCheckOutCompleted,
-    @JsonKey(
-      name: 'completedAt',
-      fromJson: FirestoreJson.toDateTime,
-      toJson: FirestoreJson.dateTimeToFirestore,
-    )
-    DateTime? completedAt,
+    @JsonKey(name: 'completedAt') DateTime? completedAt,
   });
 }
 
@@ -168,27 +127,12 @@ class __$$AttendanceSessionDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? classId = freezed,
-    Object? date = freezed,
     Object? isCheckInCompleted = freezed,
     Object? isCheckOutCompleted = freezed,
     Object? completedAt = freezed,
   }) {
     return _then(
       _$AttendanceSessionDataImpl(
-        id: freezed == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        classId: freezed == classId
-            ? _value.classId
-            : classId // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        date: freezed == date
-            ? _value.date
-            : date // ignore: cast_nullable_to_non_nullable
-                  as String?,
         isCheckInCompleted: freezed == isCheckInCompleted
             ? _value.isCheckInCompleted
             : isCheckInCompleted // ignore: cast_nullable_to_non_nullable
@@ -208,33 +152,16 @@ class __$$AttendanceSessionDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AttendanceSessionDataImpl implements _AttendanceSessionData {
+class _$AttendanceSessionDataImpl extends _AttendanceSessionData {
   const _$AttendanceSessionDataImpl({
-    @JsonKey(name: 'id', includeToJson: false) this.id,
-    @JsonKey(name: 'classId') this.classId,
-    @JsonKey(name: 'date', fromJson: FirestoreJson.toDateString) this.date,
     @JsonKey(name: 'isCheckInCompleted') this.isCheckInCompleted,
     @JsonKey(name: 'isCheckOutCompleted') this.isCheckOutCompleted,
-    @JsonKey(
-      name: 'completedAt',
-      fromJson: FirestoreJson.toDateTime,
-      toJson: FirestoreJson.dateTimeToFirestore,
-    )
-    this.completedAt,
-  });
+    @JsonKey(name: 'completedAt') this.completedAt,
+  }) : super._();
 
   factory _$AttendanceSessionDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$AttendanceSessionDataImplFromJson(json);
 
-  @override
-  @JsonKey(name: 'id', includeToJson: false)
-  final String? id;
-  @override
-  @JsonKey(name: 'classId')
-  final String? classId;
-  @override
-  @JsonKey(name: 'date', fromJson: FirestoreJson.toDateString)
-  final String? date;
   @override
   @JsonKey(name: 'isCheckInCompleted')
   final bool? isCheckInCompleted;
@@ -242,16 +169,12 @@ class _$AttendanceSessionDataImpl implements _AttendanceSessionData {
   @JsonKey(name: 'isCheckOutCompleted')
   final bool? isCheckOutCompleted;
   @override
-  @JsonKey(
-    name: 'completedAt',
-    fromJson: FirestoreJson.toDateTime,
-    toJson: FirestoreJson.dateTimeToFirestore,
-  )
+  @JsonKey(name: 'completedAt')
   final DateTime? completedAt;
 
   @override
   String toString() {
-    return 'AttendanceSessionData(id: $id, classId: $classId, date: $date, isCheckInCompleted: $isCheckInCompleted, isCheckOutCompleted: $isCheckOutCompleted, completedAt: $completedAt)';
+    return 'AttendanceSessionData(isCheckInCompleted: $isCheckInCompleted, isCheckOutCompleted: $isCheckOutCompleted, completedAt: $completedAt)';
   }
 
   @override
@@ -259,9 +182,6 @@ class _$AttendanceSessionDataImpl implements _AttendanceSessionData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AttendanceSessionDataImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.classId, classId) || other.classId == classId) &&
-            (identical(other.date, date) || other.date == date) &&
             (identical(other.isCheckInCompleted, isCheckInCompleted) ||
                 other.isCheckInCompleted == isCheckInCompleted) &&
             (identical(other.isCheckOutCompleted, isCheckOutCompleted) ||
@@ -274,9 +194,6 @@ class _$AttendanceSessionDataImpl implements _AttendanceSessionData {
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    id,
-    classId,
-    date,
     isCheckInCompleted,
     isCheckOutCompleted,
     completedAt,
@@ -300,34 +217,17 @@ class _$AttendanceSessionDataImpl implements _AttendanceSessionData {
   }
 }
 
-abstract class _AttendanceSessionData implements AttendanceSessionData {
+abstract class _AttendanceSessionData extends AttendanceSessionData {
   const factory _AttendanceSessionData({
-    @JsonKey(name: 'id', includeToJson: false) final String? id,
-    @JsonKey(name: 'classId') final String? classId,
-    @JsonKey(name: 'date', fromJson: FirestoreJson.toDateString)
-    final String? date,
     @JsonKey(name: 'isCheckInCompleted') final bool? isCheckInCompleted,
     @JsonKey(name: 'isCheckOutCompleted') final bool? isCheckOutCompleted,
-    @JsonKey(
-      name: 'completedAt',
-      fromJson: FirestoreJson.toDateTime,
-      toJson: FirestoreJson.dateTimeToFirestore,
-    )
-    final DateTime? completedAt,
+    @JsonKey(name: 'completedAt') final DateTime? completedAt,
   }) = _$AttendanceSessionDataImpl;
+  const _AttendanceSessionData._() : super._();
 
   factory _AttendanceSessionData.fromJson(Map<String, dynamic> json) =
       _$AttendanceSessionDataImpl.fromJson;
 
-  @override
-  @JsonKey(name: 'id', includeToJson: false)
-  String? get id;
-  @override
-  @JsonKey(name: 'classId')
-  String? get classId;
-  @override
-  @JsonKey(name: 'date', fromJson: FirestoreJson.toDateString)
-  String? get date;
   @override
   @JsonKey(name: 'isCheckInCompleted')
   bool? get isCheckInCompleted;
@@ -335,11 +235,7 @@ abstract class _AttendanceSessionData implements AttendanceSessionData {
   @JsonKey(name: 'isCheckOutCompleted')
   bool? get isCheckOutCompleted;
   @override
-  @JsonKey(
-    name: 'completedAt',
-    fromJson: FirestoreJson.toDateTime,
-    toJson: FirestoreJson.dateTimeToFirestore,
-  )
+  @JsonKey(name: 'completedAt')
   DateTime? get completedAt;
 
   /// Create a copy of AttendanceSessionData

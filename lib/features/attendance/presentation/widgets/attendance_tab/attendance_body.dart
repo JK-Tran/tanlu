@@ -1,94 +1,101 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/core/widgets/shimmer_list.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/attendance.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/attendance_student.dart';
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/attendance_status.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/leave_status.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
+
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_date_strip.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_status_sheet.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_tab/attendance_student_item.dart';
-import 'package:tanlu_management/features/student/domain/entity/student.dart';
 
 class AttendanceBody extends StatelessWidget {
   const AttendanceBody({super.key});
 
-  Future<void> _pickStatus(
+  /// Draft mode (sáng chưa chốt): đổi trạng thái local → bulk submit khi bấm Lưu
+  Future<void> _pickStatusDraft(
     BuildContext context,
-    Student student,
-    Attendance attendance,
+    AttendanceStudent student,
   ) async {
     final result = await showModalBottomSheet<AttendanceStatus>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) =>
-          AttendanceStatusSheet(student: student, attendance: attendance),
+      builder: (_) => AttendanceStatusSheet(student: student),
     );
 
     if (result != null && context.mounted) {
-      _applyStatus(context, attendance, result);
+      context.read<AttendanceBloc>().add(
+        ChangeStudentAttendanceStatusEvent(
+          studentId: student.studentId,
+          status: result,
+        ),
+      );
     }
   }
 
-  void _applyStatus(
+  /// Post-checkIn mode (đã chốt sáng): tap → chọn → gọi API ngay cho bé đó
+  Future<void> _pickStatusAndUpdate(
     BuildContext context,
-    Attendance attendance,
-    AttendanceStatus status,
-  ) {
-    final isPresentOrLate =
-        status == AttendanceStatus.present || status == AttendanceStatus.late;
-    final wasInClass =
-        attendance.status == 'present' || attendance.status == 'late';
+    AttendanceStudent student,
+  ) async {
+    final result = await showModalBottomSheet<AttendanceStatus>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => AttendanceStatusSheet(student: student),
+    );
 
-    context.read<AttendanceBloc>().add(
-      MarkStudentAttendanceEvent(
-        attendance: attendance.copyWith(
-          status: status.toStatusString,
-          checkInTime: isPresentOrLate
-              ? (wasInClass && attendance.checkInTime != null
-                    ? attendance.checkInTime
-                    : DateTime.now())
-              : null,
-          checkOutTime: isPresentOrLate ? attendance.checkOutTime : null,
+    if (result != null && context.mounted) {
+      context.read<AttendanceBloc>().add(
+        UpdateStudentAttendanceEvent(
+          studentId: student.studentId,
+          status: result,
         ),
+      );
+    }
+  }
+
+  void _togglePresent(BuildContext context, AttendanceStudent student) {
+    context.read<AttendanceBloc>().add(
+      ToggleStudentAttendanceEvent(studentId: student.studentId),
+    );
+  }
+
+  void _checkOut(BuildContext context, AttendanceStudent student) {
+    final now = DateTime.now().toUtc().toIso8601String();
+    context.read<AttendanceBloc>().add(
+      SubmitCheckOutEvent(
+        studentId: student.studentId.toString(),
+        checkOutTime: now,
       ),
     );
   }
 
-  void _togglePresent(BuildContext context, Attendance attendance) {
-    _applyStatus(
-      context,
-      attendance,
-      attendance.status == 'present'
-          ? AttendanceStatus.notMarked
-          : AttendanceStatus.present,
-    );
+  Future<void> _onRefresh(BuildContext context) async {
+    final completer = Completer<void>();
+    context.read<AttendanceBloc>().add(RefreshDailyAttendance(completer: completer));
+    await completer.future;
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AttendanceBloc, AttendanceState>(
       builder: (context, state) {
-        final attMap = {for (final a in state.attendances) a.studentId: a};
-        final leaveReasons = {
-          for (final lr in state.leaveRequests)
-            if (lr.leaveStatus == LeaveStatus.approved) lr.studentId: lr.reason,
-        };
-
-        Attendance attendanceOf(Student s) =>
-            attMap[s.id] ?? Attendance(studentId: s.id, classId: s.classId);
-
-        final isMorning = state.session?.isCheckInCompleted != true;
-        final canCheckOut = state.session?.isCheckOutCompleted != true;
+        final roster = state.dailyAttendance?.roster ?? [];
+        final isMorning =
+            state.dailyAttendance?.session.isCheckInCompleted != true;
+        final canCheckOut =
+            state.dailyAttendance?.session.isCheckOutCompleted != true;
         final dateStrip = AttendanceDateStripSliver(
-          date: state.selectedDate ?? DateTime.now(),
+          date: DateTime.now(), // Fallback to current date
         );
 
-        if (state.isLoading && state.students.isEmpty) {
+        if (state.isLoading && roster.isEmpty) {
           return CustomScrollView(
             slivers: [
               dateStrip,
@@ -98,72 +105,73 @@ class AttendanceBody extends StatelessWidget {
         }
 
         if (isMorning) {
-          return CustomScrollView(
-            slivers: [
-              dateStrip,
-              _Section(
-                label: 'Danh sách lớp',
-                students: state.students,
-                attMap: attMap,
-                leaveReasons: leaveReasons,
-                draftMode: true,
-                onTogglePresent: (s) =>
-                    _togglePresent(context, attendanceOf(s)),
-                onOpenSheet: (s) => _pickStatus(context, s, attendanceOf(s)),
-              ),
-            ],
+          return RefreshIndicator(
+            onRefresh: () => _onRefresh(context),
+            child: CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              slivers: [
+                dateStrip,
+                _Section(
+                  label: 'Danh sách lớp',
+                  students: roster,
+                  draftMode: true,
+                  onTogglePresent: (s) => _togglePresent(context, s),
+                  onOpenSheet: (s) => _pickStatusDraft(context, s),
+                ),
+              ],
+            ),
           );
         }
 
-        final unmarked = state.students
-            .where(
-              (s) => attendanceOf(s).uiStatus == AttendanceStatus.notMarked,
-            )
+        final unmarked = roster
+            .where((s) => s.status == AttendanceStatus.notMarked.apiValue)
             .toList();
-        final excused = state.students
-            .where((s) => attendanceOf(s).uiStatus == AttendanceStatus.excused)
+        final excused = roster
+            .where((s) => s.status == AttendanceStatus.absentExcused.apiValue)
             .toList();
-        final marked = state.students.where((s) {
-          final st = attendanceOf(s).uiStatus;
-          return st != AttendanceStatus.notMarked &&
-              st != AttendanceStatus.excused;
+        final absent = roster
+            .where((s) => s.status == AttendanceStatus.absentUnexcused.apiValue)
+            .toList();
+        final marked = roster.where((s) {
+          return s.status == AttendanceStatus.present.apiValue ||
+                 s.status == AttendanceStatus.late.apiValue;
         }).toList();
 
-        return CustomScrollView(
-          slivers: [
-            dateStrip,
-            if (unmarked.isNotEmpty)
-              _Section(
-                label: 'Chưa điểm danh',
-                students: unmarked,
-                attMap: attMap,
-                onOpenSheet: (s) => _pickStatus(context, s, attendanceOf(s)),
-              ),
-            if (excused.isNotEmpty)
-              _Section(
-                label: 'Đã xin phép',
-                students: excused,
-                attMap: attMap,
-                leaveReasons: leaveReasons,
-                onOpenSheet: (s) => _pickStatus(context, s, attendanceOf(s)),
-              ),
-            if (marked.isNotEmpty)
-              _Section(
-                label: 'Đã điểm danh',
-                students: marked,
-                attMap: attMap,
-                onOpenSheet: (s) => _pickStatus(context, s, attendanceOf(s)),
-                onCheckOut: canCheckOut ? (id) => _checkOut(context, id) : null,
-              ),
-          ],
+        return RefreshIndicator(
+          onRefresh: () => _onRefresh(context),
+          child: CustomScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            slivers: [
+              dateStrip,
+              if (unmarked.isNotEmpty)
+                _Section(
+                  label: 'Chưa điểm danh',
+                  students: unmarked,
+                  onOpenSheet: (s) => _pickStatusAndUpdate(context, s),
+                ),
+              if (excused.isNotEmpty)
+                _Section(
+                  label: 'Đã xin phép',
+                  students: excused,
+                  onOpenSheet: (s) => _pickStatusAndUpdate(context, s),
+                ),
+              if (marked.isNotEmpty)
+                _Section(
+                  label: 'Đã điểm danh',
+                  students: marked,
+                  onOpenSheet: (s) => _pickStatusAndUpdate(context, s),
+                  onCheckOut: canCheckOut ? (s) => _checkOut(context, s) : null,
+                ),
+              if (absent.isNotEmpty)
+                _Section(
+                  label: 'Vắng mặt',
+                  students: absent,
+                  onOpenSheet: (s) => _pickStatusAndUpdate(context, s),
+                ),
+            ],
+          ),
         );
       },
-    );
-  }
-
-  void _checkOut(BuildContext context, String studentId) {
-    context.read<AttendanceBloc>().add(
-      MarkStudentCheckOutEvent(studentId: studentId),
     );
   }
 }
@@ -172,21 +180,17 @@ class _Section extends StatelessWidget {
   const _Section({
     required this.label,
     required this.students,
-    required this.attMap,
     required this.onOpenSheet,
-    this.leaveReasons = const {},
     this.onCheckOut,
     this.draftMode = false,
     this.onTogglePresent,
   });
 
   final String label;
-  final List<Student> students;
-  final Map<String, Attendance> attMap;
-  final Map<String, String> leaveReasons;
-  final void Function(Student) onOpenSheet;
-  final void Function(Student)? onTogglePresent;
-  final void Function(String studentId)? onCheckOut;
+  final List<AttendanceStudent> students;
+  final void Function(AttendanceStudent) onOpenSheet;
+  final void Function(AttendanceStudent)? onTogglePresent;
+  final void Function(AttendanceStudent)? onCheckOut;
   final bool draftMode;
 
   @override
@@ -210,10 +214,6 @@ class _Section extends StatelessWidget {
             final student = students[i];
             return AttendanceStudentItem(
               student: student,
-              attendance:
-                  attMap[student.id] ??
-                  Attendance(studentId: student.id, classId: student.classId),
-              leaveReason: leaveReasons[student.id],
               draftMode: draftMode,
               onTogglePresent: onTogglePresent == null
                   ? null
@@ -221,7 +221,7 @@ class _Section extends StatelessWidget {
               onOpenSheet: () => onOpenSheet(student),
               onCheckOut: onCheckOut == null
                   ? null
-                  : () => onCheckOut!(student.id),
+                  : () => onCheckOut!(student),
             );
           }, childCount: students.length),
         ),

@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tanlu_management/core/di/injection_container.dart';
-import 'package:tanlu_management/core/router/custom_transitions.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
+import 'package:tanlu_management/shared/services/firebase/firebase_messaging_service.dart';
 import 'package:tanlu_management/features/auth/presentation/login/pages/login_page.dart';
 import 'package:tanlu_management/features/home/presentation/pages/home_page.dart';
 
@@ -17,23 +15,22 @@ import 'package:tanlu_management/features/person/presentation/pages/person_about
 import 'package:tanlu_management/features/overview/presentation/pages/overview_page.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_page/pages/feed_page.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/pages/create_feed_page.dart';
-import 'package:tanlu_management/features/feed/domain/entity/feed.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_detail/pages/feed_detail_page.dart';
 
 import 'package:tanlu_management/features/activity/presentation/pages/activity_page.dart';
 import 'package:tanlu_management/features/chat/presentation/chat_page/pages/chat_page.dart';
-import 'package:tanlu_management/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:tanlu_management/features/attendance/presentation/enums/attendance_tab.dart';
 import 'package:tanlu_management/features/attendance/presentation/pages/attendance_page.dart';
+import 'package:tanlu_management/features/notification/presentation/pages/notification_page.dart';
+import 'package:tanlu_management/core/router/custom_transitions.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>(
   debugLabel: 'root',
 );
 
 class AppRouter {
   const AppRouter._();
 
-  // Route paths
   static const String root = '/';
   static const String login = '/login';
   static const String student = '/student';
@@ -50,14 +47,13 @@ class AppRouter {
   static const String createFeed = '/feed/create';
   static const String feedDetail = '/feed/detail';
   static const String attendance = '/attendance';
+  static const String notification = '/notification';
 
   static GoRouter createRouter(AppBloc appBloc) {
     return GoRouter(
-      navigatorKey: _rootNavigatorKey,
+      navigatorKey: rootNavigatorKey,
       initialLocation: root,
       debugLogDiagnostics: kDebugMode,
-
-      // Redirect dựa trên AppState — tự động điều hướng đúng trang
       redirect: (context, state) {
         final appState = appBloc.state;
         final currentLoc = state.matchedLocation;
@@ -65,17 +61,18 @@ class AppRouter {
         final isOnRoot = currentLoc == root;
 
         return appState.maybeWhen(
-          loading: () =>
-              null, // Đang loading → không redirect, giữ nguyên ở Splash
+          loading: () => null,
           unauthenticated: () {
             FlutterNativeSplash.remove();
-            return isOnLogin ? null : login; // Về Login nếu chưa đăng nhập
+            FirebaseMessagingService.requestPermission();
+            return isOnLogin ? null : login;
           },
           authenticated: (user) {
             FlutterNativeSplash.remove();
+            FirebaseMessagingService.requestPermission();
             final isParent = user.role == 'parent';
             if (isOnLogin || isOnRoot) {
-              return isParent ? progress : overview;
+              return isParent ? activity : overview;
             }
             return null;
           },
@@ -95,36 +92,25 @@ class AppRouter {
           name: 'login',
           builder: (context, state) => const LoginPage(),
         ),
-
-        // GoRoute(
-        //   path: '/chat-detail/:id',
-        //   name: 'chat-detail',
-        //   parentNavigatorKey: _rootNavigatorKey,
-        //   builder: (context, state) {
-        //     final id = state.pathParameters['id']!;
-        //     return ChatDetailPage(conversationId: id);
-        //   },
-        // ),
         GoRoute(
           path: '/student-detail/:id',
           name: 'student-detail',
-          parentNavigatorKey: _rootNavigatorKey,
+          parentNavigatorKey: rootNavigatorKey,
           builder: (context, state) {
-            final id = state.pathParameters['id']!;
+            final id = int.tryParse(state.pathParameters['id']!) ?? 0;
             return StudentDetailPage(studentId: id);
           },
         ),
-
         GoRoute(
           path: settings,
           name: 'settings',
-          parentNavigatorKey: _rootNavigatorKey,
+          parentNavigatorKey: rootNavigatorKey,
           builder: (context, state) => const PersonAboutPage(),
         ),
         GoRoute(
           path: attendance,
           name: 'attendance',
-          parentNavigatorKey: _rootNavigatorKey,
+          parentNavigatorKey: rootNavigatorKey,
           builder: (context, state) {
             final tab = AttendanceTab.fromQuery(
               state.uri.queryParameters['tab'],
@@ -133,35 +119,40 @@ class AppRouter {
           },
         ),
         GoRoute(
+          path: notification,
+          name: 'notification',
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (context, state) => const NotificationPage(),
+        ),
+        GoRoute(
           path: createFeed,
           name: 'create-feed',
-          parentNavigatorKey: _rootNavigatorKey,
+          parentNavigatorKey: rootNavigatorKey,
           builder: (context, state) => const CreateFeedPage(),
         ),
         GoRoute(
           path: feedDetail,
           name: 'feed-detail',
-          parentNavigatorKey: _rootNavigatorKey,
+          parentNavigatorKey: rootNavigatorKey,
           pageBuilder: (context, state) {
-            final extra = state.extra! as ({Feed feed, bool openComments});
+            final extra = state.extra as Map<String, dynamic>?;
             return SlideTransitionPage(
               child: FeedDetailPage(
-                feed: extra.feed,
-                openComments: extra.openComments,
+                title: extra?['title'] as String? ?? 'Chi tiết bài viết',
+                author: extra?['author'] as String? ?? 'Cô Lan',
+                content:
+                    extra?['content'] as String? ??
+                    'Hôm nay lớp học vẽ tranh chủ đề gia đình.',
+                openComments: extra?['openComments'] as bool? ?? false,
               ),
             );
           },
         ),
-        // Shell: wraps all tabs inside HomePage (bottom nav)
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
-            return BlocProvider.value(
-              value: sl<ChatBloc>(),
-              child: HomePage(navigationShell: navigationShell),
-            );
+            return HomePage(navigationShell: navigationShell);
           },
           branches: [
-            // Branch 0: DS Trẻ (Teacher)
             StatefulShellBranch(
               routes: [
                 GoRoute(
@@ -172,8 +163,6 @@ class AppRouter {
                 ),
               ],
             ),
-
-            // Branch 1: Báo cáo (Teacher)
             StatefulShellBranch(
               routes: [
                 GoRoute(
@@ -184,7 +173,6 @@ class AppRouter {
                 ),
               ],
             ),
-            // Branch 4: Tin nhắn (Both)
             StatefulShellBranch(
               routes: [
                 GoRoute(
@@ -195,7 +183,6 @@ class AppRouter {
                 ),
               ],
             ),
-            // Branch 5: Cá nhân (Both)
             StatefulShellBranch(
               routes: [
                 GoRoute(
@@ -206,9 +193,6 @@ class AppRouter {
                 ),
               ],
             ),
-            // Branch 6: Giáo trình (Teacher)
-
-            // Branch 7: Tổng quan (Teacher)
             StatefulShellBranch(
               routes: [
                 GoRoute(
@@ -219,7 +203,6 @@ class AppRouter {
                 ),
               ],
             ),
-            // Branch 8: Bảng tin (Teacher)
             StatefulShellBranch(
               routes: [
                 GoRoute(
@@ -237,7 +220,6 @@ class AppRouter {
   }
 }
 
-/// Listenable adapter để GoRouter lắng nghe thay đổi AppBloc state
 class _AppBlocListenable extends ChangeNotifier {
   _AppBlocListenable(AppBloc appBloc) {
     _subscription = appBloc.stream.listen((_) => notifyListeners());

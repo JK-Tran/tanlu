@@ -55,7 +55,7 @@ class PersonProfileHeader extends StatelessWidget {
                 children: [
                 AttendanceAvatar(
                   nickname: name,
-                  imageUrl: user?.avatar,
+                  imageUrl: user?.avatarUrl,
                   size: _avatarSize,
                 ),
                 SizedBox(width: 12.w),

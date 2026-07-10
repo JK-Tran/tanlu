@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tanlu_management/core/widgets/loading_overlay.dart';
-import 'package:tanlu_management/shared/network/exceptions/base/app_exception.dart';
+import 'package:tanlu_management/shared/exception/base/app_exception.dart';
 
 import 'base_bloc.dart';
 import 'default_bloc.dart';

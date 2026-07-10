@@ -29,10 +29,6 @@ mixin _$ContactData {
   String? get phone => throw _privateConstructorUsedError;
   @JsonKey(name: 'dob')
   String? get dob => throw _privateConstructorUsedError;
-  @JsonKey(name: 'userId')
-  String? get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'isPrimary')
-  bool? get isPrimary => throw _privateConstructorUsedError;
 
   /// Serializes this ContactData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -56,8 +52,6 @@ abstract class $ContactDataCopyWith<$Res> {
     @JsonKey(name: 'relationship') String? relationship,
     @JsonKey(name: 'phone') String? phone,
     @JsonKey(name: 'dob') String? dob,
-    @JsonKey(name: 'userId') String? userId,
-    @JsonKey(name: 'isPrimary') bool? isPrimary,
   });
 }
 
@@ -80,8 +74,6 @@ class _$ContactDataCopyWithImpl<$Res, $Val extends ContactData>
     Object? relationship = freezed,
     Object? phone = freezed,
     Object? dob = freezed,
-    Object? userId = freezed,
-    Object? isPrimary = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -101,14 +93,6 @@ class _$ContactDataCopyWithImpl<$Res, $Val extends ContactData>
                 ? _value.dob
                 : dob // ignore: cast_nullable_to_non_nullable
                       as String?,
-            userId: freezed == userId
-                ? _value.userId
-                : userId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            isPrimary: freezed == isPrimary
-                ? _value.isPrimary
-                : isPrimary // ignore: cast_nullable_to_non_nullable
-                      as bool?,
           )
           as $Val,
     );
@@ -129,8 +113,6 @@ abstract class _$$ContactDataImplCopyWith<$Res>
     @JsonKey(name: 'relationship') String? relationship,
     @JsonKey(name: 'phone') String? phone,
     @JsonKey(name: 'dob') String? dob,
-    @JsonKey(name: 'userId') String? userId,
-    @JsonKey(name: 'isPrimary') bool? isPrimary,
   });
 }
 
@@ -152,8 +134,6 @@ class __$$ContactDataImplCopyWithImpl<$Res>
     Object? relationship = freezed,
     Object? phone = freezed,
     Object? dob = freezed,
-    Object? userId = freezed,
-    Object? isPrimary = freezed,
   }) {
     return _then(
       _$ContactDataImpl(
@@ -173,14 +153,6 @@ class __$$ContactDataImplCopyWithImpl<$Res>
             ? _value.dob
             : dob // ignore: cast_nullable_to_non_nullable
                   as String?,
-        userId: freezed == userId
-            ? _value.userId
-            : userId // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        isPrimary: freezed == isPrimary
-            ? _value.isPrimary
-            : isPrimary // ignore: cast_nullable_to_non_nullable
-                  as bool?,
       ),
     );
   }
@@ -188,15 +160,13 @@ class __$$ContactDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ContactDataImpl implements _ContactData {
+class _$ContactDataImpl extends _ContactData {
   const _$ContactDataImpl({
     @JsonKey(name: 'name') this.name,
     @JsonKey(name: 'relationship') this.relationship,
     @JsonKey(name: 'phone') this.phone,
     @JsonKey(name: 'dob') this.dob,
-    @JsonKey(name: 'userId') this.userId,
-    @JsonKey(name: 'isPrimary') this.isPrimary,
-  });
+  }) : super._();
 
   factory _$ContactDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$ContactDataImplFromJson(json);
@@ -213,16 +183,10 @@ class _$ContactDataImpl implements _ContactData {
   @override
   @JsonKey(name: 'dob')
   final String? dob;
-  @override
-  @JsonKey(name: 'userId')
-  final String? userId;
-  @override
-  @JsonKey(name: 'isPrimary')
-  final bool? isPrimary;
 
   @override
   String toString() {
-    return 'ContactData(name: $name, relationship: $relationship, phone: $phone, dob: $dob, userId: $userId, isPrimary: $isPrimary)';
+    return 'ContactData(name: $name, relationship: $relationship, phone: $phone, dob: $dob)';
   }
 
   @override
@@ -234,23 +198,12 @@ class _$ContactDataImpl implements _ContactData {
             (identical(other.relationship, relationship) ||
                 other.relationship == relationship) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.isPrimary, isPrimary) ||
-                other.isPrimary == isPrimary));
+            (identical(other.dob, dob) || other.dob == dob));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    name,
-    relationship,
-    phone,
-    dob,
-    userId,
-    isPrimary,
-  );
+  int get hashCode => Object.hash(runtimeType, name, relationship, phone, dob);
 
   /// Create a copy of ContactData
   /// with the given fields replaced by the non-null parameter values.
@@ -266,15 +219,14 @@ class _$ContactDataImpl implements _ContactData {
   }
 }
 
-abstract class _ContactData implements ContactData {
+abstract class _ContactData extends ContactData {
   const factory _ContactData({
     @JsonKey(name: 'name') final String? name,
     @JsonKey(name: 'relationship') final String? relationship,
     @JsonKey(name: 'phone') final String? phone,
     @JsonKey(name: 'dob') final String? dob,
-    @JsonKey(name: 'userId') final String? userId,
-    @JsonKey(name: 'isPrimary') final bool? isPrimary,
   }) = _$ContactDataImpl;
+  const _ContactData._() : super._();
 
   factory _ContactData.fromJson(Map<String, dynamic> json) =
       _$ContactDataImpl.fromJson;
@@ -291,12 +243,6 @@ abstract class _ContactData implements ContactData {
   @override
   @JsonKey(name: 'dob')
   String? get dob;
-  @override
-  @JsonKey(name: 'userId')
-  String? get userId;
-  @override
-  @JsonKey(name: 'isPrimary')
-  bool? get isPrimary;
 
   /// Create a copy of ContactData
   /// with the given fields replaced by the non-null parameter values.

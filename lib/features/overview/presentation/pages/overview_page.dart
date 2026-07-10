@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
+import 'package:tanlu_management/core/base/default_bloc.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
-import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/features/overview/presentation/bloc/overview_bloc.dart';
 import 'package:tanlu_management/features/overview/presentation/widgets/overview_action_card.dart';
 import 'package:tanlu_management/features/overview/presentation/widgets/overview_banner.dart';
 import 'package:tanlu_management/features/overview/presentation/widgets/overview_request_cards.dart';
 import 'package:tanlu_management/features/overview/presentation/widgets/overview_attendance_card.dart';
 import 'package:tanlu_management/features/overview/presentation/widgets/overview_progress_card.dart';
+import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
+import 'package:tanlu_management/features/notification/presentation/bloc/notification_bloc.dart';
+import 'package:tanlu_management/features/overview/presentation/widgets/overview_shimmer.dart';
 
 class OverviewPage extends StatefulWidget {
   const OverviewPage({super.key});
@@ -18,30 +21,40 @@ class OverviewPage extends StatefulWidget {
   State<OverviewPage> createState() => _OverviewPageState();
 }
 
-class _OverviewPageState extends BasePageState<OverviewPage, OverviewBloc> {
-  @override
-  void initState() {
-    super.initState();
-    final currentUser = context.read<AppBloc>().currentUser;
-    bloc.add(StartOverviewEvent(classId: currentUser?.classId));
-  }
-
+class _OverviewPageState extends BasePageState<OverviewPage, DefaultBloc> {
   Future<void> _onRefresh() async {
-    bloc.add(const RefreshOverviewAttendanceEvent());
-    await Future.delayed(const Duration(milliseconds: 400));
+    final completer = Completer<void>();
+    context.read<NotificationBloc>().add(
+      const NotificationEvent.loadNotifications(isRefresh: true),
+    );
+
+    Future.delayed(const Duration(milliseconds: 400), () {
+      completer.complete();
+    });
+    return completer.future;
   }
 
   @override
   Widget buildPage(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          SafeArea(
-            child: RefreshIndicator(
-              color: AppColors.primary,
-              onRefresh: _onRefresh,
-              child: SingleChildScrollView(
+      body: SafeArea(
+        child: RefreshIndicator(
+          color: AppColors.primary,
+          onRefresh: _onRefresh,
+          child: BlocBuilder<AttendanceBloc, AttendanceState>(
+            builder: (context, state) {
+              final isInitialLoading = state.isLoading &&
+                  (state.dailyAttendance == null && state.leaveRequests == null);
+                  
+              if (isInitialLoading) {
+                return const SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
+                  child: OverviewShimmer(),
+                );
+              }
+
+              return SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
@@ -96,10 +109,10 @@ class _OverviewPageState extends BasePageState<OverviewPage, OverviewBloc> {
                     SizedBox(height: 80.h),
                   ],
                 ),
-              ),
-            ),
+              );
+            },
           ),
-        ],
+        ),
       ),
     );
   }

@@ -1,15 +1,17 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/attendance.dart';
+import 'package:tanlu_management/core/widgets/app_snackbar.dart';
+import 'package:tanlu_management/core/widgets/shimmer_list.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/leave_status.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/leave_status.dart';
+import 'package:tanlu_management/features/attendance/presentation/enums/leave_status_ext.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/leave_tab/leave_request_item.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/leave_tab/leave_sub_tab_bar.dart';
-import 'package:tanlu_management/features/student/domain/entity/student.dart';
 
 class LeaveBody extends StatefulWidget {
   const LeaveBody({super.key});
@@ -31,35 +33,79 @@ class _LeaveBodyState extends State<LeaveBody>
     super.dispose();
   }
 
+  Future<void> _onRefresh(BuildContext context) async {
+    final completer = Completer<void>();
+    context.read<AttendanceBloc>().add(
+      LeaveRequestsRefreshed(completer: completer),
+    );
+    await completer.future;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AttendanceBloc, AttendanceState>(
+    return BlocConsumer<AttendanceBloc, AttendanceState>(
+      listenWhen: (previous, current) =>
+          previous.isSubmitting != current.isSubmitting,
+      listener: (context, state) {
+        if (!state.isSubmitting) {
+          if (state.exception == null) {
+            AppSnackbar.showSuccess(
+              context,
+              message: state.successMessage ?? 'Thao tác thành công!',
+            );
+          } else {
+            AppSnackbar.showError(context, message: state.onPageError);
+          }
+        }
+      },
       builder: (context, state) {
-        final studentMap = {for (final s in state.students) s.id: s};
-        final attendanceMap = {
-          for (final a in state.attendances) a.studentId: a,
-        };
+        final leaves = state.leaveRequests?.data ?? [];
         final counts = {
           for (final status in LeaveStatus.values)
-            status: state.leaveRequests
-                .where((r) => r.leaveStatus == status)
-                .length,
+            status: leaves.where((r) => r.status == status.name).length,
         };
 
-        if (state.leaveRequests.isEmpty) {
-          return Column(
-            children: [
-              LeaveSubTabBar(controller: _subTabController, counts: counts),
-              Expanded(
-                child: Center(
-                  child: AppText.b2(
-                    'Chưa có đơn xin nghỉ phép',
-                    color: AppColors.grayMedium,
-                    fontSize: 14.sp,
-                  ),
+        if (state.isLoading && leaves.isEmpty) {
+          return const CustomScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: ShimmerList(
+                  itemCount: 6,
+                  itemHeight: 120,
+                  padding: EdgeInsets.only(top: 80, left: 16, right: 16),
                 ),
               ),
             ],
+          );
+        }
+
+        if (leaves.isEmpty) {
+          return RefreshIndicator(
+            onRefresh: () => _onRefresh(context),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * 0.6,
+                child: Column(
+                  children: [
+                    LeaveSubTabBar(
+                      controller: _subTabController,
+                      counts: counts,
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: AppText.b2(
+                          'Chưa có đơn xin nghỉ phép',
+                          color: AppColors.grayMedium,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           );
         }
 
@@ -72,13 +118,14 @@ class _LeaveBodyState extends State<LeaveBody>
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                   for (final status in LeaveStatus.values)
-                    _LeaveList(
-                      requests: state.leaveRequests
-                          .where((r) => r.leaveStatus == status)
-                          .toList(),
-                      status: status,
-                      studentMap: studentMap,
-                      attendanceMap: attendanceMap,
+                    RefreshIndicator(
+                      onRefresh: () => _onRefresh(context),
+                      child: _LeaveList(
+                        requests: leaves
+                            .where((r) => r.status == status.name)
+                            .toList(),
+                        status: status,
+                      ),
                     ),
                 ],
               ),
@@ -91,31 +138,33 @@ class _LeaveBodyState extends State<LeaveBody>
 }
 
 class _LeaveList extends StatelessWidget {
-  const _LeaveList({
-    required this.requests,
-    required this.status,
-    required this.studentMap,
-    required this.attendanceMap,
-  });
+  const _LeaveList({required this.requests, required this.status});
 
   final List<LeaveRequest> requests;
   final LeaveStatus status;
-  final Map<String, Student> studentMap;
-  final Map<String, Attendance> attendanceMap;
 
   @override
   Widget build(BuildContext context) {
     if (requests.isEmpty) {
-      return Center(
-        child: AppText.b2(
-          'Không có đơn ${status.label.toLowerCase()}',
-          color: AppColors.grayMedium,
-          fontSize: 14.sp,
-        ),
+      return CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(
+              child: AppText.b2(
+                'Không có đơn ${status.label.toLowerCase()}',
+                color: AppColors.grayMedium,
+                fontSize: 14.sp,
+              ),
+            ),
+          ),
+        ],
       );
     }
 
     return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(),
       padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 88.h),
       itemCount: requests.length,
       itemBuilder: (_, i) {
@@ -123,8 +172,6 @@ class _LeaveList extends StatelessWidget {
         return LeaveRequestItem.fromRequest(
           context: context,
           request: request,
-          student: studentMap[request.studentId],
-          attendance: attendanceMap[request.studentId],
           readOnly: status != LeaveStatus.pending,
         );
       },

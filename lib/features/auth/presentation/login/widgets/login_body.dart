@@ -10,13 +10,13 @@ class LoginBody extends StatelessWidget {
   const LoginBody({
     super.key,
     required this.formKey,
-    required this.usernameController,
+    required this.emailController,
     required this.passwordController,
     required this.onLoginPressed,
   });
 
   final GlobalKey<FormState> formKey;
-  final TextEditingController usernameController;
+  final TextEditingController emailController;
   final TextEditingController passwordController;
   final VoidCallback onLoginPressed;
 
@@ -44,7 +44,7 @@ class LoginBody extends StatelessWidget {
                       SizedBox(height: 32.h),
                       LoginFormCard(
                         formKey: formKey,
-                        usernameController: usernameController,
+                        emailController: emailController,
                         passwordController: passwordController,
                         onLoginPressed: onLoginPressed,
                       ),

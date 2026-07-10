@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
+import 'package:tanlu_management/core/widgets/app_text.dart';
 
 class StatsSummaryCard extends StatelessWidget {
   const StatsSummaryCard({
@@ -22,11 +23,11 @@ class StatsSummaryCard extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(12.w, 0, 12.w, 4.h),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(10.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
+              color: AppColors.black.withValues(alpha: 0.06),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -40,13 +41,11 @@ class StatsSummaryCard extends StatelessWidget {
               if (_total > 0)
                 Padding(
                   padding: EdgeInsets.only(bottom: 10.h),
-                  child: Text(
+                  child: AppText.b2(
                     'Tổng $_total bé',
-                    style: TextStyle(
-                      color: AppColors.grayMedium,
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    color: AppColors.grayMedium,
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               _StatRow(
@@ -106,22 +105,18 @@ class _StatRow extends StatelessWidget {
           ),
           SizedBox(width: 10.w),
           Expanded(
-            child: Text(
+            child: AppText.b2(
               label,
-              style: TextStyle(
-                color: AppColors.grayDark,
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w500,
-              ),
+              color: AppColors.grayDark,
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          Text(
+          AppText.b2(
             '$count',
-            style: TextStyle(
-              color: AppColors.grayDark,
-              fontSize: 15.sp,
-              fontWeight: FontWeight.w700,
-            ),
+            color: AppColors.grayDark,
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w700,
           ),
         ],
       ),

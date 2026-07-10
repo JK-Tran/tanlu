@@ -2,27 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/attendance.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/attendance_status.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/attendance_student.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
-import 'package:tanlu_management/features/student/domain/entity/student.dart';
 
-/// Bottom sheet chọn trạng thái — chạm option là áp dụng ngay.
 class AttendanceStatusSheet extends StatelessWidget {
-  const AttendanceStatusSheet({
-    super.key,
-    required this.student,
-    required this.attendance,
-  });
+  const AttendanceStatusSheet({super.key, required this.student});
 
-  final Student student;
-  final Attendance attendance;
+  final AttendanceStudent student;
 
   @override
   Widget build(BuildContext context) {
-    final nickname = student.nickname.isNotEmpty
-        ? student.nickname
-        : student.fullName;
+    final nickname = student.fullName; // Fallback to fullName
 
     return Container(
       decoration: BoxDecoration(
@@ -91,7 +82,8 @@ class AttendanceStatusSheet extends StatelessWidget {
             icon: Icons.cancel_rounded,
             label: 'Vắng mặt',
             sublabel: 'Không có lý do chính đáng',
-            onTap: () => Navigator.pop(context, AttendanceStatus.absent),
+            onTap: () =>
+                Navigator.pop(context, AttendanceStatus.absentUnexcused),
           ),
           _Option(
             iconColor: AppColors.info,
@@ -99,7 +91,7 @@ class AttendanceStatusSheet extends StatelessWidget {
             icon: Icons.assignment_return_rounded,
             label: 'Nghỉ phép',
             sublabel: 'Đã được phụ huynh xin phép',
-            onTap: () => Navigator.pop(context, AttendanceStatus.excused),
+            onTap: () => Navigator.pop(context, AttendanceStatus.absentExcused),
           ),
           _Option(
             iconColor: const Color(0xFFE17055),

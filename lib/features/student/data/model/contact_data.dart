@@ -10,9 +10,9 @@ class ContactData with _$ContactData {
     @JsonKey(name: 'relationship') String? relationship,
     @JsonKey(name: 'phone') String? phone,
     @JsonKey(name: 'dob') String? dob,
-    @JsonKey(name: 'userId') String? userId,
-    @JsonKey(name: 'isPrimary') bool? isPrimary,
   }) = _ContactData;
 
-  factory ContactData.fromJson(Map<String, dynamic> json) => _$ContactDataFromJson(json);
+  const ContactData._();
+  factory ContactData.fromJson(Map<String, dynamic> json) =>
+      _$ContactDataFromJson(json);
 }

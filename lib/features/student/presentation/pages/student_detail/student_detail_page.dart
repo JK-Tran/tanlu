@@ -8,12 +8,12 @@ import 'package:tanlu_management/core/widgets/placeholder_tab.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
 import 'package:tanlu_management/features/student/presentation/pages/student_detail/widgets/contact_tab_view.dart';
 
-import 'package:tanlu_management/core/di/injection_container.dart';
+import 'package:tanlu_management/shared/di/di.dart';
 import 'package:tanlu_management/features/student/domain/repositories/student_repository.dart';
 import 'package:tanlu_management/features/student/presentation/pages/student_detail/widgets/student_detail_header.dart';
 
 class StudentDetailPage extends StatefulWidget {
-  final String studentId;
+  final int studentId;
 
   const StudentDetailPage({super.key, required this.studentId});
 
@@ -133,7 +133,9 @@ class _StudentDetailPageState extends State<StudentDetailPage>
             child: TabBarView(
               controller: _tabController,
               children: [
-                ContactTabView(contacts: student.contacts),
+                ContactTabView(
+                  contacts: student.contacts,
+                ),
                 const PlaceholderTab(
                   title: 'Ghi chú',
                   icon: Icons.note_alt_outlined,

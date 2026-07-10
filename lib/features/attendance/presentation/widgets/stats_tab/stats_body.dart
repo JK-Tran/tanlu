@@ -1,18 +1,17 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_date_scroll_picker.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/attendance.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/attendance_student.dart';
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/attendance_status.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_date_strip.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/stats_tab/stats_history_shimmer.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/stats_tab/stats_student_item.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/stats_tab/stats_summary_item.dart';
-import 'package:tanlu_management/features/student/domain/entity/student.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
 
 class StatsBody extends StatelessWidget {
@@ -25,102 +24,104 @@ class StatsBody extends StatelessWidget {
       maxDate: DateTime.now(),
     );
     if (picked == null || !context.mounted) return;
+    context.read<AttendanceBloc>().add(FetchHistoryAttendance(date: picked));
+  }
 
-    final classId = context.read<AppBloc>().currentUser?.classId ?? '';
+  Future<void> _onRefresh(BuildContext context, DateTime historyDate) async {
+    final completer = Completer<void>();
     context.read<AttendanceBloc>().add(
-      FetchAttendanceHistoryEvent(classId: classId, date: picked),
+      RefreshHistoryAttendance(completer: completer, date: historyDate),
     );
+    await completer.future;
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AttendanceBloc, AttendanceState>(
       builder: (context, state) {
-        if (state.historyError.isNotEmpty &&
-            state.historyAttendances.isEmpty &&
-            !state.isHistoryLoading) {
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.all(24.w),
-              child: AppText.b2(
-                state.historyError,
-                color: AppColors.warning,
-                fontSize: 14.sp,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
-        }
+        final historyDate = state.historyDate ?? DateTime.now();
+        final isLoading = state.isLoading;
 
-        final historyDate =
-            state.historyDate ?? state.selectedDate ?? DateTime.now();
-        final isLoading = state.isHistoryLoading;
-        final studentMap = {for (final s in state.historyStudents) s.id: s};
-        final attendances = state.historyAttendances;
+        final attendances = state.historyAttendance?.roster ?? [];
+        final roster = state.historyAttendance?.roster ?? [];
+        final summary = state.historyAttendance?.summary;
 
-        final presentCount = attendances
-            .where((a) => a.uiStatus == AttendanceStatus.present)
-            .length;
-        final lateCount = attendances
-            .where((a) => a.uiStatus == AttendanceStatus.late)
-            .length;
-        final absentCount = attendances
-            .where((a) => a.uiStatus == AttendanceStatus.absent)
-            .length;
-        final excusedCount = attendances
-            .where((a) => a.uiStatus == AttendanceStatus.excused)
-            .length;
-        final unmarked = attendances
-            .where((a) => a.uiStatus == AttendanceStatus.notMarked)
+        final presentCount = summary?.present ?? 0;
+        final absentCount = summary?.absentUnexcused ?? 0;
+        final excusedCount = summary?.absentExcused ?? 0;
+
+        final unmarked = roster
+            .where((a) => a.status == AttendanceStatus.notMarked.apiValue)
             .toList();
-        final marked = attendances
-            .where((a) => a.uiStatus != AttendanceStatus.notMarked)
+        final excused = roster
+            .where((a) => a.status == AttendanceStatus.absentExcused.apiValue)
             .toList();
+        final absent = roster
+            .where((a) => a.status == AttendanceStatus.absentUnexcused.apiValue)
+            .toList();
+        final marked = roster.where((a) {
+          return a.status == AttendanceStatus.present.apiValue ||
+                 a.status == AttendanceStatus.late.apiValue;
+        }).toList();
 
-        return CustomScrollView(
-          slivers: [
-            AttendanceDateStripSliver(
-              date: historyDate,
-              onTap: () => _pickDate(context, historyDate),
-            ),
-            if (isLoading)
-              const SliverToBoxAdapter(child: StatsHistoryShimmer())
-            else ...[
-              SliverToBoxAdapter(
-                child: StatsSummaryCard(
-                  presentCount: presentCount + lateCount,
-                  absentCount: absentCount,
-                  excusedCount: excusedCount,
-                ),
+        return RefreshIndicator(
+          onRefresh: () => _onRefresh(context, historyDate),
+          child: CustomScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            slivers: [
+              AttendanceDateStripSliver(
+                date: historyDate,
+                onTap: () => _pickDate(context, historyDate),
               ),
-              if (attendances.isEmpty)
+              if (isLoading)
+                const SliverToBoxAdapter(child: StatsHistoryShimmer())
+              else ...[
                 SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.all(32.w),
-                    child: Center(
-                      child: AppText.b2(
-                        'Chưa có dữ liệu điểm danh ngày này',
-                        color: AppColors.grayMedium,
-                        fontSize: 14.sp,
+                  child: StatsSummaryCard(
+                    presentCount: presentCount,
+                    absentCount: absentCount,
+                    excusedCount: excusedCount,
+                  ),
+                ),
+                if (attendances.isEmpty)
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.all(32.w),
+                      child: Center(
+                        child: AppText.b2(
+                          'Chưa có dữ liệu điểm danh ngày này',
+                          color: AppColors.grayMedium,
+                          fontSize: 14.sp,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              _StatsSection(
-                title: 'Chưa điểm danh',
-                attendances: unmarked,
-                studentMap: studentMap,
-                initiallyExpanded: false,
-              ),
-              _StatsSection(
-                title: 'Đã điểm danh',
-                attendances: marked,
-                studentMap: studentMap,
-                showTime: true,
-              ),
+                if (unmarked.isNotEmpty)
+                  _StatsSection(
+                    title: 'Chưa điểm danh',
+                    attendances: unmarked,
+                    initiallyExpanded: false,
+                  ),
+                if (excused.isNotEmpty)
+                  _StatsSection(
+                    title: 'Đã xin phép',
+                    attendances: excused,
+                  ),
+                if (marked.isNotEmpty)
+                  _StatsSection(
+                    title: 'Đã điểm danh',
+                    attendances: marked,
+                    showTime: true,
+                  ),
+                if (absent.isNotEmpty)
+                  _StatsSection(
+                    title: 'Vắng mặt',
+                    attendances: absent,
+                  ),
+              ],
+              SliverToBoxAdapter(child: SizedBox(height: 40.h)),
             ],
-            SliverToBoxAdapter(child: SizedBox(height: 40.h)),
-          ],
+          ),
         );
       },
     );
@@ -131,14 +132,12 @@ class _StatsSection extends StatefulWidget {
   const _StatsSection({
     required this.title,
     required this.attendances,
-    required this.studentMap,
     this.initiallyExpanded = true,
     this.showTime = false,
   });
 
   final String title;
-  final List<Attendance> attendances;
-  final Map<String, Student> studentMap;
+  final List<AttendanceStudent> attendances;
   final bool initiallyExpanded;
   final bool showTime;
 
@@ -195,15 +194,15 @@ class _StatsSectionState extends State<_StatsSection> {
           SliverList(
             delegate: SliverChildBuilderDelegate((_, i) {
               final att = widget.attendances[i];
-              final stu = widget.studentMap[att.studentId];
-              final name = stu != null && stu.nickname.isNotEmpty
-                  ? stu.nickname
-                  : (stu?.fullName ?? att.studentId);
+              final name = att.fullName;
+
+              // Parse status enum
+              final statusEnum = AttendanceStatusMapper.fromApi(att.status);
 
               return StatsStudentItem(
                 name: name,
-                fullName: stu?.fullName,
-                status: att.uiStatus,
+                fullName: att.fullName,
+                status: statusEnum,
                 checkInTime: DateTimeUtils.formatHourMinute(att.checkInTime),
                 checkOutTime: DateTimeUtils.formatHourMinute(att.checkOutTime),
                 showTime: widget.showTime,

@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
-import 'package:tanlu_management/core/di/injection_container.dart';
 import 'package:tanlu_management/core/router/app_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_confirm_dialog.dart';
 import 'package:tanlu_management/core/widgets/app_snackbar.dart';
-import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
+
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
-import 'package:tanlu_management/features/person/domain/usecases/get_class_name_use_case.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/attendance_status.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/enums/attendance_tab.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/leave_status.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/leave_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_app_bar.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_save_bar.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_success_dialog.dart';
@@ -40,15 +38,8 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
   String? _className;
 
   Future<void> _loadClassName() async {
-    final classId = context.read<AppBloc>().currentUser?.classId;
-    if (classId == null || classId.isEmpty) return;
-
-    final output = await sl<GetClassNameUseCase>().execute(
-      GetClassNameInput(classId: classId),
-    );
-    if (!mounted) return;
-    if (output.className.isEmpty) return;
-    setState(() => _className = output.className);
+    // Dummy class name or logic if needed, previously was using sl<GetClassNameUseCase>()
+    setState(() => _className = '');
   }
 
   Future<void> _handleCompleteCheckOut(int missingCheckOutCount) async {
@@ -67,7 +58,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
     );
 
     if (confirmed == true && mounted) {
-      bloc.add(const CompleteCheckOutSessionEvent());
+      bloc.add(const SubmitCompleteCheckOutEvent());
     }
   }
 
@@ -81,13 +72,8 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
     );
     _currentTab = widget.initialTab.index;
     _tabController.addListener(_onTabChanged);
-    final currentUser = context.read<AppBloc>().currentUser;
-    bloc.add(
-      FetchDailyAttendance(
-        classId: currentUser?.classId ?? '',
-        date: DateTime.now(),
-      ),
-    );
+    bloc.add(const FetchDailyAttendance(date: null));
+    bloc.add(const LeaveRequestsStarted(limit: 50));
     if (widget.initialTab == AttendanceTab.statistics) {
       _fetchAttendanceHistory();
     }
@@ -103,23 +89,13 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
   }
 
   void _fetchAttendanceHistory() {
-    final classId = context.read<AppBloc>().currentUser?.classId ?? '';
-    if (classId.isEmpty) return;
-
-    final state = bloc.state;
-    bloc.add(
-      FetchAttendanceHistoryEvent(
-        classId: classId,
-        date: state.historyDate ?? state.selectedDate ?? DateTime.now(),
-      ),
-    );
+    bloc.add(FetchHistoryAttendance(date: DateTime.now()));
   }
 
   @override
   void dispose() {
     _tabController.removeListener(_onTabChanged);
     _tabController.dispose();
-    bloc.close();
     super.dispose();
   }
 
@@ -131,47 +107,44 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
     }
   }
 
-  Future<void> _handleExit() async {
-    if (!bloc.state.hasUnsavedChanges) {
-      if (mounted) _navigateBack();
-      return;
-    }
-
-    final confirmed = await AppConfirmDialog.show(
-      context,
-      title: 'Chưa lưu điểm danh',
-      content: 'Bạn có thay đổi chưa lưu. Thoát bây giờ sẽ mất bảng điểm danh.',
-      cancelLabel: 'Huỷ',
-      confirmLabel: 'Xác nhận',
-      type: AppConfirmDialogType.warning,
-    );
-
-    if (confirmed == true && mounted) _navigateBack();
+  void _handleExit() {
+    if (mounted) _navigateBack();
   }
 
   @override
   Widget buildPage(BuildContext context) {
     return BlocConsumer<AttendanceBloc, AttendanceState>(
       listener: (context, state) {
-        final sessionCompleted = state.session?.isCheckInCompleted == true;
-        final checkOutCompleted = state.session?.isCheckOutCompleted == true;
+        final sessionCompleted =
+            state.dailyAttendance?.session.isCheckInCompleted == true;
+        final checkOutCompleted =
+            state.dailyAttendance?.session.isCheckOutCompleted == true;
         final saveSucceeded =
-            _wasSaving && !state.isSaving && state.onPageError.isEmpty;
+            _wasSaving && !state.isSubmitting && state.onPageError.isEmpty;
 
         if (saveSucceeded) {
           if (!_sessionWasCompleted && sessionCompleted) {
-            final attendances = state.attendances;
+            final roster = state.dailyAttendance?.roster ?? [];
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => AttendanceSuccessDialog(
-                  presentCount: attendances
-                      .where((a) => a.uiStatus == AttendanceStatus.present)
+                  presentCount: roster
+                      .where(
+                        (a) => a.status == AttendanceStatus.present.apiValue,
+                      )
                       .length,
-                  absentCount: attendances
-                      .where((a) => a.uiStatus == AttendanceStatus.absent)
+                  absentCount: roster
+                      .where(
+                        (a) =>
+                            a.status ==
+                            AttendanceStatus.absentUnexcused.apiValue,
+                      )
                       .length,
-                  excusedCount: attendances
-                      .where((a) => a.uiStatus == AttendanceStatus.excused)
+                  excusedCount: roster
+                      .where(
+                        (a) =>
+                            a.status == AttendanceStatus.absentExcused.apiValue,
+                      )
                       .length,
                   className: _className ?? '—',
                 ),
@@ -192,34 +165,36 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
           }
         }
 
-        _wasSaving = state.isSaving;
+        _wasSaving = state.isSubmitting;
         _sessionWasCompleted = sessionCompleted;
         _checkOutWasCompleted = checkOutCompleted;
       },
       builder: (context, state) {
-        final attMap = {for (final a in state.attendances) a.studentId: a};
-        final pendingLeaveCount = state.leaveRequests
-            .where((r) => r.leaveStatus == LeaveStatus.pending)
+        final roster = state.dailyAttendance?.roster ?? [];
+        final pendingLeaveCount =
+            state.leaveRequests?.data
+                .where((r) => r.status == LeaveStatus.pending.name)
+                .length ??
+            0;
+        final notMarkedCount = roster
+            .where((s) => s.status == AttendanceStatus.notMarked.apiValue)
             .length;
-        final notMarkedCount = state.students.where((s) {
-          final att = attMap[s.id];
-          return att == null
-              ? true
-              : att.uiStatus == AttendanceStatus.notMarked;
-        }).length;
 
-        final markedCount = state.students.length - notMarkedCount;
-        final total = state.students.length;
-        final checkInDone = state.session?.isCheckInCompleted == true;
-        final checkOutDone = state.session?.isCheckOutCompleted == true;
-        final missingCheckOutCount = state.attendances
+        final markedCount = roster.length - notMarkedCount;
+        final total = roster.length;
+        final checkInDone =
+            state.dailyAttendance?.session.isCheckInCompleted == true;
+        final checkOutDone =
+            state.dailyAttendance?.session.isCheckOutCompleted == true;
+        final missingCheckOutCount = roster
             .where(
               (a) =>
-                  (a.status == 'present' || a.status == 'late') &&
+                  (a.status == AttendanceStatus.present.apiValue ||
+                      a.status == AttendanceStatus.late.apiValue) &&
                   a.checkOutTime == null,
             )
             .length;
-        final morningReady = notMarkedCount == 0 && !state.isSaving;
+        final morningReady = notMarkedCount == 0 && !state.isSubmitting;
 
         return PopScope(
           canPop: false,
@@ -261,7 +236,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                 ),
                 if (_currentTab == 0 &&
                     !checkInDone &&
-                    !(state.isLoading && state.students.isEmpty))
+                    !(state.isLoading && roster.isEmpty))
                   AttendanceSaveBar(
                     title: 'Đã chọn $markedCount/$total',
                     subtitle: notMarkedCount > 0
@@ -272,28 +247,26 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                         ? AppColors.success
                         : AppColors.grayDark,
                     canSave: morningReady,
-                    isSaving: state.isSaving,
-                    onSave: () =>
-                        bloc.add(const CompleteAttendanceSessionEvent()),
+                    isSaving: state.isSubmitting,
+                    onSave: () {
+                      bloc.add(const SubmitMorningAttendanceEvent());
+                    },
                   ),
-                if (_currentTab == 0 && checkInDone && state.hasUnsavedChanges)
+                if (_currentTab == 0 && checkInDone && checkOutDone)
                   AttendanceSaveBar(
-                    title: 'Có thay đổi chưa lưu',
-                    subtitle: missingCheckOutCount > 0
-                        ? 'Còn $missingCheckOutCount bé chưa ghi giờ về'
-                        : 'Sửa điểm danh — bấm Cập nhật',
+                    title: 'Đã hoàn tất điểm danh',
+                    subtitle: 'Sửa điểm danh sáng — bấm Cập nhật',
                     buttonLabel: 'Cập nhật',
-                    titleColor: !state.isSaving
+                    titleColor: !state.isSubmitting
                         ? AppColors.success
                         : AppColors.grayDark,
-                    canSave: !state.isSaving,
-                    isSaving: state.isSaving,
-                    onSave: () => bloc.add(const UpdateDailyAttendanceEvent()),
+                    canSave: !state.isSubmitting,
+                    isSaving: state.isSubmitting,
+                    onSave: () {
+                      bloc.add(const SubmitMorningAttendanceEvent());
+                    },
                   ),
-                if (_currentTab == 0 &&
-                    checkInDone &&
-                    !state.hasUnsavedChanges &&
-                    !checkOutDone)
+                if (_currentTab == 0 && checkInDone && !checkOutDone)
                   AttendanceSaveBar(
                     title: 'Chốt cuối ngày',
                     subtitle: missingCheckOutCount > 0
@@ -301,8 +274,8 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                         : 'Giáo viên xác nhận chốt điểm danh cuối ngày',
                     buttonLabel: 'Chốt điểm danh',
                     titleColor: AppColors.primary,
-                    canSave: !state.isSaving,
-                    isSaving: state.isSaving,
+                    canSave: !state.isSubmitting,
+                    isSaving: state.isSubmitting,
                     onSave: () => _handleCompleteCheckOut(missingCheckOutCount),
                   ),
               ],

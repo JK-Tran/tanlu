@@ -33,6 +33,7 @@ class PersonMenuTile extends StatelessWidget {
     required this.icon,
     required this.title,
     this.value,
+    this.trailing,
     this.iconColor,
     this.titleColor,
     this.showDivider = true,
@@ -47,6 +48,7 @@ class PersonMenuTile extends StatelessWidget {
   final Color? titleColor;
   final bool showDivider;
   final bool showChevron;
+  final Widget? trailing;
   final VoidCallback? onTap;
 
   @override

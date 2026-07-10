@@ -16,6 +16,7 @@ class PagedList<T> with _$PagedList<T> {
     @Default(0) int totalPage,
     @Default(0) int itemsPerPage,
     @Default(-99) int? offset,
+    int? nextCursor,
   }) = _PagedList;
 
   bool get isLastPage => data.isEmpty || !hasMore;
@@ -29,6 +30,7 @@ class PagedList<T> with _$PagedList<T> {
       itemsPerPage: itemsPerPage,
       totalItems: totalItems,
       totalPage: totalPage,
+      nextCursor: nextCursor,
     );
   }
 }

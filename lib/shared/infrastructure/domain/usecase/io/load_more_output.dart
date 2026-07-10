@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tanlu_management/shared/infrastructure/domain/pagination/paging_constants.dart';
+import 'package:tanlu_management/shared/constants/ui/paging_constants.dart';
 import 'package:tanlu_management/shared/infrastructure/domain/usecase/io/base_output.dart';
 
 part 'load_more_output.freezed.dart';
@@ -18,6 +18,7 @@ class LoadMoreOutput<T> extends BaseOutput with _$LoadMoreOutput<T> {
     @Default(0) int offset,
     @Default(0) int totalPage,
     @Default(0) int itemsPerPage,
+    int? nextCursor,
   }) = _LoadMoreOutput;
 
   int get nextPage => page + 1;

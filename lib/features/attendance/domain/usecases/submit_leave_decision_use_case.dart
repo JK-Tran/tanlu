@@ -1,11 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
-import 'package:tanlu_management/features/attendance/domain/repositories/attendance_repository.dart';
 import 'package:tanlu_management/shared/infrastructure/domain/usecase/future/base_future_use_case.dart';
 import 'package:tanlu_management/shared/infrastructure/domain/usecase/io/base_input.dart';
 import 'package:tanlu_management/shared/infrastructure/domain/usecase/io/base_output.dart';
+
+import '../entity/leave_request.dart';
+import '../repositories/attendance_repository.dart';
 
 part 'submit_leave_decision_use_case.freezed.dart';
 
@@ -13,7 +13,7 @@ part 'submit_leave_decision_use_case.freezed.dart';
 class SubmitLeaveDecisionUseCase
     extends
         BaseFutureUseCase<SubmitLeaveDecisionInput, SubmitLeaveDecisionOutput> {
-  const SubmitLeaveDecisionUseCase(this._repository);
+  SubmitLeaveDecisionUseCase(this._repository);
 
   final AttendanceRepository _repository;
 
@@ -22,13 +22,12 @@ class SubmitLeaveDecisionUseCase
   Future<SubmitLeaveDecisionOutput> buildUseCase(
     SubmitLeaveDecisionInput input,
   ) async {
-    await _repository.submitLeaveDecision(
-      request: input.request,
-      isApproved: input.isApproved,
-      reviewedBy: input.reviewedBy ?? '',
-      updateAttendance: input.updateAttendance,
+    final leaveRequest = await _repository.submitLeaveDecision(
+      requestId: input.requestId,
+      status: input.status,
+      decisionNote: input.decisionNote,
     );
-    return const SubmitLeaveDecisionOutput();
+    return SubmitLeaveDecisionOutput(leaveRequest: leaveRequest);
   }
 }
 
@@ -36,17 +35,16 @@ class SubmitLeaveDecisionUseCase
 class SubmitLeaveDecisionInput extends BaseInput
     with _$SubmitLeaveDecisionInput {
   const factory SubmitLeaveDecisionInput({
-    required LeaveRequest request,
-    required bool isApproved,
-    required bool updateAttendance,
-    String? reviewedBy,
+    required int requestId,
+    required String status,
+    String? decisionNote,
   }) = _SubmitLeaveDecisionInput;
 }
 
 @freezed
 class SubmitLeaveDecisionOutput extends BaseOutput
     with _$SubmitLeaveDecisionOutput {
-  const factory SubmitLeaveDecisionOutput() = _SubmitLeaveDecisionOutput;
-
-  const SubmitLeaveDecisionOutput._();
+  const factory SubmitLeaveDecisionOutput({
+    required LeaveRequest leaveRequest,
+  }) = _SubmitLeaveDecisionOutput;
 }

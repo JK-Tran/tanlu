@@ -17,9 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AttendanceSession {
-  String get id => throw _privateConstructorUsedError;
-  String get classId => throw _privateConstructorUsedError;
-  DateTime? get date => throw _privateConstructorUsedError;
   bool get isCheckInCompleted => throw _privateConstructorUsedError;
   bool get isCheckOutCompleted => throw _privateConstructorUsedError;
   DateTime? get completedAt => throw _privateConstructorUsedError;
@@ -39,9 +36,6 @@ abstract class $AttendanceSessionCopyWith<$Res> {
   ) = _$AttendanceSessionCopyWithImpl<$Res, AttendanceSession>;
   @useResult
   $Res call({
-    String id,
-    String classId,
-    DateTime? date,
     bool isCheckInCompleted,
     bool isCheckOutCompleted,
     DateTime? completedAt,
@@ -63,27 +57,12 @@ class _$AttendanceSessionCopyWithImpl<$Res, $Val extends AttendanceSession>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? classId = null,
-    Object? date = freezed,
     Object? isCheckInCompleted = null,
     Object? isCheckOutCompleted = null,
     Object? completedAt = freezed,
   }) {
     return _then(
       _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            classId: null == classId
-                ? _value.classId
-                : classId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            date: freezed == date
-                ? _value.date
-                : date // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
             isCheckInCompleted: null == isCheckInCompleted
                 ? _value.isCheckInCompleted
                 : isCheckInCompleted // ignore: cast_nullable_to_non_nullable
@@ -112,9 +91,6 @@ abstract class _$$AttendanceSessionImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    String id,
-    String classId,
-    DateTime? date,
     bool isCheckInCompleted,
     bool isCheckOutCompleted,
     DateTime? completedAt,
@@ -135,27 +111,12 @@ class __$$AttendanceSessionImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? classId = null,
-    Object? date = freezed,
     Object? isCheckInCompleted = null,
     Object? isCheckOutCompleted = null,
     Object? completedAt = freezed,
   }) {
     return _then(
       _$AttendanceSessionImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        classId: null == classId
-            ? _value.classId
-            : classId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        date: freezed == date
-            ? _value.date
-            : date // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
         isCheckInCompleted: null == isCheckInCompleted
             ? _value.isCheckInCompleted
             : isCheckInCompleted // ignore: cast_nullable_to_non_nullable
@@ -177,22 +138,11 @@ class __$$AttendanceSessionImplCopyWithImpl<$Res>
 
 class _$AttendanceSessionImpl implements _AttendanceSession {
   const _$AttendanceSessionImpl({
-    this.id = '',
-    this.classId = '',
-    this.date,
     this.isCheckInCompleted = false,
     this.isCheckOutCompleted = false,
     this.completedAt,
   });
 
-  @override
-  @JsonKey()
-  final String id;
-  @override
-  @JsonKey()
-  final String classId;
-  @override
-  final DateTime? date;
   @override
   @JsonKey()
   final bool isCheckInCompleted;
@@ -204,7 +154,7 @@ class _$AttendanceSessionImpl implements _AttendanceSession {
 
   @override
   String toString() {
-    return 'AttendanceSession(id: $id, classId: $classId, date: $date, isCheckInCompleted: $isCheckInCompleted, isCheckOutCompleted: $isCheckOutCompleted, completedAt: $completedAt)';
+    return 'AttendanceSession(isCheckInCompleted: $isCheckInCompleted, isCheckOutCompleted: $isCheckOutCompleted, completedAt: $completedAt)';
   }
 
   @override
@@ -212,9 +162,6 @@ class _$AttendanceSessionImpl implements _AttendanceSession {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AttendanceSessionImpl &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.classId, classId) || other.classId == classId) &&
-            (identical(other.date, date) || other.date == date) &&
             (identical(other.isCheckInCompleted, isCheckInCompleted) ||
                 other.isCheckInCompleted == isCheckInCompleted) &&
             (identical(other.isCheckOutCompleted, isCheckOutCompleted) ||
@@ -226,9 +173,6 @@ class _$AttendanceSessionImpl implements _AttendanceSession {
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    id,
-    classId,
-    date,
     isCheckInCompleted,
     isCheckOutCompleted,
     completedAt,
@@ -248,20 +192,11 @@ class _$AttendanceSessionImpl implements _AttendanceSession {
 
 abstract class _AttendanceSession implements AttendanceSession {
   const factory _AttendanceSession({
-    final String id,
-    final String classId,
-    final DateTime? date,
     final bool isCheckInCompleted,
     final bool isCheckOutCompleted,
     final DateTime? completedAt,
   }) = _$AttendanceSessionImpl;
 
-  @override
-  String get id;
-  @override
-  String get classId;
-  @override
-  DateTime? get date;
   @override
   bool get isCheckInCompleted;
   @override

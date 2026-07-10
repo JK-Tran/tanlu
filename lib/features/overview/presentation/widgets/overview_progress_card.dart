@@ -3,7 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
-import 'package:tanlu_management/features/overview/presentation/bloc/overview_bloc.dart';
+
+class OverviewAvatarPreview {
+  const OverviewAvatarPreview({required this.nickname, this.avatarUrl});
+
+  final String nickname;
+  final String? avatarUrl;
+}
 
 class OverviewProgressCard extends StatelessWidget {
   const OverviewProgressCard({
@@ -27,7 +33,7 @@ class OverviewProgressCard extends StatelessWidget {
   final String iconPath;
   final Color primaryColor;
   final Color iconBgColor;
-  final List<OverviewMarkedStudent> avatars;
+  final List<OverviewAvatarPreview> avatars;
   final int currentValue;
   final int totalValue;
   final String statusText;
