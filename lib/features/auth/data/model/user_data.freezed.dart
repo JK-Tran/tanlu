@@ -22,7 +22,7 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserData {
   @JsonKey(name: 'id')
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'email')
   String? get email => throw _privateConstructorUsedError;
   @JsonKey(name: 'fullName')
@@ -30,13 +30,21 @@ mixin _$UserData {
   @JsonKey(name: 'role')
   String? get role => throw _privateConstructorUsedError;
   @JsonKey(name: 'centerId')
-  String? get centerId => throw _privateConstructorUsedError;
+  int? get centerId => throw _privateConstructorUsedError;
   @JsonKey(name: 'phone')
   String? get phone => throw _privateConstructorUsedError;
-  @JsonKey(readValue: _readUserAvatar)
-  String? get avatar => throw _privateConstructorUsedError;
+  @JsonKey(name: 'avatarUrl')
+  String? get avatarUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'passwordHash')
+  String? get passwordHash => throw _privateConstructorUsedError;
+  @JsonKey(name: 'fcmToken')
+  String? get fcmToken => throw _privateConstructorUsedError;
+  @JsonKey(name: 'createdAt')
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updatedAt')
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'classId')
-  String? get classId => throw _privateConstructorUsedError;
+  int? get classId => throw _privateConstructorUsedError;
 
   /// Serializes this UserData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,14 +62,18 @@ abstract class $UserDataCopyWith<$Res> {
       _$UserDataCopyWithImpl<$Res, UserData>;
   @useResult
   $Res call({
-    @JsonKey(name: 'id') String? id,
+    @JsonKey(name: 'id') int? id,
     @JsonKey(name: 'email') String? email,
     @JsonKey(name: 'fullName') String? fullName,
     @JsonKey(name: 'role') String? role,
-    @JsonKey(name: 'centerId') String? centerId,
+    @JsonKey(name: 'centerId') int? centerId,
     @JsonKey(name: 'phone') String? phone,
-    @JsonKey(readValue: _readUserAvatar) String? avatar,
-    @JsonKey(name: 'classId') String? classId,
+    @JsonKey(name: 'avatarUrl') String? avatarUrl,
+    @JsonKey(name: 'passwordHash') String? passwordHash,
+    @JsonKey(name: 'fcmToken') String? fcmToken,
+    @JsonKey(name: 'createdAt') DateTime? createdAt,
+    @JsonKey(name: 'updatedAt') DateTime? updatedAt,
+    @JsonKey(name: 'classId') int? classId,
   });
 }
 
@@ -86,7 +98,11 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
     Object? role = freezed,
     Object? centerId = freezed,
     Object? phone = freezed,
-    Object? avatar = freezed,
+    Object? avatarUrl = freezed,
+    Object? passwordHash = freezed,
+    Object? fcmToken = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? classId = freezed,
   }) {
     return _then(
@@ -94,7 +110,7 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
             id: freezed == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as String?,
+                      as int?,
             email: freezed == email
                 ? _value.email
                 : email // ignore: cast_nullable_to_non_nullable
@@ -110,19 +126,35 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
             centerId: freezed == centerId
                 ? _value.centerId
                 : centerId // ignore: cast_nullable_to_non_nullable
-                      as String?,
+                      as int?,
             phone: freezed == phone
                 ? _value.phone
                 : phone // ignore: cast_nullable_to_non_nullable
                       as String?,
-            avatar: freezed == avatar
-                ? _value.avatar
-                : avatar // ignore: cast_nullable_to_non_nullable
+            avatarUrl: freezed == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
                       as String?,
+            passwordHash: freezed == passwordHash
+                ? _value.passwordHash
+                : passwordHash // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            fcmToken: freezed == fcmToken
+                ? _value.fcmToken
+                : fcmToken // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
             classId: freezed == classId
                 ? _value.classId
                 : classId // ignore: cast_nullable_to_non_nullable
-                      as String?,
+                      as int?,
           )
           as $Val,
     );
@@ -139,14 +171,18 @@ abstract class _$$UserDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    @JsonKey(name: 'id') String? id,
+    @JsonKey(name: 'id') int? id,
     @JsonKey(name: 'email') String? email,
     @JsonKey(name: 'fullName') String? fullName,
     @JsonKey(name: 'role') String? role,
-    @JsonKey(name: 'centerId') String? centerId,
+    @JsonKey(name: 'centerId') int? centerId,
     @JsonKey(name: 'phone') String? phone,
-    @JsonKey(readValue: _readUserAvatar) String? avatar,
-    @JsonKey(name: 'classId') String? classId,
+    @JsonKey(name: 'avatarUrl') String? avatarUrl,
+    @JsonKey(name: 'passwordHash') String? passwordHash,
+    @JsonKey(name: 'fcmToken') String? fcmToken,
+    @JsonKey(name: 'createdAt') DateTime? createdAt,
+    @JsonKey(name: 'updatedAt') DateTime? updatedAt,
+    @JsonKey(name: 'classId') int? classId,
   });
 }
 
@@ -170,7 +206,11 @@ class __$$UserDataImplCopyWithImpl<$Res>
     Object? role = freezed,
     Object? centerId = freezed,
     Object? phone = freezed,
-    Object? avatar = freezed,
+    Object? avatarUrl = freezed,
+    Object? passwordHash = freezed,
+    Object? fcmToken = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? classId = freezed,
   }) {
     return _then(
@@ -178,7 +218,7 @@ class __$$UserDataImplCopyWithImpl<$Res>
         id: freezed == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                  as int?,
         email: freezed == email
             ? _value.email
             : email // ignore: cast_nullable_to_non_nullable
@@ -194,19 +234,35 @@ class __$$UserDataImplCopyWithImpl<$Res>
         centerId: freezed == centerId
             ? _value.centerId
             : centerId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                  as int?,
         phone: freezed == phone
             ? _value.phone
             : phone // ignore: cast_nullable_to_non_nullable
                   as String?,
-        avatar: freezed == avatar
-            ? _value.avatar
-            : avatar // ignore: cast_nullable_to_non_nullable
+        avatarUrl: freezed == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
                   as String?,
+        passwordHash: freezed == passwordHash
+            ? _value.passwordHash
+            : passwordHash // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        fcmToken: freezed == fcmToken
+            ? _value.fcmToken
+            : fcmToken // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
         classId: freezed == classId
             ? _value.classId
             : classId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                  as int?,
       ),
     );
   }
@@ -222,7 +278,11 @@ class _$UserDataImpl extends _UserData {
     @JsonKey(name: 'role') this.role,
     @JsonKey(name: 'centerId') this.centerId,
     @JsonKey(name: 'phone') this.phone,
-    @JsonKey(readValue: _readUserAvatar) this.avatar,
+    @JsonKey(name: 'avatarUrl') this.avatarUrl,
+    @JsonKey(name: 'passwordHash') this.passwordHash,
+    @JsonKey(name: 'fcmToken') this.fcmToken,
+    @JsonKey(name: 'createdAt') this.createdAt,
+    @JsonKey(name: 'updatedAt') this.updatedAt,
     @JsonKey(name: 'classId') this.classId,
   }) : super._();
 
@@ -231,7 +291,7 @@ class _$UserDataImpl extends _UserData {
 
   @override
   @JsonKey(name: 'id')
-  final String? id;
+  final int? id;
   @override
   @JsonKey(name: 'email')
   final String? email;
@@ -243,20 +303,32 @@ class _$UserDataImpl extends _UserData {
   final String? role;
   @override
   @JsonKey(name: 'centerId')
-  final String? centerId;
+  final int? centerId;
   @override
   @JsonKey(name: 'phone')
   final String? phone;
   @override
-  @JsonKey(readValue: _readUserAvatar)
-  final String? avatar;
+  @JsonKey(name: 'avatarUrl')
+  final String? avatarUrl;
+  @override
+  @JsonKey(name: 'passwordHash')
+  final String? passwordHash;
+  @override
+  @JsonKey(name: 'fcmToken')
+  final String? fcmToken;
+  @override
+  @JsonKey(name: 'createdAt')
+  final DateTime? createdAt;
+  @override
+  @JsonKey(name: 'updatedAt')
+  final DateTime? updatedAt;
   @override
   @JsonKey(name: 'classId')
-  final String? classId;
+  final int? classId;
 
   @override
   String toString() {
-    return 'UserData(id: $id, email: $email, fullName: $fullName, role: $role, centerId: $centerId, phone: $phone, avatar: $avatar, classId: $classId)';
+    return 'UserData(id: $id, email: $email, fullName: $fullName, role: $role, centerId: $centerId, phone: $phone, avatarUrl: $avatarUrl, passwordHash: $passwordHash, fcmToken: $fcmToken, createdAt: $createdAt, updatedAt: $updatedAt, classId: $classId)';
   }
 
   @override
@@ -272,7 +344,16 @@ class _$UserDataImpl extends _UserData {
             (identical(other.centerId, centerId) ||
                 other.centerId == centerId) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
+            (identical(other.passwordHash, passwordHash) ||
+                other.passwordHash == passwordHash) &&
+            (identical(other.fcmToken, fcmToken) ||
+                other.fcmToken == fcmToken) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.classId, classId) || other.classId == classId));
   }
 
@@ -286,7 +367,11 @@ class _$UserDataImpl extends _UserData {
     role,
     centerId,
     phone,
-    avatar,
+    avatarUrl,
+    passwordHash,
+    fcmToken,
+    createdAt,
+    updatedAt,
     classId,
   );
 
@@ -306,14 +391,18 @@ class _$UserDataImpl extends _UserData {
 
 abstract class _UserData extends UserData {
   const factory _UserData({
-    @JsonKey(name: 'id') final String? id,
+    @JsonKey(name: 'id') final int? id,
     @JsonKey(name: 'email') final String? email,
     @JsonKey(name: 'fullName') final String? fullName,
     @JsonKey(name: 'role') final String? role,
-    @JsonKey(name: 'centerId') final String? centerId,
+    @JsonKey(name: 'centerId') final int? centerId,
     @JsonKey(name: 'phone') final String? phone,
-    @JsonKey(readValue: _readUserAvatar) final String? avatar,
-    @JsonKey(name: 'classId') final String? classId,
+    @JsonKey(name: 'avatarUrl') final String? avatarUrl,
+    @JsonKey(name: 'passwordHash') final String? passwordHash,
+    @JsonKey(name: 'fcmToken') final String? fcmToken,
+    @JsonKey(name: 'createdAt') final DateTime? createdAt,
+    @JsonKey(name: 'updatedAt') final DateTime? updatedAt,
+    @JsonKey(name: 'classId') final int? classId,
   }) = _$UserDataImpl;
   const _UserData._() : super._();
 
@@ -322,7 +411,7 @@ abstract class _UserData extends UserData {
 
   @override
   @JsonKey(name: 'id')
-  String? get id;
+  int? get id;
   @override
   @JsonKey(name: 'email')
   String? get email;
@@ -334,21 +423,269 @@ abstract class _UserData extends UserData {
   String? get role;
   @override
   @JsonKey(name: 'centerId')
-  String? get centerId;
+  int? get centerId;
   @override
   @JsonKey(name: 'phone')
   String? get phone;
   @override
-  @JsonKey(readValue: _readUserAvatar)
-  String? get avatar;
+  @JsonKey(name: 'avatarUrl')
+  String? get avatarUrl;
+  @override
+  @JsonKey(name: 'passwordHash')
+  String? get passwordHash;
+  @override
+  @JsonKey(name: 'fcmToken')
+  String? get fcmToken;
+  @override
+  @JsonKey(name: 'createdAt')
+  DateTime? get createdAt;
+  @override
+  @JsonKey(name: 'updatedAt')
+  DateTime? get updatedAt;
   @override
   @JsonKey(name: 'classId')
-  String? get classId;
+  int? get classId;
 
   /// Create a copy of UserData
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserDataImplCopyWith<_$UserDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+UserDataResponse _$UserDataResponseFromJson(Map<String, dynamic> json) {
+  return _UserDataResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UserDataResponse {
+  @JsonKey(name: 'token')
+  String? get token => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user')
+  UserData? get user => throw _privateConstructorUsedError;
+  @JsonKey(name: 'firebaseCustomToken')
+  String? get firebaseCustomToken => throw _privateConstructorUsedError;
+
+  /// Serializes this UserDataResponse to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of UserDataResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UserDataResponseCopyWith<UserDataResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserDataResponseCopyWith<$Res> {
+  factory $UserDataResponseCopyWith(
+    UserDataResponse value,
+    $Res Function(UserDataResponse) then,
+  ) = _$UserDataResponseCopyWithImpl<$Res, UserDataResponse>;
+  @useResult
+  $Res call({
+    @JsonKey(name: 'token') String? token,
+    @JsonKey(name: 'user') UserData? user,
+    @JsonKey(name: 'firebaseCustomToken') String? firebaseCustomToken,
+  });
+
+  $UserDataCopyWith<$Res>? get user;
+}
+
+/// @nodoc
+class _$UserDataResponseCopyWithImpl<$Res, $Val extends UserDataResponse>
+    implements $UserDataResponseCopyWith<$Res> {
+  _$UserDataResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UserDataResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = freezed,
+    Object? user = freezed,
+    Object? firebaseCustomToken = freezed,
+  }) {
+    return _then(
+      _value.copyWith(
+            token: freezed == token
+                ? _value.token
+                : token // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            user: freezed == user
+                ? _value.user
+                : user // ignore: cast_nullable_to_non_nullable
+                      as UserData?,
+            firebaseCustomToken: freezed == firebaseCustomToken
+                ? _value.firebaseCustomToken
+                : firebaseCustomToken // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of UserDataResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserDataCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserDataCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$UserDataResponseImplCopyWith<$Res>
+    implements $UserDataResponseCopyWith<$Res> {
+  factory _$$UserDataResponseImplCopyWith(
+    _$UserDataResponseImpl value,
+    $Res Function(_$UserDataResponseImpl) then,
+  ) = __$$UserDataResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({
+    @JsonKey(name: 'token') String? token,
+    @JsonKey(name: 'user') UserData? user,
+    @JsonKey(name: 'firebaseCustomToken') String? firebaseCustomToken,
+  });
+
+  @override
+  $UserDataCopyWith<$Res>? get user;
+}
+
+/// @nodoc
+class __$$UserDataResponseImplCopyWithImpl<$Res>
+    extends _$UserDataResponseCopyWithImpl<$Res, _$UserDataResponseImpl>
+    implements _$$UserDataResponseImplCopyWith<$Res> {
+  __$$UserDataResponseImplCopyWithImpl(
+    _$UserDataResponseImpl _value,
+    $Res Function(_$UserDataResponseImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of UserDataResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = freezed,
+    Object? user = freezed,
+    Object? firebaseCustomToken = freezed,
+  }) {
+    return _then(
+      _$UserDataResponseImpl(
+        token: freezed == token
+            ? _value.token
+            : token // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        user: freezed == user
+            ? _value.user
+            : user // ignore: cast_nullable_to_non_nullable
+                  as UserData?,
+        firebaseCustomToken: freezed == firebaseCustomToken
+            ? _value.firebaseCustomToken
+            : firebaseCustomToken // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UserDataResponseImpl implements _UserDataResponse {
+  const _$UserDataResponseImpl({
+    @JsonKey(name: 'token') this.token,
+    @JsonKey(name: 'user') this.user,
+    @JsonKey(name: 'firebaseCustomToken') this.firebaseCustomToken,
+  });
+
+  factory _$UserDataResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserDataResponseImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'token')
+  final String? token;
+  @override
+  @JsonKey(name: 'user')
+  final UserData? user;
+  @override
+  @JsonKey(name: 'firebaseCustomToken')
+  final String? firebaseCustomToken;
+
+  @override
+  String toString() {
+    return 'UserDataResponse(token: $token, user: $user, firebaseCustomToken: $firebaseCustomToken)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserDataResponseImpl &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.firebaseCustomToken, firebaseCustomToken) ||
+                other.firebaseCustomToken == firebaseCustomToken));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, token, user, firebaseCustomToken);
+
+  /// Create a copy of UserDataResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserDataResponseImplCopyWith<_$UserDataResponseImpl> get copyWith =>
+      __$$UserDataResponseImplCopyWithImpl<_$UserDataResponseImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserDataResponseImplToJson(this);
+  }
+}
+
+abstract class _UserDataResponse implements UserDataResponse {
+  const factory _UserDataResponse({
+    @JsonKey(name: 'token') final String? token,
+    @JsonKey(name: 'user') final UserData? user,
+    @JsonKey(name: 'firebaseCustomToken') final String? firebaseCustomToken,
+  }) = _$UserDataResponseImpl;
+
+  factory _UserDataResponse.fromJson(Map<String, dynamic> json) =
+      _$UserDataResponseImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'token')
+  String? get token;
+  @override
+  @JsonKey(name: 'user')
+  UserData? get user;
+  @override
+  @JsonKey(name: 'firebaseCustomToken')
+  String? get firebaseCustomToken;
+
+  /// Create a copy of UserDataResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UserDataResponseImplCopyWith<_$UserDataResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

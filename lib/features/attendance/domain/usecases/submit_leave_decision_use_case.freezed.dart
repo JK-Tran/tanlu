@@ -17,10 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SubmitLeaveDecisionInput {
-  LeaveRequest get request => throw _privateConstructorUsedError;
-  bool get isApproved => throw _privateConstructorUsedError;
-  bool get updateAttendance => throw _privateConstructorUsedError;
-  String? get reviewedBy => throw _privateConstructorUsedError;
+  int get requestId => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  String? get decisionNote => throw _privateConstructorUsedError;
 
   /// Create a copy of SubmitLeaveDecisionInput
   /// with the given fields replaced by the non-null parameter values.
@@ -36,14 +35,7 @@ abstract class $SubmitLeaveDecisionInputCopyWith<$Res> {
     $Res Function(SubmitLeaveDecisionInput) then,
   ) = _$SubmitLeaveDecisionInputCopyWithImpl<$Res, SubmitLeaveDecisionInput>;
   @useResult
-  $Res call({
-    LeaveRequest request,
-    bool isApproved,
-    bool updateAttendance,
-    String? reviewedBy,
-  });
-
-  $LeaveRequestCopyWith<$Res> get request;
+  $Res call({int requestId, String status, String? decisionNote});
 }
 
 /// @nodoc
@@ -64,42 +56,27 @@ class _$SubmitLeaveDecisionInputCopyWithImpl<
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = null,
-    Object? isApproved = null,
-    Object? updateAttendance = null,
-    Object? reviewedBy = freezed,
+    Object? requestId = null,
+    Object? status = null,
+    Object? decisionNote = freezed,
   }) {
     return _then(
       _value.copyWith(
-            request: null == request
-                ? _value.request
-                : request // ignore: cast_nullable_to_non_nullable
-                      as LeaveRequest,
-            isApproved: null == isApproved
-                ? _value.isApproved
-                : isApproved // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            updateAttendance: null == updateAttendance
-                ? _value.updateAttendance
-                : updateAttendance // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            reviewedBy: freezed == reviewedBy
-                ? _value.reviewedBy
-                : reviewedBy // ignore: cast_nullable_to_non_nullable
+            requestId: null == requestId
+                ? _value.requestId
+                : requestId // ignore: cast_nullable_to_non_nullable
+                      as int,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as String,
+            decisionNote: freezed == decisionNote
+                ? _value.decisionNote
+                : decisionNote // ignore: cast_nullable_to_non_nullable
                       as String?,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of SubmitLeaveDecisionInput
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $LeaveRequestCopyWith<$Res> get request {
-    return $LeaveRequestCopyWith<$Res>(_value.request, (value) {
-      return _then(_value.copyWith(request: value) as $Val);
-    });
   }
 }
 
@@ -112,15 +89,7 @@ abstract class _$$SubmitLeaveDecisionInputImplCopyWith<$Res>
   ) = __$$SubmitLeaveDecisionInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    LeaveRequest request,
-    bool isApproved,
-    bool updateAttendance,
-    String? reviewedBy,
-  });
-
-  @override
-  $LeaveRequestCopyWith<$Res> get request;
+  $Res call({int requestId, String status, String? decisionNote});
 }
 
 /// @nodoc
@@ -141,28 +110,23 @@ class __$$SubmitLeaveDecisionInputImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = null,
-    Object? isApproved = null,
-    Object? updateAttendance = null,
-    Object? reviewedBy = freezed,
+    Object? requestId = null,
+    Object? status = null,
+    Object? decisionNote = freezed,
   }) {
     return _then(
       _$SubmitLeaveDecisionInputImpl(
-        request: null == request
-            ? _value.request
-            : request // ignore: cast_nullable_to_non_nullable
-                  as LeaveRequest,
-        isApproved: null == isApproved
-            ? _value.isApproved
-            : isApproved // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        updateAttendance: null == updateAttendance
-            ? _value.updateAttendance
-            : updateAttendance // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        reviewedBy: freezed == reviewedBy
-            ? _value.reviewedBy
-            : reviewedBy // ignore: cast_nullable_to_non_nullable
+        requestId: null == requestId
+            ? _value.requestId
+            : requestId // ignore: cast_nullable_to_non_nullable
+                  as int,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as String,
+        decisionNote: freezed == decisionNote
+            ? _value.decisionNote
+            : decisionNote // ignore: cast_nullable_to_non_nullable
                   as String?,
       ),
     );
@@ -171,39 +135,23 @@ class __$$SubmitLeaveDecisionInputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SubmitLeaveDecisionInputImpl
-    with DiagnosticableTreeMixin
-    implements _SubmitLeaveDecisionInput {
+class _$SubmitLeaveDecisionInputImpl implements _SubmitLeaveDecisionInput {
   const _$SubmitLeaveDecisionInputImpl({
-    required this.request,
-    required this.isApproved,
-    required this.updateAttendance,
-    this.reviewedBy,
+    required this.requestId,
+    required this.status,
+    this.decisionNote,
   });
 
   @override
-  final LeaveRequest request;
+  final int requestId;
   @override
-  final bool isApproved;
+  final String status;
   @override
-  final bool updateAttendance;
-  @override
-  final String? reviewedBy;
+  final String? decisionNote;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SubmitLeaveDecisionInput(request: $request, isApproved: $isApproved, updateAttendance: $updateAttendance, reviewedBy: $reviewedBy)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SubmitLeaveDecisionInput'))
-      ..add(DiagnosticsProperty('request', request))
-      ..add(DiagnosticsProperty('isApproved', isApproved))
-      ..add(DiagnosticsProperty('updateAttendance', updateAttendance))
-      ..add(DiagnosticsProperty('reviewedBy', reviewedBy));
+  String toString() {
+    return 'SubmitLeaveDecisionInput(requestId: $requestId, status: $status, decisionNote: $decisionNote)';
   }
 
   @override
@@ -211,23 +159,15 @@ class _$SubmitLeaveDecisionInputImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SubmitLeaveDecisionInputImpl &&
-            (identical(other.request, request) || other.request == request) &&
-            (identical(other.isApproved, isApproved) ||
-                other.isApproved == isApproved) &&
-            (identical(other.updateAttendance, updateAttendance) ||
-                other.updateAttendance == updateAttendance) &&
-            (identical(other.reviewedBy, reviewedBy) ||
-                other.reviewedBy == reviewedBy));
+            (identical(other.requestId, requestId) ||
+                other.requestId == requestId) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.decisionNote, decisionNote) ||
+                other.decisionNote == decisionNote));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    request,
-    isApproved,
-    updateAttendance,
-    reviewedBy,
-  );
+  int get hashCode => Object.hash(runtimeType, requestId, status, decisionNote);
 
   /// Create a copy of SubmitLeaveDecisionInput
   /// with the given fields replaced by the non-null parameter values.
@@ -243,20 +183,17 @@ class _$SubmitLeaveDecisionInputImpl
 
 abstract class _SubmitLeaveDecisionInput implements SubmitLeaveDecisionInput {
   const factory _SubmitLeaveDecisionInput({
-    required final LeaveRequest request,
-    required final bool isApproved,
-    required final bool updateAttendance,
-    final String? reviewedBy,
+    required final int requestId,
+    required final String status,
+    final String? decisionNote,
   }) = _$SubmitLeaveDecisionInputImpl;
 
   @override
-  LeaveRequest get request;
+  int get requestId;
   @override
-  bool get isApproved;
+  String get status;
   @override
-  bool get updateAttendance;
-  @override
-  String? get reviewedBy;
+  String? get decisionNote;
 
   /// Create a copy of SubmitLeaveDecisionInput
   /// with the given fields replaced by the non-null parameter values.
@@ -267,7 +204,15 @@ abstract class _SubmitLeaveDecisionInput implements SubmitLeaveDecisionInput {
 }
 
 /// @nodoc
-mixin _$SubmitLeaveDecisionOutput {}
+mixin _$SubmitLeaveDecisionOutput {
+  LeaveRequest get leaveRequest => throw _privateConstructorUsedError;
+
+  /// Create a copy of SubmitLeaveDecisionOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SubmitLeaveDecisionOutputCopyWith<SubmitLeaveDecisionOutput> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 /// @nodoc
 abstract class $SubmitLeaveDecisionOutputCopyWith<$Res> {
@@ -275,6 +220,10 @@ abstract class $SubmitLeaveDecisionOutputCopyWith<$Res> {
     SubmitLeaveDecisionOutput value,
     $Res Function(SubmitLeaveDecisionOutput) then,
   ) = _$SubmitLeaveDecisionOutputCopyWithImpl<$Res, SubmitLeaveDecisionOutput>;
+  @useResult
+  $Res call({LeaveRequest leaveRequest});
+
+  $LeaveRequestCopyWith<$Res> get leaveRequest;
 }
 
 /// @nodoc
@@ -292,14 +241,44 @@ class _$SubmitLeaveDecisionOutputCopyWithImpl<
 
   /// Create a copy of SubmitLeaveDecisionOutput
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? leaveRequest = null}) {
+    return _then(
+      _value.copyWith(
+            leaveRequest: null == leaveRequest
+                ? _value.leaveRequest
+                : leaveRequest // ignore: cast_nullable_to_non_nullable
+                      as LeaveRequest,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of SubmitLeaveDecisionOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LeaveRequestCopyWith<$Res> get leaveRequest {
+    return $LeaveRequestCopyWith<$Res>(_value.leaveRequest, (value) {
+      return _then(_value.copyWith(leaveRequest: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$SubmitLeaveDecisionOutputImplCopyWith<$Res> {
+abstract class _$$SubmitLeaveDecisionOutputImplCopyWith<$Res>
+    implements $SubmitLeaveDecisionOutputCopyWith<$Res> {
   factory _$$SubmitLeaveDecisionOutputImplCopyWith(
     _$SubmitLeaveDecisionOutputImpl value,
     $Res Function(_$SubmitLeaveDecisionOutputImpl) then,
   ) = __$$SubmitLeaveDecisionOutputImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({LeaveRequest leaveRequest});
+
+  @override
+  $LeaveRequestCopyWith<$Res> get leaveRequest;
 }
 
 /// @nodoc
@@ -317,37 +296,69 @@ class __$$SubmitLeaveDecisionOutputImplCopyWithImpl<$Res>
 
   /// Create a copy of SubmitLeaveDecisionOutput
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? leaveRequest = null}) {
+    return _then(
+      _$SubmitLeaveDecisionOutputImpl(
+        leaveRequest: null == leaveRequest
+            ? _value.leaveRequest
+            : leaveRequest // ignore: cast_nullable_to_non_nullable
+                  as LeaveRequest,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
-class _$SubmitLeaveDecisionOutputImpl extends _SubmitLeaveDecisionOutput
-    with DiagnosticableTreeMixin {
-  const _$SubmitLeaveDecisionOutputImpl() : super._();
+class _$SubmitLeaveDecisionOutputImpl implements _SubmitLeaveDecisionOutput {
+  const _$SubmitLeaveDecisionOutputImpl({required this.leaveRequest});
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SubmitLeaveDecisionOutput()';
-  }
+  final LeaveRequest leaveRequest;
 
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'SubmitLeaveDecisionOutput'));
+  String toString() {
+    return 'SubmitLeaveDecisionOutput(leaveRequest: $leaveRequest)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SubmitLeaveDecisionOutputImpl);
+            other is _$SubmitLeaveDecisionOutputImpl &&
+            (identical(other.leaveRequest, leaveRequest) ||
+                other.leaveRequest == leaveRequest));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, leaveRequest);
+
+  /// Create a copy of SubmitLeaveDecisionOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SubmitLeaveDecisionOutputImplCopyWith<_$SubmitLeaveDecisionOutputImpl>
+  get copyWith =>
+      __$$SubmitLeaveDecisionOutputImplCopyWithImpl<
+        _$SubmitLeaveDecisionOutputImpl
+      >(this, _$identity);
 }
 
-abstract class _SubmitLeaveDecisionOutput extends SubmitLeaveDecisionOutput {
-  const factory _SubmitLeaveDecisionOutput() = _$SubmitLeaveDecisionOutputImpl;
-  const _SubmitLeaveDecisionOutput._() : super._();
+abstract class _SubmitLeaveDecisionOutput implements SubmitLeaveDecisionOutput {
+  const factory _SubmitLeaveDecisionOutput({
+    required final LeaveRequest leaveRequest,
+  }) = _$SubmitLeaveDecisionOutputImpl;
+
+  @override
+  LeaveRequest get leaveRequest;
+
+  /// Create a copy of SubmitLeaveDecisionOutput
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SubmitLeaveDecisionOutputImplCopyWith<_$SubmitLeaveDecisionOutputImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
 import 'package:tanlu_management/core/dimensions/app_dimens.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
-import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/features/auth/domain/repositories/auth_repository.dart';
+
 import 'package:tanlu_management/features/auth/presentation/login/bloc/login_bloc.dart';
 import 'package:tanlu_management/features/auth/presentation/login/widgets/login_body.dart';
 
@@ -24,7 +22,7 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
   @override
   void initState() {
     super.initState();
-    _usernameController.text = bloc.state.username;
+    _usernameController.text = bloc.state.email;
     _passwordController.text = bloc.state.password;
   }
 
@@ -49,8 +47,6 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.loginSuccess == true) {
-          final user = GetIt.instance.get<AuthRepository>().getCurrentUser();
-          context.read<AppBloc>().add(AppEvent.loggedIn(user));
           return;
         }
         // Lắng nghe lỗi cụ thể của trang (onPageError) → hiển thị SnackBar
@@ -72,7 +68,7 @@ class _LoginPageState extends BasePageState<LoginPage, LoginBloc> {
       },
       child: LoginBody(
         formKey: _formKey,
-        usernameController: _usernameController,
+        emailController: _usernameController,
         passwordController: _passwordController,
         onLoginPressed: _onLoginPressed,
       ),

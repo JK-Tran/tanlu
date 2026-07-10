@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/shared/utils/string_utils.dart';
+import 'package:tanlu_management/features/notification/presentation/bloc/notification_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tanlu_management/core/router/app_router.dart';
+import 'package:tanlu_management/shared/utils/date_time_utils.dart';
 
 class OverviewBanner extends StatelessWidget {
   const OverviewBanner({super.key});
@@ -37,92 +40,163 @@ class OverviewBanner extends StatelessWidget {
               ),
             ],
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: Stack(
             children: [
-              // Nội dung Text bên trái
-              Expanded(
-                flex: 6,
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        width: constraints.maxWidth,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            AppText.b2(
-                              'Xin chào,\n$displayName 👋',
-                              color: AppColors.grayDark,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
-                              maxLines: 2,
-                              textOverflow: TextOverflow.ellipsis,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Nội dung Text bên trái
+                  Expanded(
+                    flex: 6,
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: SizedBox(
+                            width: constraints.maxWidth,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AppText.b2(
+                                  'Xin chào,\n$displayName 👋',
+                                  color: AppColors.grayDark,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                  maxLines: 2,
+                                  textOverflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(height: 8.h),
+                                Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.w,
+                                    vertical: 6.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(6.r),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(alpha: 0.05),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.calendar_month_rounded,
+                                        size: 14.sp,
+                                        color: AppColors.grayDark,
+                                      ),
+                                      SizedBox(width: 6.w),
+                                      Flexible(
+                                        child: AppText.b2(
+                                          DateTimeUtils.formatDateHeader(DateTime.now()),
+                                          color: AppColors.grayDark,
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w600,
+                                          maxLines: 1,
+                                          textOverflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 8.h),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10.w,
-                                vertical: 6.h,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(6.r),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.05),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.calendar_month_rounded,
-                                    size: 14.sp,
-                                    color: AppColors.grayDark,
-                                  ),
-                                  SizedBox(width: 6.w),
-                                  Flexible(
-                                    child: AppText.b2(
-                                      StringUtils.getFormattedDate(),
-                                      color: AppColors.grayDark,
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w600,
-                                      maxLines: 1,
-                                      textOverflow: TextOverflow.ellipsis,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  // Ảnh trang trí bên phải
+                  Expanded(
+                    flex: 5,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      child: Transform.scale(
+                        scale: 1.4,
+                        child: Image.asset(
+                          'assets/images/img-banner-overview.png',
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const SizedBox(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              
+              // Bell Icon
+              Positioned(
+                top: 20.h,
+                right: 0,
+                child: BlocBuilder<NotificationBloc, NotificationState>(
+                  builder: (context, state) {
+                    final unreadCount = state.unreadCount;
+                    return Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.05),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Material(
+                        color: Colors.white,
+                        shape: const CircleBorder(),
+                        clipBehavior: Clip.antiAlias,
+                        child: InkWell(
+                          onTap: () {
+                            context.push(AppRouter.notification);
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(8.w),
+                            child: Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                Icon(
+                                  Icons.notifications_outlined,
+                                  color: AppColors.grayDark,
+                                  size: 24.sp,
+                                ),
+                                if (unreadCount > 0)
+                                  Positioned(
+                                    right: -4,
+                                    top: -4,
+                                    child: Container(
+                                      padding: EdgeInsets.all(4.w),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Text(
+                                        unreadCount > 99 ? '99+' : unreadCount.toString(),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10.sp,
+                                          fontWeight: FontWeight.bold,
+                                          height: 1,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ],
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     );
                   },
-                ),
-              ),
-
-              // Ảnh trang trí bên phải
-              Expanded(
-                flex: 5,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  child: Transform.scale(
-                    scale: 1.4,
-                    child: Image.asset(
-                      'assets/images/img-banner-overview.png',
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const SizedBox(),
-                    ),
-                  ),
                 ),
               ),
             ],

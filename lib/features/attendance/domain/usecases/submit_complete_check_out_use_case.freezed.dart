@@ -17,8 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SubmitCompleteCheckOutInput {
-  AttendanceSession get session => throw _privateConstructorUsedError;
-  List<Attendance> get attendances => throw _privateConstructorUsedError;
+  String get date => throw _privateConstructorUsedError;
 
   /// Create a copy of SubmitCompleteCheckOutInput
   /// with the given fields replaced by the non-null parameter values.
@@ -38,9 +37,7 @@ abstract class $SubmitCompleteCheckOutInputCopyWith<$Res> {
         SubmitCompleteCheckOutInput
       >;
   @useResult
-  $Res call({AttendanceSession session, List<Attendance> attendances});
-
-  $AttendanceSessionCopyWith<$Res> get session;
+  $Res call({String date});
 }
 
 /// @nodoc
@@ -60,30 +57,16 @@ class _$SubmitCompleteCheckOutInputCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? session = null, Object? attendances = null}) {
+  $Res call({Object? date = null}) {
     return _then(
       _value.copyWith(
-            session: null == session
-                ? _value.session
-                : session // ignore: cast_nullable_to_non_nullable
-                      as AttendanceSession,
-            attendances: null == attendances
-                ? _value.attendances
-                : attendances // ignore: cast_nullable_to_non_nullable
-                      as List<Attendance>,
+            date: null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                      as String,
           )
           as $Val,
     );
-  }
-
-  /// Create a copy of SubmitCompleteCheckOutInput
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AttendanceSessionCopyWith<$Res> get session {
-    return $AttendanceSessionCopyWith<$Res>(_value.session, (value) {
-      return _then(_value.copyWith(session: value) as $Val);
-    });
   }
 }
 
@@ -96,10 +79,7 @@ abstract class _$$SubmitCompleteCheckOutInputImplCopyWith<$Res>
   ) = __$$SubmitCompleteCheckOutInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AttendanceSession session, List<Attendance> attendances});
-
-  @override
-  $AttendanceSessionCopyWith<$Res> get session;
+  $Res call({String date});
 }
 
 /// @nodoc
@@ -119,17 +99,13 @@ class __$$SubmitCompleteCheckOutInputImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? session = null, Object? attendances = null}) {
+  $Res call({Object? date = null}) {
     return _then(
       _$SubmitCompleteCheckOutInputImpl(
-        session: null == session
-            ? _value.session
-            : session // ignore: cast_nullable_to_non_nullable
-                  as AttendanceSession,
-        attendances: null == attendances
-            ? _value._attendances
-            : attendances // ignore: cast_nullable_to_non_nullable
-                  as List<Attendance>,
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as String,
       ),
     );
   }
@@ -138,35 +114,15 @@ class __$$SubmitCompleteCheckOutInputImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SubmitCompleteCheckOutInputImpl
-    with DiagnosticableTreeMixin
     implements _SubmitCompleteCheckOutInput {
-  const _$SubmitCompleteCheckOutInputImpl({
-    required this.session,
-    required final List<Attendance> attendances,
-  }) : _attendances = attendances;
+  const _$SubmitCompleteCheckOutInputImpl({required this.date});
 
   @override
-  final AttendanceSession session;
-  final List<Attendance> _attendances;
-  @override
-  List<Attendance> get attendances {
-    if (_attendances is EqualUnmodifiableListView) return _attendances;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_attendances);
-  }
+  final String date;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SubmitCompleteCheckOutInput(session: $session, attendances: $attendances)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SubmitCompleteCheckOutInput'))
-      ..add(DiagnosticsProperty('session', session))
-      ..add(DiagnosticsProperty('attendances', attendances));
+  String toString() {
+    return 'SubmitCompleteCheckOutInput(date: $date)';
   }
 
   @override
@@ -174,19 +130,11 @@ class _$SubmitCompleteCheckOutInputImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SubmitCompleteCheckOutInputImpl &&
-            (identical(other.session, session) || other.session == session) &&
-            const DeepCollectionEquality().equals(
-              other._attendances,
-              _attendances,
-            ));
+            (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    session,
-    const DeepCollectionEquality().hash(_attendances),
-  );
+  int get hashCode => Object.hash(runtimeType, date);
 
   /// Create a copy of SubmitCompleteCheckOutInput
   /// with the given fields replaced by the non-null parameter values.
@@ -202,15 +150,11 @@ class _$SubmitCompleteCheckOutInputImpl
 
 abstract class _SubmitCompleteCheckOutInput
     implements SubmitCompleteCheckOutInput {
-  const factory _SubmitCompleteCheckOutInput({
-    required final AttendanceSession session,
-    required final List<Attendance> attendances,
-  }) = _$SubmitCompleteCheckOutInputImpl;
+  const factory _SubmitCompleteCheckOutInput({required final String date}) =
+      _$SubmitCompleteCheckOutInputImpl;
 
   @override
-  AttendanceSession get session;
-  @override
-  List<Attendance> get attendances;
+  String get date;
 
   /// Create a copy of SubmitCompleteCheckOutInput
   /// with the given fields replaced by the non-null parameter values.
@@ -279,20 +223,13 @@ class __$$SubmitCompleteCheckOutOutputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SubmitCompleteCheckOutOutputImpl extends _SubmitCompleteCheckOutOutput
-    with DiagnosticableTreeMixin {
-  const _$SubmitCompleteCheckOutOutputImpl() : super._();
+class _$SubmitCompleteCheckOutOutputImpl
+    implements _SubmitCompleteCheckOutOutput {
+  const _$SubmitCompleteCheckOutOutputImpl();
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'SubmitCompleteCheckOutOutput()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SubmitCompleteCheckOutOutput'));
   }
 
   @override
@@ -307,8 +244,7 @@ class _$SubmitCompleteCheckOutOutputImpl extends _SubmitCompleteCheckOutOutput
 }
 
 abstract class _SubmitCompleteCheckOutOutput
-    extends SubmitCompleteCheckOutOutput {
+    implements SubmitCompleteCheckOutOutput {
   const factory _SubmitCompleteCheckOutOutput() =
       _$SubmitCompleteCheckOutOutputImpl;
-  const _SubmitCompleteCheckOutOutput._() : super._();
 }

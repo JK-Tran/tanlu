@@ -4,12 +4,11 @@ part of 'student_bloc.dart';
 class StudentState with _$StudentState {
   const factory StudentState({
     @Default([]) List<Student> students,
-    Student? currentStudent,
-    StudentClassStats? stats,
-    @Default(StudentGenderFilter.all) StudentGenderFilter genderFilter,
-    @Default('') String searchKeyword,
+    @Default([]) List<Student> allStudents,
+    @Default('') String searchQuery,
+    @Default(0) int genderFilterIndex,
     @Default('') String onPageError,
-    @Default(false) bool isLoading,
-    String? classId,
+    @Default(false) bool showListLoading,
+    @Default(false) bool isRefreshing,
   }) = _StudentState;
 }

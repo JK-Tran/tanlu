@@ -1,38 +1,47 @@
 import 'package:injectable/injectable.dart';
-import 'package:tanlu_management/features/notification/data/mapper/device_token_data_mapper.dart';
-import 'package:tanlu_management/features/notification/data/sources/notification_firebase_source.dart';
-import 'package:tanlu_management/features/notification/domain/entity/device_token.dart';
+import 'package:tanlu_management/features/notification/data/mapper/notification_data_mapper.dart';
+import 'package:tanlu_management/features/notification/data/sources/notification_api_service.dart';
 import 'package:tanlu_management/features/notification/domain/repositories/notification_repository.dart';
-import 'package:tanlu_management/shared/services/local_storage/app_preferences.dart';
 
 @LazySingleton(as: NotificationRepository)
-class NotificationRepositoryImpl implements NotificationRepository {
+class NotificationRepositoryImpl extends NotificationRepository {
   NotificationRepositoryImpl(
-    this._appPreferences,
-    this._firebaseSource,
-    this._deviceTokenDataMapper,
+    this._notificationApiService,
+    this._notificationDataMapper,
   );
 
-  final AppPreferences _appPreferences;
-  final NotificationFirebaseSource _firebaseSource;
-  final DeviceTokenDataMapper _deviceTokenDataMapper;
+  final NotificationApiService _notificationApiService;
+  final NotificationDataMapper _notificationDataMapper;
 
   @override
-  String get localDeviceToken => _appPreferences.deviceToken;
-
-  @override
-  Future<void> saveDeviceToken(DeviceToken deviceToken) async {
-    await _appPreferences.saveDeviceToken(deviceToken.token);
-    await _firebaseSource.saveDeviceToken(
-      _deviceTokenDataMapper.mapToData(deviceToken),
+  Future<Map<String, dynamic>> getNotifications({
+    int page = 1,
+    int limit = 20,
+  }) async {
+    final response = await _notificationApiService.getNotifications(
+      page: page,
+      limit: limit,
     );
+
+    final notifications =
+        response?.data
+            ?.map((e) => _notificationDataMapper.mapToEntity(e))
+            .toList() ??
+        [];
+
+    return {
+      'notifications': notifications,
+      'unreadCount': response?.unreadCount ?? 0,
+    };
   }
 
   @override
-  Future<void> clearDeviceToken(String userId) async {
-    await _firebaseSource.clearDeviceToken(userId);
+  Future<void> markAsRead(List<int> notificationIds) async {
+    await _notificationApiService.markAsRead(notificationIds);
   }
 
   @override
-  Future<void> clearLocalDeviceToken() => _appPreferences.saveDeviceToken('');
+  Future<void> markAllAsRead() async {
+    await _notificationApiService.markAllAsRead();
+  }
 }

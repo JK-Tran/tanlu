@@ -17,8 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FetchDailyAttendance {
-  String get classId => throw _privateConstructorUsedError;
-  DateTime get date => throw _privateConstructorUsedError;
+  String? get date => throw _privateConstructorUsedError;
 
   /// Create a copy of FetchDailyAttendance
   /// with the given fields replaced by the non-null parameter values.
@@ -34,7 +33,7 @@ abstract class $FetchDailyAttendanceCopyWith<$Res> {
     $Res Function(FetchDailyAttendance) then,
   ) = _$FetchDailyAttendanceCopyWithImpl<$Res, FetchDailyAttendance>;
   @useResult
-  $Res call({String classId, DateTime date});
+  $Res call({String? date});
 }
 
 /// @nodoc
@@ -54,17 +53,13 @@ class _$FetchDailyAttendanceCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? classId = null, Object? date = null}) {
+  $Res call({Object? date = freezed}) {
     return _then(
       _value.copyWith(
-            classId: null == classId
-                ? _value.classId
-                : classId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            date: null == date
+            date: freezed == date
                 ? _value.date
                 : date // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
+                      as String?,
           )
           as $Val,
     );
@@ -80,7 +75,7 @@ abstract class _$$FetchDailyAttendanceImplCopyWith<$Res>
   ) = __$$FetchDailyAttendanceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String classId, DateTime date});
+  $Res call({String? date});
 }
 
 /// @nodoc
@@ -96,17 +91,13 @@ class __$$FetchDailyAttendanceImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? classId = null, Object? date = null}) {
+  $Res call({Object? date = freezed}) {
     return _then(
       _$FetchDailyAttendanceImpl(
-        classId: null == classId
-            ? _value.classId
-            : classId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        date: null == date
+        date: freezed == date
             ? _value.date
             : date // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
+                  as String?,
       ),
     );
   }
@@ -115,16 +106,14 @@ class __$$FetchDailyAttendanceImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FetchDailyAttendanceImpl implements _FetchDailyAttendance {
-  const _$FetchDailyAttendanceImpl({required this.classId, required this.date});
+  const _$FetchDailyAttendanceImpl({this.date});
 
   @override
-  final String classId;
-  @override
-  final DateTime date;
+  final String? date;
 
   @override
   String toString() {
-    return 'FetchDailyAttendance(classId: $classId, date: $date)';
+    return 'FetchDailyAttendance(date: $date)';
   }
 
   @override
@@ -132,12 +121,11 @@ class _$FetchDailyAttendanceImpl implements _FetchDailyAttendance {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FetchDailyAttendanceImpl &&
-            (identical(other.classId, classId) || other.classId == classId) &&
             (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, classId, date);
+  int get hashCode => Object.hash(runtimeType, date);
 
   /// Create a copy of FetchDailyAttendance
   /// with the given fields replaced by the non-null parameter values.
@@ -153,15 +141,11 @@ class _$FetchDailyAttendanceImpl implements _FetchDailyAttendance {
 }
 
 abstract class _FetchDailyAttendance implements FetchDailyAttendance {
-  const factory _FetchDailyAttendance({
-    required final String classId,
-    required final DateTime date,
-  }) = _$FetchDailyAttendanceImpl;
+  const factory _FetchDailyAttendance({final String? date}) =
+      _$FetchDailyAttendanceImpl;
 
   @override
-  String get classId;
-  @override
-  DateTime get date;
+  String? get date;
 
   /// Create a copy of FetchDailyAttendance
   /// with the given fields replaced by the non-null parameter values.
@@ -172,55 +156,46 @@ abstract class _FetchDailyAttendance implements FetchDailyAttendance {
 }
 
 /// @nodoc
-mixin _$FetchAttendanceHistoryEvent {
-  String get classId => throw _privateConstructorUsedError;
+mixin _$FetchHistoryAttendance {
   DateTime get date => throw _privateConstructorUsedError;
 
-  /// Create a copy of FetchAttendanceHistoryEvent
+  /// Create a copy of FetchHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $FetchAttendanceHistoryEventCopyWith<FetchAttendanceHistoryEvent>
-  get copyWith => throw _privateConstructorUsedError;
+  $FetchHistoryAttendanceCopyWith<FetchHistoryAttendance> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $FetchAttendanceHistoryEventCopyWith<$Res> {
-  factory $FetchAttendanceHistoryEventCopyWith(
-    FetchAttendanceHistoryEvent value,
-    $Res Function(FetchAttendanceHistoryEvent) then,
-  ) =
-      _$FetchAttendanceHistoryEventCopyWithImpl<
-        $Res,
-        FetchAttendanceHistoryEvent
-      >;
+abstract class $FetchHistoryAttendanceCopyWith<$Res> {
+  factory $FetchHistoryAttendanceCopyWith(
+    FetchHistoryAttendance value,
+    $Res Function(FetchHistoryAttendance) then,
+  ) = _$FetchHistoryAttendanceCopyWithImpl<$Res, FetchHistoryAttendance>;
   @useResult
-  $Res call({String classId, DateTime date});
+  $Res call({DateTime date});
 }
 
 /// @nodoc
-class _$FetchAttendanceHistoryEventCopyWithImpl<
+class _$FetchHistoryAttendanceCopyWithImpl<
   $Res,
-  $Val extends FetchAttendanceHistoryEvent
+  $Val extends FetchHistoryAttendance
 >
-    implements $FetchAttendanceHistoryEventCopyWith<$Res> {
-  _$FetchAttendanceHistoryEventCopyWithImpl(this._value, this._then);
+    implements $FetchHistoryAttendanceCopyWith<$Res> {
+  _$FetchHistoryAttendanceCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of FetchAttendanceHistoryEvent
+  /// Create a copy of FetchHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? classId = null, Object? date = null}) {
+  $Res call({Object? date = null}) {
     return _then(
       _value.copyWith(
-            classId: null == classId
-                ? _value.classId
-                : classId // ignore: cast_nullable_to_non_nullable
-                      as String,
             date: null == date
                 ? _value.date
                 : date // ignore: cast_nullable_to_non_nullable
@@ -232,41 +207,34 @@ class _$FetchAttendanceHistoryEventCopyWithImpl<
 }
 
 /// @nodoc
-abstract class _$$FetchAttendanceHistoryEventImplCopyWith<$Res>
-    implements $FetchAttendanceHistoryEventCopyWith<$Res> {
-  factory _$$FetchAttendanceHistoryEventImplCopyWith(
-    _$FetchAttendanceHistoryEventImpl value,
-    $Res Function(_$FetchAttendanceHistoryEventImpl) then,
-  ) = __$$FetchAttendanceHistoryEventImplCopyWithImpl<$Res>;
+abstract class _$$FetchHistoryAttendanceImplCopyWith<$Res>
+    implements $FetchHistoryAttendanceCopyWith<$Res> {
+  factory _$$FetchHistoryAttendanceImplCopyWith(
+    _$FetchHistoryAttendanceImpl value,
+    $Res Function(_$FetchHistoryAttendanceImpl) then,
+  ) = __$$FetchHistoryAttendanceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String classId, DateTime date});
+  $Res call({DateTime date});
 }
 
 /// @nodoc
-class __$$FetchAttendanceHistoryEventImplCopyWithImpl<$Res>
+class __$$FetchHistoryAttendanceImplCopyWithImpl<$Res>
     extends
-        _$FetchAttendanceHistoryEventCopyWithImpl<
-          $Res,
-          _$FetchAttendanceHistoryEventImpl
-        >
-    implements _$$FetchAttendanceHistoryEventImplCopyWith<$Res> {
-  __$$FetchAttendanceHistoryEventImplCopyWithImpl(
-    _$FetchAttendanceHistoryEventImpl _value,
-    $Res Function(_$FetchAttendanceHistoryEventImpl) _then,
+        _$FetchHistoryAttendanceCopyWithImpl<$Res, _$FetchHistoryAttendanceImpl>
+    implements _$$FetchHistoryAttendanceImplCopyWith<$Res> {
+  __$$FetchHistoryAttendanceImplCopyWithImpl(
+    _$FetchHistoryAttendanceImpl _value,
+    $Res Function(_$FetchHistoryAttendanceImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of FetchAttendanceHistoryEvent
+  /// Create a copy of FetchHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? classId = null, Object? date = null}) {
+  $Res call({Object? date = null}) {
     return _then(
-      _$FetchAttendanceHistoryEventImpl(
-        classId: null == classId
-            ? _value.classId
-            : classId // ignore: cast_nullable_to_non_nullable
-                  as String,
+      _$FetchHistoryAttendanceImpl(
         date: null == date
             ? _value.date
             : date // ignore: cast_nullable_to_non_nullable
@@ -278,173 +246,152 @@ class __$$FetchAttendanceHistoryEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$FetchAttendanceHistoryEventImpl
-    implements _FetchAttendanceHistoryEvent {
-  const _$FetchAttendanceHistoryEventImpl({
-    required this.classId,
-    required this.date,
-  });
+class _$FetchHistoryAttendanceImpl implements _FetchHistoryAttendance {
+  const _$FetchHistoryAttendanceImpl({required this.date});
 
-  @override
-  final String classId;
   @override
   final DateTime date;
 
   @override
   String toString() {
-    return 'FetchAttendanceHistoryEvent(classId: $classId, date: $date)';
+    return 'FetchHistoryAttendance(date: $date)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$FetchAttendanceHistoryEventImpl &&
-            (identical(other.classId, classId) || other.classId == classId) &&
+            other is _$FetchHistoryAttendanceImpl &&
             (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, classId, date);
+  int get hashCode => Object.hash(runtimeType, date);
 
-  /// Create a copy of FetchAttendanceHistoryEvent
+  /// Create a copy of FetchHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$FetchAttendanceHistoryEventImplCopyWith<_$FetchAttendanceHistoryEventImpl>
+  _$$FetchHistoryAttendanceImplCopyWith<_$FetchHistoryAttendanceImpl>
   get copyWith =>
-      __$$FetchAttendanceHistoryEventImplCopyWithImpl<
-        _$FetchAttendanceHistoryEventImpl
-      >(this, _$identity);
+      __$$FetchHistoryAttendanceImplCopyWithImpl<_$FetchHistoryAttendanceImpl>(
+        this,
+        _$identity,
+      );
 }
 
-abstract class _FetchAttendanceHistoryEvent
-    implements FetchAttendanceHistoryEvent {
-  const factory _FetchAttendanceHistoryEvent({
-    required final String classId,
-    required final DateTime date,
-  }) = _$FetchAttendanceHistoryEventImpl;
+abstract class _FetchHistoryAttendance implements FetchHistoryAttendance {
+  const factory _FetchHistoryAttendance({required final DateTime date}) =
+      _$FetchHistoryAttendanceImpl;
 
-  @override
-  String get classId;
   @override
   DateTime get date;
 
-  /// Create a copy of FetchAttendanceHistoryEvent
+  /// Create a copy of FetchHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$FetchAttendanceHistoryEventImplCopyWith<_$FetchAttendanceHistoryEventImpl>
+  _$$FetchHistoryAttendanceImplCopyWith<_$FetchHistoryAttendanceImpl>
   get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$MarkStudentAttendanceEvent {
-  Attendance get attendance => throw _privateConstructorUsedError;
+mixin _$RefreshHistoryAttendance {
+  Completer<void> get completer => throw _privateConstructorUsedError;
+  DateTime get date => throw _privateConstructorUsedError;
 
-  /// Create a copy of MarkStudentAttendanceEvent
+  /// Create a copy of RefreshHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MarkStudentAttendanceEventCopyWith<MarkStudentAttendanceEvent>
-  get copyWith => throw _privateConstructorUsedError;
+  $RefreshHistoryAttendanceCopyWith<RefreshHistoryAttendance> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MarkStudentAttendanceEventCopyWith<$Res> {
-  factory $MarkStudentAttendanceEventCopyWith(
-    MarkStudentAttendanceEvent value,
-    $Res Function(MarkStudentAttendanceEvent) then,
-  ) =
-      _$MarkStudentAttendanceEventCopyWithImpl<
-        $Res,
-        MarkStudentAttendanceEvent
-      >;
+abstract class $RefreshHistoryAttendanceCopyWith<$Res> {
+  factory $RefreshHistoryAttendanceCopyWith(
+    RefreshHistoryAttendance value,
+    $Res Function(RefreshHistoryAttendance) then,
+  ) = _$RefreshHistoryAttendanceCopyWithImpl<$Res, RefreshHistoryAttendance>;
   @useResult
-  $Res call({Attendance attendance});
-
-  $AttendanceCopyWith<$Res> get attendance;
+  $Res call({Completer<void> completer, DateTime date});
 }
 
 /// @nodoc
-class _$MarkStudentAttendanceEventCopyWithImpl<
+class _$RefreshHistoryAttendanceCopyWithImpl<
   $Res,
-  $Val extends MarkStudentAttendanceEvent
+  $Val extends RefreshHistoryAttendance
 >
-    implements $MarkStudentAttendanceEventCopyWith<$Res> {
-  _$MarkStudentAttendanceEventCopyWithImpl(this._value, this._then);
+    implements $RefreshHistoryAttendanceCopyWith<$Res> {
+  _$RefreshHistoryAttendanceCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of MarkStudentAttendanceEvent
+  /// Create a copy of RefreshHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? attendance = null}) {
+  $Res call({Object? completer = null, Object? date = null}) {
     return _then(
       _value.copyWith(
-            attendance: null == attendance
-                ? _value.attendance
-                : attendance // ignore: cast_nullable_to_non_nullable
-                      as Attendance,
+            completer: null == completer
+                ? _value.completer
+                : completer // ignore: cast_nullable_to_non_nullable
+                      as Completer<void>,
+            date: null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
           )
           as $Val,
     );
   }
-
-  /// Create a copy of MarkStudentAttendanceEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AttendanceCopyWith<$Res> get attendance {
-    return $AttendanceCopyWith<$Res>(_value.attendance, (value) {
-      return _then(_value.copyWith(attendance: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$MarkStudentAttendanceEventImplCopyWith<$Res>
-    implements $MarkStudentAttendanceEventCopyWith<$Res> {
-  factory _$$MarkStudentAttendanceEventImplCopyWith(
-    _$MarkStudentAttendanceEventImpl value,
-    $Res Function(_$MarkStudentAttendanceEventImpl) then,
-  ) = __$$MarkStudentAttendanceEventImplCopyWithImpl<$Res>;
+abstract class _$$RefreshHistoryAttendanceImplCopyWith<$Res>
+    implements $RefreshHistoryAttendanceCopyWith<$Res> {
+  factory _$$RefreshHistoryAttendanceImplCopyWith(
+    _$RefreshHistoryAttendanceImpl value,
+    $Res Function(_$RefreshHistoryAttendanceImpl) then,
+  ) = __$$RefreshHistoryAttendanceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Attendance attendance});
-
-  @override
-  $AttendanceCopyWith<$Res> get attendance;
+  $Res call({Completer<void> completer, DateTime date});
 }
 
 /// @nodoc
-class __$$MarkStudentAttendanceEventImplCopyWithImpl<$Res>
+class __$$RefreshHistoryAttendanceImplCopyWithImpl<$Res>
     extends
-        _$MarkStudentAttendanceEventCopyWithImpl<
+        _$RefreshHistoryAttendanceCopyWithImpl<
           $Res,
-          _$MarkStudentAttendanceEventImpl
+          _$RefreshHistoryAttendanceImpl
         >
-    implements _$$MarkStudentAttendanceEventImplCopyWith<$Res> {
-  __$$MarkStudentAttendanceEventImplCopyWithImpl(
-    _$MarkStudentAttendanceEventImpl _value,
-    $Res Function(_$MarkStudentAttendanceEventImpl) _then,
+    implements _$$RefreshHistoryAttendanceImplCopyWith<$Res> {
+  __$$RefreshHistoryAttendanceImplCopyWithImpl(
+    _$RefreshHistoryAttendanceImpl _value,
+    $Res Function(_$RefreshHistoryAttendanceImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of MarkStudentAttendanceEvent
+  /// Create a copy of RefreshHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? attendance = null}) {
+  $Res call({Object? completer = null, Object? date = null}) {
     return _then(
-      _$MarkStudentAttendanceEventImpl(
-        attendance: null == attendance
-            ? _value.attendance
-            : attendance // ignore: cast_nullable_to_non_nullable
-                  as Attendance,
+      _$RefreshHistoryAttendanceImpl(
+        completer: null == completer
+            ? _value.completer
+            : completer // ignore: cast_nullable_to_non_nullable
+                  as Completer<void>,
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
       ),
     );
   }
@@ -452,347 +399,641 @@ class __$$MarkStudentAttendanceEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MarkStudentAttendanceEventImpl implements _MarkStudentAttendanceEvent {
-  const _$MarkStudentAttendanceEventImpl({required this.attendance});
+class _$RefreshHistoryAttendanceImpl implements _RefreshHistoryAttendance {
+  const _$RefreshHistoryAttendanceImpl({
+    required this.completer,
+    required this.date,
+  });
 
   @override
-  final Attendance attendance;
+  final Completer<void> completer;
+  @override
+  final DateTime date;
 
   @override
   String toString() {
-    return 'MarkStudentAttendanceEvent(attendance: $attendance)';
+    return 'RefreshHistoryAttendance(completer: $completer, date: $date)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MarkStudentAttendanceEventImpl &&
-            (identical(other.attendance, attendance) ||
-                other.attendance == attendance));
+            other is _$RefreshHistoryAttendanceImpl &&
+            (identical(other.completer, completer) ||
+                other.completer == completer) &&
+            (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, attendance);
+  int get hashCode => Object.hash(runtimeType, completer, date);
 
-  /// Create a copy of MarkStudentAttendanceEvent
+  /// Create a copy of RefreshHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$MarkStudentAttendanceEventImplCopyWith<_$MarkStudentAttendanceEventImpl>
+  _$$RefreshHistoryAttendanceImplCopyWith<_$RefreshHistoryAttendanceImpl>
   get copyWith =>
-      __$$MarkStudentAttendanceEventImplCopyWithImpl<
-        _$MarkStudentAttendanceEventImpl
+      __$$RefreshHistoryAttendanceImplCopyWithImpl<
+        _$RefreshHistoryAttendanceImpl
       >(this, _$identity);
 }
 
-abstract class _MarkStudentAttendanceEvent
-    implements MarkStudentAttendanceEvent {
-  const factory _MarkStudentAttendanceEvent({
-    required final Attendance attendance,
-  }) = _$MarkStudentAttendanceEventImpl;
+abstract class _RefreshHistoryAttendance implements RefreshHistoryAttendance {
+  const factory _RefreshHistoryAttendance({
+    required final Completer<void> completer,
+    required final DateTime date,
+  }) = _$RefreshHistoryAttendanceImpl;
 
   @override
-  Attendance get attendance;
+  Completer<void> get completer;
+  @override
+  DateTime get date;
 
-  /// Create a copy of MarkStudentAttendanceEvent
+  /// Create a copy of RefreshHistoryAttendance
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MarkStudentAttendanceEventImplCopyWith<_$MarkStudentAttendanceEventImpl>
+  _$$RefreshHistoryAttendanceImplCopyWith<_$RefreshHistoryAttendanceImpl>
   get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$CompleteAttendanceSessionEvent {}
+mixin _$RefreshDailyAttendance {
+  Completer<void> get completer => throw _privateConstructorUsedError;
+  String? get date => throw _privateConstructorUsedError;
 
-/// @nodoc
-abstract class $CompleteAttendanceSessionEventCopyWith<$Res> {
-  factory $CompleteAttendanceSessionEventCopyWith(
-    CompleteAttendanceSessionEvent value,
-    $Res Function(CompleteAttendanceSessionEvent) then,
-  ) =
-      _$CompleteAttendanceSessionEventCopyWithImpl<
-        $Res,
-        CompleteAttendanceSessionEvent
-      >;
-}
-
-/// @nodoc
-class _$CompleteAttendanceSessionEventCopyWithImpl<
-  $Res,
-  $Val extends CompleteAttendanceSessionEvent
->
-    implements $CompleteAttendanceSessionEventCopyWith<$Res> {
-  _$CompleteAttendanceSessionEventCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CompleteAttendanceSessionEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$CompleteAttendanceSessionEventImplCopyWith<$Res> {
-  factory _$$CompleteAttendanceSessionEventImplCopyWith(
-    _$CompleteAttendanceSessionEventImpl value,
-    $Res Function(_$CompleteAttendanceSessionEventImpl) then,
-  ) = __$$CompleteAttendanceSessionEventImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$CompleteAttendanceSessionEventImplCopyWithImpl<$Res>
-    extends
-        _$CompleteAttendanceSessionEventCopyWithImpl<
-          $Res,
-          _$CompleteAttendanceSessionEventImpl
-        >
-    implements _$$CompleteAttendanceSessionEventImplCopyWith<$Res> {
-  __$$CompleteAttendanceSessionEventImplCopyWithImpl(
-    _$CompleteAttendanceSessionEventImpl _value,
-    $Res Function(_$CompleteAttendanceSessionEventImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of CompleteAttendanceSessionEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$CompleteAttendanceSessionEventImpl
-    implements _CompleteAttendanceSessionEvent {
-  const _$CompleteAttendanceSessionEventImpl();
-
-  @override
-  String toString() {
-    return 'CompleteAttendanceSessionEvent()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CompleteAttendanceSessionEventImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class _CompleteAttendanceSessionEvent
-    implements CompleteAttendanceSessionEvent {
-  const factory _CompleteAttendanceSessionEvent() =
-      _$CompleteAttendanceSessionEventImpl;
-}
-
-/// @nodoc
-mixin _$UpdateDailyAttendanceEvent {}
-
-/// @nodoc
-abstract class $UpdateDailyAttendanceEventCopyWith<$Res> {
-  factory $UpdateDailyAttendanceEventCopyWith(
-    UpdateDailyAttendanceEvent value,
-    $Res Function(UpdateDailyAttendanceEvent) then,
-  ) =
-      _$UpdateDailyAttendanceEventCopyWithImpl<
-        $Res,
-        UpdateDailyAttendanceEvent
-      >;
-}
-
-/// @nodoc
-class _$UpdateDailyAttendanceEventCopyWithImpl<
-  $Res,
-  $Val extends UpdateDailyAttendanceEvent
->
-    implements $UpdateDailyAttendanceEventCopyWith<$Res> {
-  _$UpdateDailyAttendanceEventCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of UpdateDailyAttendanceEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$UpdateDailyAttendanceEventImplCopyWith<$Res> {
-  factory _$$UpdateDailyAttendanceEventImplCopyWith(
-    _$UpdateDailyAttendanceEventImpl value,
-    $Res Function(_$UpdateDailyAttendanceEventImpl) then,
-  ) = __$$UpdateDailyAttendanceEventImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$UpdateDailyAttendanceEventImplCopyWithImpl<$Res>
-    extends
-        _$UpdateDailyAttendanceEventCopyWithImpl<
-          $Res,
-          _$UpdateDailyAttendanceEventImpl
-        >
-    implements _$$UpdateDailyAttendanceEventImplCopyWith<$Res> {
-  __$$UpdateDailyAttendanceEventImplCopyWithImpl(
-    _$UpdateDailyAttendanceEventImpl _value,
-    $Res Function(_$UpdateDailyAttendanceEventImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of UpdateDailyAttendanceEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$UpdateDailyAttendanceEventImpl implements _UpdateDailyAttendanceEvent {
-  const _$UpdateDailyAttendanceEventImpl();
-
-  @override
-  String toString() {
-    return 'UpdateDailyAttendanceEvent()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UpdateDailyAttendanceEventImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class _UpdateDailyAttendanceEvent
-    implements UpdateDailyAttendanceEvent {
-  const factory _UpdateDailyAttendanceEvent() =
-      _$UpdateDailyAttendanceEventImpl;
-}
-
-/// @nodoc
-mixin _$CompleteCheckOutSessionEvent {}
-
-/// @nodoc
-abstract class $CompleteCheckOutSessionEventCopyWith<$Res> {
-  factory $CompleteCheckOutSessionEventCopyWith(
-    CompleteCheckOutSessionEvent value,
-    $Res Function(CompleteCheckOutSessionEvent) then,
-  ) =
-      _$CompleteCheckOutSessionEventCopyWithImpl<
-        $Res,
-        CompleteCheckOutSessionEvent
-      >;
-}
-
-/// @nodoc
-class _$CompleteCheckOutSessionEventCopyWithImpl<
-  $Res,
-  $Val extends CompleteCheckOutSessionEvent
->
-    implements $CompleteCheckOutSessionEventCopyWith<$Res> {
-  _$CompleteCheckOutSessionEventCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CompleteCheckOutSessionEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$CompleteCheckOutSessionEventImplCopyWith<$Res> {
-  factory _$$CompleteCheckOutSessionEventImplCopyWith(
-    _$CompleteCheckOutSessionEventImpl value,
-    $Res Function(_$CompleteCheckOutSessionEventImpl) then,
-  ) = __$$CompleteCheckOutSessionEventImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$CompleteCheckOutSessionEventImplCopyWithImpl<$Res>
-    extends
-        _$CompleteCheckOutSessionEventCopyWithImpl<
-          $Res,
-          _$CompleteCheckOutSessionEventImpl
-        >
-    implements _$$CompleteCheckOutSessionEventImplCopyWith<$Res> {
-  __$$CompleteCheckOutSessionEventImplCopyWithImpl(
-    _$CompleteCheckOutSessionEventImpl _value,
-    $Res Function(_$CompleteCheckOutSessionEventImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of CompleteCheckOutSessionEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$CompleteCheckOutSessionEventImpl
-    implements _CompleteCheckOutSessionEvent {
-  const _$CompleteCheckOutSessionEventImpl();
-
-  @override
-  String toString() {
-    return 'CompleteCheckOutSessionEvent()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CompleteCheckOutSessionEventImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-}
-
-abstract class _CompleteCheckOutSessionEvent
-    implements CompleteCheckOutSessionEvent {
-  const factory _CompleteCheckOutSessionEvent() =
-      _$CompleteCheckOutSessionEventImpl;
-}
-
-/// @nodoc
-mixin _$MarkStudentCheckOutEvent {
-  String get studentId => throw _privateConstructorUsedError;
-
-  /// Create a copy of MarkStudentCheckOutEvent
+  /// Create a copy of RefreshDailyAttendance
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MarkStudentCheckOutEventCopyWith<MarkStudentCheckOutEvent> get copyWith =>
+  $RefreshDailyAttendanceCopyWith<RefreshDailyAttendance> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MarkStudentCheckOutEventCopyWith<$Res> {
-  factory $MarkStudentCheckOutEventCopyWith(
-    MarkStudentCheckOutEvent value,
-    $Res Function(MarkStudentCheckOutEvent) then,
-  ) = _$MarkStudentCheckOutEventCopyWithImpl<$Res, MarkStudentCheckOutEvent>;
+abstract class $RefreshDailyAttendanceCopyWith<$Res> {
+  factory $RefreshDailyAttendanceCopyWith(
+    RefreshDailyAttendance value,
+    $Res Function(RefreshDailyAttendance) then,
+  ) = _$RefreshDailyAttendanceCopyWithImpl<$Res, RefreshDailyAttendance>;
   @useResult
-  $Res call({String studentId});
+  $Res call({Completer<void> completer, String? date});
 }
 
 /// @nodoc
-class _$MarkStudentCheckOutEventCopyWithImpl<
+class _$RefreshDailyAttendanceCopyWithImpl<
   $Res,
-  $Val extends MarkStudentCheckOutEvent
+  $Val extends RefreshDailyAttendance
 >
-    implements $MarkStudentCheckOutEventCopyWith<$Res> {
-  _$MarkStudentCheckOutEventCopyWithImpl(this._value, this._then);
+    implements $RefreshDailyAttendanceCopyWith<$Res> {
+  _$RefreshDailyAttendanceCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of MarkStudentCheckOutEvent
+  /// Create a copy of RefreshDailyAttendance
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? completer = null, Object? date = freezed}) {
+    return _then(
+      _value.copyWith(
+            completer: null == completer
+                ? _value.completer
+                : completer // ignore: cast_nullable_to_non_nullable
+                      as Completer<void>,
+            date: freezed == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$RefreshDailyAttendanceImplCopyWith<$Res>
+    implements $RefreshDailyAttendanceCopyWith<$Res> {
+  factory _$$RefreshDailyAttendanceImplCopyWith(
+    _$RefreshDailyAttendanceImpl value,
+    $Res Function(_$RefreshDailyAttendanceImpl) then,
+  ) = __$$RefreshDailyAttendanceImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Completer<void> completer, String? date});
+}
+
+/// @nodoc
+class __$$RefreshDailyAttendanceImplCopyWithImpl<$Res>
+    extends
+        _$RefreshDailyAttendanceCopyWithImpl<$Res, _$RefreshDailyAttendanceImpl>
+    implements _$$RefreshDailyAttendanceImplCopyWith<$Res> {
+  __$$RefreshDailyAttendanceImplCopyWithImpl(
+    _$RefreshDailyAttendanceImpl _value,
+    $Res Function(_$RefreshDailyAttendanceImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of RefreshDailyAttendance
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? completer = null, Object? date = freezed}) {
+    return _then(
+      _$RefreshDailyAttendanceImpl(
+        completer: null == completer
+            ? _value.completer
+            : completer // ignore: cast_nullable_to_non_nullable
+                  as Completer<void>,
+        date: freezed == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$RefreshDailyAttendanceImpl implements _RefreshDailyAttendance {
+  const _$RefreshDailyAttendanceImpl({required this.completer, this.date});
+
+  @override
+  final Completer<void> completer;
+  @override
+  final String? date;
+
+  @override
+  String toString() {
+    return 'RefreshDailyAttendance(completer: $completer, date: $date)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RefreshDailyAttendanceImpl &&
+            (identical(other.completer, completer) ||
+                other.completer == completer) &&
+            (identical(other.date, date) || other.date == date));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, completer, date);
+
+  /// Create a copy of RefreshDailyAttendance
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RefreshDailyAttendanceImplCopyWith<_$RefreshDailyAttendanceImpl>
+  get copyWith =>
+      __$$RefreshDailyAttendanceImplCopyWithImpl<_$RefreshDailyAttendanceImpl>(
+        this,
+        _$identity,
+      );
+}
+
+abstract class _RefreshDailyAttendance implements RefreshDailyAttendance {
+  const factory _RefreshDailyAttendance({
+    required final Completer<void> completer,
+    final String? date,
+  }) = _$RefreshDailyAttendanceImpl;
+
+  @override
+  Completer<void> get completer;
+  @override
+  String? get date;
+
+  /// Create a copy of RefreshDailyAttendance
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$RefreshDailyAttendanceImplCopyWith<_$RefreshDailyAttendanceImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$LeaveRequestsStarted {
+  int get limit => throw _privateConstructorUsedError;
+
+  /// Create a copy of LeaveRequestsStarted
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LeaveRequestsStartedCopyWith<LeaveRequestsStarted> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LeaveRequestsStartedCopyWith<$Res> {
+  factory $LeaveRequestsStartedCopyWith(
+    LeaveRequestsStarted value,
+    $Res Function(LeaveRequestsStarted) then,
+  ) = _$LeaveRequestsStartedCopyWithImpl<$Res, LeaveRequestsStarted>;
+  @useResult
+  $Res call({int limit});
+}
+
+/// @nodoc
+class _$LeaveRequestsStartedCopyWithImpl<
+  $Res,
+  $Val extends LeaveRequestsStarted
+>
+    implements $LeaveRequestsStartedCopyWith<$Res> {
+  _$LeaveRequestsStartedCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LeaveRequestsStarted
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? limit = null}) {
+    return _then(
+      _value.copyWith(
+            limit: null == limit
+                ? _value.limit
+                : limit // ignore: cast_nullable_to_non_nullable
+                      as int,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$LeaveRequestsStartedImplCopyWith<$Res>
+    implements $LeaveRequestsStartedCopyWith<$Res> {
+  factory _$$LeaveRequestsStartedImplCopyWith(
+    _$LeaveRequestsStartedImpl value,
+    $Res Function(_$LeaveRequestsStartedImpl) then,
+  ) = __$$LeaveRequestsStartedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int limit});
+}
+
+/// @nodoc
+class __$$LeaveRequestsStartedImplCopyWithImpl<$Res>
+    extends _$LeaveRequestsStartedCopyWithImpl<$Res, _$LeaveRequestsStartedImpl>
+    implements _$$LeaveRequestsStartedImplCopyWith<$Res> {
+  __$$LeaveRequestsStartedImplCopyWithImpl(
+    _$LeaveRequestsStartedImpl _value,
+    $Res Function(_$LeaveRequestsStartedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of LeaveRequestsStarted
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? limit = null}) {
+    return _then(
+      _$LeaveRequestsStartedImpl(
+        limit: null == limit
+            ? _value.limit
+            : limit // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$LeaveRequestsStartedImpl implements _LeaveRequestsStarted {
+  const _$LeaveRequestsStartedImpl({this.limit = 10});
+
+  @override
+  @JsonKey()
+  final int limit;
+
+  @override
+  String toString() {
+    return 'LeaveRequestsStarted(limit: $limit)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LeaveRequestsStartedImpl &&
+            (identical(other.limit, limit) || other.limit == limit));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, limit);
+
+  /// Create a copy of LeaveRequestsStarted
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LeaveRequestsStartedImplCopyWith<_$LeaveRequestsStartedImpl>
+  get copyWith =>
+      __$$LeaveRequestsStartedImplCopyWithImpl<_$LeaveRequestsStartedImpl>(
+        this,
+        _$identity,
+      );
+}
+
+abstract class _LeaveRequestsStarted implements LeaveRequestsStarted {
+  const factory _LeaveRequestsStarted({final int limit}) =
+      _$LeaveRequestsStartedImpl;
+
+  @override
+  int get limit;
+
+  /// Create a copy of LeaveRequestsStarted
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LeaveRequestsStartedImplCopyWith<_$LeaveRequestsStartedImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$LeaveRequestsLoadMore {}
+
+/// @nodoc
+abstract class $LeaveRequestsLoadMoreCopyWith<$Res> {
+  factory $LeaveRequestsLoadMoreCopyWith(
+    LeaveRequestsLoadMore value,
+    $Res Function(LeaveRequestsLoadMore) then,
+  ) = _$LeaveRequestsLoadMoreCopyWithImpl<$Res, LeaveRequestsLoadMore>;
+}
+
+/// @nodoc
+class _$LeaveRequestsLoadMoreCopyWithImpl<
+  $Res,
+  $Val extends LeaveRequestsLoadMore
+>
+    implements $LeaveRequestsLoadMoreCopyWith<$Res> {
+  _$LeaveRequestsLoadMoreCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LeaveRequestsLoadMore
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$LeaveRequestsLoadMoreImplCopyWith<$Res> {
+  factory _$$LeaveRequestsLoadMoreImplCopyWith(
+    _$LeaveRequestsLoadMoreImpl value,
+    $Res Function(_$LeaveRequestsLoadMoreImpl) then,
+  ) = __$$LeaveRequestsLoadMoreImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LeaveRequestsLoadMoreImplCopyWithImpl<$Res>
+    extends
+        _$LeaveRequestsLoadMoreCopyWithImpl<$Res, _$LeaveRequestsLoadMoreImpl>
+    implements _$$LeaveRequestsLoadMoreImplCopyWith<$Res> {
+  __$$LeaveRequestsLoadMoreImplCopyWithImpl(
+    _$LeaveRequestsLoadMoreImpl _value,
+    $Res Function(_$LeaveRequestsLoadMoreImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of LeaveRequestsLoadMore
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LeaveRequestsLoadMoreImpl implements _LeaveRequestsLoadMore {
+  const _$LeaveRequestsLoadMoreImpl();
+
+  @override
+  String toString() {
+    return 'LeaveRequestsLoadMore()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LeaveRequestsLoadMoreImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+abstract class _LeaveRequestsLoadMore implements LeaveRequestsLoadMore {
+  const factory _LeaveRequestsLoadMore() = _$LeaveRequestsLoadMoreImpl;
+}
+
+/// @nodoc
+mixin _$LeaveRequestsRefreshed {
+  Completer<void> get completer => throw _privateConstructorUsedError;
+  int get limit => throw _privateConstructorUsedError;
+
+  /// Create a copy of LeaveRequestsRefreshed
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LeaveRequestsRefreshedCopyWith<LeaveRequestsRefreshed> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LeaveRequestsRefreshedCopyWith<$Res> {
+  factory $LeaveRequestsRefreshedCopyWith(
+    LeaveRequestsRefreshed value,
+    $Res Function(LeaveRequestsRefreshed) then,
+  ) = _$LeaveRequestsRefreshedCopyWithImpl<$Res, LeaveRequestsRefreshed>;
+  @useResult
+  $Res call({Completer<void> completer, int limit});
+}
+
+/// @nodoc
+class _$LeaveRequestsRefreshedCopyWithImpl<
+  $Res,
+  $Val extends LeaveRequestsRefreshed
+>
+    implements $LeaveRequestsRefreshedCopyWith<$Res> {
+  _$LeaveRequestsRefreshedCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LeaveRequestsRefreshed
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? completer = null, Object? limit = null}) {
+    return _then(
+      _value.copyWith(
+            completer: null == completer
+                ? _value.completer
+                : completer // ignore: cast_nullable_to_non_nullable
+                      as Completer<void>,
+            limit: null == limit
+                ? _value.limit
+                : limit // ignore: cast_nullable_to_non_nullable
+                      as int,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$LeaveRequestsRefreshedImplCopyWith<$Res>
+    implements $LeaveRequestsRefreshedCopyWith<$Res> {
+  factory _$$LeaveRequestsRefreshedImplCopyWith(
+    _$LeaveRequestsRefreshedImpl value,
+    $Res Function(_$LeaveRequestsRefreshedImpl) then,
+  ) = __$$LeaveRequestsRefreshedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Completer<void> completer, int limit});
+}
+
+/// @nodoc
+class __$$LeaveRequestsRefreshedImplCopyWithImpl<$Res>
+    extends
+        _$LeaveRequestsRefreshedCopyWithImpl<$Res, _$LeaveRequestsRefreshedImpl>
+    implements _$$LeaveRequestsRefreshedImplCopyWith<$Res> {
+  __$$LeaveRequestsRefreshedImplCopyWithImpl(
+    _$LeaveRequestsRefreshedImpl _value,
+    $Res Function(_$LeaveRequestsRefreshedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of LeaveRequestsRefreshed
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? completer = null, Object? limit = null}) {
+    return _then(
+      _$LeaveRequestsRefreshedImpl(
+        completer: null == completer
+            ? _value.completer
+            : completer // ignore: cast_nullable_to_non_nullable
+                  as Completer<void>,
+        limit: null == limit
+            ? _value.limit
+            : limit // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$LeaveRequestsRefreshedImpl implements _LeaveRequestsRefreshed {
+  const _$LeaveRequestsRefreshedImpl({
+    required this.completer,
+    this.limit = 10,
+  });
+
+  @override
+  final Completer<void> completer;
+  @override
+  @JsonKey()
+  final int limit;
+
+  @override
+  String toString() {
+    return 'LeaveRequestsRefreshed(completer: $completer, limit: $limit)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LeaveRequestsRefreshedImpl &&
+            (identical(other.completer, completer) ||
+                other.completer == completer) &&
+            (identical(other.limit, limit) || other.limit == limit));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, completer, limit);
+
+  /// Create a copy of LeaveRequestsRefreshed
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LeaveRequestsRefreshedImplCopyWith<_$LeaveRequestsRefreshedImpl>
+  get copyWith =>
+      __$$LeaveRequestsRefreshedImplCopyWithImpl<_$LeaveRequestsRefreshedImpl>(
+        this,
+        _$identity,
+      );
+}
+
+abstract class _LeaveRequestsRefreshed implements LeaveRequestsRefreshed {
+  const factory _LeaveRequestsRefreshed({
+    required final Completer<void> completer,
+    final int limit,
+  }) = _$LeaveRequestsRefreshedImpl;
+
+  @override
+  Completer<void> get completer;
+  @override
+  int get limit;
+
+  /// Create a copy of LeaveRequestsRefreshed
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LeaveRequestsRefreshedImplCopyWith<_$LeaveRequestsRefreshedImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ToggleStudentAttendanceEvent {
+  int get studentId => throw _privateConstructorUsedError;
+
+  /// Create a copy of ToggleStudentAttendanceEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ToggleStudentAttendanceEventCopyWith<ToggleStudentAttendanceEvent>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ToggleStudentAttendanceEventCopyWith<$Res> {
+  factory $ToggleStudentAttendanceEventCopyWith(
+    ToggleStudentAttendanceEvent value,
+    $Res Function(ToggleStudentAttendanceEvent) then,
+  ) =
+      _$ToggleStudentAttendanceEventCopyWithImpl<
+        $Res,
+        ToggleStudentAttendanceEvent
+      >;
+  @useResult
+  $Res call({int studentId});
+}
+
+/// @nodoc
+class _$ToggleStudentAttendanceEventCopyWithImpl<
+  $Res,
+  $Val extends ToggleStudentAttendanceEvent
+>
+    implements $ToggleStudentAttendanceEventCopyWith<$Res> {
+  _$ToggleStudentAttendanceEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ToggleStudentAttendanceEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -802,6 +1043,333 @@ class _$MarkStudentCheckOutEventCopyWithImpl<
             studentId: null == studentId
                 ? _value.studentId
                 : studentId // ignore: cast_nullable_to_non_nullable
+                      as int,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$ToggleStudentAttendanceEventImplCopyWith<$Res>
+    implements $ToggleStudentAttendanceEventCopyWith<$Res> {
+  factory _$$ToggleStudentAttendanceEventImplCopyWith(
+    _$ToggleStudentAttendanceEventImpl value,
+    $Res Function(_$ToggleStudentAttendanceEventImpl) then,
+  ) = __$$ToggleStudentAttendanceEventImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int studentId});
+}
+
+/// @nodoc
+class __$$ToggleStudentAttendanceEventImplCopyWithImpl<$Res>
+    extends
+        _$ToggleStudentAttendanceEventCopyWithImpl<
+          $Res,
+          _$ToggleStudentAttendanceEventImpl
+        >
+    implements _$$ToggleStudentAttendanceEventImplCopyWith<$Res> {
+  __$$ToggleStudentAttendanceEventImplCopyWithImpl(
+    _$ToggleStudentAttendanceEventImpl _value,
+    $Res Function(_$ToggleStudentAttendanceEventImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ToggleStudentAttendanceEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? studentId = null}) {
+    return _then(
+      _$ToggleStudentAttendanceEventImpl(
+        studentId: null == studentId
+            ? _value.studentId
+            : studentId // ignore: cast_nullable_to_non_nullable
+                  as int,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$ToggleStudentAttendanceEventImpl
+    implements _ToggleStudentAttendanceEvent {
+  const _$ToggleStudentAttendanceEventImpl({required this.studentId});
+
+  @override
+  final int studentId;
+
+  @override
+  String toString() {
+    return 'ToggleStudentAttendanceEvent(studentId: $studentId)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ToggleStudentAttendanceEventImpl &&
+            (identical(other.studentId, studentId) ||
+                other.studentId == studentId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, studentId);
+
+  /// Create a copy of ToggleStudentAttendanceEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ToggleStudentAttendanceEventImplCopyWith<
+    _$ToggleStudentAttendanceEventImpl
+  >
+  get copyWith =>
+      __$$ToggleStudentAttendanceEventImplCopyWithImpl<
+        _$ToggleStudentAttendanceEventImpl
+      >(this, _$identity);
+}
+
+abstract class _ToggleStudentAttendanceEvent
+    implements ToggleStudentAttendanceEvent {
+  const factory _ToggleStudentAttendanceEvent({required final int studentId}) =
+      _$ToggleStudentAttendanceEventImpl;
+
+  @override
+  int get studentId;
+
+  /// Create a copy of ToggleStudentAttendanceEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ToggleStudentAttendanceEventImplCopyWith<
+    _$ToggleStudentAttendanceEventImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ChangeStudentAttendanceStatusEvent {
+  int get studentId => throw _privateConstructorUsedError;
+  AttendanceStatus get status => throw _privateConstructorUsedError;
+
+  /// Create a copy of ChangeStudentAttendanceStatusEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ChangeStudentAttendanceStatusEventCopyWith<
+    ChangeStudentAttendanceStatusEvent
+  >
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ChangeStudentAttendanceStatusEventCopyWith<$Res> {
+  factory $ChangeStudentAttendanceStatusEventCopyWith(
+    ChangeStudentAttendanceStatusEvent value,
+    $Res Function(ChangeStudentAttendanceStatusEvent) then,
+  ) =
+      _$ChangeStudentAttendanceStatusEventCopyWithImpl<
+        $Res,
+        ChangeStudentAttendanceStatusEvent
+      >;
+  @useResult
+  $Res call({int studentId, AttendanceStatus status});
+}
+
+/// @nodoc
+class _$ChangeStudentAttendanceStatusEventCopyWithImpl<
+  $Res,
+  $Val extends ChangeStudentAttendanceStatusEvent
+>
+    implements $ChangeStudentAttendanceStatusEventCopyWith<$Res> {
+  _$ChangeStudentAttendanceStatusEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ChangeStudentAttendanceStatusEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? studentId = null, Object? status = null}) {
+    return _then(
+      _value.copyWith(
+            studentId: null == studentId
+                ? _value.studentId
+                : studentId // ignore: cast_nullable_to_non_nullable
+                      as int,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as AttendanceStatus,
+          )
+          as $Val,
+    );
+  }
+}
+
+/// @nodoc
+abstract class _$$ChangeStudentAttendanceStatusEventImplCopyWith<$Res>
+    implements $ChangeStudentAttendanceStatusEventCopyWith<$Res> {
+  factory _$$ChangeStudentAttendanceStatusEventImplCopyWith(
+    _$ChangeStudentAttendanceStatusEventImpl value,
+    $Res Function(_$ChangeStudentAttendanceStatusEventImpl) then,
+  ) = __$$ChangeStudentAttendanceStatusEventImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int studentId, AttendanceStatus status});
+}
+
+/// @nodoc
+class __$$ChangeStudentAttendanceStatusEventImplCopyWithImpl<$Res>
+    extends
+        _$ChangeStudentAttendanceStatusEventCopyWithImpl<
+          $Res,
+          _$ChangeStudentAttendanceStatusEventImpl
+        >
+    implements _$$ChangeStudentAttendanceStatusEventImplCopyWith<$Res> {
+  __$$ChangeStudentAttendanceStatusEventImplCopyWithImpl(
+    _$ChangeStudentAttendanceStatusEventImpl _value,
+    $Res Function(_$ChangeStudentAttendanceStatusEventImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of ChangeStudentAttendanceStatusEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? studentId = null, Object? status = null}) {
+    return _then(
+      _$ChangeStudentAttendanceStatusEventImpl(
+        studentId: null == studentId
+            ? _value.studentId
+            : studentId // ignore: cast_nullable_to_non_nullable
+                  as int,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as AttendanceStatus,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$ChangeStudentAttendanceStatusEventImpl
+    implements _ChangeStudentAttendanceStatusEvent {
+  const _$ChangeStudentAttendanceStatusEventImpl({
+    required this.studentId,
+    required this.status,
+  });
+
+  @override
+  final int studentId;
+  @override
+  final AttendanceStatus status;
+
+  @override
+  String toString() {
+    return 'ChangeStudentAttendanceStatusEvent(studentId: $studentId, status: $status)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeStudentAttendanceStatusEventImpl &&
+            (identical(other.studentId, studentId) ||
+                other.studentId == studentId) &&
+            (identical(other.status, status) || other.status == status));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, studentId, status);
+
+  /// Create a copy of ChangeStudentAttendanceStatusEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeStudentAttendanceStatusEventImplCopyWith<
+    _$ChangeStudentAttendanceStatusEventImpl
+  >
+  get copyWith =>
+      __$$ChangeStudentAttendanceStatusEventImplCopyWithImpl<
+        _$ChangeStudentAttendanceStatusEventImpl
+      >(this, _$identity);
+}
+
+abstract class _ChangeStudentAttendanceStatusEvent
+    implements ChangeStudentAttendanceStatusEvent {
+  const factory _ChangeStudentAttendanceStatusEvent({
+    required final int studentId,
+    required final AttendanceStatus status,
+  }) = _$ChangeStudentAttendanceStatusEventImpl;
+
+  @override
+  int get studentId;
+  @override
+  AttendanceStatus get status;
+
+  /// Create a copy of ChangeStudentAttendanceStatusEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ChangeStudentAttendanceStatusEventImplCopyWith<
+    _$ChangeStudentAttendanceStatusEventImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$SubmitCheckOutEvent {
+  String get studentId => throw _privateConstructorUsedError;
+  String get checkOutTime => throw _privateConstructorUsedError;
+
+  /// Create a copy of SubmitCheckOutEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SubmitCheckOutEventCopyWith<SubmitCheckOutEvent> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SubmitCheckOutEventCopyWith<$Res> {
+  factory $SubmitCheckOutEventCopyWith(
+    SubmitCheckOutEvent value,
+    $Res Function(SubmitCheckOutEvent) then,
+  ) = _$SubmitCheckOutEventCopyWithImpl<$Res, SubmitCheckOutEvent>;
+  @useResult
+  $Res call({String studentId, String checkOutTime});
+}
+
+/// @nodoc
+class _$SubmitCheckOutEventCopyWithImpl<$Res, $Val extends SubmitCheckOutEvent>
+    implements $SubmitCheckOutEventCopyWith<$Res> {
+  _$SubmitCheckOutEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of SubmitCheckOutEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? studentId = null, Object? checkOutTime = null}) {
+    return _then(
+      _value.copyWith(
+            studentId: null == studentId
+                ? _value.studentId
+                : studentId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            checkOutTime: null == checkOutTime
+                ? _value.checkOutTime
+                : checkOutTime // ignore: cast_nullable_to_non_nullable
                       as String,
           )
           as $Val,
@@ -810,40 +1378,40 @@ class _$MarkStudentCheckOutEventCopyWithImpl<
 }
 
 /// @nodoc
-abstract class _$$MarkStudentCheckOutEventImplCopyWith<$Res>
-    implements $MarkStudentCheckOutEventCopyWith<$Res> {
-  factory _$$MarkStudentCheckOutEventImplCopyWith(
-    _$MarkStudentCheckOutEventImpl value,
-    $Res Function(_$MarkStudentCheckOutEventImpl) then,
-  ) = __$$MarkStudentCheckOutEventImplCopyWithImpl<$Res>;
+abstract class _$$SubmitCheckOutEventImplCopyWith<$Res>
+    implements $SubmitCheckOutEventCopyWith<$Res> {
+  factory _$$SubmitCheckOutEventImplCopyWith(
+    _$SubmitCheckOutEventImpl value,
+    $Res Function(_$SubmitCheckOutEventImpl) then,
+  ) = __$$SubmitCheckOutEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String studentId});
+  $Res call({String studentId, String checkOutTime});
 }
 
 /// @nodoc
-class __$$MarkStudentCheckOutEventImplCopyWithImpl<$Res>
-    extends
-        _$MarkStudentCheckOutEventCopyWithImpl<
-          $Res,
-          _$MarkStudentCheckOutEventImpl
-        >
-    implements _$$MarkStudentCheckOutEventImplCopyWith<$Res> {
-  __$$MarkStudentCheckOutEventImplCopyWithImpl(
-    _$MarkStudentCheckOutEventImpl _value,
-    $Res Function(_$MarkStudentCheckOutEventImpl) _then,
+class __$$SubmitCheckOutEventImplCopyWithImpl<$Res>
+    extends _$SubmitCheckOutEventCopyWithImpl<$Res, _$SubmitCheckOutEventImpl>
+    implements _$$SubmitCheckOutEventImplCopyWith<$Res> {
+  __$$SubmitCheckOutEventImplCopyWithImpl(
+    _$SubmitCheckOutEventImpl _value,
+    $Res Function(_$SubmitCheckOutEventImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of MarkStudentCheckOutEvent
+  /// Create a copy of SubmitCheckOutEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? studentId = null}) {
+  $Res call({Object? studentId = null, Object? checkOutTime = null}) {
     return _then(
-      _$MarkStudentCheckOutEventImpl(
+      _$SubmitCheckOutEventImpl(
         studentId: null == studentId
             ? _value.studentId
             : studentId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        checkOutTime: null == checkOutTime
+            ? _value.checkOutTime
+            : checkOutTime // ignore: cast_nullable_to_non_nullable
                   as String,
       ),
     );
@@ -852,61 +1420,72 @@ class __$$MarkStudentCheckOutEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MarkStudentCheckOutEventImpl implements _MarkStudentCheckOutEvent {
-  const _$MarkStudentCheckOutEventImpl({required this.studentId});
+class _$SubmitCheckOutEventImpl implements _SubmitCheckOutEvent {
+  const _$SubmitCheckOutEventImpl({
+    required this.studentId,
+    required this.checkOutTime,
+  });
 
   @override
   final String studentId;
+  @override
+  final String checkOutTime;
 
   @override
   String toString() {
-    return 'MarkStudentCheckOutEvent(studentId: $studentId)';
+    return 'SubmitCheckOutEvent(studentId: $studentId, checkOutTime: $checkOutTime)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MarkStudentCheckOutEventImpl &&
+            other is _$SubmitCheckOutEventImpl &&
             (identical(other.studentId, studentId) ||
-                other.studentId == studentId));
+                other.studentId == studentId) &&
+            (identical(other.checkOutTime, checkOutTime) ||
+                other.checkOutTime == checkOutTime));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, studentId);
+  int get hashCode => Object.hash(runtimeType, studentId, checkOutTime);
 
-  /// Create a copy of MarkStudentCheckOutEvent
+  /// Create a copy of SubmitCheckOutEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$MarkStudentCheckOutEventImplCopyWith<_$MarkStudentCheckOutEventImpl>
-  get copyWith =>
-      __$$MarkStudentCheckOutEventImplCopyWithImpl<
-        _$MarkStudentCheckOutEventImpl
-      >(this, _$identity);
+  _$$SubmitCheckOutEventImplCopyWith<_$SubmitCheckOutEventImpl> get copyWith =>
+      __$$SubmitCheckOutEventImplCopyWithImpl<_$SubmitCheckOutEventImpl>(
+        this,
+        _$identity,
+      );
 }
 
-abstract class _MarkStudentCheckOutEvent implements MarkStudentCheckOutEvent {
-  const factory _MarkStudentCheckOutEvent({required final String studentId}) =
-      _$MarkStudentCheckOutEventImpl;
+abstract class _SubmitCheckOutEvent implements SubmitCheckOutEvent {
+  const factory _SubmitCheckOutEvent({
+    required final String studentId,
+    required final String checkOutTime,
+  }) = _$SubmitCheckOutEventImpl;
 
   @override
   String get studentId;
+  @override
+  String get checkOutTime;
 
-  /// Create a copy of MarkStudentCheckOutEvent
+  /// Create a copy of SubmitCheckOutEvent
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MarkStudentCheckOutEventImplCopyWith<_$MarkStudentCheckOutEventImpl>
-  get copyWith => throw _privateConstructorUsedError;
+  _$$SubmitCheckOutEventImplCopyWith<_$SubmitCheckOutEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$SubmitLeaveDecisionEvent {
-  String get requestId => throw _privateConstructorUsedError;
+  int get requestId => throw _privateConstructorUsedError;
   bool get isApproved => throw _privateConstructorUsedError;
-  bool get confirmPresentOverride => throw _privateConstructorUsedError;
+  String? get decisionNote => throw _privateConstructorUsedError;
 
   /// Create a copy of SubmitLeaveDecisionEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -922,7 +1501,7 @@ abstract class $SubmitLeaveDecisionEventCopyWith<$Res> {
     $Res Function(SubmitLeaveDecisionEvent) then,
   ) = _$SubmitLeaveDecisionEventCopyWithImpl<$Res, SubmitLeaveDecisionEvent>;
   @useResult
-  $Res call({String requestId, bool isApproved, bool confirmPresentOverride});
+  $Res call({int requestId, bool isApproved, String? decisionNote});
 }
 
 /// @nodoc
@@ -945,22 +1524,22 @@ class _$SubmitLeaveDecisionEventCopyWithImpl<
   $Res call({
     Object? requestId = null,
     Object? isApproved = null,
-    Object? confirmPresentOverride = null,
+    Object? decisionNote = freezed,
   }) {
     return _then(
       _value.copyWith(
             requestId: null == requestId
                 ? _value.requestId
                 : requestId // ignore: cast_nullable_to_non_nullable
-                      as String,
+                      as int,
             isApproved: null == isApproved
                 ? _value.isApproved
                 : isApproved // ignore: cast_nullable_to_non_nullable
                       as bool,
-            confirmPresentOverride: null == confirmPresentOverride
-                ? _value.confirmPresentOverride
-                : confirmPresentOverride // ignore: cast_nullable_to_non_nullable
-                      as bool,
+            decisionNote: freezed == decisionNote
+                ? _value.decisionNote
+                : decisionNote // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -976,7 +1555,7 @@ abstract class _$$SubmitLeaveDecisionEventImplCopyWith<$Res>
   ) = __$$SubmitLeaveDecisionEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String requestId, bool isApproved, bool confirmPresentOverride});
+  $Res call({int requestId, bool isApproved, String? decisionNote});
 }
 
 /// @nodoc
@@ -999,22 +1578,22 @@ class __$$SubmitLeaveDecisionEventImplCopyWithImpl<$Res>
   $Res call({
     Object? requestId = null,
     Object? isApproved = null,
-    Object? confirmPresentOverride = null,
+    Object? decisionNote = freezed,
   }) {
     return _then(
       _$SubmitLeaveDecisionEventImpl(
         requestId: null == requestId
             ? _value.requestId
             : requestId // ignore: cast_nullable_to_non_nullable
-                  as String,
+                  as int,
         isApproved: null == isApproved
             ? _value.isApproved
             : isApproved // ignore: cast_nullable_to_non_nullable
                   as bool,
-        confirmPresentOverride: null == confirmPresentOverride
-            ? _value.confirmPresentOverride
-            : confirmPresentOverride // ignore: cast_nullable_to_non_nullable
-                  as bool,
+        decisionNote: freezed == decisionNote
+            ? _value.decisionNote
+            : decisionNote // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -1026,20 +1605,19 @@ class _$SubmitLeaveDecisionEventImpl implements _SubmitLeaveDecisionEvent {
   const _$SubmitLeaveDecisionEventImpl({
     required this.requestId,
     required this.isApproved,
-    this.confirmPresentOverride = false,
+    this.decisionNote,
   });
 
   @override
-  final String requestId;
+  final int requestId;
   @override
   final bool isApproved;
   @override
-  @JsonKey()
-  final bool confirmPresentOverride;
+  final String? decisionNote;
 
   @override
   String toString() {
-    return 'SubmitLeaveDecisionEvent(requestId: $requestId, isApproved: $isApproved, confirmPresentOverride: $confirmPresentOverride)';
+    return 'SubmitLeaveDecisionEvent(requestId: $requestId, isApproved: $isApproved, decisionNote: $decisionNote)';
   }
 
   @override
@@ -1051,13 +1629,13 @@ class _$SubmitLeaveDecisionEventImpl implements _SubmitLeaveDecisionEvent {
                 other.requestId == requestId) &&
             (identical(other.isApproved, isApproved) ||
                 other.isApproved == isApproved) &&
-            (identical(other.confirmPresentOverride, confirmPresentOverride) ||
-                other.confirmPresentOverride == confirmPresentOverride));
+            (identical(other.decisionNote, decisionNote) ||
+                other.decisionNote == decisionNote));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, requestId, isApproved, confirmPresentOverride);
+      Object.hash(runtimeType, requestId, isApproved, decisionNote);
 
   /// Create a copy of SubmitLeaveDecisionEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1073,17 +1651,17 @@ class _$SubmitLeaveDecisionEventImpl implements _SubmitLeaveDecisionEvent {
 
 abstract class _SubmitLeaveDecisionEvent implements SubmitLeaveDecisionEvent {
   const factory _SubmitLeaveDecisionEvent({
-    required final String requestId,
+    required final int requestId,
     required final bool isApproved,
-    final bool confirmPresentOverride,
+    final String? decisionNote,
   }) = _$SubmitLeaveDecisionEventImpl;
 
   @override
-  String get requestId;
+  int get requestId;
   @override
   bool get isApproved;
   @override
-  bool get confirmPresentOverride;
+  String? get decisionNote;
 
   /// Create a copy of SubmitLeaveDecisionEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1094,179 +1672,19 @@ abstract class _SubmitLeaveDecisionEvent implements SubmitLeaveDecisionEvent {
 }
 
 /// @nodoc
-mixin _$LeaveRequestsUpdatedEvent {
-  List<LeaveRequest> get leaveRequests => throw _privateConstructorUsedError;
-
-  /// Create a copy of LeaveRequestsUpdatedEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $LeaveRequestsUpdatedEventCopyWith<LeaveRequestsUpdatedEvent> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $LeaveRequestsUpdatedEventCopyWith<$Res> {
-  factory $LeaveRequestsUpdatedEventCopyWith(
-    LeaveRequestsUpdatedEvent value,
-    $Res Function(LeaveRequestsUpdatedEvent) then,
-  ) = _$LeaveRequestsUpdatedEventCopyWithImpl<$Res, LeaveRequestsUpdatedEvent>;
-  @useResult
-  $Res call({List<LeaveRequest> leaveRequests});
-}
-
-/// @nodoc
-class _$LeaveRequestsUpdatedEventCopyWithImpl<
-  $Res,
-  $Val extends LeaveRequestsUpdatedEvent
->
-    implements $LeaveRequestsUpdatedEventCopyWith<$Res> {
-  _$LeaveRequestsUpdatedEventCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of LeaveRequestsUpdatedEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? leaveRequests = null}) {
-    return _then(
-      _value.copyWith(
-            leaveRequests: null == leaveRequests
-                ? _value.leaveRequests
-                : leaveRequests // ignore: cast_nullable_to_non_nullable
-                      as List<LeaveRequest>,
-          )
-          as $Val,
-    );
-  }
-}
-
-/// @nodoc
-abstract class _$$LeaveRequestsUpdatedEventImplCopyWith<$Res>
-    implements $LeaveRequestsUpdatedEventCopyWith<$Res> {
-  factory _$$LeaveRequestsUpdatedEventImplCopyWith(
-    _$LeaveRequestsUpdatedEventImpl value,
-    $Res Function(_$LeaveRequestsUpdatedEventImpl) then,
-  ) = __$$LeaveRequestsUpdatedEventImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<LeaveRequest> leaveRequests});
-}
-
-/// @nodoc
-class __$$LeaveRequestsUpdatedEventImplCopyWithImpl<$Res>
-    extends
-        _$LeaveRequestsUpdatedEventCopyWithImpl<
-          $Res,
-          _$LeaveRequestsUpdatedEventImpl
-        >
-    implements _$$LeaveRequestsUpdatedEventImplCopyWith<$Res> {
-  __$$LeaveRequestsUpdatedEventImplCopyWithImpl(
-    _$LeaveRequestsUpdatedEventImpl _value,
-    $Res Function(_$LeaveRequestsUpdatedEventImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of LeaveRequestsUpdatedEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({Object? leaveRequests = null}) {
-    return _then(
-      _$LeaveRequestsUpdatedEventImpl(
-        null == leaveRequests
-            ? _value._leaveRequests
-            : leaveRequests // ignore: cast_nullable_to_non_nullable
-                  as List<LeaveRequest>,
-      ),
-    );
-  }
-}
-
-/// @nodoc
-
-class _$LeaveRequestsUpdatedEventImpl implements _LeaveRequestsUpdatedEvent {
-  const _$LeaveRequestsUpdatedEventImpl(final List<LeaveRequest> leaveRequests)
-    : _leaveRequests = leaveRequests;
-
-  final List<LeaveRequest> _leaveRequests;
-  @override
-  List<LeaveRequest> get leaveRequests {
-    if (_leaveRequests is EqualUnmodifiableListView) return _leaveRequests;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_leaveRequests);
-  }
-
-  @override
-  String toString() {
-    return 'LeaveRequestsUpdatedEvent(leaveRequests: $leaveRequests)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$LeaveRequestsUpdatedEventImpl &&
-            const DeepCollectionEquality().equals(
-              other._leaveRequests,
-              _leaveRequests,
-            ));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_leaveRequests),
-  );
-
-  /// Create a copy of LeaveRequestsUpdatedEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$LeaveRequestsUpdatedEventImplCopyWith<_$LeaveRequestsUpdatedEventImpl>
-  get copyWith =>
-      __$$LeaveRequestsUpdatedEventImplCopyWithImpl<
-        _$LeaveRequestsUpdatedEventImpl
-      >(this, _$identity);
-}
-
-abstract class _LeaveRequestsUpdatedEvent implements LeaveRequestsUpdatedEvent {
-  const factory _LeaveRequestsUpdatedEvent(
-    final List<LeaveRequest> leaveRequests,
-  ) = _$LeaveRequestsUpdatedEventImpl;
-
-  @override
-  List<LeaveRequest> get leaveRequests;
-
-  /// Create a copy of LeaveRequestsUpdatedEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LeaveRequestsUpdatedEventImplCopyWith<_$LeaveRequestsUpdatedEventImpl>
-  get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 mixin _$AttendanceState {
-  String get classId => throw _privateConstructorUsedError;
-  DateTime? get selectedDate => throw _privateConstructorUsedError;
-  List<Student> get students => throw _privateConstructorUsedError;
-  List<Attendance> get attendances => throw _privateConstructorUsedError;
-  List<LeaveRequest> get leaveRequests => throw _privateConstructorUsedError;
-  AttendanceSession? get session => throw _privateConstructorUsedError;
-  String get onPageError => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  bool get isSaving => throw _privateConstructorUsedError;
-  bool get hasUnsavedChanges => throw _privateConstructorUsedError;
+  bool get isSubmitting => throw _privateConstructorUsedError;
+  String get onPageError => throw _privateConstructorUsedError;
+  String? get successMessage => throw _privateConstructorUsedError;
+  AppException? get exception => throw _privateConstructorUsedError;
+  DailyAttendanceResult? get dailyAttendance =>
+      throw _privateConstructorUsedError;
+  DailyAttendanceResult? get historyAttendance =>
+      throw _privateConstructorUsedError;
   DateTime? get historyDate => throw _privateConstructorUsedError;
-  List<Student> get historyStudents => throw _privateConstructorUsedError;
-  List<Attendance> get historyAttendances => throw _privateConstructorUsedError;
-  AttendanceSession? get historySession => throw _privateConstructorUsedError;
-  bool get isHistoryLoading => throw _privateConstructorUsedError;
-  String get historyError => throw _privateConstructorUsedError;
+  PagedList<LeaveRequest>? get leaveRequests =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of AttendanceState
   /// with the given fields replaced by the non-null parameter values.
@@ -1283,26 +1701,20 @@ abstract class $AttendanceStateCopyWith<$Res> {
   ) = _$AttendanceStateCopyWithImpl<$Res, AttendanceState>;
   @useResult
   $Res call({
-    String classId,
-    DateTime? selectedDate,
-    List<Student> students,
-    List<Attendance> attendances,
-    List<LeaveRequest> leaveRequests,
-    AttendanceSession? session,
-    String onPageError,
     bool isLoading,
-    bool isSaving,
-    bool hasUnsavedChanges,
+    bool isSubmitting,
+    String onPageError,
+    String? successMessage,
+    AppException? exception,
+    DailyAttendanceResult? dailyAttendance,
+    DailyAttendanceResult? historyAttendance,
     DateTime? historyDate,
-    List<Student> historyStudents,
-    List<Attendance> historyAttendances,
-    AttendanceSession? historySession,
-    bool isHistoryLoading,
-    String historyError,
+    PagedList<LeaveRequest>? leaveRequests,
   });
 
-  $AttendanceSessionCopyWith<$Res>? get session;
-  $AttendanceSessionCopyWith<$Res>? get historySession;
+  $DailyAttendanceResultCopyWith<$Res>? get dailyAttendance;
+  $DailyAttendanceResultCopyWith<$Res>? get historyAttendance;
+  $PagedListCopyWith<LeaveRequest, $Res>? get leaveRequests;
 }
 
 /// @nodoc
@@ -1320,89 +1732,54 @@ class _$AttendanceStateCopyWithImpl<$Res, $Val extends AttendanceState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? classId = null,
-    Object? selectedDate = freezed,
-    Object? students = null,
-    Object? attendances = null,
-    Object? leaveRequests = null,
-    Object? session = freezed,
-    Object? onPageError = null,
     Object? isLoading = null,
-    Object? isSaving = null,
-    Object? hasUnsavedChanges = null,
+    Object? isSubmitting = null,
+    Object? onPageError = null,
+    Object? successMessage = freezed,
+    Object? exception = freezed,
+    Object? dailyAttendance = freezed,
+    Object? historyAttendance = freezed,
     Object? historyDate = freezed,
-    Object? historyStudents = null,
-    Object? historyAttendances = null,
-    Object? historySession = freezed,
-    Object? isHistoryLoading = null,
-    Object? historyError = null,
+    Object? leaveRequests = freezed,
   }) {
     return _then(
       _value.copyWith(
-            classId: null == classId
-                ? _value.classId
-                : classId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            selectedDate: freezed == selectedDate
-                ? _value.selectedDate
-                : selectedDate // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            students: null == students
-                ? _value.students
-                : students // ignore: cast_nullable_to_non_nullable
-                      as List<Student>,
-            attendances: null == attendances
-                ? _value.attendances
-                : attendances // ignore: cast_nullable_to_non_nullable
-                      as List<Attendance>,
-            leaveRequests: null == leaveRequests
-                ? _value.leaveRequests
-                : leaveRequests // ignore: cast_nullable_to_non_nullable
-                      as List<LeaveRequest>,
-            session: freezed == session
-                ? _value.session
-                : session // ignore: cast_nullable_to_non_nullable
-                      as AttendanceSession?,
-            onPageError: null == onPageError
-                ? _value.onPageError
-                : onPageError // ignore: cast_nullable_to_non_nullable
-                      as String,
             isLoading: null == isLoading
                 ? _value.isLoading
                 : isLoading // ignore: cast_nullable_to_non_nullable
                       as bool,
-            isSaving: null == isSaving
-                ? _value.isSaving
-                : isSaving // ignore: cast_nullable_to_non_nullable
+            isSubmitting: null == isSubmitting
+                ? _value.isSubmitting
+                : isSubmitting // ignore: cast_nullable_to_non_nullable
                       as bool,
-            hasUnsavedChanges: null == hasUnsavedChanges
-                ? _value.hasUnsavedChanges
-                : hasUnsavedChanges // ignore: cast_nullable_to_non_nullable
-                      as bool,
+            onPageError: null == onPageError
+                ? _value.onPageError
+                : onPageError // ignore: cast_nullable_to_non_nullable
+                      as String,
+            successMessage: freezed == successMessage
+                ? _value.successMessage
+                : successMessage // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            exception: freezed == exception
+                ? _value.exception
+                : exception // ignore: cast_nullable_to_non_nullable
+                      as AppException?,
+            dailyAttendance: freezed == dailyAttendance
+                ? _value.dailyAttendance
+                : dailyAttendance // ignore: cast_nullable_to_non_nullable
+                      as DailyAttendanceResult?,
+            historyAttendance: freezed == historyAttendance
+                ? _value.historyAttendance
+                : historyAttendance // ignore: cast_nullable_to_non_nullable
+                      as DailyAttendanceResult?,
             historyDate: freezed == historyDate
                 ? _value.historyDate
                 : historyDate // ignore: cast_nullable_to_non_nullable
                       as DateTime?,
-            historyStudents: null == historyStudents
-                ? _value.historyStudents
-                : historyStudents // ignore: cast_nullable_to_non_nullable
-                      as List<Student>,
-            historyAttendances: null == historyAttendances
-                ? _value.historyAttendances
-                : historyAttendances // ignore: cast_nullable_to_non_nullable
-                      as List<Attendance>,
-            historySession: freezed == historySession
-                ? _value.historySession
-                : historySession // ignore: cast_nullable_to_non_nullable
-                      as AttendanceSession?,
-            isHistoryLoading: null == isHistoryLoading
-                ? _value.isHistoryLoading
-                : isHistoryLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            historyError: null == historyError
-                ? _value.historyError
-                : historyError // ignore: cast_nullable_to_non_nullable
-                      as String,
+            leaveRequests: freezed == leaveRequests
+                ? _value.leaveRequests
+                : leaveRequests // ignore: cast_nullable_to_non_nullable
+                      as PagedList<LeaveRequest>?,
           )
           as $Val,
     );
@@ -1412,13 +1789,15 @@ class _$AttendanceStateCopyWithImpl<$Res, $Val extends AttendanceState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AttendanceSessionCopyWith<$Res>? get session {
-    if (_value.session == null) {
+  $DailyAttendanceResultCopyWith<$Res>? get dailyAttendance {
+    if (_value.dailyAttendance == null) {
       return null;
     }
 
-    return $AttendanceSessionCopyWith<$Res>(_value.session!, (value) {
-      return _then(_value.copyWith(session: value) as $Val);
+    return $DailyAttendanceResultCopyWith<$Res>(_value.dailyAttendance!, (
+      value,
+    ) {
+      return _then(_value.copyWith(dailyAttendance: value) as $Val);
     });
   }
 
@@ -1426,13 +1805,31 @@ class _$AttendanceStateCopyWithImpl<$Res, $Val extends AttendanceState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AttendanceSessionCopyWith<$Res>? get historySession {
-    if (_value.historySession == null) {
+  $DailyAttendanceResultCopyWith<$Res>? get historyAttendance {
+    if (_value.historyAttendance == null) {
       return null;
     }
 
-    return $AttendanceSessionCopyWith<$Res>(_value.historySession!, (value) {
-      return _then(_value.copyWith(historySession: value) as $Val);
+    return $DailyAttendanceResultCopyWith<$Res>(_value.historyAttendance!, (
+      value,
+    ) {
+      return _then(_value.copyWith(historyAttendance: value) as $Val);
+    });
+  }
+
+  /// Create a copy of AttendanceState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PagedListCopyWith<LeaveRequest, $Res>? get leaveRequests {
+    if (_value.leaveRequests == null) {
+      return null;
+    }
+
+    return $PagedListCopyWith<LeaveRequest, $Res>(_value.leaveRequests!, (
+      value,
+    ) {
+      return _then(_value.copyWith(leaveRequests: value) as $Val);
     });
   }
 }
@@ -1447,28 +1844,23 @@ abstract class _$$AttendanceStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    String classId,
-    DateTime? selectedDate,
-    List<Student> students,
-    List<Attendance> attendances,
-    List<LeaveRequest> leaveRequests,
-    AttendanceSession? session,
-    String onPageError,
     bool isLoading,
-    bool isSaving,
-    bool hasUnsavedChanges,
+    bool isSubmitting,
+    String onPageError,
+    String? successMessage,
+    AppException? exception,
+    DailyAttendanceResult? dailyAttendance,
+    DailyAttendanceResult? historyAttendance,
     DateTime? historyDate,
-    List<Student> historyStudents,
-    List<Attendance> historyAttendances,
-    AttendanceSession? historySession,
-    bool isHistoryLoading,
-    String historyError,
+    PagedList<LeaveRequest>? leaveRequests,
   });
 
   @override
-  $AttendanceSessionCopyWith<$Res>? get session;
+  $DailyAttendanceResultCopyWith<$Res>? get dailyAttendance;
   @override
-  $AttendanceSessionCopyWith<$Res>? get historySession;
+  $DailyAttendanceResultCopyWith<$Res>? get historyAttendance;
+  @override
+  $PagedListCopyWith<LeaveRequest, $Res>? get leaveRequests;
 }
 
 /// @nodoc
@@ -1485,89 +1877,54 @@ class __$$AttendanceStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? classId = null,
-    Object? selectedDate = freezed,
-    Object? students = null,
-    Object? attendances = null,
-    Object? leaveRequests = null,
-    Object? session = freezed,
-    Object? onPageError = null,
     Object? isLoading = null,
-    Object? isSaving = null,
-    Object? hasUnsavedChanges = null,
+    Object? isSubmitting = null,
+    Object? onPageError = null,
+    Object? successMessage = freezed,
+    Object? exception = freezed,
+    Object? dailyAttendance = freezed,
+    Object? historyAttendance = freezed,
     Object? historyDate = freezed,
-    Object? historyStudents = null,
-    Object? historyAttendances = null,
-    Object? historySession = freezed,
-    Object? isHistoryLoading = null,
-    Object? historyError = null,
+    Object? leaveRequests = freezed,
   }) {
     return _then(
       _$AttendanceStateImpl(
-        classId: null == classId
-            ? _value.classId
-            : classId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        selectedDate: freezed == selectedDate
-            ? _value.selectedDate
-            : selectedDate // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        students: null == students
-            ? _value._students
-            : students // ignore: cast_nullable_to_non_nullable
-                  as List<Student>,
-        attendances: null == attendances
-            ? _value._attendances
-            : attendances // ignore: cast_nullable_to_non_nullable
-                  as List<Attendance>,
-        leaveRequests: null == leaveRequests
-            ? _value._leaveRequests
-            : leaveRequests // ignore: cast_nullable_to_non_nullable
-                  as List<LeaveRequest>,
-        session: freezed == session
-            ? _value.session
-            : session // ignore: cast_nullable_to_non_nullable
-                  as AttendanceSession?,
-        onPageError: null == onPageError
-            ? _value.onPageError
-            : onPageError // ignore: cast_nullable_to_non_nullable
-                  as String,
         isLoading: null == isLoading
             ? _value.isLoading
             : isLoading // ignore: cast_nullable_to_non_nullable
                   as bool,
-        isSaving: null == isSaving
-            ? _value.isSaving
-            : isSaving // ignore: cast_nullable_to_non_nullable
+        isSubmitting: null == isSubmitting
+            ? _value.isSubmitting
+            : isSubmitting // ignore: cast_nullable_to_non_nullable
                   as bool,
-        hasUnsavedChanges: null == hasUnsavedChanges
-            ? _value.hasUnsavedChanges
-            : hasUnsavedChanges // ignore: cast_nullable_to_non_nullable
-                  as bool,
+        onPageError: null == onPageError
+            ? _value.onPageError
+            : onPageError // ignore: cast_nullable_to_non_nullable
+                  as String,
+        successMessage: freezed == successMessage
+            ? _value.successMessage
+            : successMessage // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        exception: freezed == exception
+            ? _value.exception
+            : exception // ignore: cast_nullable_to_non_nullable
+                  as AppException?,
+        dailyAttendance: freezed == dailyAttendance
+            ? _value.dailyAttendance
+            : dailyAttendance // ignore: cast_nullable_to_non_nullable
+                  as DailyAttendanceResult?,
+        historyAttendance: freezed == historyAttendance
+            ? _value.historyAttendance
+            : historyAttendance // ignore: cast_nullable_to_non_nullable
+                  as DailyAttendanceResult?,
         historyDate: freezed == historyDate
             ? _value.historyDate
             : historyDate // ignore: cast_nullable_to_non_nullable
                   as DateTime?,
-        historyStudents: null == historyStudents
-            ? _value._historyStudents
-            : historyStudents // ignore: cast_nullable_to_non_nullable
-                  as List<Student>,
-        historyAttendances: null == historyAttendances
-            ? _value._historyAttendances
-            : historyAttendances // ignore: cast_nullable_to_non_nullable
-                  as List<Attendance>,
-        historySession: freezed == historySession
-            ? _value.historySession
-            : historySession // ignore: cast_nullable_to_non_nullable
-                  as AttendanceSession?,
-        isHistoryLoading: null == isHistoryLoading
-            ? _value.isHistoryLoading
-            : isHistoryLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        historyError: null == historyError
-            ? _value.historyError
-            : historyError // ignore: cast_nullable_to_non_nullable
-                  as String,
+        leaveRequests: freezed == leaveRequests
+            ? _value.leaveRequests
+            : leaveRequests // ignore: cast_nullable_to_non_nullable
+                  as PagedList<LeaveRequest>?,
       ),
     );
   }
@@ -1577,107 +1934,42 @@ class __$$AttendanceStateImplCopyWithImpl<$Res>
 
 class _$AttendanceStateImpl implements _AttendanceState {
   const _$AttendanceStateImpl({
-    this.classId = '',
-    this.selectedDate,
-    final List<Student> students = const [],
-    final List<Attendance> attendances = const [],
-    final List<LeaveRequest> leaveRequests = const [],
-    this.session,
-    this.onPageError = '',
     this.isLoading = false,
-    this.isSaving = false,
-    this.hasUnsavedChanges = false,
+    this.isSubmitting = false,
+    this.onPageError = '',
+    this.successMessage,
+    this.exception,
+    this.dailyAttendance,
+    this.historyAttendance,
     this.historyDate,
-    final List<Student> historyStudents = const [],
-    final List<Attendance> historyAttendances = const [],
-    this.historySession,
-    this.isHistoryLoading = false,
-    this.historyError = '',
-  }) : _students = students,
-       _attendances = attendances,
-       _leaveRequests = leaveRequests,
-       _historyStudents = historyStudents,
-       _historyAttendances = historyAttendances;
+    this.leaveRequests,
+  });
 
-  @override
-  @JsonKey()
-  final String classId;
-  @override
-  final DateTime? selectedDate;
-  final List<Student> _students;
-  @override
-  @JsonKey()
-  List<Student> get students {
-    if (_students is EqualUnmodifiableListView) return _students;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_students);
-  }
-
-  final List<Attendance> _attendances;
-  @override
-  @JsonKey()
-  List<Attendance> get attendances {
-    if (_attendances is EqualUnmodifiableListView) return _attendances;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_attendances);
-  }
-
-  final List<LeaveRequest> _leaveRequests;
-  @override
-  @JsonKey()
-  List<LeaveRequest> get leaveRequests {
-    if (_leaveRequests is EqualUnmodifiableListView) return _leaveRequests;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_leaveRequests);
-  }
-
-  @override
-  final AttendanceSession? session;
-  @override
-  @JsonKey()
-  final String onPageError;
   @override
   @JsonKey()
   final bool isLoading;
   @override
   @JsonKey()
-  final bool isSaving;
+  final bool isSubmitting;
   @override
   @JsonKey()
-  final bool hasUnsavedChanges;
+  final String onPageError;
+  @override
+  final String? successMessage;
+  @override
+  final AppException? exception;
+  @override
+  final DailyAttendanceResult? dailyAttendance;
+  @override
+  final DailyAttendanceResult? historyAttendance;
   @override
   final DateTime? historyDate;
-  final List<Student> _historyStudents;
   @override
-  @JsonKey()
-  List<Student> get historyStudents {
-    if (_historyStudents is EqualUnmodifiableListView) return _historyStudents;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_historyStudents);
-  }
-
-  final List<Attendance> _historyAttendances;
-  @override
-  @JsonKey()
-  List<Attendance> get historyAttendances {
-    if (_historyAttendances is EqualUnmodifiableListView)
-      return _historyAttendances;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_historyAttendances);
-  }
-
-  @override
-  final AttendanceSession? historySession;
-  @override
-  @JsonKey()
-  final bool isHistoryLoading;
-  @override
-  @JsonKey()
-  final String historyError;
+  final PagedList<LeaveRequest>? leaveRequests;
 
   @override
   String toString() {
-    return 'AttendanceState(classId: $classId, selectedDate: $selectedDate, students: $students, attendances: $attendances, leaveRequests: $leaveRequests, session: $session, onPageError: $onPageError, isLoading: $isLoading, isSaving: $isSaving, hasUnsavedChanges: $hasUnsavedChanges, historyDate: $historyDate, historyStudents: $historyStudents, historyAttendances: $historyAttendances, historySession: $historySession, isHistoryLoading: $isHistoryLoading, historyError: $historyError)';
+    return 'AttendanceState(isLoading: $isLoading, isSubmitting: $isSubmitting, onPageError: $onPageError, successMessage: $successMessage, exception: $exception, dailyAttendance: $dailyAttendance, historyAttendance: $historyAttendance, historyDate: $historyDate, leaveRequests: $leaveRequests)';
   }
 
   @override
@@ -1685,64 +1977,38 @@ class _$AttendanceStateImpl implements _AttendanceState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AttendanceStateImpl &&
-            (identical(other.classId, classId) || other.classId == classId) &&
-            (identical(other.selectedDate, selectedDate) ||
-                other.selectedDate == selectedDate) &&
-            const DeepCollectionEquality().equals(other._students, _students) &&
-            const DeepCollectionEquality().equals(
-              other._attendances,
-              _attendances,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._leaveRequests,
-              _leaveRequests,
-            ) &&
-            (identical(other.session, session) || other.session == session) &&
-            (identical(other.onPageError, onPageError) ||
-                other.onPageError == onPageError) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.isSaving, isSaving) ||
-                other.isSaving == isSaving) &&
-            (identical(other.hasUnsavedChanges, hasUnsavedChanges) ||
-                other.hasUnsavedChanges == hasUnsavedChanges) &&
+            (identical(other.isSubmitting, isSubmitting) ||
+                other.isSubmitting == isSubmitting) &&
+            (identical(other.onPageError, onPageError) ||
+                other.onPageError == onPageError) &&
+            (identical(other.successMessage, successMessage) ||
+                other.successMessage == successMessage) &&
+            (identical(other.exception, exception) ||
+                other.exception == exception) &&
+            (identical(other.dailyAttendance, dailyAttendance) ||
+                other.dailyAttendance == dailyAttendance) &&
+            (identical(other.historyAttendance, historyAttendance) ||
+                other.historyAttendance == historyAttendance) &&
             (identical(other.historyDate, historyDate) ||
                 other.historyDate == historyDate) &&
-            const DeepCollectionEquality().equals(
-              other._historyStudents,
-              _historyStudents,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._historyAttendances,
-              _historyAttendances,
-            ) &&
-            (identical(other.historySession, historySession) ||
-                other.historySession == historySession) &&
-            (identical(other.isHistoryLoading, isHistoryLoading) ||
-                other.isHistoryLoading == isHistoryLoading) &&
-            (identical(other.historyError, historyError) ||
-                other.historyError == historyError));
+            (identical(other.leaveRequests, leaveRequests) ||
+                other.leaveRequests == leaveRequests));
   }
 
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    classId,
-    selectedDate,
-    const DeepCollectionEquality().hash(_students),
-    const DeepCollectionEquality().hash(_attendances),
-    const DeepCollectionEquality().hash(_leaveRequests),
-    session,
-    onPageError,
     isLoading,
-    isSaving,
-    hasUnsavedChanges,
+    isSubmitting,
+    onPageError,
+    successMessage,
+    exception,
+    dailyAttendance,
+    historyAttendance,
     historyDate,
-    const DeepCollectionEquality().hash(_historyStudents),
-    const DeepCollectionEquality().hash(_historyAttendances),
-    historySession,
-    isHistoryLoading,
-    historyError,
+    leaveRequests,
   );
 
   /// Create a copy of AttendanceState
@@ -1759,56 +2025,35 @@ class _$AttendanceStateImpl implements _AttendanceState {
 
 abstract class _AttendanceState implements AttendanceState {
   const factory _AttendanceState({
-    final String classId,
-    final DateTime? selectedDate,
-    final List<Student> students,
-    final List<Attendance> attendances,
-    final List<LeaveRequest> leaveRequests,
-    final AttendanceSession? session,
-    final String onPageError,
     final bool isLoading,
-    final bool isSaving,
-    final bool hasUnsavedChanges,
+    final bool isSubmitting,
+    final String onPageError,
+    final String? successMessage,
+    final AppException? exception,
+    final DailyAttendanceResult? dailyAttendance,
+    final DailyAttendanceResult? historyAttendance,
     final DateTime? historyDate,
-    final List<Student> historyStudents,
-    final List<Attendance> historyAttendances,
-    final AttendanceSession? historySession,
-    final bool isHistoryLoading,
-    final String historyError,
+    final PagedList<LeaveRequest>? leaveRequests,
   }) = _$AttendanceStateImpl;
 
   @override
-  String get classId;
+  bool get isLoading;
   @override
-  DateTime? get selectedDate;
-  @override
-  List<Student> get students;
-  @override
-  List<Attendance> get attendances;
-  @override
-  List<LeaveRequest> get leaveRequests;
-  @override
-  AttendanceSession? get session;
+  bool get isSubmitting;
   @override
   String get onPageError;
   @override
-  bool get isLoading;
+  String? get successMessage;
   @override
-  bool get isSaving;
+  AppException? get exception;
   @override
-  bool get hasUnsavedChanges;
+  DailyAttendanceResult? get dailyAttendance;
+  @override
+  DailyAttendanceResult? get historyAttendance;
   @override
   DateTime? get historyDate;
   @override
-  List<Student> get historyStudents;
-  @override
-  List<Attendance> get historyAttendances;
-  @override
-  AttendanceSession? get historySession;
-  @override
-  bool get isHistoryLoading;
-  @override
-  String get historyError;
+  PagedList<LeaveRequest>? get leaveRequests;
 
   /// Create a copy of AttendanceState
   /// with the given fields replaced by the non-null parameter values.

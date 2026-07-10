@@ -19,16 +19,10 @@ class ValidationUtils {
     final bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
     final bool hasLowercase = password.contains(RegExp(r'[a-z]'));
     final bool hasDigits = password.contains(RegExp(r'[0-9]'));
-    final bool hasSpecialCharacters = password.contains(
-      RegExp(r'[!@#$%^&*(),.?":{}|<>]'),
-    );
+    final bool hasSpecialCharacters = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
     final bool hasMinLength = password.length > 8;
 
-    return hasUppercase &&
-        hasLowercase &&
-        hasDigits &&
-        hasSpecialCharacters &&
-        hasMinLength;
+    return hasUppercase && hasLowercase && hasDigits && hasSpecialCharacters && hasMinLength;
   }
 
   static bool isValidOtpCode(String password) {
@@ -68,9 +62,7 @@ class ValidationUtils {
   /// Check if a string is a valid email.
   /// Return true if it is valid.
   static bool isValidEmail(String email) {
-    if (!RegExp(
-      r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$',
-    ).hasMatch(email.trim())) {
+    if (!RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$').hasMatch(email.trim())) {
       return false;
     }
 

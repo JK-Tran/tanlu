@@ -17,34 +17,33 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Student {
-  String get id => throw _privateConstructorUsedError;
-  String get classId => throw _privateConstructorUsedError;
-  String get fullName => throw _privateConstructorUsedError;
-  String get nickname => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
-  DateTime? get dob => throw _privateConstructorUsedError;
-  DateTime? get dateOfBirth => throw _privateConstructorUsedError;
-  String get avatarUrl => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
+  int get centerId => throw _privateConstructorUsedError;
+  int get classId => throw _privateConstructorUsedError;
+  int get parentId => throw _privateConstructorUsedError;
   String get studentCode => throw _privateConstructorUsedError;
+  String get fullName => throw _privateConstructorUsedError;
+  String get nickName => throw _privateConstructorUsedError;
+  String get gender => throw _privateConstructorUsedError;
+  DateTime? get birthDate => throw _privateConstructorUsedError;
+  String get avatarUrl => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
-  String get parentUserId => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
-  List<Contact> get contacts =>
-      throw _privateConstructorUsedError; // Y tế & Thể chất
   String get birthHistory => throw _privateConstructorUsedError;
   String get diagnosis => throw _privateConstructorUsedError;
   String get allergies => throw _privateConstructorUsedError;
   String get currentMedications => throw _privateConstructorUsedError;
-  String get bloodType =>
-      throw _privateConstructorUsedError; // Hành vi & Sở thích
+  String get bloodType => throw _privateConstructorUsedError;
   String get likes => throw _privateConstructorUsedError;
   String get dislikesOrTriggers => throw _privateConstructorUsedError;
-  String get selfCareSkills =>
-      throw _privateConstructorUsedError; // Cũ / Tương thích ngược
+  String get selfCareSkills => throw _privateConstructorUsedError;
   String get initialReason => throw _privateConstructorUsedError;
   String get diagnosisSummary => throw _privateConstructorUsedError;
   int get developmentAgeMonth => throw _privateConstructorUsedError;
   String get supportLevel => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  ClassInfo get classInfo => throw _privateConstructorUsedError;
+  Parent get parent => throw _privateConstructorUsedError;
+  List<Contact> get contacts => throw _privateConstructorUsedError;
 
   /// Create a copy of Student
   /// with the given fields replaced by the non-null parameter values.
@@ -58,19 +57,17 @@ abstract class $StudentCopyWith<$Res> {
       _$StudentCopyWithImpl<$Res, Student>;
   @useResult
   $Res call({
-    String id,
-    String classId,
-    String fullName,
-    String nickname,
-    String gender,
-    DateTime? dob,
-    DateTime? dateOfBirth,
-    String avatarUrl,
+    int id,
+    int centerId,
+    int classId,
+    int parentId,
     String studentCode,
+    String fullName,
+    String nickName,
+    String gender,
+    DateTime? birthDate,
+    String avatarUrl,
     String status,
-    String parentUserId,
-    String address,
-    List<Contact> contacts,
     String birthHistory,
     String diagnosis,
     String allergies,
@@ -83,7 +80,14 @@ abstract class $StudentCopyWith<$Res> {
     String diagnosisSummary,
     int developmentAgeMonth,
     String supportLevel,
+    DateTime? createdAt,
+    ClassInfo classInfo,
+    Parent parent,
+    List<Contact> contacts,
   });
+
+  $ClassInfoCopyWith<$Res> get classInfo;
+  $ParentCopyWith<$Res> get parent;
 }
 
 /// @nodoc
@@ -102,18 +106,16 @@ class _$StudentCopyWithImpl<$Res, $Val extends Student>
   @override
   $Res call({
     Object? id = null,
+    Object? centerId = null,
     Object? classId = null,
-    Object? fullName = null,
-    Object? nickname = null,
-    Object? gender = null,
-    Object? dob = freezed,
-    Object? dateOfBirth = freezed,
-    Object? avatarUrl = null,
+    Object? parentId = null,
     Object? studentCode = null,
+    Object? fullName = null,
+    Object? nickName = null,
+    Object? gender = null,
+    Object? birthDate = freezed,
+    Object? avatarUrl = null,
     Object? status = null,
-    Object? parentUserId = null,
-    Object? address = null,
-    Object? contacts = null,
     Object? birthHistory = null,
     Object? diagnosis = null,
     Object? allergies = null,
@@ -126,61 +128,57 @@ class _$StudentCopyWithImpl<$Res, $Val extends Student>
     Object? diagnosisSummary = null,
     Object? developmentAgeMonth = null,
     Object? supportLevel = null,
+    Object? createdAt = freezed,
+    Object? classInfo = null,
+    Object? parent = null,
+    Object? contacts = null,
   }) {
     return _then(
       _value.copyWith(
             id: null == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as String,
+                      as int,
+            centerId: null == centerId
+                ? _value.centerId
+                : centerId // ignore: cast_nullable_to_non_nullable
+                      as int,
             classId: null == classId
                 ? _value.classId
                 : classId // ignore: cast_nullable_to_non_nullable
+                      as int,
+            parentId: null == parentId
+                ? _value.parentId
+                : parentId // ignore: cast_nullable_to_non_nullable
+                      as int,
+            studentCode: null == studentCode
+                ? _value.studentCode
+                : studentCode // ignore: cast_nullable_to_non_nullable
                       as String,
             fullName: null == fullName
                 ? _value.fullName
                 : fullName // ignore: cast_nullable_to_non_nullable
                       as String,
-            nickname: null == nickname
-                ? _value.nickname
-                : nickname // ignore: cast_nullable_to_non_nullable
+            nickName: null == nickName
+                ? _value.nickName
+                : nickName // ignore: cast_nullable_to_non_nullable
                       as String,
             gender: null == gender
                 ? _value.gender
                 : gender // ignore: cast_nullable_to_non_nullable
                       as String,
-            dob: freezed == dob
-                ? _value.dob
-                : dob // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            dateOfBirth: freezed == dateOfBirth
-                ? _value.dateOfBirth
-                : dateOfBirth // ignore: cast_nullable_to_non_nullable
+            birthDate: freezed == birthDate
+                ? _value.birthDate
+                : birthDate // ignore: cast_nullable_to_non_nullable
                       as DateTime?,
             avatarUrl: null == avatarUrl
                 ? _value.avatarUrl
                 : avatarUrl // ignore: cast_nullable_to_non_nullable
                       as String,
-            studentCode: null == studentCode
-                ? _value.studentCode
-                : studentCode // ignore: cast_nullable_to_non_nullable
-                      as String,
             status: null == status
                 ? _value.status
                 : status // ignore: cast_nullable_to_non_nullable
                       as String,
-            parentUserId: null == parentUserId
-                ? _value.parentUserId
-                : parentUserId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            address: null == address
-                ? _value.address
-                : address // ignore: cast_nullable_to_non_nullable
-                      as String,
-            contacts: null == contacts
-                ? _value.contacts
-                : contacts // ignore: cast_nullable_to_non_nullable
-                      as List<Contact>,
             birthHistory: null == birthHistory
                 ? _value.birthHistory
                 : birthHistory // ignore: cast_nullable_to_non_nullable
@@ -229,9 +227,45 @@ class _$StudentCopyWithImpl<$Res, $Val extends Student>
                 ? _value.supportLevel
                 : supportLevel // ignore: cast_nullable_to_non_nullable
                       as String,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            classInfo: null == classInfo
+                ? _value.classInfo
+                : classInfo // ignore: cast_nullable_to_non_nullable
+                      as ClassInfo,
+            parent: null == parent
+                ? _value.parent
+                : parent // ignore: cast_nullable_to_non_nullable
+                      as Parent,
+            contacts: null == contacts
+                ? _value.contacts
+                : contacts // ignore: cast_nullable_to_non_nullable
+                      as List<Contact>,
           )
           as $Val,
     );
+  }
+
+  /// Create a copy of Student
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ClassInfoCopyWith<$Res> get classInfo {
+    return $ClassInfoCopyWith<$Res>(_value.classInfo, (value) {
+      return _then(_value.copyWith(classInfo: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Student
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ParentCopyWith<$Res> get parent {
+    return $ParentCopyWith<$Res>(_value.parent, (value) {
+      return _then(_value.copyWith(parent: value) as $Val);
+    });
   }
 }
 
@@ -244,19 +278,17 @@ abstract class _$$StudentImplCopyWith<$Res> implements $StudentCopyWith<$Res> {
   @override
   @useResult
   $Res call({
-    String id,
-    String classId,
-    String fullName,
-    String nickname,
-    String gender,
-    DateTime? dob,
-    DateTime? dateOfBirth,
-    String avatarUrl,
+    int id,
+    int centerId,
+    int classId,
+    int parentId,
     String studentCode,
+    String fullName,
+    String nickName,
+    String gender,
+    DateTime? birthDate,
+    String avatarUrl,
     String status,
-    String parentUserId,
-    String address,
-    List<Contact> contacts,
     String birthHistory,
     String diagnosis,
     String allergies,
@@ -269,7 +301,16 @@ abstract class _$$StudentImplCopyWith<$Res> implements $StudentCopyWith<$Res> {
     String diagnosisSummary,
     int developmentAgeMonth,
     String supportLevel,
+    DateTime? createdAt,
+    ClassInfo classInfo,
+    Parent parent,
+    List<Contact> contacts,
   });
+
+  @override
+  $ClassInfoCopyWith<$Res> get classInfo;
+  @override
+  $ParentCopyWith<$Res> get parent;
 }
 
 /// @nodoc
@@ -287,18 +328,16 @@ class __$$StudentImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? centerId = null,
     Object? classId = null,
-    Object? fullName = null,
-    Object? nickname = null,
-    Object? gender = null,
-    Object? dob = freezed,
-    Object? dateOfBirth = freezed,
-    Object? avatarUrl = null,
+    Object? parentId = null,
     Object? studentCode = null,
+    Object? fullName = null,
+    Object? nickName = null,
+    Object? gender = null,
+    Object? birthDate = freezed,
+    Object? avatarUrl = null,
     Object? status = null,
-    Object? parentUserId = null,
-    Object? address = null,
-    Object? contacts = null,
     Object? birthHistory = null,
     Object? diagnosis = null,
     Object? allergies = null,
@@ -311,61 +350,57 @@ class __$$StudentImplCopyWithImpl<$Res>
     Object? diagnosisSummary = null,
     Object? developmentAgeMonth = null,
     Object? supportLevel = null,
+    Object? createdAt = freezed,
+    Object? classInfo = null,
+    Object? parent = null,
+    Object? contacts = null,
   }) {
     return _then(
       _$StudentImpl(
         id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as String,
+                  as int,
+        centerId: null == centerId
+            ? _value.centerId
+            : centerId // ignore: cast_nullable_to_non_nullable
+                  as int,
         classId: null == classId
             ? _value.classId
             : classId // ignore: cast_nullable_to_non_nullable
+                  as int,
+        parentId: null == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                  as int,
+        studentCode: null == studentCode
+            ? _value.studentCode
+            : studentCode // ignore: cast_nullable_to_non_nullable
                   as String,
         fullName: null == fullName
             ? _value.fullName
             : fullName // ignore: cast_nullable_to_non_nullable
                   as String,
-        nickname: null == nickname
-            ? _value.nickname
-            : nickname // ignore: cast_nullable_to_non_nullable
+        nickName: null == nickName
+            ? _value.nickName
+            : nickName // ignore: cast_nullable_to_non_nullable
                   as String,
         gender: null == gender
             ? _value.gender
             : gender // ignore: cast_nullable_to_non_nullable
                   as String,
-        dob: freezed == dob
-            ? _value.dob
-            : dob // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        dateOfBirth: freezed == dateOfBirth
-            ? _value.dateOfBirth
-            : dateOfBirth // ignore: cast_nullable_to_non_nullable
+        birthDate: freezed == birthDate
+            ? _value.birthDate
+            : birthDate // ignore: cast_nullable_to_non_nullable
                   as DateTime?,
         avatarUrl: null == avatarUrl
             ? _value.avatarUrl
             : avatarUrl // ignore: cast_nullable_to_non_nullable
                   as String,
-        studentCode: null == studentCode
-            ? _value.studentCode
-            : studentCode // ignore: cast_nullable_to_non_nullable
-                  as String,
         status: null == status
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
                   as String,
-        parentUserId: null == parentUserId
-            ? _value.parentUserId
-            : parentUserId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        address: null == address
-            ? _value.address
-            : address // ignore: cast_nullable_to_non_nullable
-                  as String,
-        contacts: null == contacts
-            ? _value._contacts
-            : contacts // ignore: cast_nullable_to_non_nullable
-                  as List<Contact>,
         birthHistory: null == birthHistory
             ? _value.birthHistory
             : birthHistory // ignore: cast_nullable_to_non_nullable
@@ -414,6 +449,22 @@ class __$$StudentImplCopyWithImpl<$Res>
             ? _value.supportLevel
             : supportLevel // ignore: cast_nullable_to_non_nullable
                   as String,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        classInfo: null == classInfo
+            ? _value.classInfo
+            : classInfo // ignore: cast_nullable_to_non_nullable
+                  as ClassInfo,
+        parent: null == parent
+            ? _value.parent
+            : parent // ignore: cast_nullable_to_non_nullable
+                  as Parent,
+        contacts: null == contacts
+            ? _value._contacts
+            : contacts // ignore: cast_nullable_to_non_nullable
+                  as List<Contact>,
       ),
     );
   }
@@ -423,19 +474,17 @@ class __$$StudentImplCopyWithImpl<$Res>
 
 class _$StudentImpl implements _Student {
   const _$StudentImpl({
-    this.id = '',
-    this.classId = '',
-    this.fullName = '',
-    this.nickname = '',
-    this.gender = '',
-    this.dob,
-    this.dateOfBirth,
-    this.avatarUrl = '',
+    this.id = 0,
+    this.centerId = 0,
+    this.classId = 0,
+    this.parentId = 0,
     this.studentCode = '',
+    this.fullName = '',
+    this.nickName = '',
+    this.gender = '',
+    this.birthDate,
+    this.avatarUrl = '',
     this.status = '',
-    this.parentUserId = '',
-    this.address = '',
-    final List<Contact> contacts = const [],
     this.birthHistory = '',
     this.diagnosis = '',
     this.allergies = '',
@@ -448,52 +497,44 @@ class _$StudentImpl implements _Student {
     this.diagnosisSummary = '',
     this.developmentAgeMonth = 0,
     this.supportLevel = '',
+    this.createdAt,
+    this.classInfo = const ClassInfo(),
+    this.parent = const Parent(),
+    final List<Contact> contacts = const [],
   }) : _contacts = contacts;
 
   @override
   @JsonKey()
-  final String id;
+  final int id;
   @override
   @JsonKey()
-  final String classId;
+  final int centerId;
   @override
   @JsonKey()
-  final String fullName;
+  final int classId;
   @override
   @JsonKey()
-  final String nickname;
-  @override
-  @JsonKey()
-  final String gender;
-  @override
-  final DateTime? dob;
-  @override
-  final DateTime? dateOfBirth;
-  @override
-  @JsonKey()
-  final String avatarUrl;
+  final int parentId;
   @override
   @JsonKey()
   final String studentCode;
   @override
   @JsonKey()
+  final String fullName;
+  @override
+  @JsonKey()
+  final String nickName;
+  @override
+  @JsonKey()
+  final String gender;
+  @override
+  final DateTime? birthDate;
+  @override
+  @JsonKey()
+  final String avatarUrl;
+  @override
+  @JsonKey()
   final String status;
-  @override
-  @JsonKey()
-  final String parentUserId;
-  @override
-  @JsonKey()
-  final String address;
-  final List<Contact> _contacts;
-  @override
-  @JsonKey()
-  List<Contact> get contacts {
-    if (_contacts is EqualUnmodifiableListView) return _contacts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_contacts);
-  }
-
-  // Y tế & Thể chất
   @override
   @JsonKey()
   final String birthHistory;
@@ -509,7 +550,6 @@ class _$StudentImpl implements _Student {
   @override
   @JsonKey()
   final String bloodType;
-  // Hành vi & Sở thích
   @override
   @JsonKey()
   final String likes;
@@ -519,7 +559,6 @@ class _$StudentImpl implements _Student {
   @override
   @JsonKey()
   final String selfCareSkills;
-  // Cũ / Tương thích ngược
   @override
   @JsonKey()
   final String initialReason;
@@ -532,10 +571,26 @@ class _$StudentImpl implements _Student {
   @override
   @JsonKey()
   final String supportLevel;
+  @override
+  final DateTime? createdAt;
+  @override
+  @JsonKey()
+  final ClassInfo classInfo;
+  @override
+  @JsonKey()
+  final Parent parent;
+  final List<Contact> _contacts;
+  @override
+  @JsonKey()
+  List<Contact> get contacts {
+    if (_contacts is EqualUnmodifiableListView) return _contacts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_contacts);
+  }
 
   @override
   String toString() {
-    return 'Student(id: $id, classId: $classId, fullName: $fullName, nickname: $nickname, gender: $gender, dob: $dob, dateOfBirth: $dateOfBirth, avatarUrl: $avatarUrl, studentCode: $studentCode, status: $status, parentUserId: $parentUserId, address: $address, contacts: $contacts, birthHistory: $birthHistory, diagnosis: $diagnosis, allergies: $allergies, currentMedications: $currentMedications, bloodType: $bloodType, likes: $likes, dislikesOrTriggers: $dislikesOrTriggers, selfCareSkills: $selfCareSkills, initialReason: $initialReason, diagnosisSummary: $diagnosisSummary, developmentAgeMonth: $developmentAgeMonth, supportLevel: $supportLevel)';
+    return 'Student(id: $id, centerId: $centerId, classId: $classId, parentId: $parentId, studentCode: $studentCode, fullName: $fullName, nickName: $nickName, gender: $gender, birthDate: $birthDate, avatarUrl: $avatarUrl, status: $status, birthHistory: $birthHistory, diagnosis: $diagnosis, allergies: $allergies, currentMedications: $currentMedications, bloodType: $bloodType, likes: $likes, dislikesOrTriggers: $dislikesOrTriggers, selfCareSkills: $selfCareSkills, initialReason: $initialReason, diagnosisSummary: $diagnosisSummary, developmentAgeMonth: $developmentAgeMonth, supportLevel: $supportLevel, createdAt: $createdAt, classInfo: $classInfo, parent: $parent, contacts: $contacts)';
   }
 
   @override
@@ -544,24 +599,23 @@ class _$StudentImpl implements _Student {
         (other.runtimeType == runtimeType &&
             other is _$StudentImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.centerId, centerId) ||
+                other.centerId == centerId) &&
             (identical(other.classId, classId) || other.classId == classId) &&
-            (identical(other.fullName, fullName) ||
-                other.fullName == fullName) &&
-            (identical(other.nickname, nickname) ||
-                other.nickname == nickname) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
-            (identical(other.avatarUrl, avatarUrl) ||
-                other.avatarUrl == avatarUrl) &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId) &&
             (identical(other.studentCode, studentCode) ||
                 other.studentCode == studentCode) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
+            (identical(other.nickName, nickName) ||
+                other.nickName == nickName) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.birthDate, birthDate) ||
+                other.birthDate == birthDate) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.parentUserId, parentUserId) ||
-                other.parentUserId == parentUserId) &&
-            (identical(other.address, address) || other.address == address) &&
-            const DeepCollectionEquality().equals(other._contacts, _contacts) &&
             (identical(other.birthHistory, birthHistory) ||
                 other.birthHistory == birthHistory) &&
             (identical(other.diagnosis, diagnosis) ||
@@ -584,25 +638,29 @@ class _$StudentImpl implements _Student {
             (identical(other.developmentAgeMonth, developmentAgeMonth) ||
                 other.developmentAgeMonth == developmentAgeMonth) &&
             (identical(other.supportLevel, supportLevel) ||
-                other.supportLevel == supportLevel));
+                other.supportLevel == supportLevel) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.classInfo, classInfo) ||
+                other.classInfo == classInfo) &&
+            (identical(other.parent, parent) || other.parent == parent) &&
+            const DeepCollectionEquality().equals(other._contacts, _contacts));
   }
 
   @override
   int get hashCode => Object.hashAll([
     runtimeType,
     id,
+    centerId,
     classId,
-    fullName,
-    nickname,
-    gender,
-    dob,
-    dateOfBirth,
-    avatarUrl,
+    parentId,
     studentCode,
+    fullName,
+    nickName,
+    gender,
+    birthDate,
+    avatarUrl,
     status,
-    parentUserId,
-    address,
-    const DeepCollectionEquality().hash(_contacts),
     birthHistory,
     diagnosis,
     allergies,
@@ -615,6 +673,10 @@ class _$StudentImpl implements _Student {
     diagnosisSummary,
     developmentAgeMonth,
     supportLevel,
+    createdAt,
+    classInfo,
+    parent,
+    const DeepCollectionEquality().hash(_contacts),
   ]);
 
   /// Create a copy of Student
@@ -628,19 +690,17 @@ class _$StudentImpl implements _Student {
 
 abstract class _Student implements Student {
   const factory _Student({
-    final String id,
-    final String classId,
-    final String fullName,
-    final String nickname,
-    final String gender,
-    final DateTime? dob,
-    final DateTime? dateOfBirth,
-    final String avatarUrl,
+    final int id,
+    final int centerId,
+    final int classId,
+    final int parentId,
     final String studentCode,
+    final String fullName,
+    final String nickName,
+    final String gender,
+    final DateTime? birthDate,
+    final String avatarUrl,
     final String status,
-    final String parentUserId,
-    final String address,
-    final List<Contact> contacts,
     final String birthHistory,
     final String diagnosis,
     final String allergies,
@@ -653,34 +713,34 @@ abstract class _Student implements Student {
     final String diagnosisSummary,
     final int developmentAgeMonth,
     final String supportLevel,
+    final DateTime? createdAt,
+    final ClassInfo classInfo,
+    final Parent parent,
+    final List<Contact> contacts,
   }) = _$StudentImpl;
 
   @override
-  String get id;
+  int get id;
   @override
-  String get classId;
+  int get centerId;
   @override
-  String get fullName;
+  int get classId;
   @override
-  String get nickname;
-  @override
-  String get gender;
-  @override
-  DateTime? get dob;
-  @override
-  DateTime? get dateOfBirth;
-  @override
-  String get avatarUrl;
+  int get parentId;
   @override
   String get studentCode;
   @override
+  String get fullName;
+  @override
+  String get nickName;
+  @override
+  String get gender;
+  @override
+  DateTime? get birthDate;
+  @override
+  String get avatarUrl;
+  @override
   String get status;
-  @override
-  String get parentUserId;
-  @override
-  String get address;
-  @override
-  List<Contact> get contacts; // Y tế & Thể chất
   @override
   String get birthHistory;
   @override
@@ -690,13 +750,13 @@ abstract class _Student implements Student {
   @override
   String get currentMedications;
   @override
-  String get bloodType; // Hành vi & Sở thích
+  String get bloodType;
   @override
   String get likes;
   @override
   String get dislikesOrTriggers;
   @override
-  String get selfCareSkills; // Cũ / Tương thích ngược
+  String get selfCareSkills;
   @override
   String get initialReason;
   @override
@@ -705,6 +765,14 @@ abstract class _Student implements Student {
   int get developmentAgeMonth;
   @override
   String get supportLevel;
+  @override
+  DateTime? get createdAt;
+  @override
+  ClassInfo get classInfo;
+  @override
+  Parent get parent;
+  @override
+  List<Contact> get contacts;
 
   /// Create a copy of Student
   /// with the given fields replaced by the non-null parameter values.

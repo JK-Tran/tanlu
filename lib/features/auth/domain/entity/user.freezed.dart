@@ -17,14 +17,18 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$User {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
+  String get passwordHash => throw _privateConstructorUsedError;
+  String get avatarUrl => throw _privateConstructorUsedError;
+  String get phone => throw _privateConstructorUsedError;
   String get role => throw _privateConstructorUsedError;
-  String? get centerId => throw _privateConstructorUsedError;
-  String? get phone => throw _privateConstructorUsedError;
-  String? get avatar => throw _privateConstructorUsedError;
-  String? get classId => throw _privateConstructorUsedError;
+  int get centerId => throw _privateConstructorUsedError;
+  String get fcmToken => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  int get classId => throw _privateConstructorUsedError;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -38,14 +42,18 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call({
-    String id,
+    int id,
     String email,
     String fullName,
+    String passwordHash,
+    String avatarUrl,
+    String phone,
     String role,
-    String? centerId,
-    String? phone,
-    String? avatar,
-    String? classId,
+    int centerId,
+    String fcmToken,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    int classId,
   });
 }
 
@@ -67,18 +75,22 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? id = null,
     Object? email = null,
     Object? fullName = null,
+    Object? passwordHash = null,
+    Object? avatarUrl = null,
+    Object? phone = null,
     Object? role = null,
-    Object? centerId = freezed,
-    Object? phone = freezed,
-    Object? avatar = freezed,
-    Object? classId = freezed,
+    Object? centerId = null,
+    Object? fcmToken = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? classId = null,
   }) {
     return _then(
       _value.copyWith(
             id: null == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as String,
+                      as int,
             email: null == email
                 ? _value.email
                 : email // ignore: cast_nullable_to_non_nullable
@@ -87,26 +99,42 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
                 ? _value.fullName
                 : fullName // ignore: cast_nullable_to_non_nullable
                       as String,
+            passwordHash: null == passwordHash
+                ? _value.passwordHash
+                : passwordHash // ignore: cast_nullable_to_non_nullable
+                      as String,
+            avatarUrl: null == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
+                      as String,
+            phone: null == phone
+                ? _value.phone
+                : phone // ignore: cast_nullable_to_non_nullable
+                      as String,
             role: null == role
                 ? _value.role
                 : role // ignore: cast_nullable_to_non_nullable
                       as String,
-            centerId: freezed == centerId
+            centerId: null == centerId
                 ? _value.centerId
                 : centerId // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            phone: freezed == phone
-                ? _value.phone
-                : phone // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            avatar: freezed == avatar
-                ? _value.avatar
-                : avatar // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            classId: freezed == classId
+                      as int,
+            fcmToken: null == fcmToken
+                ? _value.fcmToken
+                : fcmToken // ignore: cast_nullable_to_non_nullable
+                      as String,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            classId: null == classId
                 ? _value.classId
                 : classId // ignore: cast_nullable_to_non_nullable
-                      as String?,
+                      as int,
           )
           as $Val,
     );
@@ -122,14 +150,18 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call({
-    String id,
+    int id,
     String email,
     String fullName,
+    String passwordHash,
+    String avatarUrl,
+    String phone,
     String role,
-    String? centerId,
-    String? phone,
-    String? avatar,
-    String? classId,
+    int centerId,
+    String fcmToken,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    int classId,
   });
 }
 
@@ -148,18 +180,22 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? id = null,
     Object? email = null,
     Object? fullName = null,
+    Object? passwordHash = null,
+    Object? avatarUrl = null,
+    Object? phone = null,
     Object? role = null,
-    Object? centerId = freezed,
-    Object? phone = freezed,
-    Object? avatar = freezed,
-    Object? classId = freezed,
+    Object? centerId = null,
+    Object? fcmToken = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? classId = null,
   }) {
     return _then(
       _$UserImpl(
         id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as String,
+                  as int,
         email: null == email
             ? _value.email
             : email // ignore: cast_nullable_to_non_nullable
@@ -168,26 +204,42 @@ class __$$UserImplCopyWithImpl<$Res>
             ? _value.fullName
             : fullName // ignore: cast_nullable_to_non_nullable
                   as String,
+        passwordHash: null == passwordHash
+            ? _value.passwordHash
+            : passwordHash // ignore: cast_nullable_to_non_nullable
+                  as String,
+        avatarUrl: null == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
+                  as String,
+        phone: null == phone
+            ? _value.phone
+            : phone // ignore: cast_nullable_to_non_nullable
+                  as String,
         role: null == role
             ? _value.role
             : role // ignore: cast_nullable_to_non_nullable
                   as String,
-        centerId: freezed == centerId
+        centerId: null == centerId
             ? _value.centerId
             : centerId // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        phone: freezed == phone
-            ? _value.phone
-            : phone // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        avatar: freezed == avatar
-            ? _value.avatar
-            : avatar // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        classId: freezed == classId
+                  as int,
+        fcmToken: null == fcmToken
+            ? _value.fcmToken
+            : fcmToken // ignore: cast_nullable_to_non_nullable
+                  as String,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        classId: null == classId
             ? _value.classId
             : classId // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                  as int,
       ),
     );
   }
@@ -197,19 +249,23 @@ class __$$UserImplCopyWithImpl<$Res>
 
 class _$UserImpl implements _User {
   const _$UserImpl({
-    this.id = '',
+    this.id = 0,
     this.email = '',
     this.fullName = '',
+    this.passwordHash = '',
+    this.avatarUrl = '',
+    this.phone = '',
     this.role = '',
-    this.centerId,
-    this.phone,
-    this.avatar,
-    this.classId,
+    this.centerId = 0,
+    this.fcmToken = '',
+    this.createdAt,
+    this.updatedAt,
+    this.classId = 0,
   });
 
   @override
   @JsonKey()
-  final String id;
+  final int id;
   @override
   @JsonKey()
   final String email;
@@ -218,19 +274,33 @@ class _$UserImpl implements _User {
   final String fullName;
   @override
   @JsonKey()
+  final String passwordHash;
+  @override
+  @JsonKey()
+  final String avatarUrl;
+  @override
+  @JsonKey()
+  final String phone;
+  @override
+  @JsonKey()
   final String role;
   @override
-  final String? centerId;
+  @JsonKey()
+  final int centerId;
   @override
-  final String? phone;
+  @JsonKey()
+  final String fcmToken;
   @override
-  final String? avatar;
+  final DateTime? createdAt;
   @override
-  final String? classId;
+  final DateTime? updatedAt;
+  @override
+  @JsonKey()
+  final int classId;
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, fullName: $fullName, role: $role, centerId: $centerId, phone: $phone, avatar: $avatar, classId: $classId)';
+    return 'User(id: $id, email: $email, fullName: $fullName, passwordHash: $passwordHash, avatarUrl: $avatarUrl, phone: $phone, role: $role, centerId: $centerId, fcmToken: $fcmToken, createdAt: $createdAt, updatedAt: $updatedAt, classId: $classId)';
   }
 
   @override
@@ -242,11 +312,20 @@ class _$UserImpl implements _User {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
+            (identical(other.passwordHash, passwordHash) ||
+                other.passwordHash == passwordHash) &&
+            (identical(other.avatarUrl, avatarUrl) ||
+                other.avatarUrl == avatarUrl) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.role, role) || other.role == role) &&
             (identical(other.centerId, centerId) ||
                 other.centerId == centerId) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.fcmToken, fcmToken) ||
+                other.fcmToken == fcmToken) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
             (identical(other.classId, classId) || other.classId == classId));
   }
 
@@ -256,10 +335,14 @@ class _$UserImpl implements _User {
     id,
     email,
     fullName,
+    passwordHash,
+    avatarUrl,
+    phone,
     role,
     centerId,
-    phone,
-    avatar,
+    fcmToken,
+    createdAt,
+    updatedAt,
     classId,
   );
 
@@ -274,37 +357,264 @@ class _$UserImpl implements _User {
 
 abstract class _User implements User {
   const factory _User({
-    final String id,
+    final int id,
     final String email,
     final String fullName,
+    final String passwordHash,
+    final String avatarUrl,
+    final String phone,
     final String role,
-    final String? centerId,
-    final String? phone,
-    final String? avatar,
-    final String? classId,
+    final int centerId,
+    final String fcmToken,
+    final DateTime? createdAt,
+    final DateTime? updatedAt,
+    final int classId,
   }) = _$UserImpl;
 
   @override
-  String get id;
+  int get id;
   @override
   String get email;
   @override
   String get fullName;
   @override
+  String get passwordHash;
+  @override
+  String get avatarUrl;
+  @override
+  String get phone;
+  @override
   String get role;
   @override
-  String? get centerId;
+  int get centerId;
   @override
-  String? get phone;
+  String get fcmToken;
   @override
-  String? get avatar;
+  DateTime? get createdAt;
   @override
-  String? get classId;
+  DateTime? get updatedAt;
+  @override
+  int get classId;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$UserResponse {
+  Token? get token => throw _privateConstructorUsedError;
+  User? get user => throw _privateConstructorUsedError;
+  String get firebaseCustomToken => throw _privateConstructorUsedError;
+
+  /// Create a copy of UserResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UserResponseCopyWith<UserResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UserResponseCopyWith<$Res> {
+  factory $UserResponseCopyWith(
+    UserResponse value,
+    $Res Function(UserResponse) then,
+  ) = _$UserResponseCopyWithImpl<$Res, UserResponse>;
+  @useResult
+  $Res call({Token? token, User? user, String firebaseCustomToken});
+
+  $TokenCopyWith<$Res>? get token;
+  $UserCopyWith<$Res>? get user;
+}
+
+/// @nodoc
+class _$UserResponseCopyWithImpl<$Res, $Val extends UserResponse>
+    implements $UserResponseCopyWith<$Res> {
+  _$UserResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of UserResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = freezed,
+    Object? user = freezed,
+    Object? firebaseCustomToken = null,
+  }) {
+    return _then(
+      _value.copyWith(
+            token: freezed == token
+                ? _value.token
+                : token // ignore: cast_nullable_to_non_nullable
+                      as Token?,
+            user: freezed == user
+                ? _value.user
+                : user // ignore: cast_nullable_to_non_nullable
+                      as User?,
+            firebaseCustomToken: null == firebaseCustomToken
+                ? _value.firebaseCustomToken
+                : firebaseCustomToken // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of UserResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TokenCopyWith<$Res>? get token {
+    if (_value.token == null) {
+      return null;
+    }
+
+    return $TokenCopyWith<$Res>(_value.token!, (value) {
+      return _then(_value.copyWith(token: value) as $Val);
+    });
+  }
+
+  /// Create a copy of UserResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$UserResponseImplCopyWith<$Res>
+    implements $UserResponseCopyWith<$Res> {
+  factory _$$UserResponseImplCopyWith(
+    _$UserResponseImpl value,
+    $Res Function(_$UserResponseImpl) then,
+  ) = __$$UserResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Token? token, User? user, String firebaseCustomToken});
+
+  @override
+  $TokenCopyWith<$Res>? get token;
+  @override
+  $UserCopyWith<$Res>? get user;
+}
+
+/// @nodoc
+class __$$UserResponseImplCopyWithImpl<$Res>
+    extends _$UserResponseCopyWithImpl<$Res, _$UserResponseImpl>
+    implements _$$UserResponseImplCopyWith<$Res> {
+  __$$UserResponseImplCopyWithImpl(
+    _$UserResponseImpl _value,
+    $Res Function(_$UserResponseImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of UserResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = freezed,
+    Object? user = freezed,
+    Object? firebaseCustomToken = null,
+  }) {
+    return _then(
+      _$UserResponseImpl(
+        token: freezed == token
+            ? _value.token
+            : token // ignore: cast_nullable_to_non_nullable
+                  as Token?,
+        user: freezed == user
+            ? _value.user
+            : user // ignore: cast_nullable_to_non_nullable
+                  as User?,
+        firebaseCustomToken: null == firebaseCustomToken
+            ? _value.firebaseCustomToken
+            : firebaseCustomToken // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$UserResponseImpl implements _UserResponse {
+  const _$UserResponseImpl({
+    this.token,
+    this.user,
+    this.firebaseCustomToken = '',
+  });
+
+  @override
+  final Token? token;
+  @override
+  final User? user;
+  @override
+  @JsonKey()
+  final String firebaseCustomToken;
+
+  @override
+  String toString() {
+    return 'UserResponse(token: $token, user: $user, firebaseCustomToken: $firebaseCustomToken)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UserResponseImpl &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.firebaseCustomToken, firebaseCustomToken) ||
+                other.firebaseCustomToken == firebaseCustomToken));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, token, user, firebaseCustomToken);
+
+  /// Create a copy of UserResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserResponseImplCopyWith<_$UserResponseImpl> get copyWith =>
+      __$$UserResponseImplCopyWithImpl<_$UserResponseImpl>(this, _$identity);
+}
+
+abstract class _UserResponse implements UserResponse {
+  const factory _UserResponse({
+    final Token? token,
+    final User? user,
+    final String firebaseCustomToken,
+  }) = _$UserResponseImpl;
+
+  @override
+  Token? get token;
+  @override
+  User? get user;
+  @override
+  String get firebaseCustomToken;
+
+  /// Create a copy of UserResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UserResponseImplCopyWith<_$UserResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -8,21 +8,17 @@ part of 'student_data.dart';
 
 _$StudentDataImpl _$$StudentDataImplFromJson(Map<String, dynamic> json) =>
     _$StudentDataImpl(
-      id: json['id'] as String?,
-      classId: json['classId'] as String?,
-      fullName: json['fullName'] as String?,
-      nickname: json['nickname'] as String?,
-      gender: json['gender'] as String?,
-      dob: json['dob'] as String?,
-      dateOfBirth: json['dateOfBirth'] as String?,
-      avatarUrl: json['avatarUrl'] as String?,
+      id: (json['id'] as num?)?.toInt(),
+      centerId: (json['centerId'] as num?)?.toInt(),
+      classId: (json['classId'] as num?)?.toInt(),
+      parentId: (json['parentId'] as num?)?.toInt(),
       studentCode: json['studentCode'] as String?,
+      fullName: json['fullName'] as String?,
+      nickName: json['nickName'] as String?,
+      gender: json['gender'] as String?,
+      birthDate: json['birthDate'] as String?,
+      avatarUrl: json['avatarUrl'] as String?,
       status: json['status'] as String?,
-      parentUserId: json['parentUserId'] as String?,
-      address: json['address'] as String?,
-      contacts: (json['contacts'] as List<dynamic>?)
-          ?.map((e) => ContactData.fromJson(e as Map<String, dynamic>))
-          .toList(),
       birthHistory: json['birthHistory'] as String?,
       diagnosis: json['diagnosis'] as String?,
       allergies: json['allergies'] as String?,
@@ -35,22 +31,33 @@ _$StudentDataImpl _$$StudentDataImplFromJson(Map<String, dynamic> json) =>
       diagnosisSummary: json['diagnosisSummary'] as String?,
       developmentAgeMonth: (json['developmentAgeMonth'] as num?)?.toInt(),
       supportLevel: json['supportLevel'] as String?,
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      classInfo: json['class'] == null
+          ? null
+          : ClassInfoData.fromJson(json['class'] as Map<String, dynamic>),
+      parent: json['parent'] == null
+          ? null
+          : ParentData.fromJson(json['parent'] as Map<String, dynamic>),
+      contacts: (json['contacts'] as List<dynamic>?)
+          ?.map((e) => ContactData.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$StudentDataImplToJson(_$StudentDataImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
+      'centerId': instance.centerId,
       'classId': instance.classId,
-      'fullName': instance.fullName,
-      'nickname': instance.nickname,
-      'gender': instance.gender,
-      'dob': instance.dob,
-      'dateOfBirth': instance.dateOfBirth,
-      'avatarUrl': instance.avatarUrl,
+      'parentId': instance.parentId,
       'studentCode': instance.studentCode,
+      'fullName': instance.fullName,
+      'nickName': instance.nickName,
+      'gender': instance.gender,
+      'birthDate': instance.birthDate,
+      'avatarUrl': instance.avatarUrl,
       'status': instance.status,
-      'parentUserId': instance.parentUserId,
-      'address': instance.address,
-      'contacts': instance.contacts,
       'birthHistory': instance.birthHistory,
       'diagnosis': instance.diagnosis,
       'allergies': instance.allergies,
@@ -63,4 +70,8 @@ Map<String, dynamic> _$$StudentDataImplToJson(_$StudentDataImpl instance) =>
       'diagnosisSummary': instance.diagnosisSummary,
       'developmentAgeMonth': instance.developmentAgeMonth,
       'supportLevel': instance.supportLevel,
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'class': instance.classInfo,
+      'parent': instance.parent,
+      'contacts': instance.contacts,
     };

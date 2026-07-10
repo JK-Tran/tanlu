@@ -1,46 +1,33 @@
-import 'package:tanlu_management/features/attendance/domain/entity/attendance.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/attendance_session.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/daily_attendance.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/attendance_student.dart';
+import 'package:tanlu_management/shared/infrastructure/domain/entity/paged_list.dart';
+
+import '../entity/daily_attendance_result.dart';
+import '../entity/leave_request.dart';
 
 abstract class AttendanceRepository {
-  /// Roster + attendances + leave + session đã merge theo ngày.
-  Future<DailyAttendance> getDailyAttendance(String classId, String date);
+  Future<DailyAttendanceResult> getDailyAttendance({String? date});
 
-  Future<List<Attendance>> getAttendances(String classId, String date);
-
-  Future<AttendanceSession?> getSession(String classId, String date);
-
-  Future<List<LeaveRequest>> getLeaveRequests(String classId, String date);
-
-  Stream<List<LeaveRequest>> streamLeaveRequests(String classId, String date);
-
-  /// Lưu điểm danh sáng — ghi session + attendances.
-  Future<void> submitAttendances({
-    required AttendanceSession session,
-    required List<Attendance> attendances,
+  Future<PagedList<LeaveRequest>> getLeaveRequests({
+    required int page,
+    required int limit,
   });
 
-  /// Cập nhật attendances sau khi đã lưu điểm danh sáng.
-  Future<void> updateAttendances({required List<Attendance> attendances});
-
-  /// Chốt cuối ngày — ghi giờ về + isCheckOutCompleted.
-  Future<void> submitCompleteCheckOut({
-    required AttendanceSession session,
-    required List<Attendance> attendances,
+  Future<void> submitMorningAttendance({
+    required String date,
+    required List<AttendanceStudent> attendanceStudent,
   });
 
-  /// Duyệt / từ chối đơn xin phép.
-  Future<void> submitLeaveDecision({
-    required LeaveRequest request,
-    required bool isApproved,
-    required String reviewedBy,
-    required bool updateAttendance,
-  });
-
-  Future<List<Attendance>> getAttendanceHistory({
+  Future<void> submitCheckOut({
+    required String date,
     required String studentId,
-    required String startDate,
-    required String endDate,
+    required String checkOutTime,
+  });
+
+  Future<void> submitCompleteCheckOut({required String date});
+
+  Future<LeaveRequest> submitLeaveDecision({
+    required int requestId,
+    required String status,
+    String? decisionNote,
   });
 }

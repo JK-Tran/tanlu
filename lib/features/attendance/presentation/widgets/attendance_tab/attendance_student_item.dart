@@ -2,60 +2,124 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/attendance.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/attendance_status.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/attendance_student.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
-import 'package:tanlu_management/features/student/domain/entity/student.dart';
+
+extension AttendanceStatusExt on AttendanceStatus {
+  String get label {
+    switch (this) {
+      case AttendanceStatus.present:
+        return 'Có mặt';
+      case AttendanceStatus.late:
+        return 'Đi trễ';
+      case AttendanceStatus.absentUnexcused:
+        return 'Vắng mặt';
+      case AttendanceStatus.absentExcused:
+        return 'Nghỉ phép';
+      case AttendanceStatus.notMarked:
+        return 'Chưa điểm danh';
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case AttendanceStatus.present:
+        return AppColors.success;
+      case AttendanceStatus.late:
+        return const Color(0xFFE17055);
+      case AttendanceStatus.absentUnexcused:
+        return AppColors.warning;
+      case AttendanceStatus.absentExcused:
+        return AppColors.info;
+      case AttendanceStatus.notMarked:
+        return AppColors.grayMedium;
+    }
+  }
+
+  Color get bgColor {
+    switch (this) {
+      case AttendanceStatus.present:
+        return AppColors.successLight;
+      case AttendanceStatus.late:
+        return const Color(0xFFE17055).withValues(alpha: 0.12);
+      case AttendanceStatus.absentUnexcused:
+        return AppColors.warningLight;
+      case AttendanceStatus.absentExcused:
+        return AppColors.infoLight;
+      case AttendanceStatus.notMarked:
+        return Colors.transparent;
+    }
+  }
+
+  IconData get icon {
+    switch (this) {
+      case AttendanceStatus.present:
+        return Icons.check_circle_rounded;
+      case AttendanceStatus.late:
+        return Icons.access_time_rounded;
+      case AttendanceStatus.absentUnexcused:
+        return Icons.cancel_rounded;
+      case AttendanceStatus.absentExcused:
+        return Icons.assignment_return_rounded;
+      case AttendanceStatus.notMarked:
+        return Icons.radio_button_unchecked;
+    }
+  }
+}
+
+// _getStatusFromString removed in favor of AttendanceStatusMapper.fromApi
 
 class AttendanceStudentItem extends StatelessWidget {
   const AttendanceStudentItem({
     super.key,
     required this.student,
-    required this.attendance,
     required this.onOpenSheet,
-    this.leaveReason,
     this.onCheckOut,
     this.draftMode = false,
     this.onTogglePresent,
   });
 
-  final Student student;
-  final Attendance attendance;
-  final String? leaveReason;
+  final AttendanceStudent student;
   final VoidCallback onOpenSheet;
   final VoidCallback? onCheckOut;
   final bool draftMode;
   final VoidCallback? onTogglePresent;
 
-  String get _nickname =>
-      student.nickname.isNotEmpty ? student.nickname : student.fullName;
+  String get _nickname => student.nickName; // fallback if nickname is missing
 
   bool get _canCheckOut {
-    final status = attendance.uiStatus;
+    final status = AttendanceStatusMapper.fromApi(student.status);
     return (status == AttendanceStatus.present ||
             status == AttendanceStatus.late) &&
-        attendance.checkOutTime == null;
+        student.checkOutTime == null;
   }
 
   bool get _canTogglePresent {
     if (!draftMode || onTogglePresent == null) return false;
-    final status = attendance.uiStatus;
+    final status = AttendanceStatusMapper.fromApi(student.status);
     return status == AttendanceStatus.notMarked ||
         status == AttendanceStatus.present;
   }
 
   @override
   Widget build(BuildContext context) {
-    final status = attendance.uiStatus;
+    final status = AttendanceStatusMapper.fromApi(student.status);
     final isMarked = status != AttendanceStatus.notMarked;
-    final checkInStr = DateTimeUtils.formatHourMinute(attendance.checkInTime);
-    final checkOutStr = DateTimeUtils.formatHourMinute(attendance.checkOutTime);
+    final checkInStr = DateTimeUtils.formatTime(
+      student.checkInTime,
+      hmOnly: true,
+    );
+    final checkOutStr = DateTimeUtils.formatTime(
+      student.checkOutTime,
+      hmOnly: true,
+    );
 
     return Material(
       color: draftMode && isMarked
           ? status.bgColor.withValues(alpha: 0.25)
-          : Colors.white,
+          : AppColors.white,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
         decoration: BoxDecoration(
@@ -94,11 +158,51 @@ class AttendanceStudentItem extends StatelessWidget {
                       status != AttendanceStatus.present)
                     Padding(
                       padding: EdgeInsets.only(top: 4.h),
-                      child: AppText.b2(
-                        status.label,
-                        color: status.color,
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w600,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppText.b2(
+                            status.label,
+                            color: status.color,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          if (status == AttendanceStatus.absentExcused &&
+                              student.leaveRequest.id != 0 &&
+                              student.leaveRequest.status == 'approved') ...[
+                            SizedBox(width: 8.w),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 6.w,
+                                vertical: 2.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: status.bgColor,
+                                borderRadius: BorderRadius.circular(4.r),
+                                border: Border.all(
+                                  color: status.color.withValues(alpha: 0.3),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.verified_rounded,
+                                    color: status.color,
+                                    size: 10.sp,
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  AppText.b2(
+                                    'Đã duyệt đơn',
+                                    color: status.color,
+                                    fontSize: 9.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                     ),
                   if (draftMode &&
@@ -125,12 +229,12 @@ class AttendanceStudentItem extends StatelessWidget {
                       ),
                     ),
                   if (!draftMode &&
-                      status == AttendanceStatus.excused &&
-                      leaveReason != null)
+                      status == AttendanceStatus.absentExcused &&
+                      student.leaveRequest.reason.isNotEmpty)
                     Padding(
                       padding: EdgeInsets.only(top: 2.h),
                       child: AppText.b2(
-                        leaveReason!,
+                        student.leaveRequest.reason,
                         color: AppColors.info,
                         fontSize: 11.sp,
                         fontStyle: FontStyle.italic,
@@ -183,8 +287,20 @@ class AttendanceStudentItem extends StatelessWidget {
 
   bool get _showTimeRow {
     if (draftMode) return false;
-    final checkInStr = DateTimeUtils.formatHourMinute(attendance.checkInTime);
-    final checkOutStr = DateTimeUtils.formatHourMinute(attendance.checkOutTime);
+    // Chỉ có mặt / đi trễ mới có giờ vào/về
+    final status = AttendanceStatusMapper.fromApi(student.status);
+    if (status == AttendanceStatus.absentExcused ||
+        status == AttendanceStatus.absentUnexcused) {
+      return false;
+    }
+    final checkInStr = DateTimeUtils.formatTime(
+      student.checkInTime,
+      hmOnly: true,
+    );
+    final checkOutStr = DateTimeUtils.formatTime(
+      student.checkOutTime,
+      hmOnly: true,
+    );
     return checkInStr != null || checkOutStr != null || _canCheckOut;
   }
 
@@ -336,28 +452,36 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-        decoration: BoxDecoration(
-          color: status.bgColor,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(status.icon, size: 14.w, color: status.color),
-            SizedBox(width: 4.w),
-            AppText.b2(
-              status.label,
-              color: status.color,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w600,
-            ),
-            SizedBox(width: 4.w),
-            Icon(Icons.chevron_right_rounded, size: 14.w, color: status.color),
-          ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12.r),
+        child: Ink(
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+          decoration: BoxDecoration(
+            color: status.bgColor,
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(status.icon, size: 14.w, color: status.color),
+              SizedBox(width: 4.w),
+              AppText.b2(
+                status.label,
+                color: status.color,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w600,
+              ),
+              SizedBox(width: 4.w),
+              Icon(
+                Icons.chevron_right_rounded,
+                size: 14.w,
+                color: status.color,
+              ),
+            ],
+          ),
         ),
       ),
     );

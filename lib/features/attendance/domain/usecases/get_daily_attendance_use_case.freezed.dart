@@ -17,8 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$GetDailyAttendanceInput {
-  String get classId => throw _privateConstructorUsedError;
-  DateTime get date => throw _privateConstructorUsedError;
+  String? get date => throw _privateConstructorUsedError;
 
   /// Create a copy of GetDailyAttendanceInput
   /// with the given fields replaced by the non-null parameter values.
@@ -34,7 +33,7 @@ abstract class $GetDailyAttendanceInputCopyWith<$Res> {
     $Res Function(GetDailyAttendanceInput) then,
   ) = _$GetDailyAttendanceInputCopyWithImpl<$Res, GetDailyAttendanceInput>;
   @useResult
-  $Res call({String classId, DateTime date});
+  $Res call({String? date});
 }
 
 /// @nodoc
@@ -54,17 +53,13 @@ class _$GetDailyAttendanceInputCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? classId = null, Object? date = null}) {
+  $Res call({Object? date = freezed}) {
     return _then(
       _value.copyWith(
-            classId: null == classId
-                ? _value.classId
-                : classId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            date: null == date
+            date: freezed == date
                 ? _value.date
                 : date // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
+                      as String?,
           )
           as $Val,
     );
@@ -80,7 +75,7 @@ abstract class _$$GetDailyAttendanceInputImplCopyWith<$Res>
   ) = __$$GetDailyAttendanceInputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String classId, DateTime date});
+  $Res call({String? date});
 }
 
 /// @nodoc
@@ -100,17 +95,13 @@ class __$$GetDailyAttendanceInputImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? classId = null, Object? date = null}) {
+  $Res call({Object? date = freezed}) {
     return _then(
       _$GetDailyAttendanceInputImpl(
-        classId: null == classId
-            ? _value.classId
-            : classId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        date: null == date
+        date: freezed == date
             ? _value.date
             : date // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
+                  as String?,
       ),
     );
   }
@@ -118,31 +109,15 @@ class __$$GetDailyAttendanceInputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$GetDailyAttendanceInputImpl
-    with DiagnosticableTreeMixin
-    implements _GetDailyAttendanceInput {
-  const _$GetDailyAttendanceInputImpl({
-    required this.classId,
-    required this.date,
-  });
+class _$GetDailyAttendanceInputImpl implements _GetDailyAttendanceInput {
+  const _$GetDailyAttendanceInputImpl({this.date});
 
   @override
-  final String classId;
-  @override
-  final DateTime date;
+  final String? date;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GetDailyAttendanceInput(classId: $classId, date: $date)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'GetDailyAttendanceInput'))
-      ..add(DiagnosticsProperty('classId', classId))
-      ..add(DiagnosticsProperty('date', date));
+  String toString() {
+    return 'GetDailyAttendanceInput(date: $date)';
   }
 
   @override
@@ -150,12 +125,11 @@ class _$GetDailyAttendanceInputImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetDailyAttendanceInputImpl &&
-            (identical(other.classId, classId) || other.classId == classId) &&
             (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, classId, date);
+  int get hashCode => Object.hash(runtimeType, date);
 
   /// Create a copy of GetDailyAttendanceInput
   /// with the given fields replaced by the non-null parameter values.
@@ -170,15 +144,11 @@ class _$GetDailyAttendanceInputImpl
 }
 
 abstract class _GetDailyAttendanceInput implements GetDailyAttendanceInput {
-  const factory _GetDailyAttendanceInput({
-    required final String classId,
-    required final DateTime date,
-  }) = _$GetDailyAttendanceInputImpl;
+  const factory _GetDailyAttendanceInput({final String? date}) =
+      _$GetDailyAttendanceInputImpl;
 
   @override
-  String get classId;
-  @override
-  DateTime get date;
+  String? get date;
 
   /// Create a copy of GetDailyAttendanceInput
   /// with the given fields replaced by the non-null parameter values.
@@ -190,10 +160,8 @@ abstract class _GetDailyAttendanceInput implements GetDailyAttendanceInput {
 
 /// @nodoc
 mixin _$GetDailyAttendanceOutput {
-  List<Student> get students => throw _privateConstructorUsedError;
-  List<Attendance> get attendanceList => throw _privateConstructorUsedError;
-  List<LeaveRequest> get leaveRequests => throw _privateConstructorUsedError;
-  AttendanceSession? get session => throw _privateConstructorUsedError;
+  DailyAttendanceResult get dailyAttendance =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of GetDailyAttendanceOutput
   /// with the given fields replaced by the non-null parameter values.
@@ -209,14 +177,9 @@ abstract class $GetDailyAttendanceOutputCopyWith<$Res> {
     $Res Function(GetDailyAttendanceOutput) then,
   ) = _$GetDailyAttendanceOutputCopyWithImpl<$Res, GetDailyAttendanceOutput>;
   @useResult
-  $Res call({
-    List<Student> students,
-    List<Attendance> attendanceList,
-    List<LeaveRequest> leaveRequests,
-    AttendanceSession? session,
-  });
+  $Res call({DailyAttendanceResult dailyAttendance});
 
-  $AttendanceSessionCopyWith<$Res>? get session;
+  $DailyAttendanceResultCopyWith<$Res> get dailyAttendance;
 }
 
 /// @nodoc
@@ -236,30 +199,13 @@ class _$GetDailyAttendanceOutputCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? students = null,
-    Object? attendanceList = null,
-    Object? leaveRequests = null,
-    Object? session = freezed,
-  }) {
+  $Res call({Object? dailyAttendance = null}) {
     return _then(
       _value.copyWith(
-            students: null == students
-                ? _value.students
-                : students // ignore: cast_nullable_to_non_nullable
-                      as List<Student>,
-            attendanceList: null == attendanceList
-                ? _value.attendanceList
-                : attendanceList // ignore: cast_nullable_to_non_nullable
-                      as List<Attendance>,
-            leaveRequests: null == leaveRequests
-                ? _value.leaveRequests
-                : leaveRequests // ignore: cast_nullable_to_non_nullable
-                      as List<LeaveRequest>,
-            session: freezed == session
-                ? _value.session
-                : session // ignore: cast_nullable_to_non_nullable
-                      as AttendanceSession?,
+            dailyAttendance: null == dailyAttendance
+                ? _value.dailyAttendance
+                : dailyAttendance // ignore: cast_nullable_to_non_nullable
+                      as DailyAttendanceResult,
           )
           as $Val,
     );
@@ -269,13 +215,11 @@ class _$GetDailyAttendanceOutputCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $AttendanceSessionCopyWith<$Res>? get session {
-    if (_value.session == null) {
-      return null;
-    }
-
-    return $AttendanceSessionCopyWith<$Res>(_value.session!, (value) {
-      return _then(_value.copyWith(session: value) as $Val);
+  $DailyAttendanceResultCopyWith<$Res> get dailyAttendance {
+    return $DailyAttendanceResultCopyWith<$Res>(_value.dailyAttendance, (
+      value,
+    ) {
+      return _then(_value.copyWith(dailyAttendance: value) as $Val);
     });
   }
 }
@@ -289,15 +233,10 @@ abstract class _$$GetDailyAttendanceOutputImplCopyWith<$Res>
   ) = __$$GetDailyAttendanceOutputImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<Student> students,
-    List<Attendance> attendanceList,
-    List<LeaveRequest> leaveRequests,
-    AttendanceSession? session,
-  });
+  $Res call({DailyAttendanceResult dailyAttendance});
 
   @override
-  $AttendanceSessionCopyWith<$Res>? get session;
+  $DailyAttendanceResultCopyWith<$Res> get dailyAttendance;
 }
 
 /// @nodoc
@@ -317,30 +256,13 @@ class __$$GetDailyAttendanceOutputImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? students = null,
-    Object? attendanceList = null,
-    Object? leaveRequests = null,
-    Object? session = freezed,
-  }) {
+  $Res call({Object? dailyAttendance = null}) {
     return _then(
       _$GetDailyAttendanceOutputImpl(
-        students: null == students
-            ? _value._students
-            : students // ignore: cast_nullable_to_non_nullable
-                  as List<Student>,
-        attendanceList: null == attendanceList
-            ? _value._attendanceList
-            : attendanceList // ignore: cast_nullable_to_non_nullable
-                  as List<Attendance>,
-        leaveRequests: null == leaveRequests
-            ? _value._leaveRequests
-            : leaveRequests // ignore: cast_nullable_to_non_nullable
-                  as List<LeaveRequest>,
-        session: freezed == session
-            ? _value.session
-            : session // ignore: cast_nullable_to_non_nullable
-                  as AttendanceSession?,
+        dailyAttendance: null == dailyAttendance
+            ? _value.dailyAttendance
+            : dailyAttendance // ignore: cast_nullable_to_non_nullable
+                  as DailyAttendanceResult,
       ),
     );
   }
@@ -348,62 +270,15 @@ class __$$GetDailyAttendanceOutputImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$GetDailyAttendanceOutputImpl extends _GetDailyAttendanceOutput
-    with DiagnosticableTreeMixin {
-  const _$GetDailyAttendanceOutputImpl({
-    final List<Student> students = const [],
-    final List<Attendance> attendanceList = const [],
-    final List<LeaveRequest> leaveRequests = const [],
-    this.session,
-  }) : _students = students,
-       _attendanceList = attendanceList,
-       _leaveRequests = leaveRequests,
-       super._();
-
-  final List<Student> _students;
-  @override
-  @JsonKey()
-  List<Student> get students {
-    if (_students is EqualUnmodifiableListView) return _students;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_students);
-  }
-
-  final List<Attendance> _attendanceList;
-  @override
-  @JsonKey()
-  List<Attendance> get attendanceList {
-    if (_attendanceList is EqualUnmodifiableListView) return _attendanceList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_attendanceList);
-  }
-
-  final List<LeaveRequest> _leaveRequests;
-  @override
-  @JsonKey()
-  List<LeaveRequest> get leaveRequests {
-    if (_leaveRequests is EqualUnmodifiableListView) return _leaveRequests;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_leaveRequests);
-  }
+class _$GetDailyAttendanceOutputImpl implements _GetDailyAttendanceOutput {
+  const _$GetDailyAttendanceOutputImpl({required this.dailyAttendance});
 
   @override
-  final AttendanceSession? session;
+  final DailyAttendanceResult dailyAttendance;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GetDailyAttendanceOutput(students: $students, attendanceList: $attendanceList, leaveRequests: $leaveRequests, session: $session)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'GetDailyAttendanceOutput'))
-      ..add(DiagnosticsProperty('students', students))
-      ..add(DiagnosticsProperty('attendanceList', attendanceList))
-      ..add(DiagnosticsProperty('leaveRequests', leaveRequests))
-      ..add(DiagnosticsProperty('session', session));
+  String toString() {
+    return 'GetDailyAttendanceOutput(dailyAttendance: $dailyAttendance)';
   }
 
   @override
@@ -411,26 +286,12 @@ class _$GetDailyAttendanceOutputImpl extends _GetDailyAttendanceOutput
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetDailyAttendanceOutputImpl &&
-            const DeepCollectionEquality().equals(other._students, _students) &&
-            const DeepCollectionEquality().equals(
-              other._attendanceList,
-              _attendanceList,
-            ) &&
-            const DeepCollectionEquality().equals(
-              other._leaveRequests,
-              _leaveRequests,
-            ) &&
-            (identical(other.session, session) || other.session == session));
+            (identical(other.dailyAttendance, dailyAttendance) ||
+                other.dailyAttendance == dailyAttendance));
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_students),
-    const DeepCollectionEquality().hash(_attendanceList),
-    const DeepCollectionEquality().hash(_leaveRequests),
-    session,
-  );
+  int get hashCode => Object.hash(runtimeType, dailyAttendance);
 
   /// Create a copy of GetDailyAttendanceOutput
   /// with the given fields replaced by the non-null parameter values.
@@ -444,23 +305,13 @@ class _$GetDailyAttendanceOutputImpl extends _GetDailyAttendanceOutput
       >(this, _$identity);
 }
 
-abstract class _GetDailyAttendanceOutput extends GetDailyAttendanceOutput {
+abstract class _GetDailyAttendanceOutput implements GetDailyAttendanceOutput {
   const factory _GetDailyAttendanceOutput({
-    final List<Student> students,
-    final List<Attendance> attendanceList,
-    final List<LeaveRequest> leaveRequests,
-    final AttendanceSession? session,
+    required final DailyAttendanceResult dailyAttendance,
   }) = _$GetDailyAttendanceOutputImpl;
-  const _GetDailyAttendanceOutput._() : super._();
 
   @override
-  List<Student> get students;
-  @override
-  List<Attendance> get attendanceList;
-  @override
-  List<LeaveRequest> get leaveRequests;
-  @override
-  AttendanceSession? get session;
+  DailyAttendanceResult get dailyAttendance;
 
   /// Create a copy of GetDailyAttendanceOutput
   /// with the given fields replaced by the non-null parameter values.

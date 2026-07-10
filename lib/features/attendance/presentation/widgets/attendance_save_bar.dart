@@ -14,6 +14,8 @@ class AttendanceSaveBar extends StatelessWidget {
     required this.canSave,
     required this.isSaving,
     required this.onSave,
+    this.secondaryButtonLabel,
+    this.onSecondarySave,
   });
 
   final String title;
@@ -23,6 +25,8 @@ class AttendanceSaveBar extends StatelessWidget {
   final bool canSave;
   final bool isSaving;
   final VoidCallback onSave;
+  final String? secondaryButtonLabel;
+  final VoidCallback? onSecondarySave;
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +70,26 @@ class AttendanceSaveBar extends StatelessWidget {
             ),
           ),
           SizedBox(width: 12.w),
+          if (secondaryButtonLabel != null && onSecondarySave != null) ...[
+            OutlinedButton(
+              onPressed: canSave ? onSecondarySave : null,
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.primary,
+                side: const BorderSide(color: AppColors.primary),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+              child: AppText.b1(
+                secondaryButtonLabel!,
+                color: AppColors.primary,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(width: 8.w),
+          ],
           FilledButton(
             onPressed: canSave ? onSave : null,
             style: FilledButton.styleFrom(

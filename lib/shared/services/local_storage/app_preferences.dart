@@ -41,7 +41,5 @@ abstract class AppPreferences {
 
   Future<void> clearCurrentUserData();
 
-  Future<bool> saveSubUSer(String subUser);
-
   Future<bool> saveCurrentUser(String user);
 }

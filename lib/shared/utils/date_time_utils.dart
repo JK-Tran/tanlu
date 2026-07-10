@@ -1,8 +1,108 @@
 import 'package:clock/clock.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tanlu_management/shared/constants/locale_constants.dart';
+import 'package:tanlu_management/shared/utils/string_utils.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class DateTimeUtils {
   DateTimeUtils._();
+  static List<String> l10nShortWeekDays() {
+    return <String>[
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
+  }
+
+  static String weekDayS(int? dayWeek) {
+    switch (dayWeek) {
+      case 1:
+        return 'Monday';
+
+      case 2:
+        return 'Tuesday';
+
+      case 3:
+        return 'Wednesday';
+
+      case 4:
+        return 'Thursday';
+
+      case 5:
+        return 'Friday';
+
+      case 6:
+        return 'Saturday';
+
+      case 7:
+        return 'Sunday';
+
+      default:
+        return 'Monday';
+    }
+  }
+
+  static String weekDayNum(int? dayWeek) {
+    switch (dayWeek) {
+      case 1:
+        return 'Monday';
+
+      case 2:
+        return 'Tuesday';
+
+      case 3:
+        return 'Wednesday';
+
+      case 4:
+        return 'Thursday';
+
+      case 5:
+        return 'Friday';
+
+      case 6:
+        return 'Saturday';
+
+      case 7:
+        return 'Sunday';
+
+      default:
+        return 'Monday';
+    }
+  }
+
+  static String weekDay(int? dayWeek) {
+    switch (dayWeek) {
+      case 1:
+        return 'Monday';
+
+      case 2:
+        return 'Tuesday';
+
+      case 3:
+        return 'Wednesday';
+
+      case 4:
+        return 'Thursday';
+
+      case 5:
+        return 'Friday';
+
+      case 6:
+        return 'Saturday';
+
+      case 7:
+        return 'Sunday';
+
+      default:
+        return 'Monday';
+    }
+  }
 
   static int daysBetween(DateTime from, DateTime to) {
     from = DateTime(from.year, from.month, from.day);
@@ -82,6 +182,27 @@ class DateTimeUtils {
     return null;
   }
 
+  static DateTime? tryParse({
+    String? date,
+    String? format,
+    String locale = LocaleConstants.defaultLocale,
+  }) {
+    if (date == null) {
+      return null;
+    }
+
+    if (format == null) {
+      return DateTime.tryParse(date);
+    }
+
+    final DateFormat dateFormat = DateFormat(format, locale);
+    try {
+      return dateFormat.parse(date);
+    } catch (e) {
+      return null;
+    }
+  }
+
   static String? formatDateTime(DateTime? time) {
     if (time == null) {
       return null;
@@ -89,6 +210,18 @@ class DateTimeUtils {
 
     try {
       return DateFormat('yyyy-MM-dd HH:mm:ss').format(time);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static String? formatHourMinute(DateTime? time) {
+    if (time == null) {
+      return null;
+    }
+
+    try {
+      return DateFormat('HH:mm').format(time);
     } catch (e) {
       return null;
     }
@@ -335,6 +468,14 @@ class DateTimeUtils {
     return DateTime(date.year, date.month, date.day + days);
   }
 
+  static String fromDurationToText(Duration duration) {
+    if (duration.inHours == 0) {
+      return '0:${duration.inMinutes}:00';
+    }
+
+    return '${duration.inHours}:00:00';
+  }
+
   static String formatDateHeader(DateTime dt) {
     final localTime = dt.toLocal();
     final day = localTime.day.toString().padLeft(2, '0');
@@ -342,39 +483,6 @@ class DateTimeUtils {
     final year = localTime.year;
     return '$day/$month/$year';
   }
-
-  /// Thứ trong tuần — vd. `Thứ 6`, `CN`.
-  static String formatWeekdayLabel(DateTime? time, {String fallback = ''}) {
-    if (time == null) return fallback;
-    return _weekdayLabels[time.weekday];
-  }
-
-  /// Ngày trong tháng — vd. `19`.
-  static String formatDayOfMonth(DateTime? time, {String fallback = ''}) {
-    if (time == null) return fallback;
-    return time.day.toString().padLeft(2, '0');
-  }
-
-  /// Hiển thị ngày kèm thứ — vd. `Thứ 2, 18/06/2026`.
-  static String formatWeekdayDate(DateTime? time, {String fallback = ''}) {
-    if (time == null) return fallback;
-    return '${formatWeekdayLabel(time)}, ${formatDateHeader(time)}';
-  }
-
-  static const _weekdayLabels = [
-    '',
-    'Thứ 2',
-    'Thứ 3',
-    'Thứ 4',
-    'Thứ 5',
-    'Thứ 6',
-    'Thứ 7',
-    'CN',
-  ];
-
-  /// Giờ:phút — vd. `08:30`. Dùng cho check-in/out.
-  static String? formatHourMinute(DateTime? time) =>
-      formatTime(time, hmOnly: true);
 
   /// Format integer with thousand separator `.` (e.g. 1990000 -> 1.990.000).
   static String formatMinorWithDot(int value) {
@@ -389,19 +497,6 @@ class DateTimeUtils {
     }
     final String formatted = buffer.toString();
     return value < 0 ? '-$formatted' : formatted;
-  }
-
-  /// Phân giải chuỗi ngày sinh (thường từ DB lưu yyyy-MM-dd) thành chuỗi hiển thị (dd/MM/yyyy)
-  static String formatDobString(
-    String? dobString, {
-    String fallback = 'Chưa có dữ liệu',
-  }) {
-    if (dobString == null || dobString.trim().isEmpty) return fallback;
-    final parsed = parseDateTimeDateOnly(dobString.trim());
-    if (parsed != null) {
-      return formatDateHeader(parsed); // Trả về dd/MM/yyyy
-    }
-    return dobString; // Nếu không parse được thì trả về nguyên gốc
   }
 }
 
@@ -424,6 +519,45 @@ extension DateTimeTimezoneExtension on DateTime {
       dateOnly.isAtSameMomentAs(anotherDate.dateOnly);
   bool isSameTime(DateTime anotherDate) =>
       hour == anotherDate.hour && minute == anotherDate.minute;
+  Map<String, tz.Location> get getTimeZoneDatabase {
+    tz.initializeTimeZones();
+
+    return tz.timeZoneDatabase.locations;
+  }
+
+  int _getESTtoUTCDifference(String locationName) {
+    tz.initializeTimeZones();
+    final locationNY = tz.getLocation(locationName);
+    final tz.TZDateTime nowNY = tz.TZDateTime.now(locationNY);
+
+    return nowNY.timeZoneOffset.inHours;
+  }
+
+  DateTime toESTzone(String locationName) {
+    DateTime result = toUtc(); // local time to UTC
+    result = result.add(
+      Duration(hours: _getESTtoUTCDifference(locationName)),
+    ); // convert UTC to EST
+
+    return result;
+  }
+
+  DateTime fromESTzone(String locationName) {
+    DateTime result = subtract(
+      Duration(hours: _getESTtoUTCDifference(locationName)),
+    ); // convert EST to UTC
+
+    String dateTimeAsIso8601String = result.toIso8601String();
+    dateTimeAsIso8601String +=
+        dateTimeAsIso8601String.characters.last.equalsIgnoreCase('Z')
+        ? ''
+        : 'Z';
+    result = DateTime.parse(dateTimeAsIso8601String); // make isUtc to be true
+
+    result = result.toLocal(); // convert UTC to local time
+
+    return result;
+  }
 }
 
 extension NumTimeExtension<T extends num> on T {

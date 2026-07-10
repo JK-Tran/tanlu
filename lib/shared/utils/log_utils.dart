@@ -29,7 +29,7 @@ class Log {
     );
   }
 
-  static String prettyJson(Map<String, dynamic> json) {
+  static String prettyJson(dynamic json) {
     if (!LogConfig.isPrettyJson) {
       return json.toString();
     }

@@ -15,34 +15,32 @@ class ContactTabView extends StatelessWidget {
     if (contacts.isEmpty) {
       return Center(
         child: AppText.b2(
-          'Chưa có thông tin liên hệ',
+          'Chưa có thông tin phụ huynh',
           color: AppColors.grayMedium,
         ),
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-          child: AppText.t2(
-            'Thông tin liên hệ',
-            fontWeight: FontWeight.bold,
-            color: AppColors.grayDark,
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+            child: AppText.t2(
+              'Thông tin phụ huynh',
+              fontWeight: FontWeight.bold,
+              color: AppColors.grayDark,
+            ),
           ),
-        ),
-
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-            itemCount: contacts.length,
-            itemBuilder: (context, index) {
-              return ContactCard(contact: contacts[index]);
-            },
+          ...contacts.map(
+            (contact) => Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+              child: ContactCard(contact: contact),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -5,7 +5,7 @@ class AppEvent with _$AppEvent {
   /// Khởi chạy app — kiểm tra session
   const factory AppEvent.started() = _Started;
 
-  /// Đã đăng nhập thành công (gọi từ LoginBloc sau khi login xong)
+  /// Đã đăng nhập thành công (gọi từ AuthBloc sau khi login xong)
   const factory AppEvent.loggedIn(User user) = _LoggedIn;
 
   /// Đăng xuất

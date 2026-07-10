@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tanlu_management/shared/exception/base/app_exception.dart';
+import 'package:tanlu_management/shared/exception/uncaught/app_uncaught_exception.dart';
 import 'package:tanlu_management/shared/utils/log_utils.dart';
-import 'package:tanlu_management/shared/network/exceptions/base/app_exception.dart';
-import 'package:tanlu_management/shared/network/exceptions/uncaught/app_uncaught_exeption.dart';
 
 abstract class BaseBloc<E, S> extends Bloc<E, S> {
   BaseBloc(super.initialState);
@@ -18,9 +18,10 @@ abstract class BaseBloc<E, S> extends Bloc<E, S> {
     required Future<void> Function() action,
     bool handleLoading = true,
     void Function(AppException)? doOnError,
+    void Function()? doOnEventCompleted,
   }) async {
     if (handleLoading) _loadingController.add(true);
-    
+
     try {
       await action();
     } on AppException catch (e) {
@@ -31,9 +32,13 @@ abstract class BaseBloc<E, S> extends Bloc<E, S> {
         _errorController.add(e);
       }
     } catch (e, stackTrace) {
-      Log.e('Uncaught exception in Bloc', errorObject: e, stackTrace: stackTrace);
+      Log.e(
+        'Uncaught exception in Bloc',
+        errorObject: e,
+        stackTrace: stackTrace,
+      );
       final exception = AppUncaughtException(e);
-      
+
       if (doOnError != null) {
         doOnError(exception);
       } else {
@@ -41,6 +46,7 @@ abstract class BaseBloc<E, S> extends Bloc<E, S> {
       }
     } finally {
       if (handleLoading) _loadingController.add(false);
+      doOnEventCompleted?.call();
     }
   }
 

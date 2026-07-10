@@ -32,7 +32,7 @@ class PersonProfilePage extends StatelessWidget {
           Center(
             child: AttendanceAvatar(
               nickname: name,
-              imageUrl: user?.avatar,
+              imageUrl: user?.avatarUrl,
               size: 88,
             ),
           ),
@@ -47,8 +47,8 @@ class PersonProfilePage extends StatelessWidget {
               PersonInfoTile(
                 icon: Icons.phone_outlined,
                 label: 'Số điện thoại',
-                value: user?.phone?.trim().isNotEmpty == true
-                    ? user!.phone!
+                value: user?.phone.trim().isNotEmpty == true
+                    ? user!.phone
                     : '—',
               ),
               PersonInfoTile(

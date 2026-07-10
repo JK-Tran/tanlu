@@ -5,23 +5,23 @@ abstract class StudentEvent {
 }
 
 @freezed
-class FetchStudents extends StudentEvent with _$FetchStudents {
-  const factory FetchStudents({String? classId}) = _FetchStudents;
+class PageStarted extends StudentEvent with _$PageStarted {
+  const factory PageStarted() = _PageStarted;
 }
 
 @freezed
-class RefreshStudents extends StudentEvent with _$RefreshStudents {
-  const factory RefreshStudents({String? classId}) = _RefreshStudents;
+class RefreshRequested extends StudentEvent with _$RefreshRequested {
+  const factory RefreshRequested() = _RefreshRequested;
 }
 
 @freezed
-class ChangeStudentGenderFilter extends StudentEvent
-    with _$ChangeStudentGenderFilter {
-  const factory ChangeStudentGenderFilter({required int index}) =
-      _ChangeStudentGenderFilter;
+class GenderFilterChanged extends StudentEvent with _$GenderFilterChanged {
+  const factory GenderFilterChanged({required int index}) =
+      _GenderFilterChanged;
 }
 
 @freezed
-class SearchStudents extends StudentEvent with _$SearchStudents {
-  const factory SearchStudents({required String query}) = _SearchStudents;
+class SearchQueryChanged extends StudentEvent with _$SearchQueryChanged {
+  const factory SearchQueryChanged({required String query}) =
+      _SearchQueryChanged;
 }

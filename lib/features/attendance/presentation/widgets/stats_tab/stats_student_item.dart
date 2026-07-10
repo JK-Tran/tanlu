@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/attendance_status.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
+import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_tab/attendance_student_item.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
 
 class StatsStudentItem extends StatelessWidget {
@@ -23,12 +24,17 @@ class StatsStudentItem extends StatelessWidget {
   final String? checkOutTime;
   final bool showTime;
 
-  bool get _showTimeRow =>
-      showTime &&
-      (checkInTime != null ||
-          checkOutTime != null ||
-          status == AttendanceStatus.present ||
-          status == AttendanceStatus.late);
+  bool get _showTimeRow {
+    if (status == AttendanceStatus.absentExcused ||
+        status == AttendanceStatus.absentUnexcused) {
+      return false;
+    }
+    return showTime &&
+        (checkInTime != null ||
+            checkOutTime != null ||
+            status == AttendanceStatus.present ||
+            status == AttendanceStatus.late);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,7 @@ class StatsStudentItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         border: Border(
           bottom: BorderSide(color: AppColors.grayLight.withValues(alpha: 0.5)),
         ),
@@ -100,6 +106,7 @@ class _TimeRow extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ],
+        SizedBox(width: 10.w),
         if (checkInStr != null && checkOutStr != null)
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 6.w),

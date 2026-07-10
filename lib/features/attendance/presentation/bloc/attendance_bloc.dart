@@ -4,448 +4,573 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/core/base/base_bloc.dart';
-import 'package:tanlu_management/core/di/injection_container.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/attendance.dart';
-import 'package:tanlu_management/features/attendance/domain/entity/attendance_session.dart';
+import 'package:tanlu_management/core/constants/app_strings.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
-import 'package:tanlu_management/features/attendance/domain/usecases/submit_complete_check_out_use_case.dart';
-import 'package:tanlu_management/features/attendance/domain/usecases/get_daily_attendance_use_case.dart';
-import 'package:tanlu_management/features/attendance/domain/usecases/stream_leave_requests_use_case.dart';
-import 'package:tanlu_management/features/attendance/domain/usecases/submit_daily_attendance_use_case.dart';
-import 'package:tanlu_management/features/attendance/domain/usecases/submit_leave_decision_use_case.dart';
-import 'package:tanlu_management/features/attendance/domain/usecases/update_daily_attendance_use_case.dart';
-import 'package:tanlu_management/features/auth/domain/repositories/auth_repository.dart';
-import 'package:tanlu_management/features/student/domain/entity/student.dart';
+import 'package:tanlu_management/shared/exception/base/app_exception.dart';
+import 'package:tanlu_management/shared/exception/uncaught/app_uncaught_exception.dart';
+import 'package:tanlu_management/shared/infrastructure/domain/entity/paged_list.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
+
+import '../../domain/entity/daily_attendance_result.dart';
+import '../../domain/usecases/get_daily_attendance_use_case.dart';
+import '../../domain/usecases/get_leave_requests_use_case.dart';
+import '../../domain/usecases/submit_daily_attendance_use_case.dart';
+import '../../domain/usecases/submit_check_out_use_case.dart';
+import '../../domain/usecases/submit_complete_check_out_use_case.dart';
+import '../../domain/usecases/submit_leave_decision_use_case.dart';
+import '../../domain/entity/enums/attendance_status.dart';
 
 part 'attendance_bloc.freezed.dart';
 part 'attendance_event.dart';
 part 'attendance_state.dart';
 
-@injectable
+@LazySingleton()
 class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
   AttendanceBloc(
     this._getDailyAttendanceUseCase,
+    this._getLeaveRequestsUseCase,
     this._submitDailyAttendanceUseCase,
-    this._updateDailyAttendanceUseCase,
+    this._submitCheckOutUseCase,
     this._submitCompleteCheckOutUseCase,
     this._submitLeaveDecisionUseCase,
-    this._streamLeaveRequestsUseCase,
   ) : super(const AttendanceState()) {
     on<FetchDailyAttendance>(_onFetchDailyAttendance);
-    on<FetchAttendanceHistoryEvent>(_onFetchAttendanceHistory);
-    on<MarkStudentAttendanceEvent>(_onMarkStudentAttendance);
-    on<MarkStudentCheckOutEvent>(_onMarkStudentCheckOut);
-    on<CompleteAttendanceSessionEvent>(_onCompleteAttendanceSession);
-    on<UpdateDailyAttendanceEvent>(_onUpdateDailyAttendance);
-    on<CompleteCheckOutSessionEvent>(_onCompleteCheckOutSession);
+    on<FetchHistoryAttendance>(_onFetchHistoryAttendance);
+    on<RefreshHistoryAttendance>(_onRefreshHistoryAttendance);
+    on<RefreshDailyAttendance>(_onRefreshDailyAttendance);
+    on<LeaveRequestsStarted>(_onLeaveRequestsStarted);
+    on<LeaveRequestsLoadMore>(_onLeaveRequestsLoadMore);
+    on<LeaveRequestsRefreshed>(_onLeaveRequestsRefreshed);
+    on<ToggleStudentAttendanceEvent>(_onToggleStudentAttendance);
+    on<ChangeStudentAttendanceStatusEvent>(_onChangeStudentAttendanceStatus);
+    on<SubmitMorningAttendanceEvent>(_onSubmitMorningAttendance);
+    on<UpdateStudentAttendanceEvent>(_onUpdateStudentAttendance);
+    on<SubmitCheckOutEvent>(_onSubmitCheckOut);
+    on<SubmitCompleteCheckOutEvent>(_onSubmitCompleteCheckOut);
     on<SubmitLeaveDecisionEvent>(_onSubmitLeaveDecision);
-    on<LeaveRequestsUpdatedEvent>(_onLeaveRequestsUpdated);
   }
 
   final GetDailyAttendanceUseCase _getDailyAttendanceUseCase;
+  final GetLeaveRequestsUseCase _getLeaveRequestsUseCase;
   final SubmitDailyAttendanceUseCase _submitDailyAttendanceUseCase;
-  final UpdateDailyAttendanceUseCase _updateDailyAttendanceUseCase;
+  final SubmitCheckOutUseCase _submitCheckOutUseCase;
   final SubmitCompleteCheckOutUseCase _submitCompleteCheckOutUseCase;
   final SubmitLeaveDecisionUseCase _submitLeaveDecisionUseCase;
-  final StreamLeaveRequestsUseCase _streamLeaveRequestsUseCase;
 
-  StreamSubscription<List<LeaveRequest>>? _leaveRequestStreamSub;
-
-  void _startLeaveRequestStream(String classId, DateTime date) {
-    final dateStr = DateTimeUtils.formatDateTimeDateOnly(date) ?? '';
-    _leaveRequestStreamSub?.cancel();
-    _leaveRequestStreamSub = _streamLeaveRequestsUseCase
-        .execute(StreamLeaveRequestsInput(classId: classId, dateStr: dateStr))
-        .listen((leaveRequests) {
-          if (!isClosed) add(LeaveRequestsUpdatedEvent(leaveRequests));
-        });
-  }
-
-  @override
-  Future<void> close() {
-    _leaveRequestStreamSub?.cancel();
-    return super.close();
-  }
-
-  Future<void> _onFetchDailyAttendance(
+  FutureOr<void> _onFetchDailyAttendance(
     FetchDailyAttendance event,
+    Emitter<AttendanceState> emit,
+  ) async {
+    await _getDailyAttendance(emit: emit, date: event.date);
+  }
+
+  FutureOr<void> _onFetchHistoryAttendance(
+    FetchHistoryAttendance event,
     Emitter<AttendanceState> emit,
   ) async {
     await runBlocCatching(
       handleLoading: false,
       action: () async {
-        emit(state.copyWith(isLoading: true, onPageError: ''));
+        emit(
+          state.copyWith(
+            isLoading: true,
+            exception: null,
+            onPageError: '',
+            historyDate: event.date,
+          ),
+        );
 
-        final result = await _getDailyAttendanceUseCase.execute(
-          GetDailyAttendanceInput(classId: event.classId, date: event.date),
+        final dateStr = DateTimeUtils.formatDateTimeDateOnly(event.date);
+        final output = await _getDailyAttendanceUseCase.execute(
+          GetDailyAttendanceInput(date: dateStr),
         );
 
         emit(
           state.copyWith(
             isLoading: false,
-            classId: event.classId,
-            selectedDate: event.date,
-            students: result.students,
-            attendances: result.attendanceList,
-            leaveRequests: result.leaveRequests,
-            session: result.session,
-            hasUnsavedChanges: false,
+            historyAttendance: output.dailyAttendance,
           ),
         );
-
-        _startLeaveRequestStream(event.classId, event.date);
       },
       doOnError: (e) {
-        emit(state.copyWith(isLoading: false, onPageError: e.toString()));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            exception: e,
+            onPageError: _mapErrorMessage(e),
+          ),
+        );
       },
     );
   }
 
-  Future<void> _onFetchAttendanceHistory(
-    FetchAttendanceHistoryEvent event,
+  FutureOr<void> _onRefreshDailyAttendance(
+    RefreshDailyAttendance event,
+    Emitter<AttendanceState> emit,
+  ) async {
+    await _getDailyAttendance(emit: emit, date: event.date);
+    if (!event.completer.isCompleted) {
+      event.completer.complete();
+    }
+  }
+
+  FutureOr<void> _onRefreshHistoryAttendance(
+    RefreshHistoryAttendance event,
     Emitter<AttendanceState> emit,
   ) async {
     await runBlocCatching(
       handleLoading: false,
       action: () async {
-        emit(state.copyWith(isHistoryLoading: true, historyError: ''));
+        emit(
+          state.copyWith(
+            isLoading: true,
+            exception: null,
+            onPageError: '',
+            historyDate: event.date,
+          ),
+        );
 
-        final result = await _getDailyAttendanceUseCase.execute(
-          GetDailyAttendanceInput(classId: event.classId, date: event.date),
+        final dateStr = DateTimeUtils.formatDateTimeDateOnly(event.date);
+        final output = await _getDailyAttendanceUseCase.execute(
+          GetDailyAttendanceInput(date: dateStr),
         );
 
         emit(
           state.copyWith(
-            isHistoryLoading: false,
-            historyDate: event.date,
-            historyStudents: result.students,
-            historyAttendances: result.attendanceList,
-            historySession: result.session,
+            isLoading: false,
+            historyAttendance: output.dailyAttendance,
           ),
         );
       },
       doOnError: (e) {
         emit(
-          state.copyWith(isHistoryLoading: false, historyError: e.toString()),
+          state.copyWith(
+            isLoading: false,
+            exception: e,
+            onPageError: _mapErrorMessage(e),
+          ),
         );
       },
     );
+    if (!event.completer.isCompleted) {
+      event.completer.complete();
+    }
   }
 
-  Future<void> _onMarkStudentAttendance(
-    MarkStudentAttendanceEvent event,
+  FutureOr<void> _onLeaveRequestsStarted(
+    LeaveRequestsStarted event,
     Emitter<AttendanceState> emit,
   ) async {
-    final now = DateTime.now();
-    final currentUser = sl<AuthRepository>().getCurrentUser();
-    final updatedAttendance = event.attendance.copyWith(
-      classId: state.classId,
-      date: state.selectedDate,
-      recordedBy: currentUser.id,
-      updatedAt: now,
-      createdAt: event.attendance.createdAt ?? now,
-    );
-
-    final updatedList = state.attendances.map((a) {
-      return a.studentId == updatedAttendance.studentId ? updatedAttendance : a;
-    }).toList();
-
-    emit(
-      state.copyWith(
-        attendances: updatedList,
-        hasUnsavedChanges: true,
-        onPageError: '',
-      ),
+    await _getLeaveRequests(
+      emit: emit,
+      isInitialLoad: true,
+      limit: event.limit,
     );
   }
 
-  Future<void> _onMarkStudentCheckOut(
-    MarkStudentCheckOutEvent event,
+  FutureOr<void> _onLeaveRequestsLoadMore(
+    LeaveRequestsLoadMore event,
     Emitter<AttendanceState> emit,
   ) async {
-    final now = DateTime.now();
-    final currentUser = sl<AuthRepository>().getCurrentUser();
+    await _getLeaveRequests(emit: emit, isInitialLoad: false);
+  }
 
-    final updatedList = state.attendances.map((a) {
-      if (a.studentId != event.studentId) return a;
-      if (a.status != 'present' && a.status != 'late') return a;
-      if (a.checkOutTime != null) return a;
-
-      return a.copyWith(
-        checkOutTime: now,
-        classId: state.classId,
-        date: state.selectedDate,
-        recordedBy: currentUser.id,
-        updatedAt: now,
-        createdAt: a.createdAt ?? now,
-      );
-    }).toList();
-
-    emit(
-      state.copyWith(
-        attendances: updatedList,
-        hasUnsavedChanges: true,
-        onPageError: '',
-      ),
+  FutureOr<void> _onLeaveRequestsRefreshed(
+    LeaveRequestsRefreshed event,
+    Emitter<AttendanceState> emit,
+  ) async {
+    await _getLeaveRequests(
+      emit: emit,
+      isInitialLoad: true,
+      limit: event.limit,
     );
+    if (!event.completer.isCompleted) {
+      event.completer.complete();
+    }
   }
 
-  bool _shouldApplyLeaveToAttendance(
-    Attendance attendance,
-    bool isApproved,
-    bool confirmPresentOverride,
+  void _onToggleStudentAttendance(
+    ToggleStudentAttendanceEvent event,
+    Emitter<AttendanceState> emit,
   ) {
-    if (!isApproved) return false;
-    if (attendance.status == 'absent_excused') return false;
-    if (attendance.status == 'not_marked' ||
-        attendance.status == 'absent_unexcused') {
-      return true;
-    }
-    if (attendance.status == 'present' || attendance.status == 'late') {
-      return confirmPresentOverride;
-    }
-    return false;
-  }
+    final daily = state.dailyAttendance;
+    final roster = List.of(daily!.roster);
+    final index = roster.indexWhere((s) => s.studentId == event.studentId);
+    if (index < 0) return;
 
-  Attendance _applyApprovedLeave(
-    Attendance attendance,
-    LeaveRequest request,
-    String reviewedBy,
-  ) {
-    final now = DateTime.now();
-    return attendance.copyWith(
-      status: 'absent_excused',
-      note: request.reason,
-      checkInTime: null,
-      checkOutTime: null,
-      classId: state.classId,
-      date: state.selectedDate,
-      recordedBy: reviewedBy,
-      updatedAt: now,
+    final student = roster[index];
+    final currentStatus = AttendanceStatusMapper.fromApi(student.status);
+
+    String newStatusApi;
+    DateTime? newCheckIn;
+
+    if (currentStatus == AttendanceStatus.notMarked) {
+      newStatusApi = AttendanceStatus.present.apiValue;
+      newCheckIn = DateTime.now();
+    } else {
+      newStatusApi = AttendanceStatus.notMarked.apiValue;
+      newCheckIn = null; // Revert checkInTime if toggling off
+    }
+
+    roster[index] = student.copyWith(
+      status: newStatusApi,
+      checkInTime: newCheckIn,
     );
+
+    emit(state.copyWith(dailyAttendance: daily.copyWith(roster: roster)));
   }
 
-  Future<void> _onCompleteAttendanceSession(
-    CompleteAttendanceSessionEvent event,
+  void _onChangeStudentAttendanceStatus(
+    ChangeStudentAttendanceStatusEvent event,
+    Emitter<AttendanceState> emit,
+  ) {
+    final daily = state.dailyAttendance;
+    final roster = List.of(daily!.roster);
+    final index = roster.indexWhere((s) => s.studentId == event.studentId);
+    if (index < 0) return;
+
+    final student = roster[index];
+    final currentStatus = AttendanceStatusMapper.fromApi(student.status);
+    if (currentStatus == event.status) return;
+
+    String newStatusApi = event.status.apiValue;
+    DateTime? newCheckIn = student.checkInTime;
+
+    if (event.status == AttendanceStatus.notMarked ||
+        event.status == AttendanceStatus.absentExcused ||
+        event.status == AttendanceStatus.absentUnexcused) {
+      newCheckIn = null;
+    } else if (currentStatus == AttendanceStatus.notMarked ||
+        currentStatus == AttendanceStatus.absentExcused ||
+        currentStatus == AttendanceStatus.absentUnexcused) {
+      newCheckIn = DateTime.now();
+    }
+
+    roster[index] = student.copyWith(
+      status: newStatusApi,
+      checkInTime: newCheckIn,
+    );
+
+    emit(state.copyWith(dailyAttendance: daily.copyWith(roster: roster)));
+  }
+
+  Future<void> _onSubmitMorningAttendance(
+    SubmitMorningAttendanceEvent event,
     Emitter<AttendanceState> emit,
   ) async {
     await runBlocCatching(
+      handleLoading: false,
       action: () async {
-        emit(state.copyWith(isSaving: true, onPageError: ''));
+        emit(
+          state.copyWith(isSubmitting: true, isLoading: true, onPageError: ''),
+        );
 
-        final session =
-            state.session ??
-            AttendanceSession(classId: state.classId, date: state.selectedDate);
-
-        final attendancesToSave = state.attendances.map((attendance) {
-          final now = DateTime.now();
-          if (attendance.status == 'not_marked') {
-            return attendance.copyWith(status: 'absent_unexcused');
-          }
-          if ((attendance.status == 'present' || attendance.status == 'late') &&
-              attendance.checkInTime == null) {
-            return attendance.copyWith(checkInTime: now);
-          }
-          return attendance;
-        }).toList();
+        final daily = state.dailyAttendance!;
 
         await _submitDailyAttendanceUseCase.execute(
           SubmitDailyAttendanceInput(
-            session: session,
-            attendances: attendancesToSave,
+            date: daily.date,
+            attendanceStudent: daily.roster,
           ),
         );
 
+        // Refresh để lấy session đã cập nhật từ server
+        await _getDailyAttendance(emit: emit, date: daily.date);
+
+        // Hoàn thành submit
+        emit(state.copyWith(isSubmitting: false));
+      },
+      doOnError: (e) {
         emit(
           state.copyWith(
-            isSaving: false,
-            hasUnsavedChanges: false,
-            session: session.copyWith(isCheckInCompleted: true),
-            attendances: attendancesToSave,
+            isSubmitting: false,
+            isLoading: false,
+            onPageError: _mapErrorMessage(e),
           ),
         );
-      },
-      doOnError: (e) {
-        emit(state.copyWith(isSaving: false, onPageError: e.toString()));
       },
     );
   }
 
-  Future<void> _onUpdateDailyAttendance(
-    UpdateDailyAttendanceEvent event,
+  Future<void> _onUpdateStudentAttendance(
+    UpdateStudentAttendanceEvent event,
     Emitter<AttendanceState> emit,
   ) async {
     await runBlocCatching(
+      handleLoading: false,
       action: () async {
-        emit(state.copyWith(isSaving: true, onPageError: ''));
-
-        final session = state.session;
-        if (session == null) {
-          throw Exception('Không tìm thấy phiên điểm danh');
-        }
-
-        await _updateDailyAttendanceUseCase.execute(
-          UpdateDailyAttendanceInput(
-            session: session,
-            attendances: state.attendances,
-          ),
+        emit(
+          state.copyWith(isSubmitting: true, isLoading: true, onPageError: ''),
         );
 
-        emit(state.copyWith(isSaving: false, hasUnsavedChanges: false));
-      },
-      doOnError: (e) {
-        emit(state.copyWith(isSaving: false, onPageError: e.toString()));
-      },
-    );
-  }
+        final daily = state.dailyAttendance!;
 
-  Future<void> _onCompleteCheckOutSession(
-    CompleteCheckOutSessionEvent event,
-    Emitter<AttendanceState> emit,
-  ) async {
-    await runBlocCatching(
-      action: () async {
-        emit(state.copyWith(isSaving: true, onPageError: ''));
-
-        final session = state.session;
-        if (session == null) {
-          throw Exception('Không tìm thấy phiên điểm danh');
+        // Cập nhật student trong danh sách roster
+        final roster = List.of(daily.roster);
+        final index = roster.indexWhere((s) => s.studentId == event.studentId);
+        if (index < 0) {
+          emit(state.copyWith(isSubmitting: false, isLoading: false));
+          return;
         }
 
-        final now = DateTime.now();
-        final currentUser = sl<AuthRepository>().getCurrentUser();
+        final existing = roster[index];
+        final currentStatus = AttendanceStatusMapper.fromApi(existing.status);
 
-        final attendancesWithCheckout = state.attendances.map((a) {
-          if ((a.status == 'present' || a.status == 'late') &&
-              a.checkOutTime == null) {
-            return a.copyWith(
-              checkOutTime: now,
-              recordedBy: currentUser.id,
-              updatedAt: now,
-            );
+        // Xác định checkInTime hợp lý
+        DateTime? checkInTime = existing.checkInTime;
+        if (event.status == AttendanceStatus.present ||
+            event.status == AttendanceStatus.late) {
+          if (checkInTime == null ||
+              currentStatus == AttendanceStatus.absentUnexcused ||
+              currentStatus == AttendanceStatus.absentExcused ||
+              currentStatus == AttendanceStatus.notMarked) {
+            checkInTime = DateTime.now(); // Ghi thời gian hiện tại
           }
-          return a;
-        }).toList();
+        } else if (event.status == AttendanceStatus.absentUnexcused ||
+            event.status == AttendanceStatus.absentExcused) {
+          checkInTime = null; // Xoá giờ vào khi đổi sang vắng
+        }
+
+        final updatedStudent = existing.copyWith(
+          status: event.status.apiValue,
+          checkInTime: checkInTime,
+          note: event.note ?? existing.note,
+        );
+
+        roster[index] = updatedStudent;
+
+        await _submitDailyAttendanceUseCase.execute(
+          SubmitDailyAttendanceInput(
+            date: daily.date,
+            attendanceStudent: roster,
+          ),
+        );
+
+        await _getDailyAttendance(emit: emit, date: daily.date);
+
+        emit(state.copyWith(isSubmitting: false));
+      },
+      doOnError: (e) {
+        emit(
+          state.copyWith(
+            isSubmitting: false,
+            isLoading: false,
+            onPageError: _mapErrorMessage(e),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onSubmitCheckOut(
+    SubmitCheckOutEvent event,
+    Emitter<AttendanceState> emit,
+  ) async {
+    await runBlocCatching(
+      handleLoading: false,
+      action: () async {
+        emit(
+          state.copyWith(isSubmitting: true, isLoading: true, onPageError: ''),
+        );
+
+        final daily = state.dailyAttendance!;
+
+        await _submitCheckOutUseCase.execute(
+          SubmitCheckOutInput(
+            date: daily.date,
+            studentId: event.studentId,
+            checkOutTime: event.checkOutTime,
+          ),
+        );
+
+        await _getDailyAttendance(emit: emit, date: daily.date);
+        emit(state.copyWith(isSubmitting: false));
+      },
+      doOnError: (e) {
+        emit(
+          state.copyWith(
+            isSubmitting: false,
+            isLoading: false,
+            onPageError: _mapErrorMessage(e),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onSubmitCompleteCheckOut(
+    SubmitCompleteCheckOutEvent event,
+    Emitter<AttendanceState> emit,
+  ) async {
+    await runBlocCatching(
+      handleLoading: false,
+      action: () async {
+        emit(
+          state.copyWith(isSubmitting: true, isLoading: true, onPageError: ''),
+        );
+
+        final daily = state.dailyAttendance!;
 
         await _submitCompleteCheckOutUseCase.execute(
-          SubmitCompleteCheckOutInput(
-            session: session,
-            attendances: attendancesWithCheckout,
-          ),
+          SubmitCompleteCheckOutInput(date: daily.date),
         );
 
-        emit(
-          state.copyWith(
-            isSaving: false,
-            hasUnsavedChanges: false,
-            attendances: attendancesWithCheckout,
-            session: session.copyWith(isCheckOutCompleted: true),
-          ),
-        );
+        await _getDailyAttendance(emit: emit, date: daily.date);
+        emit(state.copyWith(isSubmitting: false));
       },
       doOnError: (e) {
-        emit(state.copyWith(isSaving: false, onPageError: e.toString()));
+        emit(
+          state.copyWith(
+            isSubmitting: false,
+            isLoading: false,
+            onPageError: _mapErrorMessage(e),
+          ),
+        );
       },
     );
   }
 
-  Future<void> _onSubmitLeaveDecision(
+  Future<void> _getDailyAttendance({
+    required Emitter<AttendanceState> emit,
+    String? date,
+  }) async {
+    await runBlocCatching(
+      handleLoading: false,
+      action: () async {
+        emit(state.copyWith(isLoading: true, exception: null, onPageError: ''));
+
+        final output = await _getDailyAttendanceUseCase.execute(
+          GetDailyAttendanceInput(date: date),
+        );
+
+        emit(
+          state.copyWith(
+            isLoading: false,
+            dailyAttendance: output.dailyAttendance,
+          ),
+        );
+      },
+      doOnError: (e) {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            exception: e,
+            onPageError: _mapErrorMessage(e),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _getLeaveRequests({
+    required Emitter<AttendanceState> emit,
+    required bool isInitialLoad,
+    int? limit,
+  }) async {
+    await runBlocCatching(
+      handleLoading: false,
+      action: () async {
+        if (isInitialLoad) {
+          emit(
+            state.copyWith(isLoading: true, exception: null, onPageError: ''),
+          );
+        }
+
+        final output = await _getLeaveRequestsUseCase.execute(
+          GetLeaveRequestsInput(limit: limit ?? 10),
+          isInitialLoad,
+        );
+
+        emit(
+          state.copyWith(
+            isLoading: false,
+            leaveRequests: PagedList(
+              data: output.data,
+              otherData: output.otherData,
+              currentPage: output.page,
+              hasMore: !output.isLastPage,
+              totalItems: output.totalItems,
+              totalPage: output.totalPage,
+              itemsPerPage: output.itemsPerPage,
+              offset: output.offset,
+              nextCursor: output.nextCursor,
+            ),
+          ),
+        );
+      },
+      doOnError: (e) {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            exception: e,
+            onPageError: _mapErrorMessage(e),
+          ),
+        );
+      },
+    );
+  }
+
+  FutureOr<void> _onSubmitLeaveDecision(
     SubmitLeaveDecisionEvent event,
     Emitter<AttendanceState> emit,
   ) async {
     await runBlocCatching(
       handleLoading: false,
       action: () async {
-        final currentUser = sl<AuthRepository>().getCurrentUser();
-        final request = state.leaveRequests.firstWhere(
-          (lr) => lr.id == event.requestId,
-          orElse: () => throw Exception('Không tìm thấy đơn xin phép'),
-        );
+        emit(state.copyWith(isSubmitting: true, successMessage: null));
 
-        final attendance = state.attendances.firstWhere(
-          (a) => a.studentId == request.studentId,
-          orElse: () => Attendance(
-            studentId: request.studentId,
-            classId: state.classId,
-            date: state.selectedDate,
+        final status = event.isApproved ? 'approved' : 'rejected';
+        final output = await _submitLeaveDecisionUseCase.execute(
+          SubmitLeaveDecisionInput(
+            requestId: event.requestId,
+            status: status,
+            decisionNote: event.decisionNote,
           ),
         );
 
-        if (event.isApproved &&
-            (attendance.status == 'present' || attendance.status == 'late') &&
-            !event.confirmPresentOverride) {
-          throw Exception('Cần xác nhận ghi đè điểm danh');
+        final updatedRequest = output.leaveRequest;
+        final successMsg = event.isApproved
+            ? 'Duyệt xin phép thành công!'
+            : 'Từ chối xin phép thành công!';
+
+        // Update the list of leave requests in the state
+        if (state.leaveRequests != null) {
+          final currentList = List<LeaveRequest>.from(
+            state.leaveRequests!.data,
+          );
+          final index = currentList.indexWhere(
+            (r) => r.id == updatedRequest.id,
+          );
+          if (index != -1) {
+            currentList[index] = updatedRequest;
+            emit(
+              state.copyWith(
+                leaveRequests: state.leaveRequests!.copyWith(data: currentList),
+                successMessage: successMsg,
+              ),
+            );
+            return;
+          }
         }
 
-        final applyToAttendance = _shouldApplyLeaveToAttendance(
-          attendance,
-          event.isApproved,
-          event.confirmPresentOverride,
-        );
-        final isCheckInCompleted = state.session?.isCheckInCompleted == true;
-        final updateFirestoreAttendance =
-            applyToAttendance && isCheckInCompleted;
-
-        final newStatus = event.isApproved ? 'approved' : 'rejected';
-        final updatedLeaveRequests = state.leaveRequests.map((lr) {
-          return lr.id == event.requestId ? lr.copyWith(status: newStatus) : lr;
-        }).toList();
-
-        final updatedAttendances = applyToAttendance
-            ? state.attendances.map((a) {
-                if (a.studentId != request.studentId) return a;
-                return _applyApprovedLeave(a, request, currentUser.id);
-              }).toList()
-            : state.attendances;
-
-        emit(
-          state.copyWith(
-            leaveRequests: updatedLeaveRequests,
-            attendances: updatedAttendances,
-            hasUnsavedChanges: applyToAttendance && !isCheckInCompleted
-                ? true
-                : state.hasUnsavedChanges,
-          ),
-        );
-
-        await _submitLeaveDecisionUseCase.execute(
-          SubmitLeaveDecisionInput(
-            request: request,
-            isApproved: event.isApproved,
-            reviewedBy: currentUser.id,
-            updateAttendance: updateFirestoreAttendance,
-          ),
-        );
+        emit(state.copyWith(successMessage: successMsg));
+      },
+      doOnEventCompleted: () {
+        emit(state.copyWith(isSubmitting: false));
       },
       doOnError: (e) {
-        emit(state.copyWith(onPageError: e.toString()));
+        emit(state.copyWith(isSubmitting: false));
       },
     );
   }
 
-  void _onLeaveRequestsUpdated(
-    LeaveRequestsUpdatedEvent event,
-    Emitter<AttendanceState> emit,
-  ) {
-    final updatedAttendances = state.attendances.map((attendance) {
-      final approvedLeave = event.leaveRequests.where(
-        (r) => r.studentId == attendance.studentId && r.status == 'approved',
-      );
-      if (approvedLeave.isEmpty) return attendance;
-      if (attendance.status != 'not_marked' &&
-          attendance.status != 'absent_unexcused') {
-        return attendance;
-      }
-      final leave = approvedLeave.first;
-      return attendance.copyWith(status: 'absent_excused', note: leave.reason);
-    }).toList();
-
-    emit(
-      state.copyWith(
-        leaveRequests: event.leaveRequests,
-        attendances: updatedAttendances,
-      ),
-    );
+  String _mapErrorMessage(Object error) {
+    if (error is AppUncaughtException) {
+      final root = error.rootError;
+      if (root is AppException) return root.toString();
+      return root?.toString() ?? AppStrings.unknownError;
+    }
+    if (error is AppException) return error.toString();
+    return error.toString();
   }
 }

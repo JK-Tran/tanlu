@@ -1,10 +1,8 @@
 import 'package:injectable/injectable.dart';
-import 'package:tanlu_management/core/utils/app_logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:tanlu_management/shared/utils/log_utils.dart';
 
-/// Thông tin app từ project (pubspec, build.gradle, Info.plist).
-/// Gọi [init] trong main() trước runApp.
-@lazySingleton
+@LazySingleton()
 class AppInfo {
   PackageInfo? _packageInfo;
 
@@ -13,19 +11,16 @@ class AppInfo {
   String get versionCode => _packageInfo?.buildNumber ?? '';
   String get versionName => _packageInfo?.version ?? '';
 
-  /// versionName+versionCode (vd: 1.0.1+1)
-  String get versionFull => '$versionName+$versionCode';
-
   Future<void> init() async {
     try {
       _packageInfo = await PackageInfo.fromPlatform();
-      appLogger.d(
-        'AppInfo | applicationId: ${_packageInfo!.packageName} | '
-        'appName: ${_packageInfo!.appName} | versionName: ${_packageInfo!.version} | '
-        'versionCode: ${_packageInfo!.buildNumber}',
-      );
-    } catch (e, st) {
-      appLogger.e('AppInfo init failed: $e', e, st);
+      Log.d(_packageInfo!.packageName, name: 'APPLICATION_ID');
+      Log.d(_packageInfo!.appName, name: 'APP_NAME');
+      Log.d(_packageInfo!.version, name: 'VERSION_NAME');
+      Log.d(_packageInfo!.buildNumber, name: 'VERSION_CODE');
+    } catch (e) {
+      Log.e('Error initializing AppInfo: $e');
+      // Set default values if package_info fails
       _packageInfo = null;
     }
   }

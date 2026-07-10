@@ -25,6 +25,7 @@ mixin _$PagedList<T> {
   int get totalPage => throw _privateConstructorUsedError;
   int get itemsPerPage => throw _privateConstructorUsedError;
   int? get offset => throw _privateConstructorUsedError;
+  int? get nextCursor => throw _privateConstructorUsedError;
 
   /// Create a copy of PagedList
   /// with the given fields replaced by the non-null parameter values.
@@ -49,6 +50,7 @@ abstract class $PagedListCopyWith<T, $Res> {
     int totalPage,
     int itemsPerPage,
     int? offset,
+    int? nextCursor,
   });
 }
 
@@ -75,6 +77,7 @@ class _$PagedListCopyWithImpl<T, $Res, $Val extends PagedList<T>>
     Object? totalPage = null,
     Object? itemsPerPage = null,
     Object? offset = freezed,
+    Object? nextCursor = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -107,6 +110,10 @@ class _$PagedListCopyWithImpl<T, $Res, $Val extends PagedList<T>>
                 ? _value.offset
                 : offset // ignore: cast_nullable_to_non_nullable
                       as int?,
+            nextCursor: freezed == nextCursor
+                ? _value.nextCursor
+                : nextCursor // ignore: cast_nullable_to_non_nullable
+                      as int?,
           )
           as $Val,
     );
@@ -131,6 +138,7 @@ abstract class _$$PagedListImplCopyWith<T, $Res>
     int totalPage,
     int itemsPerPage,
     int? offset,
+    int? nextCursor,
   });
 }
 
@@ -156,6 +164,7 @@ class __$$PagedListImplCopyWithImpl<T, $Res>
     Object? totalPage = null,
     Object? itemsPerPage = null,
     Object? offset = freezed,
+    Object? nextCursor = freezed,
   }) {
     return _then(
       _$PagedListImpl<T>(
@@ -188,6 +197,10 @@ class __$$PagedListImplCopyWithImpl<T, $Res>
             ? _value.offset
             : offset // ignore: cast_nullable_to_non_nullable
                   as int?,
+        nextCursor: freezed == nextCursor
+            ? _value.nextCursor
+            : nextCursor // ignore: cast_nullable_to_non_nullable
+                  as int?,
       ),
     );
   }
@@ -205,6 +218,7 @@ class _$PagedListImpl<T> extends _PagedList<T> {
     this.totalPage = 0,
     this.itemsPerPage = 0,
     this.offset = -99,
+    this.nextCursor,
   }) : _data = data,
        super._();
 
@@ -237,10 +251,12 @@ class _$PagedListImpl<T> extends _PagedList<T> {
   @override
   @JsonKey()
   final int? offset;
+  @override
+  final int? nextCursor;
 
   @override
   String toString() {
-    return 'PagedList<$T>(data: $data, otherData: $otherData, currentPage: $currentPage, hasMore: $hasMore, totalItems: $totalItems, totalPage: $totalPage, itemsPerPage: $itemsPerPage, offset: $offset)';
+    return 'PagedList<$T>(data: $data, otherData: $otherData, currentPage: $currentPage, hasMore: $hasMore, totalItems: $totalItems, totalPage: $totalPage, itemsPerPage: $itemsPerPage, offset: $offset, nextCursor: $nextCursor)';
   }
 
   @override
@@ -259,7 +275,9 @@ class _$PagedListImpl<T> extends _PagedList<T> {
                 other.totalPage == totalPage) &&
             (identical(other.itemsPerPage, itemsPerPage) ||
                 other.itemsPerPage == itemsPerPage) &&
-            (identical(other.offset, offset) || other.offset == offset));
+            (identical(other.offset, offset) || other.offset == offset) &&
+            (identical(other.nextCursor, nextCursor) ||
+                other.nextCursor == nextCursor));
   }
 
   @override
@@ -273,6 +291,7 @@ class _$PagedListImpl<T> extends _PagedList<T> {
     totalPage,
     itemsPerPage,
     offset,
+    nextCursor,
   );
 
   /// Create a copy of PagedList
@@ -294,6 +313,7 @@ abstract class _PagedList<T> extends PagedList<T> {
     final int totalPage,
     final int itemsPerPage,
     final int? offset,
+    final int? nextCursor,
   }) = _$PagedListImpl<T>;
   const _PagedList._() : super._();
 
@@ -313,6 +333,8 @@ abstract class _PagedList<T> extends PagedList<T> {
   int get itemsPerPage;
   @override
   int? get offset;
+  @override
+  int? get nextCursor;
 
   /// Create a copy of PagedList
   /// with the given fields replaced by the non-null parameter values.

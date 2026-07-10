@@ -6,7 +6,6 @@ import 'package:tanlu_management/core/widgets/app_info_row.dart';
 import 'package:tanlu_management/core/widgets/app_snackbar.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/student/domain/entity/contact.dart';
-import 'package:tanlu_management/shared/extensions/date_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactCard extends StatelessWidget {
@@ -19,9 +18,7 @@ class ContactCard extends StatelessWidget {
       context: context,
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(24.r),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
       ),
       builder: (context) {
         return SafeArea(
@@ -57,10 +54,7 @@ class ContactCard extends StatelessWidget {
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: contact.phone));
                     Navigator.pop(context);
-                    AppSnackbar.showSuccess(
-                      context,
-                      message: 'Đã sao chép',
-                    );
+                    AppSnackbar.showSuccess(context, message: 'Đã sao chép');
                   },
                 ),
                 Padding(
@@ -81,10 +75,7 @@ class ContactCard extends StatelessWidget {
                     color: AppColors.success,
                     size: 24.w,
                   ),
-                  title: AppText.b1(
-                    'Gọi điện',
-                    color: AppColors.grayDark,
-                  ),
+                  title: AppText.b1('Gọi điện', color: AppColors.grayDark),
                   onTap: () async {
                     Navigator.pop(context);
                     final Uri url = Uri.parse('tel:${contact.phone}');
@@ -111,15 +102,7 @@ class ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isMother = contact.relationship.toLowerCase() == 'mẹ';
-    final isFather = contact.relationship.toLowerCase() == 'bố';
-
     Color tagColor = AppColors.primary;
-    if (isFather) {
-      tagColor = AppColors.success; // green
-    } else if (!isMother) {
-      tagColor = AppColors.info; // blue
-    }
 
     return Container(
       margin: EdgeInsets.only(bottom: 16.h),
@@ -127,9 +110,7 @@ class ContactCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: AppColors.grayLight.withValues(alpha: 0.3),
-        ),
+        border: Border.all(color: AppColors.grayLight.withValues(alpha: 0.3)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -169,16 +150,13 @@ class ContactCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12.w,
-                  vertical: 6.h,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
                   color: tagColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: AppText.b2(
-                  contact.relationship,
+                  contact.relationship.isNotEmpty ? contact.relationship : 'Phụ huynh',
                   color: tagColor,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
@@ -187,12 +165,6 @@ class ContactCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.h),
-          AppInfoRow(
-            icon: Icons.calendar_today_outlined,
-            label: 'Ngày sinh',
-            value: contact.dob?.toDateString() ?? 'Chưa cập nhật',
-          ),
-          SizedBox(height: 8.h),
           if (contact.phone.isNotEmpty)
             AppInfoRow(
               icon: Icons.phone_outlined,

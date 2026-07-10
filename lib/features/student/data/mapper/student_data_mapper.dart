@@ -1,56 +1,57 @@
 import 'package:injectable/injectable.dart';
+import 'package:tanlu_management/features/student/data/mapper/class_info_data_mapper.dart';
+import 'package:tanlu_management/features/student/data/mapper/contact_data_mapper.dart';
+import 'package:tanlu_management/features/student/data/mapper/parent_data_mapper.dart';
 import 'package:tanlu_management/features/student/data/model/student_data.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
-import 'package:tanlu_management/features/student/domain/entity/contact.dart';
-import 'package:tanlu_management/features/student/data/model/contact_data.dart';
-import 'package:tanlu_management/shared/infrastructure/mapper/base_data_mapper.dart';
+import 'package:tanlu_management/shared/infrastructure/data/base/base_data_mapper.dart';
+import 'package:tanlu_management/shared/utils/date_time_utils.dart';
 
-@injectable
+@Injectable()
 class StudentDataMapper extends BaseDataMapper<StudentData, Student>
     with DataMapperMixin<StudentData, Student> {
+  StudentDataMapper(
+    this._classInfoDataMapper,
+    this._parentDataMapper,
+    this._contactDataMapper,
+  );
+
+  final ClassInfoDataMapper _classInfoDataMapper;
+  final ParentDataMapper _parentDataMapper;
+  final ContactDataMapper _contactDataMapper;
+
   @override
-  Student mapToEntity(StudentData? model) {
+  Student mapToEntity(StudentData? data) {
     return Student(
-      id: model?.id ?? '',
-      classId: model?.classId ?? '',
-      fullName: model?.fullName ?? '',
-      nickname: model?.nickname ?? '',
-      gender: model?.gender ?? '',
-      dob: model?.dob != null ? DateTime.tryParse(model!.dob!) : null,
-      dateOfBirth: model?.dateOfBirth != null
-          ? DateTime.tryParse(model!.dateOfBirth!)
-          : null,
-      avatarUrl: model?.avatarUrl ?? '',
-      studentCode: model?.studentCode ?? '',
-      status: model?.status ?? '',
-      parentUserId: model?.parentUserId ?? '',
-      address: model?.address ?? '',
-      contacts:
-          model?.contacts
-              ?.map(
-                (c) => Contact(
-                  name: c.name ?? '',
-                  relationship: c.relationship ?? '',
-                  phone: c.phone ?? '',
-                  dob: c.dob != null ? DateTime.tryParse(c.dob!) : null,
-                  userId: c.userId ?? '',
-                  isPrimary: c.isPrimary ?? false,
-                ),
-              )
-              .toList() ??
-          [],
-      birthHistory: model?.birthHistory ?? '',
-      diagnosis: model?.diagnosis ?? '',
-      allergies: model?.allergies ?? '',
-      currentMedications: model?.currentMedications ?? '',
-      bloodType: model?.bloodType ?? '',
-      likes: model?.likes ?? '',
-      dislikesOrTriggers: model?.dislikesOrTriggers ?? '',
-      selfCareSkills: model?.selfCareSkills ?? '',
-      initialReason: model?.initialReason ?? '',
-      diagnosisSummary: model?.diagnosisSummary ?? '',
-      developmentAgeMonth: model?.developmentAgeMonth ?? 0,
-      supportLevel: model?.supportLevel ?? '',
+      id: data?.id ?? 0,
+      centerId: data?.centerId ?? 0,
+      classId: data?.classId ?? 0,
+      parentId: data?.parentId ?? 0,
+      studentCode: data?.studentCode ?? '',
+      fullName: data?.fullName ?? '',
+      nickName: data?.nickName ?? '',
+      gender: data?.gender ?? '',
+      birthDate: DateTimeUtils.parseDateTimeDateOnlyType2(
+        data?.birthDate ?? '',
+      ),
+      avatarUrl: data?.avatarUrl ?? '',
+      status: data?.status ?? '',
+      birthHistory: data?.birthHistory ?? '',
+      diagnosis: data?.diagnosis ?? '',
+      allergies: data?.allergies ?? '',
+      currentMedications: data?.currentMedications ?? '',
+      bloodType: data?.bloodType ?? '',
+      likes: data?.likes ?? '',
+      dislikesOrTriggers: data?.dislikesOrTriggers ?? '',
+      selfCareSkills: data?.selfCareSkills ?? '',
+      initialReason: data?.initialReason ?? '',
+      diagnosisSummary: data?.diagnosisSummary ?? '',
+      developmentAgeMonth: data?.developmentAgeMonth ?? 0,
+      supportLevel: data?.supportLevel ?? '',
+      createdAt: data?.createdAt ?? DateTime.now(),
+      classInfo: _classInfoDataMapper.mapToEntity(data?.classInfo),
+      parent: _parentDataMapper.mapToEntity(data?.parent),
+      contacts: _contactDataMapper.mapToListEntity(data?.contacts),
     );
   }
 
@@ -58,29 +59,16 @@ class StudentDataMapper extends BaseDataMapper<StudentData, Student>
   StudentData mapToData(Student entity) {
     return StudentData(
       id: entity.id,
+      centerId: entity.centerId,
       classId: entity.classId,
-      fullName: entity.fullName,
-      nickname: entity.nickname,
-      gender: entity.gender,
-      dob: entity.dob?.toIso8601String(),
-      dateOfBirth: entity.dateOfBirth?.toIso8601String(),
-      avatarUrl: entity.avatarUrl,
+      parentId: entity.parentId,
       studentCode: entity.studentCode,
+      fullName: entity.fullName,
+      nickName: entity.nickName,
+      gender: entity.gender,
+      birthDate: entity.birthDate?.toIso8601String(),
+      avatarUrl: entity.avatarUrl,
       status: entity.status,
-      parentUserId: entity.parentUserId,
-      address: entity.address,
-      contacts: entity.contacts
-          .map(
-            (c) => ContactData(
-              name: c.name,
-              relationship: c.relationship,
-              phone: c.phone,
-              dob: c.dob?.toIso8601String(),
-              userId: c.userId,
-              isPrimary: c.isPrimary,
-            ),
-          )
-          .toList(),
       birthHistory: entity.birthHistory,
       diagnosis: entity.diagnosis,
       allergies: entity.allergies,
@@ -93,6 +81,10 @@ class StudentDataMapper extends BaseDataMapper<StudentData, Student>
       diagnosisSummary: entity.diagnosisSummary,
       developmentAgeMonth: entity.developmentAgeMonth,
       supportLevel: entity.supportLevel,
+      createdAt: entity.createdAt,
+      classInfo: _classInfoDataMapper.mapToData(entity.classInfo),
+      parent: _parentDataMapper.mapToData(entity.parent),
+      contacts: _contactDataMapper.mapToListData(entity.contacts),
     );
   }
 }

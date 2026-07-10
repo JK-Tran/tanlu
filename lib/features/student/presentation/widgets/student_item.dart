@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
-import 'package:tanlu_management/features/student/domain/entity/student.dart';
 
 class StudentItem extends StatelessWidget {
-  final Student student;
+  const StudentItem({
+    super.key,
+    required this.studentId,
+    required this.fullName,
+    required this.nickName,
+    required this.gender,
+    this.avatarUrl,
+    this.className,
+    this.parentName,
+    this.onTap,
+  });
 
-  const StudentItem({super.key, required this.student});
+  final int studentId;
+  final String fullName;
+  final String nickName;
+  final String gender;
+  final String? className;
+  final String? parentName;
+  final String? avatarUrl;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final gender = student.gender.toLowerCase();
-    final isMale = gender == 'nam' || gender == 'male';
-    final name = student.nickname.isNotEmpty
-        ? student.nickname
-        : student.fullName;
-    final fullName = student.fullName;
-    final avatarUrl = student.avatarUrl.isNotEmpty ? student.avatarUrl : null;
+    final isMale =
+        gender.toLowerCase() == 'nam' || gender.toLowerCase() == 'male';
+    final displayName = nickName.isNotEmpty ? nickName : fullName;
 
     return InkWell(
-      onTap: () => context.push('/student-detail/${student.id}'),
+      onTap: onTap,
       borderRadius: BorderRadius.circular(8.r),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
@@ -53,14 +64,6 @@ class StudentItem extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: (isMale ? AppColors.info : AppColors.primary)
-                        .withValues(alpha: 0.3),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
               ),
               padding: EdgeInsets.all(2.5.w),
               child: Container(
@@ -70,7 +73,7 @@ class StudentItem extends StatelessWidget {
                 ),
                 padding: EdgeInsets.all(1.5.w),
                 child: AttendanceAvatar(
-                  nickname: name,
+                  nickname: displayName,
                   imageUrl: avatarUrl,
                   size: 44,
                 ),
@@ -87,13 +90,14 @@ class StudentItem extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     fontSize: 14.sp,
                   ),
-                  SizedBox(height: 2.h),
-                  AppText.t1(
-                    name,
-                    color: AppColors.grayMedium,
-
-                    fontSize: 12.sp,
-                  ),
+                  if (nickName.isNotEmpty) ...[
+                    SizedBox(height: 2.h),
+                    AppText.t1(
+                      nickName,
+                      color: AppColors.grayMedium,
+                      fontSize: 12.sp,
+                    ),
+                  ],
                 ],
               ),
             ),

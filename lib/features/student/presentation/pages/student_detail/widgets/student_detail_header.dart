@@ -7,7 +7,7 @@ import 'package:tanlu_management/core/widgets/app_icon_pill.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
-import 'package:tanlu_management/shared/extensions/date_extension.dart';
+import 'package:tanlu_management/shared/utils/string_utils.dart';
 
 class StudentDetailHeader extends StatelessWidget {
   final Student student;
@@ -18,11 +18,8 @@ class StudentDetailHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final gender = student.gender.toLowerCase();
     final isMale = gender == 'nam' || gender == 'male';
-    final avatarNickname = student.nickname.isNotEmpty
-        ? student.nickname
-        : student.fullName;
-    final avatarUrl =
-        student.avatarUrl.isNotEmpty ? student.avatarUrl : null;
+    final avatarNickname = student.fullName;
+    final avatarUrl = student.avatarUrl.isNotEmpty ? student.avatarUrl : null;
 
     String diagnosisName = student.diagnosis;
     String severity = '';
@@ -38,9 +35,7 @@ class StudentDetailHeader extends StatelessWidget {
         top: MediaQuery.paddingOf(context).top + 10.h,
         bottom: 10,
       ),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.8),
-      ),
+      decoration: BoxDecoration(color: AppColors.primary),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -147,17 +142,6 @@ class StudentDetailHeader extends StatelessWidget {
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                children: [
-                                  if (student.nickname.isNotEmpty)
-                                    TextSpan(
-                                      text: ' (Bé ${student.nickname})',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                ],
                               ),
                             ),
                           ),
@@ -180,16 +164,18 @@ class StudentDetailHeader extends StatelessWidget {
                       SizedBox(height: 4.h),
                       AppIconPill(
                         icon: Icons.calendar_today_outlined,
-                        text: student.dob?.toDateString() ?? 'Chưa cập nhật',
+                        text: StringUtils.formatBirthDate(student.birthDate),
                         backgroundColor: Colors.white.withValues(alpha: 0.15),
                         contentColor: Colors.white,
                       ),
                       SizedBox(height: 8.h),
                       AppIconPill(
                         icon: Icons.school_rounded,
-                        text: student.classId.isNotEmpty
-                            ? student.classId
-                            : 'Chưa cập nhật lớp',
+                        text: student.classInfo.name.isNotEmpty
+                            ? student.classInfo.name
+                            : (student.classId != 0
+                                  ? 'Lớp ${student.classId}'
+                                  : 'Chưa cập nhật lớp'),
                         backgroundColor: Colors.white.withValues(alpha: 0.15),
                         contentColor: Colors.white,
                       ),

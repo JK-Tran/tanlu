@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/presentation/enums/leave_status.dart';
+import 'package:tanlu_management/features/attendance/domain/entity/enums/leave_status.dart';
+import 'package:tanlu_management/features/attendance/presentation/enums/leave_status_ext.dart';
 
 /// Bộ lọc trạng thái đơn xin phép — chip pill, khác hẳn tab chính.
 class LeaveSubTabBar extends StatelessWidget {
@@ -20,14 +21,14 @@ class LeaveSubTabBar extends StatelessWidget {
     return ColoredBox(
       color: AppColors.grayBg,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(16.w, 4.h, 16.w, 10.h),
+        padding: EdgeInsets.fromLTRB(10.w, 4.h, 10.w, 10.h),
         child: AnimatedBuilder(
           animation: controller,
           builder: (context, _) {
             return Row(
               children: [
                 for (var i = 0; i < LeaveStatus.values.length; i++) ...[
-                  if (i > 0) SizedBox(width: 8.w),
+                  if (i > 0) SizedBox(width: 4.w),
                   Expanded(
                     child: _FilterChip(
                       label: LeaveStatus.values[i].label,
