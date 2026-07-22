@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class AppSearchBar extends StatelessWidget {
   const AppSearchBar({
@@ -17,7 +18,7 @@ class AppSearchBar extends StatelessWidget {
 
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
-  final String hintText;
+  final String? hintText;
   final FocusNode? focusNode;
   final Color? backgroundColor;
   final Color? borderColor;
@@ -26,6 +27,7 @@ class AppSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveHint = hintText ?? context.l10n.searchPlaceholder;
     return Container(
       height: 48.h,
       decoration: BoxDecoration(
@@ -53,7 +55,7 @@ class AppSearchBar extends StatelessWidget {
         decoration: InputDecoration(
           isDense: true,
           contentPadding: EdgeInsets.symmetric(vertical: 12.h),
-          hintText: hintText,
+          hintText: effectiveHint,
           hintStyle: TextStyle(color: AppColors.grayMedium, fontSize: 14.sp),
           prefixIcon: Icon(
             Icons.search_rounded,

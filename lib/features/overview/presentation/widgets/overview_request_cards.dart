@@ -11,6 +11,7 @@ import 'package:tanlu_management/features/attendance/domain/entity/enums/leave_s
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanlu_management/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class OverviewRequestCards extends StatefulWidget {
   const OverviewRequestCards({super.key});
@@ -164,7 +165,7 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AppText.b2(
-                        'Xem chi tiết',
+                        context.l10n.viewDetails,
                         color: primaryColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 13.sp,
@@ -290,10 +291,10 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
       primaryColor: primaryColor,
       lightBgColor: primaryColor.withValues(alpha: 0.1),
       iconPath: 'assets/images/overview/img-calender.png',
-      title: 'Yêu cầu xin nghỉ',
+      title: context.l10n.leaveRequest,
       subtitle: pendingRequests.isNotEmpty
-          ? '${pendingRequests.length} yêu cầu chờ\nxác nhận'
-          : 'Chờ xác nhận',
+          ? context.l10n.leaveRequestPendingCount(pendingRequests.length)
+          : context.l10n.pendingConfirmation,
       onViewDetails: () => context.push('${AppRouter.attendance}?tab=leave'),
       contentArea: isLoading
           ? const Center(
@@ -333,7 +334,7 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AppText.b2(
-                          'Phụ huynh - ${pendingRequests.first.parent.fullName.isNotEmpty ? pendingRequests.first.parent.fullName : pendingRequests.first.student.fullName} ',
+                          context.l10n.parentName(pendingRequests.first.parent.fullName.isNotEmpty ? pendingRequests.first.parent.fullName : pendingRequests.first.student.fullName),
                           color: AppColors.grayDark80,
                         ),
                       ],
@@ -357,7 +358,7 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
                             textOverflow: TextOverflow.ellipsis,
                           ),
                           AppText.b2(
-                            'Chờ xác nhận',
+                            context.l10n.pendingConfirmation,
                             color: primaryColor,
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w700,
@@ -377,11 +378,11 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
       primaryColor: const Color(0xFFF28C28),
       lightBgColor: const Color(0xFFF28C28).withValues(alpha: 0.1),
       iconPath: 'assets/images/overview/img-chat-nontification.png',
-      title: 'Yêu cầu phụ huynh',
-      subtitle: 'Chờ phản hồi',
+      title: context.l10n.parentRequest,
+      subtitle: context.l10n.pendingResponse,
       contentArea: Center(
-        child: AppText.b2(
-          'Sắp ra mắt',
+        child: AppText.t2(
+          context.l10n.comingSoon,
           color: AppColors.grayMedium,
           fontSize: 12.sp,
         ),

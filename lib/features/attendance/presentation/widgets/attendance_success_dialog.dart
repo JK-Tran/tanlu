@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 /// Màn hình thành công sau khi lưu điểm danh sáng.
 /// Pop về [AttendancePage] phía dưới trong stack.
@@ -65,7 +66,7 @@ class AttendanceSuccessDialog extends StatelessWidget {
               ),
               SizedBox(height: 28.h),
               AppText.h1(
-                'Đã lưu điểm danh sáng!',
+                context.l10n.savedAttendanceMorning,
                 textAlign: TextAlign.center,
                 color: AppColors.grayDark,
                 fontSize: 20.sp,
@@ -84,7 +85,7 @@ class AttendanceSuccessDialog extends StatelessWidget {
                 children: [
                   _StatChip(
                     count: presentCount,
-                    label: 'Có mặt',
+                    label: context.l10n.statusPresent,
                     color: AppColors.success,
                     bgColor: AppColors.successLight,
                     icon: Icons.check_circle,
@@ -92,7 +93,7 @@ class AttendanceSuccessDialog extends StatelessWidget {
                   SizedBox(width: 10.w),
                   _StatChip(
                     count: absentCount,
-                    label: 'Vắng mặt',
+                    label: context.l10n.statusAbsent,
                     color: AppColors.warning,
                     bgColor: AppColors.warningLight,
                     icon: Icons.cancel,
@@ -100,7 +101,7 @@ class AttendanceSuccessDialog extends StatelessWidget {
                   SizedBox(width: 10.w),
                   _StatChip(
                     count: excusedCount,
-                    label: 'Xin phép',
+                    label: context.l10n.excused,
                     color: AppColors.info,
                     bgColor: AppColors.infoLight,
                     icon: Icons.assignment_return_rounded,
@@ -121,7 +122,7 @@ class AttendanceSuccessDialog extends StatelessWidget {
                     ),
                   ),
                   child: AppText.b1(
-                    'Quay lại',
+                    context.l10n.goBack,
                     color: Colors.white,
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,

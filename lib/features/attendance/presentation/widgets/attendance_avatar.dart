@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 
 class AttendanceAvatar extends StatelessWidget {
@@ -57,13 +58,13 @@ class AttendanceAvatar extends StatelessWidget {
       width: size.w,
       height: size.w,
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.18),
+        color: color.withValues(alpha: 0.9),
         shape: BoxShape.circle,
       ),
       alignment: Alignment.center,
       child: AppText.h2(
         nickname.isNotEmpty ? nickname[0].toUpperCase() : '?',
-        color: color,
+        color: AppColors.white,
         fontSize: (size * 0.44).sp,
         fontWeight: FontWeight.w800,
       ),

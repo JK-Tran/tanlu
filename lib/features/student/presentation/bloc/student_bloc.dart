@@ -2,11 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/core/base/base_bloc.dart';
-import 'package:tanlu_management/core/constants/app_strings.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
 import 'package:tanlu_management/features/student/domain/usecases/get_students_use_case.dart';
-import 'package:tanlu_management/shared/exception/base/app_exception.dart';
-import 'package:tanlu_management/shared/exception/uncaught/app_uncaught_exception.dart';
+import 'package:tanlu_management/shared/utils/error_mapper.dart';
 
 part 'student_bloc.freezed.dart';
 part 'student_event.dart';
@@ -107,7 +105,7 @@ class StudentBloc extends BaseBloc<StudentEvent, StudentState> {
           state.copyWith(
             showListLoading: false,
             isRefreshing: false,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
           ),
         );
       },
@@ -130,9 +128,7 @@ class StudentBloc extends BaseBloc<StudentEvent, StudentState> {
     final normalizedQuery = query.trim().toLowerCase();
     if (normalizedQuery.isNotEmpty) {
       filtered = filtered
-          .where(
-            (s) => s.fullName.toLowerCase().contains(normalizedQuery),
-          )
+          .where((s) => s.fullName.toLowerCase().contains(normalizedQuery))
           .toList();
     }
 
@@ -147,15 +143,5 @@ class StudentBloc extends BaseBloc<StudentEvent, StudentState> {
   bool _isFemale(String gender) {
     final value = gender.toLowerCase();
     return value == 'nữ' || value == 'nu' || value == 'female';
-  }
-
-  String _mapErrorMessage(Object error) {
-    if (error is AppUncaughtException) {
-      final root = error.rootError;
-      if (root is AppException) return root.toString();
-      return root?.toString() ?? AppStrings.unknownError;
-    }
-    if (error is AppException) return error.toString();
-    return error.toString();
   }
 }

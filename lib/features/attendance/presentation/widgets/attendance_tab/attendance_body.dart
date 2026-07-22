@@ -12,9 +12,19 @@ import 'package:tanlu_management/features/attendance/domain/entity/enums/attenda
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_date_strip.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_status_sheet.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_tab/attendance_student_item.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
-class AttendanceBody extends StatelessWidget {
+class AttendanceBody extends StatefulWidget {
   const AttendanceBody({super.key});
+
+  @override
+  State<AttendanceBody> createState() => _AttendanceBodyState();
+}
+
+class _AttendanceBodyState extends State<AttendanceBody>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
 
   /// Draft mode (sáng chưa chốt): đổi trạng thái local → bulk submit khi bấm Lưu
   Future<void> _pickStatusDraft(
@@ -78,12 +88,15 @@ class AttendanceBody extends StatelessWidget {
 
   Future<void> _onRefresh(BuildContext context) async {
     final completer = Completer<void>();
-    context.read<AttendanceBloc>().add(RefreshDailyAttendance(completer: completer));
+    context.read<AttendanceBloc>().add(
+      RefreshDailyAttendance(completer: completer),
+    );
     await completer.future;
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<AttendanceBloc, AttendanceState>(
       builder: (context, state) {
         final roster = state.dailyAttendance?.roster ?? [];
@@ -112,7 +125,7 @@ class AttendanceBody extends StatelessWidget {
               slivers: [
                 dateStrip,
                 _Section(
-                  label: 'Danh sách lớp',
+                  label: context.l10n.classList,
                   students: roster,
                   draftMode: true,
                   onTogglePresent: (s) => _togglePresent(context, s),
@@ -134,7 +147,7 @@ class AttendanceBody extends StatelessWidget {
             .toList();
         final marked = roster.where((s) {
           return s.status == AttendanceStatus.present.apiValue ||
-                 s.status == AttendanceStatus.late.apiValue;
+              s.status == AttendanceStatus.late.apiValue;
         }).toList();
 
         return RefreshIndicator(
@@ -145,26 +158,26 @@ class AttendanceBody extends StatelessWidget {
               dateStrip,
               if (unmarked.isNotEmpty)
                 _Section(
-                  label: 'Chưa điểm danh',
+                  label: context.l10n.statusNotMarked,
                   students: unmarked,
                   onOpenSheet: (s) => _pickStatusAndUpdate(context, s),
                 ),
               if (excused.isNotEmpty)
                 _Section(
-                  label: 'Đã xin phép',
+                  label: context.l10n.statusExcused,
                   students: excused,
                   onOpenSheet: (s) => _pickStatusAndUpdate(context, s),
                 ),
               if (marked.isNotEmpty)
                 _Section(
-                  label: 'Đã điểm danh',
+                  label: context.l10n.statusPresent,
                   students: marked,
                   onOpenSheet: (s) => _pickStatusAndUpdate(context, s),
                   onCheckOut: canCheckOut ? (s) => _checkOut(context, s) : null,
                 ),
               if (absent.isNotEmpty)
                 _Section(
-                  label: 'Vắng mặt',
+                  label: context.l10n.statusAbsent,
                   students: absent,
                   onOpenSheet: (s) => _pickStatusAndUpdate(context, s),
                 ),
@@ -202,7 +215,7 @@ class _Section extends StatelessWidget {
             color: AppColors.grayVeryLight,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
             child: AppText.b2(
-              '$label (${students.length})',
+              context.l10n.attendanceListTitle(label, students.length),
               color: AppColors.grayMedium,
               fontSize: 13.sp,
               fontWeight: FontWeight.w700,

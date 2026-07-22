@@ -2,6 +2,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_confirm_dialog.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class AppLeaveDecisionDialogResult {
   const AppLeaveDecisionDialogResult({
@@ -18,23 +19,23 @@ class AppLeaveDecisionDialog extends StatefulWidget {
     super.key,
     required this.title,
     required this.content,
-    this.cancelLabel = 'Hủy',
-    this.confirmLabel = 'Xác nhận',
+    this.cancelLabel,
+    this.confirmLabel,
     this.type = AppConfirmDialogType.info,
   });
 
   final String title;
   final String content;
-  final String cancelLabel;
-  final String confirmLabel;
+  final String? cancelLabel;
+  final String? confirmLabel;
   final AppConfirmDialogType type;
 
   static Future<AppLeaveDecisionDialogResult?> show(
     BuildContext context, {
     required String title,
     required String content,
-    String cancelLabel = 'Hủy',
-    String confirmLabel = 'Xác nhận',
+    String? cancelLabel,
+    String? confirmLabel,
     AppConfirmDialogType type = AppConfirmDialogType.info,
   }) {
     return showDialog<AppLeaveDecisionDialogResult>(
@@ -129,7 +130,7 @@ class _AppLeaveDecisionDialogState extends State<AppLeaveDecisionDialog> {
               minLines: 2,
               style: TextStyle(fontSize: 13.sp, color: AppColors.grayDark),
               decoration: InputDecoration(
-                hintText: 'Nhập ghi chú cho phụ huynh (nếu có)...',
+                hintText: context.l10n.noteForParentOptional,
                 hintStyle: TextStyle(
                   fontSize: 13.sp,
                   color: AppColors.grayMedium,
@@ -163,7 +164,7 @@ class _AppLeaveDecisionDialogState extends State<AppLeaveDecisionDialog> {
             );
           },
           child: Text(
-            widget.cancelLabel,
+            widget.cancelLabel ?? context.l10n.cancel,
             style: TextStyle(
               color: AppColors.grayMedium,
               fontSize: 12.sp,
@@ -190,7 +191,7 @@ class _AppLeaveDecisionDialogState extends State<AppLeaveDecisionDialog> {
             );
           },
           child: Text(
-            widget.confirmLabel,
+            widget.confirmLabel ?? context.l10n.confirm,
             style: TextStyle(
               color: Colors.white,
               fontSize: 12.sp,

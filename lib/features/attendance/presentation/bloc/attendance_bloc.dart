@@ -4,12 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/core/base/base_bloc.dart';
-import 'package:tanlu_management/core/constants/app_strings.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
 import 'package:tanlu_management/shared/exception/base/app_exception.dart';
-import 'package:tanlu_management/shared/exception/uncaught/app_uncaught_exception.dart';
 import 'package:tanlu_management/shared/infrastructure/domain/entity/paged_list.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
+import 'package:tanlu_management/shared/utils/error_mapper.dart';
 
 import '../../domain/entity/daily_attendance_result.dart';
 import '../../domain/usecases/get_daily_attendance_use_case.dart';
@@ -97,7 +96,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
           state.copyWith(
             isLoading: false,
             exception: e,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
           ),
         );
       },
@@ -147,7 +146,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
           state.copyWith(
             isLoading: false,
             exception: e,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
           ),
         );
       },
@@ -285,7 +284,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
           state.copyWith(
             isSubmitting: false,
             isLoading: false,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
           ),
         );
       },
@@ -355,7 +354,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
           state.copyWith(
             isSubmitting: false,
             isLoading: false,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
           ),
         );
       },
@@ -391,7 +390,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
           state.copyWith(
             isSubmitting: false,
             isLoading: false,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
           ),
         );
       },
@@ -423,7 +422,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
           state.copyWith(
             isSubmitting: false,
             isLoading: false,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
           ),
         );
       },
@@ -455,7 +454,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
           state.copyWith(
             isLoading: false,
             exception: e,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
           ),
         );
       },
@@ -503,7 +502,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
           state.copyWith(
             isLoading: false,
             exception: e,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
           ),
         );
       },
@@ -562,15 +561,5 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
         emit(state.copyWith(isSubmitting: false));
       },
     );
-  }
-
-  String _mapErrorMessage(Object error) {
-    if (error is AppUncaughtException) {
-      final root = error.rootError;
-      if (root is AppException) return root.toString();
-      return root?.toString() ?? AppStrings.unknownError;
-    }
-    if (error is AppException) return error.toString();
-    return error.toString();
   }
 }

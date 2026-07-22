@@ -5,6 +5,7 @@ import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/attendance_student.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class AttendanceStatusSheet extends StatelessWidget {
   const AttendanceStatusSheet({super.key, required this.student});
@@ -59,7 +60,7 @@ class AttendanceStatusSheet extends StatelessWidget {
                   ),
                 ),
                 AppText.b2(
-                  'Chọn trạng thái',
+                  context.l10n.selectStatus,
                   color: AppColors.grayMedium,
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
@@ -72,16 +73,16 @@ class AttendanceStatusSheet extends StatelessWidget {
             iconColor: AppColors.success,
             bgColor: AppColors.successLight,
             icon: Icons.check_circle_rounded,
-            label: 'Có mặt',
-            sublabel: 'Có trong lớp',
+            label: context.l10n.statusPresent,
+            sublabel: context.l10n.inClass,
             onTap: () => Navigator.pop(context, AttendanceStatus.present),
           ),
           _Option(
             iconColor: AppColors.warning,
             bgColor: AppColors.warningLight,
             icon: Icons.cancel_rounded,
-            label: 'Vắng mặt',
-            sublabel: 'Không có lý do chính đáng',
+            label: context.l10n.statusAbsent,
+            sublabel: context.l10n.absentNoReason,
             onTap: () =>
                 Navigator.pop(context, AttendanceStatus.absentUnexcused),
           ),
@@ -89,16 +90,16 @@ class AttendanceStatusSheet extends StatelessWidget {
             iconColor: AppColors.info,
             bgColor: AppColors.infoLight,
             icon: Icons.assignment_return_rounded,
-            label: 'Nghỉ phép',
-            sublabel: 'Đã được phụ huynh xin phép',
+            label: context.l10n.statusExcused,
+            sublabel: context.l10n.leaveApprovedByParent,
             onTap: () => Navigator.pop(context, AttendanceStatus.absentExcused),
           ),
           _Option(
             iconColor: const Color(0xFFE17055),
             bgColor: const Color(0xFFE17055).withValues(alpha: 0.12),
             icon: Icons.access_time_rounded,
-            label: 'Đi trễ',
-            sublabel: 'Có mặt nhưng đến muộn',
+            label: context.l10n.statusLate,
+            sublabel: context.l10n.lateArrival,
             onTap: () => Navigator.pop(context, AttendanceStatus.late),
           ),
 

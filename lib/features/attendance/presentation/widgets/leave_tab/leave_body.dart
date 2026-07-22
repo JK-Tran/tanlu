@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/core/widgets/app_snackbar.dart';
 import 'package:tanlu_management/core/widgets/shimmer_list.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
@@ -12,6 +11,7 @@ import 'package:tanlu_management/features/attendance/domain/entity/enums/leave_s
 import 'package:tanlu_management/features/attendance/presentation/enums/leave_status_ext.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/leave_tab/leave_request_item.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/leave_tab/leave_sub_tab_bar.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class LeaveBody extends StatefulWidget {
   const LeaveBody({super.key});
@@ -21,7 +21,10 @@ class LeaveBody extends StatefulWidget {
 }
 
 class _LeaveBodyState extends State<LeaveBody>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   late final TabController _subTabController = TabController(
     length: LeaveStatus.values.length,
     vsync: this,
@@ -43,21 +46,11 @@ class _LeaveBodyState extends State<LeaveBody>
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AttendanceBloc, AttendanceState>(
-      listenWhen: (previous, current) =>
-          previous.isSubmitting != current.isSubmitting,
-      listener: (context, state) {
-        if (!state.isSubmitting) {
-          if (state.exception == null) {
-            AppSnackbar.showSuccess(
-              context,
-              message: state.successMessage ?? 'Thao tác thành công!',
-            );
-          } else {
-            AppSnackbar.showError(context, message: state.onPageError);
-          }
-        }
-      },
+    super.build(context);
+    return BlocBuilder<AttendanceBloc, AttendanceState>(
+      buildWhen: (previous, current) =>
+          previous.leaveRequests != current.leaveRequests ||
+          previous.isLoading != current.isLoading,
       builder: (context, state) {
         final leaves = state.leaveRequests?.data ?? [];
         final counts = {
@@ -96,7 +89,7 @@ class _LeaveBodyState extends State<LeaveBody>
                     Expanded(
                       child: Center(
                         child: AppText.b2(
-                          'Chưa có đơn xin nghỉ phép',
+                          context.l10n.noLeaveRequests,
                           color: AppColors.grayMedium,
                           fontSize: 14.sp,
                         ),
@@ -153,7 +146,7 @@ class _LeaveList extends StatelessWidget {
             hasScrollBody: false,
             child: Center(
               child: AppText.b2(
-                'Không có đơn ${status.label.toLowerCase()}',
+                context.l10n.noLeaveRequestsWithStatus(status.label.toLowerCase()),
                 color: AppColors.grayMedium,
                 fontSize: 14.sp,
               ),

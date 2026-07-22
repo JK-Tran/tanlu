@@ -1,3 +1,5 @@
+import 'package:tanlu_management/l10n/l10n.dart';
+
 enum FeedNotificationFilter {
   all,
   feeds,
@@ -5,9 +7,9 @@ enum FeedNotificationFilter {
   other;
 
   String get label => switch (this) {
-        FeedNotificationFilter.all => 'Tất cả',
-        FeedNotificationFilter.feeds => 'Bài viết',
-        FeedNotificationFilter.comments => 'Bình luận',
-        FeedNotificationFilter.other => 'Khác',
+        FeedNotificationFilter.all => S.current.all,
+        FeedNotificationFilter.feeds => S.current.posts,
+        FeedNotificationFilter.comments => S.current.comments,
+        FeedNotificationFilter.other => S.current.other,
       };
 }

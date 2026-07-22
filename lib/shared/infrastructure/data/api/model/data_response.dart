@@ -4,14 +4,13 @@ import 'package:tanlu_management/shared/infrastructure/data/api/model/pagination
 part 'data_response.freezed.dart';
 part 'data_response.g.dart';
 
-@JsonSerializable(genericArgumentFactories: true)
+@JsonSerializable(genericArgumentFactories: true, createToJson: false)
 class DataResponse<T> {
   DataResponse({
     @JsonKey(name: 'data') this.data,
     @JsonKey(name: 'meta') this.meta,
   });
 
-  // ignore: avoid-dynamic
   factory DataResponse.fromJson(
     Map<String, dynamic> json,
     T Function(dynamic) fromJsonT,
@@ -21,14 +20,13 @@ class DataResponse<T> {
   final Meta? meta;
 }
 
-@JsonSerializable(genericArgumentFactories: true)
+@JsonSerializable(genericArgumentFactories: true, createToJson: false)
 class DataListResponse<T> {
   DataListResponse({
     @JsonKey(name: 'data') this.data,
     @JsonKey(name: 'meta') this.pagination,
   });
 
-  // ignore: avoid-dynamic
   factory DataListResponse.fromJson(
     Map<String, dynamic> json,
     T Function(dynamic) fromJsonT,

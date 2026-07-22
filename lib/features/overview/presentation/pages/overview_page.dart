@@ -22,11 +22,24 @@ class OverviewPage extends StatefulWidget {
 }
 
 class _OverviewPageState extends BasePageState<OverviewPage, DefaultBloc> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<AttendanceBloc>().add(const FetchDailyAttendance());
+      }
+    });
+  }
+
   Future<void> _onRefresh() async {
     final completer = Completer<void>();
+
     context.read<NotificationBloc>().add(
       const NotificationEvent.loadNotifications(isRefresh: true),
     );
+
+    context.read<AttendanceBloc>().add(const FetchDailyAttendance());
 
     Future.delayed(const Duration(milliseconds: 400), () {
       completer.complete();
@@ -44,9 +57,11 @@ class _OverviewPageState extends BasePageState<OverviewPage, DefaultBloc> {
           onRefresh: _onRefresh,
           child: BlocBuilder<AttendanceBloc, AttendanceState>(
             builder: (context, state) {
-              final isInitialLoading = state.isLoading &&
-                  (state.dailyAttendance == null && state.leaveRequests == null);
-                  
+              final isInitialLoading =
+                  state.isLoading &&
+                  (state.dailyAttendance == null &&
+                      state.leaveRequests == null);
+
               if (isInitialLoading) {
                 return const SingleChildScrollView(
                   physics: NeverScrollableScrollPhysics(),
@@ -77,7 +92,9 @@ class _OverviewPageState extends BasePageState<OverviewPage, DefaultBloc> {
                     SizedBox(height: 16.h),
                     const OverviewRequestCards(),
                     SizedBox(height: 16.h),
-                    const OverviewAttendanceCard(),
+                    OverviewAttendanceCard(
+                      dailyAttendance: state.dailyAttendance,
+                    ),
                     SizedBox(height: 16.h),
                     OverviewProgressCard(
                       title: 'Đánh giá tháng 5/2026',

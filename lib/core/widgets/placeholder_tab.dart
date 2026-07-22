@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class PlaceholderTab extends StatelessWidget {
   final String title;
@@ -18,7 +19,7 @@ class PlaceholderTab extends StatelessWidget {
           Icon(icon, size: 40.w, color: AppColors.grayLight),
           SizedBox(height: 16.h),
           AppText.t2(
-            '$title\n(Tính năng sắp ra mắt)',
+            '$title\n${context.l10n.featureComingSoon}',
             color: AppColors.grayMedium,
             textAlign: TextAlign.center,
           ),

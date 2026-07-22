@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/enums/leave_status.dart';
 
 extension LeaveStatusExt on LeaveStatus {
   String get label {
     switch (this) {
       case LeaveStatus.pending:
-        return 'Chờ duyệt';
+        return S.current.statusPending;
       case LeaveStatus.approved:
-        return 'Đã duyệt';
+        return S.current.statusApproved;
       case LeaveStatus.rejected:
-        return 'Từ chối';
+        return S.current.statusRejected;
     }
   }
 

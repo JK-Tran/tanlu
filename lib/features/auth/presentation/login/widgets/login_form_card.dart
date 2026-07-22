@@ -7,6 +7,7 @@ import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/core/widgets/app_text_field.dart';
 import 'package:tanlu_management/core/widgets/buttons/app_primary_button.dart';
 import 'package:tanlu_management/features/auth/presentation/login/bloc/login_bloc.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class LoginFormCard extends StatelessWidget {
   const LoginFormCard({
@@ -44,7 +45,7 @@ class LoginFormCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AppText.t0(
-              'ĐĂNG NHẬP',
+              context.l10n.loginTitleCaps,
               color: AppColors.grayDark80,
               fontWeight: FontWeight.w700,
               fontSize: 20.sp,
@@ -59,12 +60,12 @@ class LoginFormCard extends StatelessWidget {
                   onChanged: (value) =>
                       context.read<LoginBloc>().add(EmailChanged(email: value)),
                   labelText: 'Email',
-                  hintText: 'Nhập email đăng nhập',
+                  hintText: context.l10n.enterLoginEmail,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Vui lòng nhập email';
+                      return context.l10n.pleaseEnterEmail;
                     }
                     return null;
                   },
@@ -87,16 +88,16 @@ class LoginFormCard extends StatelessWidget {
                   onChanged: (value) => context.read<LoginBloc>().add(
                     PasswordChanged(password: value),
                   ),
-                  labelText: 'Mật khẩu',
-                  hintText: 'Nhập mật khẩu của bạn',
+                  labelText: context.l10n.password,
+                  hintText: context.l10n.enterYourPassword,
                   obscureText: state.obscureText,
                   textInputAction: TextInputAction.done,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Vui lòng nhập mật khẩu';
+                      return context.l10n.pleaseEnterPassword;
                     }
                     if (value.length < 6) {
-                      return 'Mật khẩu phải tối thiểu 6 ký tự';
+                      return context.l10n.passwordMinLengthError;
                     }
                     return null;
                   },
@@ -116,7 +117,7 @@ class LoginFormCard extends StatelessWidget {
                   p.showLoginButtonLoading != c.showLoginButtonLoading,
               builder: (context, state) {
                 return AppPrimaryButton(
-                  label: 'Đăng nhập',
+                  label: context.l10n.login,
                   loading: state.showLoginButtonLoading,
                   onPressed: state.isLoginButtonEnabled ? onLoginPressed : null,
                 );

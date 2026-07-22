@@ -16,23 +16,10 @@ DataResponse<T> _$DataResponseFromJson<T>(
       : Meta.fromJson(json['meta'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$DataResponseToJson<T>(
-  DataResponse<T> instance,
-  Object? Function(T value) toJsonT,
-) => <String, dynamic>{
-  'data': _$nullableGenericToJson(instance.data, toJsonT),
-  'meta': instance.meta,
-};
-
 T? _$nullableGenericFromJson<T>(
   Object? input,
   T Function(Object? json) fromJson,
 ) => input == null ? null : fromJson(input);
-
-Object? _$nullableGenericToJson<T>(
-  T? input,
-  Object? Function(T value) toJson,
-) => input == null ? null : toJson(input);
 
 DataListResponse<T> _$DataListResponseFromJson<T>(
   Map<String, dynamic> json,
@@ -43,14 +30,6 @@ DataListResponse<T> _$DataListResponseFromJson<T>(
       ? null
       : PaginationData.fromJson(json['pagination'] as Map<String, dynamic>),
 );
-
-Map<String, dynamic> _$DataListResponseToJson<T>(
-  DataListResponse<T> instance,
-  Object? Function(T value) toJsonT,
-) => <String, dynamic>{
-  'data': instance.data?.map(toJsonT).toList(),
-  'pagination': instance.pagination,
-};
 
 _$MetaImpl _$$MetaImplFromJson(Map<String, dynamic> json) => _$MetaImpl(
   pageInfo: json['pagy_info'] == null

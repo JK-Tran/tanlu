@@ -11,6 +11,7 @@ import 'package:tanlu_management/features/student/presentation/bloc/student_bloc
 import 'package:tanlu_management/features/student/presentation/widgets/student_header.dart';
 import 'package:tanlu_management/features/student/presentation/widgets/student_item.dart';
 import 'package:tanlu_management/features/student/presentation/widgets/student_stats.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class StudentPage extends StatefulWidget {
   const StudentPage({super.key});
@@ -108,7 +109,7 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
                           padding: const EdgeInsets.symmetric(vertical: 48),
                           child: Center(
                             child: AppText.b1(
-                              'Chưa có học sinh.',
+                              context.l10n.noStudents,
                               color: AppColors.grayMedium,
                             ),
                           ),

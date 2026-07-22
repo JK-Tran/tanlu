@@ -7,6 +7,7 @@ import 'package:tanlu_management/core/widgets/app_snackbar.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/student/domain/entity/contact.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class ContactCard extends StatelessWidget {
   final Contact contact;
@@ -48,13 +49,13 @@ class ContactCard extends StatelessWidget {
                     size: 24.w,
                   ),
                   title: AppText.b1(
-                    'Sao chép số điện thoại',
+                    context.l10n.copyPhoneNumber,
                     color: AppColors.grayDark,
                   ),
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: contact.phone));
                     Navigator.pop(context);
-                    AppSnackbar.showSuccess(context, message: 'Đã sao chép');
+                    AppSnackbar.showSuccess(context, message: context.l10n.copied);
                   },
                 ),
                 Padding(
@@ -75,7 +76,7 @@ class ContactCard extends StatelessWidget {
                     color: AppColors.success,
                     size: 24.w,
                   ),
-                  title: AppText.b1('Gọi điện', color: AppColors.grayDark),
+                  title: AppText.b1(context.l10n.callPhone, color: AppColors.grayDark),
                   onTap: () async {
                     Navigator.pop(context);
                     final Uri url = Uri.parse('tel:${contact.phone}');
@@ -85,7 +86,7 @@ class ContactCard extends StatelessWidget {
                       if (context.mounted) {
                         AppSnackbar.showError(
                           context,
-                          message: 'Không thể gọi điện thoại trên thiết bị này',
+                          message: context.l10n.cannotCallPhone,
                         );
                       }
                     }
@@ -156,7 +157,7 @@ class ContactCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: AppText.b2(
-                  contact.relationship.isNotEmpty ? contact.relationship : 'Phụ huynh',
+                  contact.relationship.isNotEmpty ? contact.relationship : context.l10n.parent,
                   color: tagColor,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
@@ -168,7 +169,7 @@ class ContactCard extends StatelessWidget {
           if (contact.phone.isNotEmpty)
             AppInfoRow(
               icon: Icons.phone_outlined,
-              label: 'Số điện thoại',
+              label: context.l10n.phoneNumber,
               value: contact.phone,
               trailing: Icon(
                 Icons.touch_app_rounded,
@@ -180,8 +181,8 @@ class ContactCard extends StatelessWidget {
           else
             AppInfoRow(
               icon: Icons.phone_outlined,
-              label: 'Số điện thoại',
-              value: 'Chưa có dữ liệu',
+              label: context.l10n.phoneNumber,
+              value: context.l10n.noData,
             ),
         ],
       ),

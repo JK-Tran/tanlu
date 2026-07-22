@@ -5,6 +5,7 @@ import 'package:tanlu_management/core/widgets/app_icon_button.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
 import 'package:tanlu_management/features/auth/domain/entity/user.dart';
+import 'package:tanlu_management/features/notification/presentation/widgets/notification_bell_widget.dart';
 
 /// Header tab Cá nhân — nền pastel, avatar trái, tên phải (theo mẫu).
 class PersonProfileHeader extends StatelessWidget {
@@ -53,53 +54,63 @@ class PersonProfileHeader extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                AttendanceAvatar(
-                  nickname: name,
-                  imageUrl: user?.avatarUrl,
-                  size: _avatarSize,
-                ),
-                SizedBox(width: 12.w),
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 6.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        AppText.b1(
-                          name,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 17.sp,
-                          color: AppColors.grayDark,
-                          maxLines: 1,
-                          textOverflow: TextOverflow.ellipsis,
-                        ),
-                        SizedBox(height: 2.h),
-                        AppText.b2(
-                          _roleLabel,
-                          fontSize: 13.sp,
-                          color: AppColors.grayMedium,
-                          maxLines: 1,
-                          textOverflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                  AttendanceAvatar(
+                    nickname: name,
+                    imageUrl: user?.avatarUrl,
+                    size: _avatarSize,
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 6.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AppText.b1(
+                            name,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 17.sp,
+                            color: AppColors.grayDark,
+                            maxLines: 1,
+                            textOverflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 2.h),
+                          AppText.b2(
+                            _roleLabel,
+                            fontSize: 13.sp,
+                            color: AppColors.grayMedium,
+                            maxLines: 1,
+                            textOverflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                if (onEditTap != null)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 4.h),
-                    child: AppIconButton(
-                      icon: Icons.edit_rounded,
-                      iconColor: AppColors.primary,
-                      backgroundColor: Colors.white,
-                      size: 36,
-                      borderRadius: 18,
-                      shape: BoxShape.circle,
-                      onPressed: onEditTap,
+                  if (onEditTap != null)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 4.h),
+                      child: AppIconButton(
+                        icon: Icons.edit_rounded,
+                        iconColor: AppColors.primary,
+                        backgroundColor: Colors.white,
+                        size: 36,
+                        borderRadius: 18,
+                        shape: BoxShape.circle,
+                        onPressed: onEditTap,
+                      ),
                     ),
-                  ),
                 ],
+              ),
+            ),
+            Positioned(
+              top: 16.h,
+              right: 16.w,
+              child: const NotificationBellWidget(
+                size: 40,
+                iconSize: 24,
+                backgroundColor: Colors.white,
+                hasShadow: true,
               ),
             ),
           ],

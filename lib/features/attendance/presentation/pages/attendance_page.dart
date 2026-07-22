@@ -32,9 +32,6 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _currentTab = 0;
-  bool _wasSaving = false;
-  bool _sessionWasCompleted = false;
-  bool _checkOutWasCompleted = false;
   String? _className;
 
   Future<void> _loadClassName() async {
@@ -114,16 +111,16 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
   @override
   Widget buildPage(BuildContext context) {
     return BlocConsumer<AttendanceBloc, AttendanceState>(
+      listenWhen: (previous, current) =>
+          previous.isSubmitting && !current.isSubmitting,
       listener: (context, state) {
-        final sessionCompleted =
-            state.dailyAttendance?.session.isCheckInCompleted == true;
-        final checkOutCompleted =
-            state.dailyAttendance?.session.isCheckOutCompleted == true;
-        final saveSucceeded =
-            _wasSaving && !state.isSubmitting && state.onPageError.isEmpty;
+        if (state.onPageError.isNotEmpty) {
+          AppSnackbar.showError(context, message: state.onPageError);
+          return;
+        }
 
-        if (saveSucceeded) {
-          if (!_sessionWasCompleted && sessionCompleted) {
+        if (state.successMessage != null) {
+          if (state.successMessage == 'Lưu điểm danh sáng thành công!') {
             final roster = state.dailyAttendance?.roster ?? [];
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -150,24 +147,10 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                 ),
               ),
             );
-          } else if (checkOutCompleted && !_checkOutWasCompleted) {
-            AppSnackbar.show(
-              context,
-              message: 'Đã chốt cuối ngày',
-              type: AppSnackbarType.success,
-            );
-          } else if (_sessionWasCompleted && !checkOutCompleted) {
-            AppSnackbar.show(
-              context,
-              message: 'Đã cập nhật',
-              type: AppSnackbarType.success,
-            );
+          } else {
+            AppSnackbar.showSuccess(context, message: state.successMessage!);
           }
         }
-
-        _wasSaving = state.isSubmitting;
-        _sessionWasCompleted = sessionCompleted;
-        _checkOutWasCompleted = checkOutCompleted;
       },
       builder: (context, state) {
         final roster = state.dailyAttendance?.roster ?? [];
@@ -205,33 +188,23 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
             backgroundColor: AppColors.grayBg,
             body: Column(
               children: [
+                AttendanceAppBar(
+                  onBack: _handleExit,
+                  className: _className ?? '',
+                ),
+                AttendanceTabBar(
+                  controller: _tabController,
+                  pendingLeaveCount: pendingLeaveCount,
+                ),
                 Expanded(
-                  child: NestedScrollView(
-                    headerSliverBuilder: (_, _) => [
-                      AttendanceSliverAppBar(
-                        onBack: _handleExit,
-                        className: _className ?? '',
-                      ),
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: AttendanceTabBarDelegate(
-                          extent: AttendanceTabBar.headerExtent,
-                          child: AttendanceTabBar(
-                            controller: _tabController,
-                            pendingLeaveCount: pendingLeaveCount,
-                          ),
-                        ),
-                      ),
+                  child: TabBarView(
+                    controller: _tabController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: const [
+                      AttendanceBody(),
+                      LeaveBody(),
+                      StatsBody(),
                     ],
-                    body: TabBarView(
-                      controller: _tabController,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: const [
-                        AttendanceBody(),
-                        LeaveBody(),
-                        StatsBody(),
-                      ],
-                    ),
                   ),
                 ),
                 if (_currentTab == 0 &&
@@ -252,20 +225,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                       bloc.add(const SubmitMorningAttendanceEvent());
                     },
                   ),
-                if (_currentTab == 0 && checkInDone && checkOutDone)
-                  AttendanceSaveBar(
-                    title: 'Đã hoàn tất điểm danh',
-                    subtitle: 'Sửa điểm danh sáng — bấm Cập nhật',
-                    buttonLabel: 'Cập nhật',
-                    titleColor: !state.isSubmitting
-                        ? AppColors.success
-                        : AppColors.grayDark,
-                    canSave: !state.isSubmitting,
-                    isSaving: state.isSubmitting,
-                    onSave: () {
-                      bloc.add(const SubmitMorningAttendanceEvent());
-                    },
-                  ),
+
                 if (_currentTab == 0 && checkInDone && !checkOutDone)
                   AttendanceSaveBar(
                     title: 'Chốt cuối ngày',

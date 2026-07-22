@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
 import 'package:tanlu_management/features/notification/presentation/bloc/notification_bloc.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class HomePage extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
@@ -84,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                                 : const Color(0xFF999999),
                             size: 24.w,
                           ),
-                          label: 'Tiến trình',
+                          label: context.l10n.navProgress,
                           isSelected: safeSelectedIndex == 0,
                           onTap: () => onItemTapped(0),
                         ),
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                                 : const Color(0xFF999999),
                             size: 24.w,
                           ),
-                          label: 'Hoạt động',
+                          label: context.l10n.navActivity,
                           isSelected: safeSelectedIndex == 1,
                           onTap: () => onItemTapped(1),
                         ),
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                                 : const Color(0xFF999999),
                             size: 24.w,
                           ),
-                          label: 'Tin nhắn',
+                          label: context.l10n.navMessage,
                           isSelected: safeSelectedIndex == 2,
                           onTap: () => onItemTapped(2),
                         ),
@@ -126,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                                 : const Color(0xFF999999),
                             size: 24.w,
                           ),
-                          label: 'Tài khoản',
+                          label: context.l10n.navAccount,
                           isSelected: safeSelectedIndex == 3,
                           onTap: () => onItemTapped(3),
                         ),
@@ -142,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                                 : const Color(0xFF999999),
                             size: 24.w,
                           ),
-                          label: 'Tổng quan',
+                          label: context.l10n.navOverview,
                           isSelected: safeSelectedIndex == 0,
                           onTap: () => onItemTapped(0),
                         ),
@@ -156,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                                 : const Color(0xFF999999),
                             size: 24.w,
                           ),
-                          label: 'Học sinh',
+                          label: context.l10n.navStudent,
                           isSelected: safeSelectedIndex == 1,
                           onTap: () => onItemTapped(1),
                         ),
@@ -170,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                                 : const Color(0xFF999999),
                             size: 24.w,
                           ),
-                          label: 'Bảng tin',
+                          label: context.l10n.navFeed,
                           isSelected: safeSelectedIndex == 2,
                           onTap: () => onItemTapped(2),
                         ),
@@ -184,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                                 : const Color(0xFF999999),
                             size: 24.w,
                           ),
-                          label: 'Tin nhắn',
+                          label: context.l10n.navMessage,
                           isSelected: safeSelectedIndex == 3,
                           onTap: () => onItemTapped(3),
                         ),
@@ -198,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                                 : const Color(0xFF999999),
                             size: 24.w,
                           ),
-                          label: 'Cá nhân',
+                          label: context.l10n.navPersonal,
                           isSelected: safeSelectedIndex == 4,
                           onTap: () => onItemTapped(4),
                         ),

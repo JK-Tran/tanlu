@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
-import 'package:tanlu_management/core/base/default_bloc.dart';
+import 'package:tanlu_management/core/constants/app_media_limit.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
-import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/core/widgets/app_snackbar.dart';
+import 'package:tanlu_management/core/widgets/loading_overlay.dart';
+import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
+import 'package:tanlu_management/features/feed/presentation/create_feed/bloc/create_feed_bloc.dart';
+import 'package:tanlu_management/features/feed/presentation/create_feed/pages/media_picker_page.dart';
+import 'package:tanlu_management/features/feed/presentation/create_feed/widgets/create_feed_body.dart';
+import 'package:tanlu_management/features/feed/presentation/create_feed/widgets/create_feed_submit_bar.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_page/widgets/feed_app_bar.dart';
 
 class CreateFeedPage extends StatefulWidget {
@@ -13,47 +20,136 @@ class CreateFeedPage extends StatefulWidget {
   State<CreateFeedPage> createState() => _CreateFeedPageState();
 }
 
-class _CreateFeedPageState extends BasePageState<CreateFeedPage, DefaultBloc> {
-  final _controller = TextEditingController(
-    text: 'Chia sẻ hoạt động hôm nay của lớp...',
-  );
+class _CreateFeedPageState
+    extends BasePageState<CreateFeedPage, CreateFeedBloc> {
+  final _contentController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    final user = context.read<AppBloc>().currentUser;
+    bloc.add(
+      CreateFeedStarted(
+        authorId: user?.id ?? 0,
+        fullName: user?.fullName ?? '',
+        avatar: user?.avatarUrl ?? '',
+        role: user?.role ?? '',
+        classId: user?.classId ?? 0,
+        centerId: user?.centerId ?? 0,
+      ),
+    );
+  }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _contentController.dispose();
+    bloc.close();
     super.dispose();
+  }
+
+  int _imageCount(CreateFeedState state) =>
+      state.localMedia.where((item) => !item.isVideo).length;
+
+  int _videoCount(CreateFeedState state) =>
+      state.localMedia.where((item) => item.isVideo).length;
+
+  Future<void> _openMediaLibrary() async {
+    if (bloc.state.isSubmitting) return;
+
+    final state = bloc.state;
+    final remainingImages = AppMediaLimit.maxImagesPerPost - _imageCount(state);
+    final remainingVideos = AppMediaLimit.maxVideosPerPost - _videoCount(state);
+
+    if (remainingImages <= 0 && remainingVideos <= 0) {
+      AppSnackbar.show(
+        context,
+        message:
+            'Đã đủ ${AppMediaLimit.maxImagesPerPost} ảnh và '
+            '${AppMediaLimit.maxVideosPerPost} video',
+        type: AppSnackbarType.warning,
+      );
+      return;
+    }
+
+    final items = await MediaPickerPage.open(
+      context,
+      maxImages: remainingImages,
+      maxVideos: remainingVideos,
+    );
+
+    if (items == null || items.isEmpty || !mounted) return;
+
+    bloc.add(CreateFeedMediaPicked(items: items));
+  }
+
+  void _submit() {
+    bloc.add(const CreateFeedSubmitted());
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    return Scaffold(
-      appBar: const FeedAppBar(title: 'Đăng bài'),
-      body: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            TextField(
-              controller: _controller,
-              maxLines: 6,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Viết nội dung bài đăng...',
+    return BlocConsumer<CreateFeedBloc, CreateFeedState>(
+      listenWhen: (prev, curr) =>
+          (prev.onPageError != curr.onPageError &&
+              curr.onPageError.isNotEmpty) ||
+          prev.submitSuccess != curr.submitSuccess,
+      listener: (context, state) {
+        if (state.onPageError.isNotEmpty) {
+          AppSnackbar.show(
+            context,
+            message: state.onPageError,
+            type: AppSnackbarType.error,
+          );
+        }
+        if (state.submitSuccess == true) {
+          context.pop(state.isPublic);
+        }
+      },
+      builder: (context, state) {
+        final canSubmit = state.isSubmitButtonEnabled && !state.isSubmitting;
+
+        return PopScope(
+          canPop: !state.isSubmitting,
+          child: Stack(
+            children: [
+              Scaffold(
+                backgroundColor: AppColors.grayBg,
+                appBar: FeedAppBar(
+                  showBack: true,
+                  backEnabled: !state.isSubmitting,
+                  title: 'Tạo bài viết',
+                ),
+                body: Column(
+                  children: [
+                    Expanded(
+                      child: CreateFeedBody(
+                        state: state,
+                        contentController: _contentController,
+                        onContentChanged: (value) =>
+                            bloc.add(CreateFeedContentChanged(content: value)),
+                        onOpenMediaLibrary: _openMediaLibrary,
+                        onRemoveMedia: (index) =>
+                            bloc.add(CreateFeedMediaRemoved(index: index)),
+                        onPublicChanged: (value) => bloc.add(
+                          CreateFeedIsPublicChanged(isPublic: value),
+                        ),
+                      ),
+                    ),
+                    CreateFeedSubmitBar(
+                      canSubmit: canSubmit,
+                      isSubmitting: state.isSubmitting,
+                      onSubmit: _submit,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 16.h),
-            AppText.b2(
-              'Ảnh/video sẽ được hỗ trợ khi kết nối API.',
-              color: AppColors.grayMedium,
-            ),
-            const Spacer(),
-            FilledButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Đăng bài (UI mẫu)'),
-            ),
-          ],
-        ),
-      ),
+              if (state.isSubmitting)
+                const Positioned.fill(child: LoadingOverlay()),
+            ],
+          ),
+        );
+      },
     );
   }
 }

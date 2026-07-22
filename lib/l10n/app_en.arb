@@ -1,0 +1,272 @@
+{
+  "@@locale": "en",
+  "absent": "Absent",
+  "agree": "Agree",
+  "all": "All",
+  "approveLeaveRequestConfirmMessage": "Are you sure you want to approve the leave request for {name}?",
+  "@approveLeaveRequestConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approveLeaveRequestConfirmTitle": "Approve this request?",
+  "attendanceStatusFinalized": "finalized for the day",
+  "attendanceStatusInProgress": "attendance in progress",
+  "attendanceStatusMorning": "morning attendance done",
+  "attendanceStatusNotYet": "not attended yet",
+  "attendanceSummary": "Present {present} · Excused {absentExcused} · Unexcused {absentUnexcused}",
+  "@attendanceSummary": {
+    "placeholders": {
+      "present": {
+        "type": "int"
+      },
+      "absentExcused": {
+        "type": "int"
+      },
+      "absentUnexcused": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceToday": "Attendance today",
+  "attended": "Attended",
+  "callPhone": "Call",
+  "cancel": "Cancel",
+  "cannotCallPhone": "Cannot call on this device",
+  "cannotPlayVideo": "Cannot play video",
+  "chooseFromGallery": "Choose from gallery",
+  "classLabel": "Class {classId}",
+  "@classLabel": {
+    "placeholders": {
+      "classId": {
+        "type": "String"
+      }
+    }
+  },
+  "close": "Close",
+  "comingSoon": "Coming soon",
+  "comment": "Comment",
+  "comments": "Comments",
+  "commentsCount": "{count} comments",
+  "@commentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "confirm": "Confirm",
+  "copied": "Copied",
+  "copyPhoneNumber": "Copy phone number",
+  "day": "days",
+  "diagnosis": "Diagnosis",
+  "enterLoginEmail": "Enter login email",
+  "enterYourPassword": "Enter your password",
+  "excused": "Excused",
+  "explore": "Explore",
+  "featureComingSoon": "(Feature coming soon)",
+  "femaleStats": "Female: {count}",
+  "@femaleStats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "forbiddenError": "You do not have permission to perform this action.",
+  "helloUser": "Hello,\n{name} 👋",
+  "@helloUser": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hotline": "Support hotline: 090 134 4756",
+  "hour": "hours",
+  "imageLoadError": "Error loading image",
+  "justNow": "Just now",
+  "leaveRequest": "Leave request",
+  "leaveRequestPendingCount": "{count} pending\nrequests",
+  "@leaveRequestPendingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "like": "Like",
+  "login": "Login",
+  "loginTitleCaps": "LOGIN",
+  "maleStats": "Male: {count}",
+  "@maleStats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minute": "minutes",
+  "month": "months",
+  "myClass": "My class",
+  "navAccount": "Account",
+  "navActivity": "Activity",
+  "navFeed": "Feed",
+  "navMessage": "Messages",
+  "navOverview": "Overview",
+  "navPersonal": "Personal",
+  "navProgress": "Progress",
+  "navStudent": "Students",
+  "networkError": "Network error. Please try again.",
+  "noAttendanceDataForDay": "No attendance data for this day",
+  "noClassUpdated": "Class not updated",
+  "noData": "No data",
+  "noInternet": "No network connection. You are offline.",
+  "noNotifications": "No notifications",
+  "noParentInfo": "No parent information",
+  "noPostsYet": "No posts yet",
+  "noStudentAttendanceYet": "No students attended yet",
+  "noStudents": "No students yet.",
+  "notAttended": "Not attended",
+  "noteForParentOptional": "Enter note for parent (optional)...",
+  "noteLabel": "Note: {note}",
+  "@noteLabel": {
+    "placeholders": {
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "notFoundError": "Data not found.",
+  "notificationsTitle": "Notifications",
+  "other": "Other",
+  "parent": "Parent",
+  "parentInfo": "Parent information",
+  "parentName": "Parent - {name}",
+  "@parentName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "parentRequest": "Parent request",
+  "parents": "Parents",
+  "password": "Password",
+  "passwordMinLengthError": "Password must be at least 6 characters",
+  "pendingConfirmation": "Pending confirmation",
+  "pendingResponse": "Pending response",
+  "phoneNumber": "Phone number",
+  "pleaseEnterEmail": "Please enter email",
+  "pleaseEnterPassword": "Please enter password",
+  "posts": "Posts",
+  "present": "Present",
+  "readAll": "Read all",
+  "reject": "Reject",
+  "rejectLeaveRequestConfirmMessage": "Are you sure you want to reject the leave request for {name}?",
+  "@rejectLeaveRequestConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rejectLeaveRequestConfirmTitle": "Reject leave request?",
+  "searchPlaceholder": "Search...",
+  "searchStudentHint": "Search student name...",
+  "serverError": "System is currently experiencing issues. Please try again later.",
+  "sessionExpiredError": "Session expired. Please log in again.",
+  "statusApproved": "Approved",
+  "statusPending": "Pending",
+  "statusRejected": "Rejected",
+  "takeNewPhoto": "Take a new photo",
+  "teacher": "Teacher",
+  "teachers": "Teachers",
+  "timeoutError": "Server connection timed out. Please try again later.",
+  "totalStats": "Total: {count}",
+  "@totalStats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "totalStudentsCount": "Total {count} students",
+  "@totalStudentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "unauthorizedError": "Invalid email or password.",
+  "unknown": "Unknown",
+  "unknownError": "An unknown error occurred.",
+  "versionInfo": "Version 1.0.0 (Beta)",
+  "viewDetails": "View details",
+  "viewMore": "View more",
+  "year": "years",
+  "reason": "Reason",
+  "sentAt": "Sent at",
+  "leaveDay": "Leave day",
+  "sentBy": "Sent by",
+  "approve": "Approve",
+  "noLeaveRequests": "No leave requests",
+  "noLeaveRequestsWithStatus": "No {status} leave requests",
+  "@noLeaveRequestsWithStatus": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "today": "Today",
+  "statusPresent": "Present",
+  "statusLate": "Late",
+  "statusAbsent": "Absent",
+  "statusExcused": "Excused",
+  "statusNotMarked": "Not marked",
+  "checkOutRecord": "Check out",
+  "notLeftYet": "Not left yet",
+  "approvedLeave": "Leave approved",
+  "checkedInAt": "In at {time}",
+  "@checkedInAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "teacherApproved": "Teacher approved",
+  "otherStatus": "Other status",
+  "classList": "Class list",
+  "attendanceListTitle": "{label} ({count})",
+  "@attendanceListTitle": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceTitle": "Attendance",
+  "selectStatus": "Select status",
+  "inClass": "In class",
+  "absentNoReason": "No valid reason",
+  "leaveApprovedByParent": "Parent-approved leave",
+  "lateArrival": "Present but arrived late",
+  "todayDateLabel": "Today · {date}",
+  "@todayDateLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "savedAttendanceMorning": "Morning attendance saved!",
+  "goBack": "Go back"
+}

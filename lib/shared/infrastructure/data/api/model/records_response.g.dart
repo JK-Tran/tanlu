@@ -17,15 +17,3 @@ RecordsListResponse<T> _$RecordsListResponseFromJson<T>(
   next: (json['next'] as num?)?.toInt(),
   prev: (json['prev'] as num?)?.toInt(),
 );
-
-Map<String, dynamic> _$RecordsListResponseToJson<T>(
-  RecordsListResponse<T> instance,
-  Object? Function(T value) toJsonT,
-) => <String, dynamic>{
-  'records': instance.records?.map(toJsonT).toList(),
-  'page': instance.page,
-  'offset': instance.offset,
-  'total': instance.total,
-  'next': instance.next,
-  'prev': instance.prev,
-};

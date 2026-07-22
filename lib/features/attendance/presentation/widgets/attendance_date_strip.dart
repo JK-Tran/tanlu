@@ -4,6 +4,7 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:intl/intl.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 /// Strip ngày — một dòng gọn, cùng padding với segmented tab bar.
 class AttendanceDateStrip extends StatelessWidget {
@@ -15,7 +16,9 @@ class AttendanceDateStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final fullDate = DateFormat('EEEE, dd/MM/yyyy').format(date);
-    final label = date.isToday ? 'Hôm nay · $fullDate' : fullDate;
+    final label = date.isToday
+        ? context.l10n.todayDateLabel(fullDate)
+        : fullDate;
 
     return ColoredBox(
       color: AppColors.grayBg,

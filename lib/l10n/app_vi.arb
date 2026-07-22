@@ -1,0 +1,272 @@
+{
+  "@@locale": "vi",
+  "absent": "Vắng mặt",
+  "agree": "Đồng ý",
+  "all": "Tất cả",
+  "approveLeaveRequestConfirmMessage": "Bạn có chắc muốn duyệt đơn xin nghỉ của {name}?",
+  "@approveLeaveRequestConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "approveLeaveRequestConfirmTitle": "Duyệt đơn này?",
+  "attendanceStatusFinalized": "đã chốt cuối ngày",
+  "attendanceStatusInProgress": "đang điểm danh",
+  "attendanceStatusMorning": "đã điểm danh sáng",
+  "attendanceStatusNotYet": "chưa điểm danh",
+  "attendanceSummary": "Có mặt {present} · Nghỉ phép {absentExcused} · Vắng {absentUnexcused}",
+  "@attendanceSummary": {
+    "placeholders": {
+      "present": {
+        "type": "int"
+      },
+      "absentExcused": {
+        "type": "int"
+      },
+      "absentUnexcused": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceToday": "Điểm danh hôm nay",
+  "attended": "Đã điểm danh",
+  "callPhone": "Gọi điện",
+  "cancel": "Hủy",
+  "cannotCallPhone": "Không thể gọi điện thoại trên thiết bị này",
+  "cannotPlayVideo": "Không thể phát video",
+  "chooseFromGallery": "Chọn từ thư viện",
+  "classLabel": "Lớp {classId}",
+  "@classLabel": {
+    "placeholders": {
+      "classId": {
+        "type": "String"
+      }
+    }
+  },
+  "close": "Đóng",
+  "comingSoon": "Sắp ra mắt",
+  "comment": "Bình luận",
+  "comments": "Bình luận",
+  "commentsCount": "{count} bình luận",
+  "@commentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "confirm": "Xác nhận",
+  "copied": "Đã sao chép",
+  "copyPhoneNumber": "Sao chép số điện thoại",
+  "day": "ngày",
+  "diagnosis": "Chẩn đoán",
+  "enterLoginEmail": "Nhập email đăng nhập",
+  "enterYourPassword": "Nhập mật khẩu của bạn",
+  "excused": "Xin phép",
+  "explore": "Khám phá",
+  "featureComingSoon": "(Tính năng sắp ra mắt)",
+  "femaleStats": "Nữ: {count}",
+  "@femaleStats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "forbiddenError": "Bạn không có quyền thực hiện thao tác này.",
+  "helloUser": "Xin chào,\n{name} 👋",
+  "@helloUser": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "hotline": "Tổng đài hỗ trợ: 090 134 4756",
+  "hour": "giờ",
+  "imageLoadError": "Lỗi tải ảnh",
+  "justNow": "Vừa xong",
+  "leaveRequest": "Yêu cầu xin nghỉ",
+  "leaveRequestPendingCount": "{count} yêu cầu chờ\nxác nhận",
+  "@leaveRequestPendingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "like": "Thích",
+  "login": "Đăng nhập",
+  "loginTitleCaps": "ĐĂNG NHẬP",
+  "maleStats": "Nam: {count}",
+  "@maleStats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minute": "phút",
+  "month": "tháng",
+  "myClass": "Lớp của tôi",
+  "navAccount": "Tài khoản",
+  "navActivity": "Hoạt động",
+  "navFeed": "Bảng tin",
+  "navMessage": "Tin nhắn",
+  "navOverview": "Tổng quan",
+  "navPersonal": "Cá nhân",
+  "navProgress": "Tiến trình",
+  "navStudent": "Học sinh",
+  "networkError": "Không có kết nối mạng. Vui lòng kiểm tra lại.",
+  "noAttendanceDataForDay": "Chưa có dữ liệu điểm danh ngày này",
+  "noClassUpdated": "Chưa cập nhật lớp",
+  "noData": "Chưa có dữ liệu",
+  "noInternet": "Không có kết nối mạng. Đang ngoại tuyến.",
+  "noNotifications": "Không có thông báo nào",
+  "noParentInfo": "Chưa có thông tin phụ huynh",
+  "noPostsYet": "Chưa có bài viết nào",
+  "noStudentAttendanceYet": "Chưa có bé nào được điểm danh",
+  "noStudents": "Chưa có học sinh.",
+  "notAttended": "Chưa điểm danh",
+  "noteForParentOptional": "Nhập ghi chú cho phụ huynh (nếu có)...",
+  "noteLabel": "Ghi chú: {note}",
+  "@noteLabel": {
+    "placeholders": {
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "notFoundError": "Không tìm thấy dữ liệu.",
+  "notificationsTitle": "Thông báo",
+  "other": "Khác",
+  "parent": "Phụ huynh",
+  "parentInfo": "Thông tin phụ huynh",
+  "parentName": "Phụ huynh - {name}",
+  "@parentName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "parentRequest": "Yêu cầu phụ huynh",
+  "parents": "Phụ huynh",
+  "password": "Mật khẩu",
+  "passwordMinLengthError": "Mật khẩu phải tối thiểu 6 ký tự",
+  "pendingConfirmation": "Chờ xác nhận",
+  "pendingResponse": "Chờ phản hồi",
+  "phoneNumber": "Số điện thoại",
+  "pleaseEnterEmail": "Vui lòng nhập email",
+  "pleaseEnterPassword": "Vui lòng nhập mật khẩu",
+  "posts": "Bài viết",
+  "present": "Có mặt",
+  "readAll": "Đọc tất cả",
+  "reject": "Từ chối",
+  "rejectLeaveRequestConfirmMessage": "Bạn có chắc muốn từ chối đơn xin nghỉ của {name}?",
+  "@rejectLeaveRequestConfirmMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rejectLeaveRequestConfirmTitle": "Từ chối đơn xin nghỉ?",
+  "searchPlaceholder": "Tìm kiếm...",
+  "searchStudentHint": "Tìm kiếm tên bé...",
+  "serverError": "Hệ thống đang gặp sự cố. Vui lòng thử lại sau.",
+  "sessionExpiredError": "Phiên đăng nhập hết hạn. Vui lòng đăng nhập lại.",
+  "statusApproved": "Đã duyệt",
+  "statusPending": "Chờ duyệt",
+  "statusRejected": "Đã từ chối",
+  "takeNewPhoto": "Chụp ảnh mới",
+  "teacher": "Giáo viên",
+  "teachers": "Giáo viên",
+  "timeoutError": "Kết nối máy chủ bị gián đoạn. Vui lòng thử lại sau.",
+  "totalStats": "Tổng: {count}",
+  "@totalStats": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "totalStudentsCount": "Tổng {count} bé",
+  "@totalStudentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "unauthorizedError": "Tài khoản hoặc mật khẩu không chính xác.",
+  "unknown": "Không rõ",
+  "unknownError": "Đã xảy ra lỗi không xác định.",
+  "versionInfo": "Phiên bản 1.0.0 (Beta)",
+  "viewDetails": "Xem chi tiết",
+  "viewMore": "Xem thêm",
+  "year": "năm",
+  "reason": "Lý do",
+  "sentAt": "Gửi lúc",
+  "leaveDay": "Nghỉ ngày",
+  "sentBy": "Gửi bởi",
+  "approve": "Duyệt",
+  "noLeaveRequests": "Chưa có đơn xin nghỉ phép",
+  "noLeaveRequestsWithStatus": "Không có đơn {status}",
+  "@noLeaveRequestsWithStatus": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "today": "Hôm nay",
+  "statusPresent": "Có mặt",
+  "statusLate": "Đi trễ",
+  "statusAbsent": "Vắng mặt",
+  "statusExcused": "Nghỉ phép",
+  "statusNotMarked": "Chưa điểm danh",
+  "checkOutRecord": "Ghi về",
+  "notLeftYet": "Chưa về",
+  "approvedLeave": "Đã duyệt đơn",
+  "checkedInAt": "Vào lúc {time}",
+  "@checkedInAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "teacherApproved": "GV đã duyệt",
+  "otherStatus": "Trạng thái khác",
+  "classList": "Danh sách lớp",
+  "attendanceListTitle": "{label} ({count})",
+  "@attendanceListTitle": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceTitle": "Điểm danh",
+  "selectStatus": "Chọn trạng thái",
+  "inClass": "Có trong lớp",
+  "absentNoReason": "Không có lý do chính đáng",
+  "leaveApprovedByParent": "Đã được phụ huynh xin phép",
+  "lateArrival": "Có mặt nhưng đến muộn",
+  "todayDateLabel": "Hôm nay · {date}",
+  "@todayDateLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "savedAttendanceMorning": "Đã lưu điểm danh sáng!",
+  "goBack": "Quay lại"
+}

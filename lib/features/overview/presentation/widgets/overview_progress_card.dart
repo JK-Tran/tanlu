@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class OverviewAvatarPreview {
   const OverviewAvatarPreview({required this.nickname, this.avatarUrl});
@@ -224,7 +225,7 @@ class OverviewProgressCard extends StatelessWidget {
 
     if (avatars.isEmpty && _extraCount == 0) {
       return AppText.b2(
-        'Chưa có bé nào được điểm danh',
+        S.current.noStudentAttendanceYet,
         color: AppColors.grayMedium,
         fontSize: 12.sp,
       );
@@ -255,8 +256,8 @@ class OverviewProgressCard extends StatelessWidget {
             widthFactor: 1.0,
             alignment: Alignment.centerLeft,
             child: Container(
-              width: 28.r,
-              height: 28.r,
+              width: 28.w + 4,
+              height: 28.w + 4,
               decoration: BoxDecoration(
                 color: primaryColor,
                 shape: BoxShape.circle,
@@ -266,7 +267,7 @@ class OverviewProgressCard extends StatelessWidget {
               child: AppText.b2(
                 '+$_extraCount',
                 color: AppColors.white,
-                fontSize: 10.sp,
+                fontSize: 11.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),

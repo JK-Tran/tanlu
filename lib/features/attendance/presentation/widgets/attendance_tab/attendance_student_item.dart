@@ -5,71 +5,12 @@ import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/attendance_student.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_tab/widgets/attendance_status_ext.dart';
+import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_tab/widgets/attendance_student_check_out_button.dart';
+import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_tab/widgets/attendance_student_status_chip.dart';
+import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_tab/widgets/attendance_student_time_row.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
-
-extension AttendanceStatusExt on AttendanceStatus {
-  String get label {
-    switch (this) {
-      case AttendanceStatus.present:
-        return 'Có mặt';
-      case AttendanceStatus.late:
-        return 'Đi trễ';
-      case AttendanceStatus.absentUnexcused:
-        return 'Vắng mặt';
-      case AttendanceStatus.absentExcused:
-        return 'Nghỉ phép';
-      case AttendanceStatus.notMarked:
-        return 'Chưa điểm danh';
-    }
-  }
-
-  Color get color {
-    switch (this) {
-      case AttendanceStatus.present:
-        return AppColors.success;
-      case AttendanceStatus.late:
-        return const Color(0xFFE17055);
-      case AttendanceStatus.absentUnexcused:
-        return AppColors.warning;
-      case AttendanceStatus.absentExcused:
-        return AppColors.info;
-      case AttendanceStatus.notMarked:
-        return AppColors.grayMedium;
-    }
-  }
-
-  Color get bgColor {
-    switch (this) {
-      case AttendanceStatus.present:
-        return AppColors.successLight;
-      case AttendanceStatus.late:
-        return const Color(0xFFE17055).withValues(alpha: 0.12);
-      case AttendanceStatus.absentUnexcused:
-        return AppColors.warningLight;
-      case AttendanceStatus.absentExcused:
-        return AppColors.infoLight;
-      case AttendanceStatus.notMarked:
-        return Colors.transparent;
-    }
-  }
-
-  IconData get icon {
-    switch (this) {
-      case AttendanceStatus.present:
-        return Icons.check_circle_rounded;
-      case AttendanceStatus.late:
-        return Icons.access_time_rounded;
-      case AttendanceStatus.absentUnexcused:
-        return Icons.cancel_rounded;
-      case AttendanceStatus.absentExcused:
-        return Icons.assignment_return_rounded;
-      case AttendanceStatus.notMarked:
-        return Icons.radio_button_unchecked;
-    }
-  }
-}
-
-// _getStatusFromString removed in favor of AttendanceStatusMapper.fromApi
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class AttendanceStudentItem extends StatelessWidget {
   const AttendanceStudentItem({
@@ -87,7 +28,7 @@ class AttendanceStudentItem extends StatelessWidget {
   final bool draftMode;
   final VoidCallback? onTogglePresent;
 
-  String get _nickname => student.nickName; // fallback if nickname is missing
+  String get _nickname => student.nickName;
 
   bool get _canCheckOut {
     final status = AttendanceStatusMapper.fromApi(student.status);
@@ -140,18 +81,27 @@ class AttendanceStudentItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppText.b2(
-                    student.fullName,
-                    color: AppColors.black,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w700,
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 6.w,
+                    runSpacing: 2.h,
+                    children: [
+                      AppText.b1(
+                        student.fullName,
+                        color: AppColors.grayDark,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      if (_nickname.isNotEmpty)
+                        AppText.b2(
+                          '($_nickname)',
+                          color: AppColors.grayMedium,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                    ],
                   ),
-                  AppText.b1(
-                    '($_nickname)',
-                    color: AppColors.grayMedium,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  SizedBox(height: 4.h),
 
                   if (draftMode &&
                       isMarked &&
@@ -164,7 +114,7 @@ class AttendanceStudentItem extends StatelessWidget {
                           AppText.b2(
                             status.label,
                             color: status.color,
-                            fontSize: 11.sp,
+                            fontSize: 10.sp,
                             fontWeight: FontWeight.w600,
                           ),
                           if (status == AttendanceStatus.absentExcused &&
@@ -193,9 +143,9 @@ class AttendanceStudentItem extends StatelessWidget {
                                   ),
                                   SizedBox(width: 4.w),
                                   AppText.b2(
-                                    'Đã duyệt đơn',
+                                    context.l10n.approvedLeave,
                                     color: status.color,
-                                    fontSize: 9.sp,
+                                    fontSize: 8.sp,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ],
@@ -205,6 +155,7 @@ class AttendanceStudentItem extends StatelessWidget {
                         ],
                       ),
                     ),
+
                   if (draftMode &&
                       (status == AttendanceStatus.present ||
                           status == AttendanceStatus.late) &&
@@ -215,35 +166,51 @@ class AttendanceStudentItem extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.login_rounded,
-                            size: 12.w,
+                            size: 10.w,
                             color: status.color,
                           ),
                           SizedBox(width: 2.w),
                           AppText.b2(
-                            'Vào lúc $checkInStr',
+                            context.l10n.checkedInAt(checkInStr),
                             color: status.color,
-                            fontSize: 11.sp,
+                            fontSize: 10.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ],
                       ),
                     ),
+
                   if (!draftMode &&
                       status == AttendanceStatus.absentExcused &&
                       student.leaveRequest.reason.isNotEmpty)
-                    Padding(
-                      padding: EdgeInsets.only(top: 2.h),
-                      child: AppText.b2(
-                        student.leaveRequest.reason,
-                        color: AppColors.info,
-                        fontSize: 11.sp,
-                        fontStyle: FontStyle.italic,
-                      ),
+                    Row(
+                      children: [
+                        if (student.leaveRequest.status == 'approved') ...[
+                          Icon(
+                            Icons.verified_rounded,
+                            size: 12.w,
+                            color: AppColors.info,
+                          ),
+                          SizedBox(width: 4.w),
+                          AppText.b2(
+                            context.l10n.teacherApproved,
+                            color: AppColors.info,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ],
+                      ],
                     ),
-                  if (!draftMode && _showTimeRow)
+
+                  if (!draftMode &&
+                      status != AttendanceStatus.absentExcused &&
+                      status != AttendanceStatus.absentUnexcused &&
+                      (checkInStr != null ||
+                          checkOutStr != null ||
+                          _canCheckOut))
                     Padding(
                       padding: EdgeInsets.only(top: 4.h),
-                      child: _TimeRow(
+                      child: AttendanceStudentTimeRow(
                         checkInStr: checkInStr,
                         checkOutStr: checkOutStr,
                         waitingCheckOut: _canCheckOut,
@@ -252,7 +219,9 @@ class AttendanceStudentItem extends StatelessWidget {
                 ],
               ),
             ),
+
             if (!draftMode) _buildTrailing(status, checkInStr, checkOutStr),
+
             if (draftMode) ...[
               Material(
                 color: Colors.transparent,
@@ -276,7 +245,7 @@ class AttendanceStudentItem extends StatelessWidget {
                 ),
                 padding: EdgeInsets.zero,
                 constraints: BoxConstraints(minWidth: 36.w, minHeight: 36.w),
-                tooltip: 'Trạng thái khác',
+                tooltip: context.l10n.otherStatus,
               ),
             ],
           ],
@@ -285,35 +254,16 @@ class AttendanceStudentItem extends StatelessWidget {
     );
   }
 
-  bool get _showTimeRow {
-    if (draftMode) return false;
-    // Chỉ có mặt / đi trễ mới có giờ vào/về
-    final status = AttendanceStatusMapper.fromApi(student.status);
-    if (status == AttendanceStatus.absentExcused ||
-        status == AttendanceStatus.absentUnexcused) {
-      return false;
-    }
-    final checkInStr = DateTimeUtils.formatTime(
-      student.checkInTime,
-      hmOnly: true,
-    );
-    final checkOutStr = DateTimeUtils.formatTime(
-      student.checkOutTime,
-      hmOnly: true,
-    );
-    return checkInStr != null || checkOutStr != null || _canCheckOut;
-  }
-
   Widget _buildTrailing(
     AttendanceStatus status,
     String? checkInStr,
     String? checkOutStr,
   ) {
     if (_canCheckOut && onCheckOut != null) {
-      return _CheckOutButton(onTap: onCheckOut!);
+      return AttendanceStudentCheckOutButton(onTap: onCheckOut!);
     }
     if (status != AttendanceStatus.notMarked) {
-      return _StatusChip(status: status, onTap: onOpenSheet);
+      return AttendanceStudentStatusChip(status: status, onTap: onOpenSheet);
     }
     return Icon(
       Icons.radio_button_unchecked,
@@ -348,141 +298,6 @@ class AttendanceStudentItem extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: AppColors.grayMedium, width: 2),
-      ),
-    );
-  }
-}
-
-class _TimeRow extends StatelessWidget {
-  const _TimeRow({
-    required this.checkInStr,
-    required this.checkOutStr,
-    required this.waitingCheckOut,
-  });
-
-  final String? checkInStr;
-  final String? checkOutStr;
-  final bool waitingCheckOut;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (checkInStr != null) ...[
-          Icon(Icons.login_rounded, size: 12.w, color: AppColors.grayMedium),
-          SizedBox(width: 2.w),
-          AppText.b2(
-            'Vào $checkInStr',
-            color: AppColors.grayMedium,
-            fontSize: 11.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ],
-        if (checkInStr != null && (checkOutStr != null || waitingCheckOut))
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.w),
-            child: AppText.b2('·', color: AppColors.grayLight, fontSize: 11.sp),
-          ),
-        if (checkOutStr != null) ...[
-          Icon(Icons.logout_rounded, size: 12.w, color: AppColors.grayMedium),
-          SizedBox(width: 2.w),
-          AppText.b2(
-            'Về $checkOutStr',
-            color: AppColors.grayMedium,
-            fontSize: 11.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ] else if (waitingCheckOut)
-          AppText.b2(
-            'Chưa về',
-            color: AppColors.warning,
-            fontSize: 11.sp,
-            fontWeight: FontWeight.w600,
-          ),
-      ],
-    );
-  }
-}
-
-class _CheckOutButton extends StatelessWidget {
-  const _CheckOutButton({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(20.r),
-        splashColor: AppColors.primary.withValues(alpha: 0.12),
-        highlightColor: AppColors.primaryLight.withValues(alpha: 0.4),
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.r),
-            border: Border.all(color: AppColors.primary, width: 1.5),
-            color: AppColors.primaryLight.withValues(alpha: 0.25),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.logout_rounded, size: 14.w, color: AppColors.primary),
-              SizedBox(width: 4.w),
-              AppText.b2(
-                'Ghi về',
-                color: AppColors.primary,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w700,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _StatusChip extends StatelessWidget {
-  const _StatusChip({required this.status, required this.onTap});
-
-  final AttendanceStatus status;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12.r),
-        child: Ink(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-          decoration: BoxDecoration(
-            color: status.bgColor,
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(status.icon, size: 14.w, color: status.color),
-              SizedBox(width: 4.w),
-              AppText.b2(
-                status.label,
-                color: status.color,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
-              ),
-              SizedBox(width: 4.w),
-              Icon(
-                Icons.chevron_right_rounded,
-                size: 14.w,
-                color: status.color,
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

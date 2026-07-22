@@ -10,6 +10,8 @@ import 'package:tanlu_management/features/auth/domain/usecases/get_me_use_case.d
 import 'package:tanlu_management/features/auth/domain/usecases/logout_use_case.dart';
 import 'package:tanlu_management/features/auth/domain/usecases/update_fcm_token_use_case.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:tanlu_management/shared/services/local_storage/app_preferences.dart';
+import 'package:tanlu_management/shared/services/socket/global_web_socket_service.dart';
 
 part 'app_bloc.freezed.dart';
 part 'app_event.dart';
@@ -22,6 +24,8 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
     this._getMeUseCase,
     this._logoutUseCase,
     this._updateFcmTokenUseCase,
+    this._appPreferences,
+    this._globalWebSocketService,
   ) : super(const AppState.loading()) {
     on<_Started>(_onStarted);
     on<_LoggedIn>(_onLoggedIn);
@@ -32,6 +36,8 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
   final GetMeUseCase _getMeUseCase;
   final LogoutUseCase _logoutUseCase;
   final UpdateFcmTokenUseCase _updateFcmTokenUseCase;
+  final AppPreferences _appPreferences;
+  final GlobalWebSocketService _globalWebSocketService;
 
   StreamSubscription<String>? _tokenRefreshSub;
 
@@ -47,6 +53,9 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
           return;
         }
         emit(AppState.authenticated(output.user!));
+        
+        final token = await _appPreferences.accessToken;
+        _globalWebSocketService.connect(token);
 
         try {
           final output = await _getMeUseCase.execute(const GetMeInput());
@@ -85,6 +94,8 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
 
   FutureOr<void> _onLoggedIn(_LoggedIn event, Emitter<AppState> emit) async {
     emit(AppState.authenticated(event.user));
+    final token = await _appPreferences.accessToken;
+    _globalWebSocketService.connect(token);
   }
 
   FutureOr<void> _onLoggedOut(_LoggedOut event, Emitter<AppState> emit) async {
@@ -92,6 +103,7 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
       handleLoading: false,
       action: () async {
         await _logoutUseCase.execute(const LogoutInput());
+        _globalWebSocketService.disconnect();
         emit(const AppState.unauthenticated());
       },
       doOnError: (_) => emit(const AppState.unauthenticated()),

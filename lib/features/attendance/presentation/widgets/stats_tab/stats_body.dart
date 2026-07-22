@@ -9,13 +9,23 @@ import 'package:tanlu_management/features/attendance/domain/entity/attendance_st
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_date_strip.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/stats_tab/stats_history_shimmer.dart';
+import 'package:tanlu_management/features/attendance/presentation/widgets/stats_tab/widgets/stats_history_shimmer.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/stats_tab/stats_student_item.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/stats_tab/stats_summary_item.dart';
+import 'package:tanlu_management/features/attendance/presentation/widgets/stats_tab/widgets/stats_summary_item.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
-class StatsBody extends StatelessWidget {
+class StatsBody extends StatefulWidget {
   const StatsBody({super.key});
+
+  @override
+  State<StatsBody> createState() => _StatsBodyState();
+}
+
+class _StatsBodyState extends State<StatsBody>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
 
   Future<void> _pickDate(BuildContext context, DateTime current) async {
     final picked = await AppDateScrollPicker.show(
@@ -37,6 +47,7 @@ class StatsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<AttendanceBloc, AttendanceState>(
       builder: (context, state) {
         final historyDate = state.historyDate ?? DateTime.now();
@@ -61,7 +72,7 @@ class StatsBody extends StatelessWidget {
             .toList();
         final marked = roster.where((a) {
           return a.status == AttendanceStatus.present.apiValue ||
-                 a.status == AttendanceStatus.late.apiValue;
+              a.status == AttendanceStatus.late.apiValue;
         }).toList();
 
         return RefreshIndicator(
@@ -89,7 +100,7 @@ class StatsBody extends StatelessWidget {
                       padding: EdgeInsets.all(32.w),
                       child: Center(
                         child: AppText.b2(
-                          'Chưa có dữ liệu điểm danh ngày này',
+                          context.l10n.noAttendanceDataForDay,
                           color: AppColors.grayMedium,
                           fontSize: 14.sp,
                         ),
@@ -98,26 +109,20 @@ class StatsBody extends StatelessWidget {
                   ),
                 if (unmarked.isNotEmpty)
                   _StatsSection(
-                    title: 'Chưa điểm danh',
+                    title: context.l10n.notAttended,
                     attendances: unmarked,
                     initiallyExpanded: false,
                   ),
                 if (excused.isNotEmpty)
-                  _StatsSection(
-                    title: 'Đã xin phép',
-                    attendances: excused,
-                  ),
+                  _StatsSection(title: context.l10n.excused, attendances: excused),
                 if (marked.isNotEmpty)
                   _StatsSection(
-                    title: 'Đã điểm danh',
+                    title: context.l10n.attended,
                     attendances: marked,
                     showTime: true,
                   ),
                 if (absent.isNotEmpty)
-                  _StatsSection(
-                    title: 'Vắng mặt',
-                    attendances: absent,
-                  ),
+                  _StatsSection(title: context.l10n.absent, attendances: absent),
               ],
               SliverToBoxAdapter(child: SizedBox(height: 40.h)),
             ],
@@ -202,6 +207,7 @@ class _StatsSectionState extends State<_StatsSection> {
               return StatsStudentItem(
                 name: name,
                 fullName: att.fullName,
+                nickName: att.nickName,
                 status: statusEnum,
                 checkInTime: DateTimeUtils.formatHourMinute(att.checkInTime),
                 checkOutTime: DateTimeUtils.formatHourMinute(att.checkOutTime),

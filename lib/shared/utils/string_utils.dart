@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
-class StringUtils {
-  const StringUtils._();
+abstract final class StringUtils {
   static bool isNullOrBlank(String? s) => s == null || s == '' || s == ' ';
 
   static bool hasMatch(String? value, String pattern) {
@@ -207,6 +207,26 @@ class StringUtils {
   static String formatBirthDate(DateTime? birthDate) {
     if (birthDate == null) return '--';
     return DateFormat('dd/MM/yyyy').format(birthDate);
+  }
+
+  static String formatTimeAgo(DateTime? date) {
+    if (date == null) return '';
+    final now = DateTime.now();
+    final difference = now.difference(date);
+
+    if (difference.inDays > 365) {
+      return '${(difference.inDays / 365).floor()} ${S.current.year}';
+    } else if ((difference.inDays / 30).floor() >= 1) {
+      return '${(difference.inDays / 30).floor()} ${S.current.month}';
+    } else if ((difference.inDays / 7).floor() >= 1) {
+      return '${difference.inDays} ${S.current.day}';
+    } else if (difference.inHours >= 1) {
+      return '${difference.inHours} ${S.current.hour}';
+    } else if (difference.inMinutes >= 1) {
+      return '${difference.inMinutes} ${S.current.minute}';
+    } else {
+      return S.current.justNow;
+    }
   }
 
   static final RegExp urlRegExp = RegExp(

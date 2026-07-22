@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_icon_button.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/features/notification/presentation/widgets/notification_bell_widget.dart';
 
 class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
   const FeedAppBar({
@@ -62,35 +63,13 @@ class FeedAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             if (trailing != null)
               trailing!
-            else if (onNotificationTap != null)
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  AppIconButton(
-                    icon: Icons.notifications_none_rounded,
-                    iconColor: AppColors.grayDark,
-                    backgroundColor: AppColors.grayVeryLight,
-                    size: 40,
-                    borderRadius: 12,
-                    onPressed: onNotificationTap,
-                  ),
-                  if (notificationCount > 0)
-                    Positioned(
-                      top: 6,
-                      right: 6,
-                      child: Container(
-                        width: 8.r,
-                        height: 8.r,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ),
-                ],
-              )
             else
-              SizedBox(width: 40.w),
+              const NotificationBellWidget(
+                size: 40,
+                iconSize: 24,
+                backgroundColor: AppColors.grayVeryLight,
+                hasShadow: false,
+              ),
           ],
         ),
       ),

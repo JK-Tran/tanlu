@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/features/notification/presentation/bloc/notification_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:tanlu_management/core/router/app_router.dart';
+import 'package:tanlu_management/features/notification/presentation/widgets/notification_bell_widget.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class OverviewBanner extends StatelessWidget {
   const OverviewBanner({super.key});
@@ -19,7 +18,7 @@ class OverviewBanner extends StatelessWidget {
         final currentUser = appState.mapOrNull(authenticated: (s) => s.user);
         final displayName = currentUser?.fullName.isNotEmpty == true
             ? currentUser!.fullName
-            : 'Giáo viên';
+            : context.l10n.teacher;
 
         return Container(
           width: double.infinity,
@@ -60,7 +59,7 @@ class OverviewBanner extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 AppText.b2(
-                                  'Xin chào,\n$displayName 👋',
+                                  context.l10n.helloUser(displayName),
                                   color: AppColors.grayDark,
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.bold,
@@ -137,67 +136,7 @@ class OverviewBanner extends StatelessWidget {
               Positioned(
                 top: 20.h,
                 right: 0,
-                child: BlocBuilder<NotificationBloc, NotificationState>(
-                  builder: (context, state) {
-                    final unreadCount = state.unreadCount;
-                    return Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Material(
-                        color: Colors.white,
-                        shape: const CircleBorder(),
-                        clipBehavior: Clip.antiAlias,
-                        child: InkWell(
-                          onTap: () {
-                            context.push(AppRouter.notification);
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.all(8.w),
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                Icon(
-                                  Icons.notifications_outlined,
-                                  color: AppColors.grayDark,
-                                  size: 24.sp,
-                                ),
-                                if (unreadCount > 0)
-                                  Positioned(
-                                    right: -4,
-                                    top: -4,
-                                    child: Container(
-                                      padding: EdgeInsets.all(4.w),
-                                      decoration: const BoxDecoration(
-                                        color: Colors.red,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Text(
-                                        unreadCount > 99 ? '99+' : unreadCount.toString(),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 10.sp,
-                                          fontWeight: FontWeight.bold,
-                                          height: 1,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                child: const NotificationBellWidget(),
               ),
             ],
           ),

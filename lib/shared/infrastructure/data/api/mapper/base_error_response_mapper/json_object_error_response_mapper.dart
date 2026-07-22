@@ -25,10 +25,20 @@ class JsonObjectErrorResponseMapper
       );
     }
 
+    final dynamic messages = data?['_messages'];
+    String? message;
+    if (messages is List && messages.isNotEmpty) {
+      message = messages.first.toString();
+    } else if (data?['error'] != null) {
+      message = data!['error'].toString();
+    } else if (data?['message'] != null) {
+      message = data!['message'].toString();
+    }
+
     return ServerError(
       generalServerStatusCode: data?['_status'],
       generalServerErrorId: data?['error_code'],
-      generalMessage: (data?['_messages'] as List).first,
+      generalMessage: message,
     );
   }
 }

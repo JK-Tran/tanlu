@@ -3,14 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:tanlu_management/core/base/base_bloc.dart';
-import 'package:tanlu_management/core/constants/app_strings.dart';
 import 'package:tanlu_management/features/auth/domain/usecases/login_use_case.dart';
-import 'package:tanlu_management/shared/exception/base/app_exception.dart';
-import 'package:tanlu_management/shared/exception/uncaught/app_uncaught_exception.dart';
 
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
 import 'package:tanlu_management/features/auth/domain/usecases/update_fcm_token_use_case.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:tanlu_management/shared/utils/error_mapper.dart';
 
 part 'login_bloc.freezed.dart';
 part 'login_event.dart';
@@ -100,11 +98,9 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
               );
             }
           } catch (e) {
-            // Ignore FCM update errors during login, or log them
             debugPrint("FCM Update Error: $e");
           }
 
-          // Báo cho AppBloc biết user đã đăng nhập thành công
           _appBloc.add(AppEvent.loggedIn(user));
         }
 
@@ -114,7 +110,7 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
         emit(
           state.copyWith(
             showLoginButtonLoading: false,
-            onPageError: _mapErrorMessage(e),
+            onPageError: ErrorMapper.getMessage(e),
             loginSuccess: false,
           ),
         );
@@ -127,15 +123,5 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) {
     emit(state.copyWith(obscureText: !state.obscureText));
-  }
-
-  String _mapErrorMessage(Object error) {
-    if (error is AppUncaughtException) {
-      final root = error.rootError;
-      if (root is AppException) return root.toString();
-      return root?.toString() ?? AppStrings.unknownError;
-    }
-    if (error is AppException) return error.toString();
-    return error.toString();
   }
 }

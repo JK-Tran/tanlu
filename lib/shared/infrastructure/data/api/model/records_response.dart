@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'records_response.g.dart';
 
-@JsonSerializable(genericArgumentFactories: true)
+@JsonSerializable(genericArgumentFactories: true, createToJson: false)
 class RecordsListResponse<T> {
   RecordsListResponse({
     @JsonKey(name: 'records') this.records,
@@ -13,9 +13,10 @@ class RecordsListResponse<T> {
     @JsonKey(name: 'prev') this.prev,
   });
 
-  // ignore: avoid-dynamic
-  factory RecordsListResponse.fromJson(Map<String, dynamic> json, T Function(dynamic) fromJsonT) =>
-      _$RecordsListResponseFromJson(json, fromJsonT);
+  factory RecordsListResponse.fromJson(
+    Map<String, dynamic> json,
+    T Function(dynamic) fromJsonT,
+  ) => _$RecordsListResponseFromJson(json, fromJsonT);
 
   final List<T>? records;
   final int? page;

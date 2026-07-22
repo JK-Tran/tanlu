@@ -8,9 +8,7 @@ import 'package:tanlu_management/features/notification/domain/usecases/get_notif
 import 'package:tanlu_management/features/notification/domain/usecases/mark_all_as_read_use_case.dart';
 import 'package:tanlu_management/features/notification/domain/usecases/mark_as_read_use_case.dart';
 import 'package:tanlu_management/core/base/base_bloc.dart';
-import 'package:tanlu_management/core/constants/app_strings.dart';
-import 'package:tanlu_management/shared/exception/base/app_exception.dart';
-import 'package:tanlu_management/shared/exception/uncaught/app_uncaught_exception.dart';
+import 'package:tanlu_management/shared/utils/error_mapper.dart';
 
 part 'notification_bloc.freezed.dart';
 part 'notification_event.dart';
@@ -69,7 +67,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
         );
       },
       doOnError: (e) {
-        emit(state.copyWith(isLoading: false, error: _mapErrorMessage(e)));
+        emit(state.copyWith(isLoading: false, error: ErrorMapper.getMessage(e)));
       },
     );
   }
@@ -133,13 +131,4 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
     add(const NotificationEvent.loadNotifications(isRefresh: true));
   }
 
-  String _mapErrorMessage(Object error) {
-    if (error is AppUncaughtException) {
-      final root = error.rootError;
-      if (root is AppException) return root.toString();
-      return root?.toString() ?? AppStrings.unknownError;
-    }
-    if (error is AppException) return error.toString();
-    return error.toString();
-  }
 }

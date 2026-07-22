@@ -4,6 +4,7 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/student/domain/entity/contact.dart';
 import 'package:tanlu_management/features/student/presentation/pages/student_detail/widgets/contact_card.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class ContactTabView extends StatelessWidget {
   final List<Contact> contacts;
@@ -15,7 +16,7 @@ class ContactTabView extends StatelessWidget {
     if (contacts.isEmpty) {
       return Center(
         child: AppText.b2(
-          'Chưa có thông tin phụ huynh',
+          context.l10n.noParentInfo,
           color: AppColors.grayMedium,
         ),
       );
@@ -28,7 +29,7 @@ class ContactTabView extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
             child: AppText.t2(
-              'Thông tin phụ huynh',
+              context.l10n.parentInfo,
               fontWeight: FontWeight.bold,
               color: AppColors.grayDark,
             ),

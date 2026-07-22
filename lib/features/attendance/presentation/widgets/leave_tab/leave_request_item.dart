@@ -13,6 +13,7 @@ import 'package:tanlu_management/features/attendance/presentation/enums/leave_st
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class LeaveRequestItem extends StatelessWidget {
   const LeaveRequestItem({
@@ -39,10 +40,10 @@ class LeaveRequestItem extends StatelessWidget {
   }) {
     final displayName = request.student.fullName.isNotEmpty
         ? request.student.fullName
-        : 'Không rõ';
+        : context.l10n.unknown;
     final nickname = request.student.fullName.isNotEmpty
         ? request.student.fullName
-        : 'Không rõ';
+        : context.l10n.unknown;
     final avatarUrl = request.student.avatarUrl.isNotEmpty
         ? request.student.avatarUrl
         : null;
@@ -57,10 +58,10 @@ class LeaveRequestItem extends StatelessWidget {
         if (!isApproved) {
           final result = await AppLeaveDecisionDialog.show(
             context,
-            title: 'Từ chối đơn xin nghỉ?',
-            content: 'Bạn có chắc muốn từ chối đơn xin nghỉ của $displayName?',
-            cancelLabel: 'Huỷ',
-            confirmLabel: 'Từ chối',
+            title: context.l10n.rejectLeaveRequestConfirmTitle,
+            content: context.l10n.rejectLeaveRequestConfirmMessage(displayName),
+            cancelLabel: context.l10n.cancel,
+            confirmLabel: context.l10n.reject,
             type: AppConfirmDialogType.warning,
           );
           if (result == null || !result.isConfirm || !context.mounted) return;
@@ -76,10 +77,10 @@ class LeaveRequestItem extends StatelessWidget {
 
         final result = await AppLeaveDecisionDialog.show(
           context,
-          title: 'Duyệt đơn xin nghỉ?',
-          content: 'Bạn có chắc muốn duyệt đơn xin nghỉ của $displayName?',
-          cancelLabel: 'Huỷ',
-          confirmLabel: 'Đồng ý',
+          title: context.l10n.approveLeaveRequestConfirmTitle,
+          content: context.l10n.approveLeaveRequestConfirmMessage(displayName),
+          cancelLabel: context.l10n.cancel,
+          confirmLabel: context.l10n.agree,
           type: AppConfirmDialogType.success,
         );
         if (result == null || !result.isConfirm || !context.mounted) return;
@@ -99,10 +100,10 @@ class LeaveRequestItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final leaveDate = request.date != null
         ? DateFormat('EEEE, dd/MM/yyyy').format(request.date!)
-        : 'Chưa rõ';
+        : context.l10n.unknown;
     final sender = request.parent.fullName.isNotEmpty
         ? request.parent.fullName
-        : 'Phụ huynh';
+        : context.l10n.parent;
     final sentAt = request.submittedAt != null
         ? DateTimeUtils.formatDateTimeType2(request.submittedAt!)?.trim()
         : null;
@@ -147,7 +148,7 @@ class LeaveRequestItem extends StatelessWidget {
             children: [
               _infoRow(
                 icon: Icons.event_outlined,
-                label: 'Nghỉ ngày',
+                label: context.l10n.leaveDay,
                 value: leaveDate,
                 valueWeight: FontWeight.w700,
                 trailing: request.date?.isToday == true
@@ -157,14 +158,14 @@ class LeaveRequestItem extends StatelessWidget {
               SizedBox(height: 6.h),
               _infoRow(
                 icon: Icons.person_outline,
-                label: 'Gửi bởi',
+                label: context.l10n.sentBy,
                 value: sender,
               ),
               if (sentAt != null) ...[
                 SizedBox(height: 6.h),
                 _infoRow(
                   icon: Icons.schedule_outlined,
-                  label: 'Gửi lúc',
+                  label: context.l10n.sentAt,
                   value: sentAt,
                 ),
               ],
@@ -175,7 +176,7 @@ class LeaveRequestItem extends StatelessWidget {
             _infoBox(
               children: [
                 AppText.l2(
-                  'Lý do',
+                  context.l10n.reason,
                   color: AppColors.grayMedium,
                   fontSize: 11.sp,
                   fontWeight: FontWeight.w500,
@@ -196,7 +197,7 @@ class LeaveRequestItem extends StatelessWidget {
               children: [
                 Expanded(
                   child: AppActionButton(
-                    label: 'Từ chối',
+                    label: context.l10n.reject,
                     onPressed: () => onDecision(false),
                     type: AppButtonType.outlined,
                     color: AppColors.white,
@@ -210,7 +211,7 @@ class LeaveRequestItem extends StatelessWidget {
                 SizedBox(width: 8.w),
                 Expanded(
                   child: AppActionButton(
-                    label: 'Đồng ý',
+                    label: context.l10n.approve,
                     onPressed: () => onDecision(true),
                     color: AppColors.success,
                     textColor: AppColors.white,
@@ -319,7 +320,7 @@ class _TodayBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.r),
       ),
       child: AppText.l2(
-        'Hôm nay',
+        context.l10n.today,
         color: AppColors.primary,
         fontSize: 10.sp,
         fontWeight: FontWeight.w700,

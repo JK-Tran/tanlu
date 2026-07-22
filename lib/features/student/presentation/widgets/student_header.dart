@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/core/widgets/app_search_bar.dart';
+import 'package:tanlu_management/features/notification/presentation/widgets/notification_bell_widget.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class StudentHeader extends StatefulWidget {
   final ValueChanged<String>? onSearchChanged;
@@ -47,44 +49,58 @@ class _StudentHeaderState extends State<StudentHeader> {
           color: AppColors.grayDark,
           fontSize: 20.sp,
         ),
-        Container(
-          width: 40.w,
-          height: 40.w,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.08),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40.w,
+              height: 40.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.08),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Material(
-            color: Colors.white,
-            shape: CircleBorder(
-              side: BorderSide(color: AppColors.primaryLight, width: 1),
-            ),
-            clipBehavior: Clip
-                .antiAlias, // Cắt viền gọn gàng để hiệu ứng nhấn không bị tràn
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  isSearching = true;
-                });
-                Future.delayed(const Duration(milliseconds: 50), () {
-                  _searchFocusNode.requestFocus();
-                });
-              },
-              splashColor: AppColors.primaryLight, // Màu gợn sóng khi nhấn
-              highlightColor: AppColors.primary.withValues(alpha: 0.5),
-              child: Icon(
-                Icons.search_rounded,
-                color: AppColors.grayDark,
-                size: 20.w,
+              child: Material(
+                color: Colors.white,
+                shape: CircleBorder(
+                  side: BorderSide(color: AppColors.primaryLight, width: 1),
+                ),
+                clipBehavior: Clip
+                    .antiAlias, // Cắt viền gọn gàng để hiệu ứng nhấn không bị tràn
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      isSearching = true;
+                    });
+                    Future.delayed(const Duration(milliseconds: 50), () {
+                      _searchFocusNode.requestFocus();
+                    });
+                  },
+                  splashColor: AppColors.primaryLight, // Màu gợn sóng khi nhấn
+                  highlightColor: AppColors.primary.withValues(alpha: 0.5),
+                  child: Icon(
+                    Icons.search_rounded,
+                    color: AppColors.grayDark,
+                    size: 20.w,
+                  ),
+                ),
               ),
             ),
-          ),
+
+            SizedBox(width: 12.w),
+
+            const NotificationBellWidget(
+              size: 40,
+              iconSize: 24,
+              backgroundColor: Colors.white,
+              hasShadow: true,
+            ),
+          ],
         ),
       ],
     );
@@ -100,7 +116,7 @@ class _StudentHeaderState extends State<StudentHeader> {
           child: AppSearchBar(
             controller: _searchController,
             focusNode: _searchFocusNode,
-            hintText: 'Tìm kiếm tên bé...',
+            hintText: context.l10n.searchStudentHint,
             backgroundColor: hasText ? AppColors.grayVeryLight : Colors.white,
             borderColor: hasText
                 ? Colors.transparent

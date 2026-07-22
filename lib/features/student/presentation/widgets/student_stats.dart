@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class StudentStats extends StatelessWidget {
   final int total;
@@ -27,21 +28,21 @@ class StudentStats extends StatelessWidget {
         children: [
           _buildStatChip(
             index: 0,
-            text: 'Tổng: $total',
+            text: S.current.totalStats(total),
             activeBgColor: AppColors.primary.withValues(alpha: 0.8),
             textColor: AppColors.black,
           ),
           SizedBox(width: 12.w),
           _buildStatChip(
             index: 1,
-            text: 'Nam: $male',
+            text: S.current.maleStats(male),
             activeBgColor: AppColors.info,
             textColor: AppColors.black,
           ),
           SizedBox(width: 12.w),
           _buildStatChip(
             index: 2,
-            text: 'Nữ: $female',
+            text: S.current.femaleStats(female),
             activeBgColor: AppColors.primary.withValues(alpha: 0.8),
             textColor: AppColors.black,
           ),

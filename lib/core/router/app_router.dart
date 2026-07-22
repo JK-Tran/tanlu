@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/shared/services/firebase/firebase_messaging_service.dart';
+import 'package:tanlu_management/core/notification/notification_service.dart';
 import 'package:tanlu_management/features/auth/presentation/login/pages/login_page.dart';
 import 'package:tanlu_management/features/home/presentation/pages/home_page.dart';
 
@@ -16,6 +16,7 @@ import 'package:tanlu_management/features/overview/presentation/pages/overview_p
 import 'package:tanlu_management/features/feed/presentation/feed_page/pages/feed_page.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/pages/create_feed_page.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_detail/pages/feed_detail_page.dart';
+import 'package:tanlu_management/features/feed/domain/entity/feed_post.dart';
 
 import 'package:tanlu_management/features/activity/presentation/pages/activity_page.dart';
 import 'package:tanlu_management/features/chat/presentation/chat_page/pages/chat_page.dart';
@@ -64,12 +65,12 @@ class AppRouter {
           loading: () => null,
           unauthenticated: () {
             FlutterNativeSplash.remove();
-            FirebaseMessagingService.requestPermission();
+            NotificationService.requestPermission();
             return isOnLogin ? null : login;
           },
           authenticated: (user) {
             FlutterNativeSplash.remove();
-            FirebaseMessagingService.requestPermission();
+            NotificationService.requestPermission();
             final isParent = user.role == 'parent';
             if (isOnLogin || isOnRoot) {
               return isParent ? activity : overview;
@@ -135,15 +136,28 @@ class AppRouter {
           name: 'feed-detail',
           parentNavigatorKey: rootNavigatorKey,
           pageBuilder: (context, state) {
-            final extra = state.extra as Map<String, dynamic>?;
+            final extra = state.extra as ({FeedPost feed, bool openComments})?;
             return SlideTransitionPage(
               child: FeedDetailPage(
-                title: extra?['title'] as String? ?? 'Chi tiết bài viết',
-                author: extra?['author'] as String? ?? 'Cô Lan',
-                content:
-                    extra?['content'] as String? ??
-                    'Hôm nay lớp học vẽ tranh chủ đề gia đình.',
-                openComments: extra?['openComments'] as bool? ?? false,
+                feed: extra?.feed,
+                openComments: extra?.openComments ?? false,
+              ),
+            );
+          },
+        ),
+        GoRoute(
+          path: '$feedDetail/:id',
+          name: 'feed-detail-by-id',
+          parentNavigatorKey: rootNavigatorKey,
+          pageBuilder: (context, state) {
+            final id = int.tryParse(state.pathParameters['id']!) ?? 0;
+            final commentIdStr = state.uri.queryParameters['commentId'];
+            final highlightCommentId = commentIdStr != null ? int.tryParse(commentIdStr) : null;
+            return SlideTransitionPage(
+              child: FeedDetailPage(
+                postId: id,
+                openComments: true,
+                highlightCommentId: highlightCommentId,
               ),
             );
           },

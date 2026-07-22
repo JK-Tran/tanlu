@@ -8,6 +8,7 @@ import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
 import 'package:tanlu_management/shared/utils/string_utils.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class StudentDetailHeader extends StatelessWidget {
   final Student student;
@@ -174,8 +175,8 @@ class StudentDetailHeader extends StatelessWidget {
                         text: student.classInfo.name.isNotEmpty
                             ? student.classInfo.name
                             : (student.classId != 0
-                                  ? 'Lớp ${student.classId}'
-                                  : 'Chưa cập nhật lớp'),
+                                  ? context.l10n.classLabel(student.classId.toString())
+                                  : context.l10n.noClassUpdated),
                         backgroundColor: Colors.white.withValues(alpha: 0.15),
                         contentColor: Colors.white,
                       ),
@@ -196,7 +197,7 @@ class StudentDetailHeader extends StatelessWidget {
                     width: 80.w,
                     child: Center(
                       child: AppText.b2(
-                        'Chẩn đoán',
+                        context.l10n.diagnosis,
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                       ),

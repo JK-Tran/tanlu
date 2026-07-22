@@ -5,6 +5,9 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
+import 'package:tanlu_management/core/notification/notification_router.dart';
+import 'package:tanlu_management/core/notification/notification_payload.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
@@ -101,7 +104,7 @@ class _NotificationPageState extends State<NotificationPage> {
     return Scaffold(
       backgroundColor: AppColors.grayBg,
       appBar: AppBar(
-        title: AppText.h2('Thông báo', color: AppColors.grayDark),
+        title: AppText.h2(context.l10n.notificationsTitle, color: AppColors.grayDark),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -114,7 +117,7 @@ class _NotificationPageState extends State<NotificationPage> {
               );
             },
             child: AppText.b2(
-              'Đọc tất cả',
+              context.l10n.readAll,
               color: AppColors.primary,
               fontWeight: FontWeight.w600,
             ),
@@ -141,7 +144,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   ),
                   SizedBox(height: 16.h),
                   AppText.b1(
-                    'Không có thông báo nào',
+                    context.l10n.noNotifications,
                     color: AppColors.grayMedium,
                   ),
                 ],
@@ -194,6 +197,12 @@ class _NotificationPageState extends State<NotificationPage> {
                           NotificationEvent.markAsRead([item.id]),
                         );
                       }
+                      
+                      final payload = NotificationPayload.fromData({
+                        'type': item.type,
+                        if (item.data != null) ...item.data!,
+                      });
+                      NotificationRouter.route(payload);
                     },
                     child: Padding(
                       padding: EdgeInsets.symmetric(

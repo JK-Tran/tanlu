@@ -1,6 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 enum AppNotificationType { info, warning, error, success }
 
@@ -9,13 +10,13 @@ class AppNotificationDialog extends StatelessWidget {
     super.key,
     required this.title,
     required this.content,
-    this.buttonText = 'Đóng',
+    this.buttonText,
     this.type = AppNotificationType.info,
   });
 
   final String title;
   final String content;
-  final String buttonText;
+  final String? buttonText;
   final AppNotificationType type;
 
   IconData get _icon => switch (type) {
@@ -42,7 +43,7 @@ class AppNotificationDialog extends StatelessWidget {
     BuildContext context, {
     required String title,
     required String content,
-    String buttonText = 'Đóng',
+    String? buttonText,
     AppNotificationType type = AppNotificationType.info,
   }) {
     return showDialog<void>(
@@ -155,7 +156,7 @@ class AppNotificationDialog extends StatelessWidget {
                 ),
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text(
-                  buttonText,
+                  buttonText ?? context.l10n.close,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 13.sp,

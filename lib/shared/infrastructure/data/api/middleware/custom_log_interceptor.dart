@@ -41,11 +41,13 @@ class CustomLogInterceptor extends BaseInterceptor {
       if (options.data is FormData) {
         final data = options.data as FormData;
         if (data.fields.isNotEmpty) {
-          log.add('🌐 Fields: ${_prettyResponse(data.fields)}');
+          log.add(
+            '🌐 Fields: ${_prettyResponse(Map.fromEntries(data.fields))}',
+          );
         }
         if (data.files.isNotEmpty) {
           log.add(
-            '🌐 Files: ${_prettyResponse(data.files.map((e) => MapEntry(e.key, 'File name: ${e.value.filename}, Content type: ${e.value.contentType}, Length: ${e.value.length}')))}',
+            '🌐 Files: ${_prettyResponse(Map.fromEntries(data.files.map((e) => MapEntry(e.key, 'File name: ${e.value.filename}, Content type: ${e.value.contentType}, Length: ${e.value.length}'))))}',
           );
         }
       } else {

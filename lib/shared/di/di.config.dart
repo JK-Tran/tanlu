@@ -66,6 +66,37 @@ import '../../features/auth/domain/usecases/save_current_user_use_case.dart'
 import '../../features/auth/domain/usecases/update_fcm_token_use_case.dart'
     as _i860;
 import '../../features/auth/presentation/login/bloc/login_bloc.dart' as _i204;
+import '../../features/feed/data/mapper/feed_author_data_mapper.dart' as _i1071;
+import '../../features/feed/data/mapper/feed_comment_data_mapper.dart' as _i70;
+import '../../features/feed/data/mapper/feed_post_data_mapper.dart' as _i517;
+import '../../features/feed/data/repositories/feed_repository_impl.dart'
+    as _i452;
+import '../../features/feed/data/sources/feed_api_service.dart' as _i226;
+import '../../features/feed/domain/repositories/feed_repository.dart' as _i430;
+import '../../features/feed/domain/usecases/create_feed_comment_use_case.dart'
+    as _i218;
+import '../../features/feed/domain/usecases/create_feed_post_use_case.dart'
+    as _i436;
+import '../../features/feed/domain/usecases/delete_feed_post_use_case.dart'
+    as _i152;
+import '../../features/feed/domain/usecases/get_feed_comments_use_case.dart'
+    as _i644;
+import '../../features/feed/domain/usecases/get_feed_post_use_case.dart'
+    as _i76;
+import '../../features/feed/domain/usecases/get_feed_posts_use_case.dart'
+    as _i61;
+import '../../features/feed/domain/usecases/toggle_comment_like_use_case.dart'
+    as _i19;
+import '../../features/feed/domain/usecases/toggle_post_like_use_case.dart'
+    as _i864;
+import '../../features/feed/domain/usecases/update_feed_post_use_case.dart'
+    as _i138;
+import '../../features/feed/presentation/create_feed/bloc/create_feed_bloc.dart'
+    as _i967;
+import '../../features/feed/presentation/feed_detail/bloc/feed_detail_bloc.dart'
+    as _i60;
+import '../../features/feed/presentation/feed_page/bloc/feed_bloc.dart'
+    as _i242;
 import '../../features/notification/data/mapper/notification_data_mapper.dart'
     as _i305;
 import '../../features/notification/data/repositories/notification_repository_impl.dart'
@@ -116,8 +147,7 @@ import '../infrastructure/data/api/middleware/connectivity_interceptor.dart'
     as _i896;
 import '../infrastructure/data/api/middleware/header_interceptor.dart' as _i34;
 import '../services/local_storage/app_preferences.dart' as _i160;
-import '../services/push/chat_incoming_banner_service.dart' as _i568;
-import '../services/push/chat_push_opener.dart' as _i542;
+import '../services/socket/global_web_socket_service.dart' as _i538;
 import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -160,15 +190,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i896.ConnectivityInterceptor>(
       () => _i896.ConnectivityInterceptor(),
     );
+    gh.factory<_i1071.FeedAuthorDataMapper>(
+      () => _i1071.FeedAuthorDataMapper(),
+    );
     gh.lazySingleton<_i305.NotificationDataMapper>(
       () => _i305.NotificationDataMapper(),
     );
     gh.lazySingleton<_i221.AppInfo>(() => _i221.AppInfo());
     gh.lazySingleton<_i756.RawApiClient>(() => _i756.RawApiClient());
-    gh.lazySingleton<_i568.ChatIncomingBannerService>(
-      () => _i568.ChatIncomingBannerService(),
+    gh.lazySingleton<_i538.GlobalWebSocketService>(
+      () => _i538.GlobalWebSocketService(),
     );
-    gh.lazySingleton<_i542.ChatPushOpener>(() => _i542.ChatPushOpener());
     gh.factory<_i67.StudentDataMapper>(
       () => _i67.StudentDataMapper(
         gh<_i367.ClassInfoDataMapper>(),
@@ -199,6 +231,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i436.NoneAuthAppServerApiClient>(
       () => _i436.NoneAuthAppServerApiClient(gh<_i34.HeaderInterceptor>()),
+    );
+    gh.factory<_i517.FeedPostDataMapper>(
+      () => _i517.FeedPostDataMapper(gh<_i1071.FeedAuthorDataMapper>()),
+    );
+    gh.factory<_i70.FeedCommentDataMapper>(
+      () => _i70.FeedCommentDataMapper(gh<_i1071.FeedAuthorDataMapper>()),
     );
     gh.factory<_i840.DailyAttendanceResultDataMapper>(
       () => _i840.DailyAttendanceResultDataMapper(
@@ -244,11 +282,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i374.StudentApiService>(
       () => _i374.StudentApiService(gh<_i695.AuthAppServerApiClient>()),
     );
+    gh.lazySingleton<_i226.FeedApiService>(
+      () => _i226.FeedApiService(gh<_i695.AuthAppServerApiClient>()),
+    );
     gh.lazySingleton<_i477.AttendanceRepository>(
       () => _i719.AttendanceRepositoryImpl(
         gh<_i799.AttendanceApiService>(),
         gh<_i840.DailyAttendanceResultDataMapper>(),
         gh<_i536.LeaveRequestDataMapper>(),
+      ),
+    );
+    gh.lazySingleton<_i430.FeedRepository>(
+      () => _i452.FeedRepositoryImpl(
+        gh<_i226.FeedApiService>(),
+        gh<_i517.FeedPostDataMapper>(),
+        gh<_i70.FeedCommentDataMapper>(),
       ),
     );
     gh.factory<_i146.GetInitialAuthDataUseCase>(
@@ -275,6 +323,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i257.GetMeUseCase>(),
         gh<_i711.LogoutUseCase>(),
         gh<_i860.UpdateFcmTokenUseCase>(),
+        gh<_i160.AppPreferences>(),
+        gh<_i538.GlobalWebSocketService>(),
       ),
     );
     gh.factory<_i204.LoginBloc>(
@@ -326,6 +376,39 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i448.SubmitLeaveDecisionUseCase>(),
       ),
     );
+    gh.factory<_i61.GetFeedPostsUseCase>(
+      () => _i61.GetFeedPostsUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i436.CreateFeedPostUseCase>(
+      () => _i436.CreateFeedPostUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i152.DeleteFeedPostUseCase>(
+      () => _i152.DeleteFeedPostUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i138.UpdateFeedPostUseCase>(
+      () => _i138.UpdateFeedPostUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i218.CreateFeedCommentUseCase>(
+      () => _i218.CreateFeedCommentUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i644.GetFeedCommentsUseCase>(
+      () => _i644.GetFeedCommentsUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i19.ToggleCommentLikeUseCase>(
+      () => _i19.ToggleCommentLikeUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i864.TogglePostLikeUseCase>(
+      () => _i864.TogglePostLikeUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i76.GetFeedPostUseCase>(
+      () => _i76.GetFeedPostUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i242.FeedBloc>(
+      () => _i242.FeedBloc(
+        gh<_i61.GetFeedPostsUseCase>(),
+        gh<_i864.TogglePostLikeUseCase>(),
+      ),
+    );
     gh.factory<_i483.GetNotificationsUseCase>(
       () => _i483.GetNotificationsUseCase(gh<_i630.NotificationRepository>()),
     );
@@ -337,6 +420,20 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i386.GetStudentsUseCase>(
       () => _i386.GetStudentsUseCase(gh<_i215.StudentRepository>()),
+    );
+    gh.factory<_i60.FeedDetailBloc>(
+      () => _i60.FeedDetailBloc(
+        gh<_i76.GetFeedPostUseCase>(),
+        gh<_i152.DeleteFeedPostUseCase>(),
+        gh<_i644.GetFeedCommentsUseCase>(),
+        gh<_i218.CreateFeedCommentUseCase>(),
+        gh<_i864.TogglePostLikeUseCase>(),
+        gh<_i19.ToggleCommentLikeUseCase>(),
+        gh<_i538.GlobalWebSocketService>(),
+      ),
+    );
+    gh.factory<_i967.CreateFeedBloc>(
+      () => _i967.CreateFeedBloc(gh<_i436.CreateFeedPostUseCase>()),
     );
     gh.lazySingleton<_i29.NotificationBloc>(
       () => _i29.NotificationBloc(

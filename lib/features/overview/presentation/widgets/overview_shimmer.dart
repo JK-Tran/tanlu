@@ -13,7 +13,6 @@ class OverviewShimmer extends StatelessWidget {
       highlightColor: AppColors.white,
       child: Column(
         children: [
-          // Banner & Action Card area
           Stack(
             children: [
               Column(
@@ -38,7 +37,6 @@ class OverviewShimmer extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
 
-          // Request Cards (2 columns)
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Row(
