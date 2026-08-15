@@ -15,7 +15,7 @@ class FeedTabBar extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(10.r),
           border: Border.all(color: AppColors.grayLight.withValues(alpha: 0.8)),
           boxShadow: [
             BoxShadow(
@@ -26,7 +26,7 @@ class FeedTabBar extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: EdgeInsets.all(4.w),
+          padding: EdgeInsets.all(6.w),
           child: TabBar(
             controller: controller,
             tabAlignment: TabAlignment.fill,
@@ -41,13 +41,13 @@ class FeedTabBar extends StatelessWidget {
             ),
             labelColor: Colors.white,
             unselectedLabelColor: AppColors.black,
-            labelStyle: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700),
+            labelStyle: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700),
             unselectedLabelStyle: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w700,
             ),
             tabs: FeedTab.values
-                .map((tab) => Tab(height: 36.h, text: tab.label))
+                .map((tab) => Tab(height: 45.h, text: tab.label))
                 .toList(),
           ),
         ),

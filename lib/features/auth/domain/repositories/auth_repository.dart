@@ -17,5 +17,11 @@ abstract class AuthRepository {
 
   Future<void> saveAccessToken(String? accessToken);
 
+  Future<void> saveRefreshToken(String? refreshToken);
+
+  Future<String> refreshToken();
+
   Future<void> updateFcmToken(String token);
+
+  Future<void> changePassword(String oldPassword, String newPassword);
 }

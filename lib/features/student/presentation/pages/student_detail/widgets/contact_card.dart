@@ -55,7 +55,10 @@ class ContactCard extends StatelessWidget {
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: contact.phone));
                     Navigator.pop(context);
-                    AppSnackbar.showSuccess(context, message: context.l10n.copied);
+                    AppSnackbar.showSuccess(
+                      context,
+                      message: context.l10n.copied,
+                    );
                   },
                 ),
                 Padding(
@@ -76,7 +79,10 @@ class ContactCard extends StatelessWidget {
                     color: AppColors.success,
                     size: 24.w,
                   ),
-                  title: AppText.b1(context.l10n.callPhone, color: AppColors.grayDark),
+                  title: AppText.b1(
+                    context.l10n.callPhone,
+                    color: AppColors.grayDark,
+                  ),
                   onTap: () async {
                     Navigator.pop(context);
                     final Uri url = Uri.parse('tel:${contact.phone}');
@@ -135,8 +141,8 @@ class ContactCard extends StatelessWidget {
                   scale: 0.8,
                   child: Image.asset(
                     'assets/icons/user.png',
-                    width: 20.w,
-                    height: 20.w,
+                    width: 16.w,
+                    height: 16.w,
                     color: Colors.white,
                   ),
                 ),
@@ -146,26 +152,28 @@ class ContactCard extends StatelessWidget {
                 child: AppText.t1(
                   contact.name,
                   color: AppColors.grayDark,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12.sp,
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                padding: EdgeInsets.all(6.w),
                 decoration: BoxDecoration(
                   color: tagColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: AppText.b2(
-                  contact.relationship.isNotEmpty ? contact.relationship : context.l10n.parent,
+                  contact.relationship.isNotEmpty
+                      ? contact.relationship
+                      : context.l10n.parent,
                   color: tagColor,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16.h),
+          SizedBox(height: 18.h),
           if (contact.phone.isNotEmpty)
             AppInfoRow(
               icon: Icons.phone_outlined,

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
-import 'package:tanlu_management/core/base/default_bloc.dart';
-import 'package:tanlu_management/core/themes/app_colors.dart';
-import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/chat/presentation/chat_page/widgets/chat_app_bar.dart';
+import 'package:tanlu_management/core/widgets/app_snackbar.dart';
+import 'package:tanlu_management/core/widgets/main_app_bar.dart';
+import 'package:tanlu_management/features/chat/domain/entity/chat_contact.dart';
+import 'package:tanlu_management/features/chat/domain/entity/chat_conversation.dart';
+import 'package:tanlu_management/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:tanlu_management/features/chat/presentation/chat_detail/pages/chat_detail_page.dart';
+import 'package:tanlu_management/features/chat/presentation/chat_page/widgets/chat_body.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -13,135 +17,92 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends BasePageState<ChatPage, DefaultBloc> {
+class _ChatPageState extends BasePageState<ChatPage, ChatBloc> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+    // Only load if not already loading to prevent double calls
+    if (!bloc.state.isLoadingConversations &&
+        bloc.state.conversations.isEmpty) {
+      bloc.add(const ChatEvent.loadConversations(isRefresh: true));
+    }
+    if (!bloc.state.isLoadingContacts && bloc.state.contacts.isEmpty) {
+      bloc.add(const ChatEvent.loadContacts());
+    }
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      if (!bloc.state.isLoadingConversations &&
+          !bloc.state.hasReachedMaxConversations) {
+        bloc.add(const ChatEvent.loadConversations(isRefresh: false));
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _navigateToDetail(BuildContext context, ChatConversation conversation) {
+    bloc.add(ChatEvent.selectConversation(conversation.id));
+    Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(
+        builder: (_) => BlocProvider.value(
+          value: bloc,
+          child: ChatDetailPage(conversationName: conversation.name),
+        ),
+      ),
+    );
+  }
+
+  void _onTapContact(BuildContext context, ChatContact contact) {
+    bloc.add(
+      ChatEvent.initConversation(contact.id, (conversationId) {
+        if (context.mounted) {
+          final conv = bloc.state.conversations.firstWhere(
+            (c) => c.id == conversationId,
+            orElse: () =>
+                ChatConversation(id: conversationId, name: contact.fullName),
+          );
+          _navigateToDetail(context, conv);
+        }
+      }),
+    );
+  }
+
   @override
   Widget buildPage(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: const ChatAppBar(),
-      body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 8.h),
-        children: [
-          _ConversationTile(
-            name: 'Phụ huynh bé An',
-            lastMessage: 'Con nhà mình hôm nay ăn uống thế nào ạ?',
-            timeLabel: '10:30',
-            unreadCount: 2,
-            onTap: () => Navigator.of(context, rootNavigator: true).push(
-              MaterialPageRoute(
-                builder: (_) => const ChatDetailPlaceholderPage(
-                  title: 'Phụ huynh bé An',
-                ),
-              ),
+    return BlocConsumer<ChatBloc, ChatState>(
+      listenWhen: (prev, curr) =>
+          prev.onPageError != curr.onPageError && curr.onPageError.isNotEmpty,
+      listener: (context, state) {
+        AppSnackbar.show(
+          context,
+          message: state.onPageError,
+          type: AppSnackbarType.error,
+        );
+      },
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: MainAppBar(title: context.l10n.navMessage),
+          body: SafeArea(
+            child: ChatBody(
+              state: state,
+              scrollController: _scrollController,
+              onTapConversation: (conv) => _navigateToDetail(context, conv),
+              onTapContact: (contact) => _onTapContact(context, contact),
             ),
           ),
-          _ConversationTile(
-            name: 'Nhóm Lớp Mầm 1',
-            lastMessage: 'Cô nhắc đóng học phí tháng 6 nhé.',
-            timeLabel: 'Hôm qua',
-            unreadCount: 0,
-            onTap: () => Navigator.of(context, rootNavigator: true).push(
-              MaterialPageRoute(
-                builder: (_) => const ChatDetailPlaceholderPage(
-                  title: 'Nhóm Lớp Mầm 1',
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ConversationTile extends StatelessWidget {
-  const _ConversationTile({
-    required this.name,
-    required this.lastMessage,
-    required this.timeLabel,
-    required this.unreadCount,
-    required this.onTap,
-  });
-
-  final String name;
-  final String lastMessage;
-  final String timeLabel;
-  final int unreadCount;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      leading: ChatAvatar(name: name, size: 48),
-      title: AppText.b2(name, fontWeight: FontWeight.w600),
-      subtitle: AppText.t1(lastMessage, maxLines: 1),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          AppText.t1(timeLabel, color: AppColors.grayMedium),
-          if (unreadCount > 0) ...[
-            SizedBox(height: 4.h),
-            CircleAvatar(
-              radius: 10.r,
-              backgroundColor: AppColors.primary,
-              child: AppText.t1(
-                '$unreadCount',
-                color: Colors.white,
-                fontSize: 10.sp,
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class ChatDetailPlaceholderPage extends StatelessWidget {
-  const ChatDetailPlaceholderPage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: ListView(
-        padding: EdgeInsets.all(16.w),
-        children: const [
-          _MessageBubble(text: 'Xin chào cô!', isMine: false),
-          _MessageBubble(text: 'Chào phụ huynh, con hôm nay ổn ạ.', isMine: true),
-          _MessageBubble(
-            text: 'Con nhà mình hôm nay ăn uống thế nào ạ?',
-            isMine: false,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _MessageBubble extends StatelessWidget {
-  const _MessageBubble({required this.text, required this.isMine});
-
-  final String text;
-  final bool isMine;
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 8.h),
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-        decoration: BoxDecoration(
-          color: isMine ? AppColors.primaryLight : AppColors.grayBg,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: AppText.b2(text),
-      ),
+        );
+      },
     );
   }
 }

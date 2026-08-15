@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class CommentInputBar extends StatelessWidget {
   const CommentInputBar({
@@ -16,7 +17,7 @@ class CommentInputBar extends StatelessWidget {
     this.editingLabel,
     this.enabled = true,
     this.isSubmitting = false,
-    this.hintText = 'Viết bình luận...',
+    this.hintText,
     this.onCancelReply,
     this.onCancelEdit,
     this.onSubmit,
@@ -31,7 +32,7 @@ class CommentInputBar extends StatelessWidget {
   final String? editingLabel;
   final bool enabled;
   final bool isSubmitting;
-  final String hintText;
+  final String? hintText;
   final VoidCallback? onCancelReply;
   final VoidCallback? onCancelEdit;
   final VoidCallback? onSubmit;
@@ -60,8 +61,7 @@ class CommentInputBar extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  AttendanceAvatar(
-                    nickname: avatarName,
+                  AppAvatar(name: avatarName,
                     imageUrl: avatarUrl,
                     size: 36,
                   ),
@@ -94,7 +94,7 @@ class CommentInputBar extends StatelessWidget {
                           color: AppColors.grayDark,
                         ),
                         decoration: InputDecoration(
-                          hintText: hintText,
+                          hintText: hintText ?? context.l10n.feedWriteCommentHint,
                           hintStyle: TextStyle(
                             color: AppColors.grayMedium,
                             fontSize: 14.sp,
@@ -171,7 +171,7 @@ class _ReplyBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText.b2(
-                  'Trả lời $authorName',
+                  context.l10n.feedReplyToAuthor(authorName),
                   fontSize: 12.sp,
                   color: AppColors.grayMedium,
                   fontWeight: FontWeight.w600,

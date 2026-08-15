@@ -30,6 +30,16 @@ class AuthApiService {
     );
   }
 
+  Future<UserDataResponse?> refreshToken(String refreshToken) async {
+    return _noneAuthAppServerApiClient.request(
+      method: RestMethod.post,
+      successResponseMapperType: SuccessResponseMapperType.jsonObject,
+      path: '/auth/refresh',
+      body: {'refreshToken': refreshToken},
+      decoder: (json) => UserDataResponse.fromJson(json as JSON),
+    );
+  }
+
   Future<UserData?> getMe() async {
     return _authAppServerApiClient.request(
       method: RestMethod.get,
@@ -53,6 +63,18 @@ class AuthApiService {
       successResponseMapperType: SuccessResponseMapperType.jsonObject,
       path: '/auth/me/fcm-token',
       body: {'fcmToken': fcmToken},
+    );
+  }
+
+  Future<void> changePassword(String oldPassword, String newPassword) async {
+    await _authAppServerApiClient.request(
+      method: RestMethod.post,
+      successResponseMapperType: SuccessResponseMapperType.jsonObject,
+      path: '/auth/change-password',
+      body: {
+        'oldPassword': oldPassword,
+        'newPassword': newPassword,
+      },
     );
   }
 }

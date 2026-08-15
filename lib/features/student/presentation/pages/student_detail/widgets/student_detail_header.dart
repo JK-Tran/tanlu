@@ -6,7 +6,7 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_icon_pill.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/student/domain/entity/student.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 import 'package:tanlu_management/shared/utils/string_utils.dart';
 import 'package:tanlu_management/l10n/l10n.dart';
 
@@ -67,7 +67,7 @@ class StudentDetailHeader extends StatelessWidget {
                 // Title
                 Expanded(
                   child: Text(
-                    "Hồ sơ trẻ",
+                    context.l10n.studentProfileTitle,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,
@@ -120,8 +120,8 @@ class StudentDetailHeader extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.white, width: 2),
                   ),
-                  child: AttendanceAvatar(
-                    nickname: avatarNickname,
+                  child: AppAvatar(
+                    name: avatarNickname,
                     imageUrl: avatarUrl,
                     size: 76,
                   ),
@@ -175,7 +175,9 @@ class StudentDetailHeader extends StatelessWidget {
                         text: student.classInfo.name.isNotEmpty
                             ? student.classInfo.name
                             : (student.classId != 0
-                                  ? context.l10n.classLabel(student.classId.toString())
+                                  ? context.l10n.classLabel(
+                                      student.classId.toString(),
+                                    )
                                   : context.l10n.noClassUpdated),
                         backgroundColor: Colors.white.withValues(alpha: 0.15),
                         contentColor: Colors.white,

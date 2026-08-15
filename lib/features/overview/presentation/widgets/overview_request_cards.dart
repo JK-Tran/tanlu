@@ -111,22 +111,22 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
                     child: Image.asset(iconPath, width: 20.w, height: 20.w),
                   ),
                 ),
-                SizedBox(width: 4.w),
+                SizedBox(width: 8.w),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppText.h2(
                         title,
-                        color: AppColors.black,
-                        fontWeight: FontWeight.bold,
+                        color: AppColors.grayDark,
+                        fontWeight: FontWeight.w700,
                         fontSize: 12.sp,
                         maxLines: 2,
                       ),
                       AppText.b2(
                         subtitle,
                         color: AppColors.grayMedium,
-                        fontSize: 12.sp,
+                        fontSize: 10.sp,
                       ),
                     ],
                   ),
@@ -168,7 +168,7 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
                         context.l10n.viewDetails,
                         color: primaryColor,
                         fontWeight: FontWeight.w600,
-                        fontSize: 13.sp,
+                        fontSize: 10.sp,
                       ),
                       Icon(
                         Icons.chevron_right,
@@ -334,7 +334,11 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AppText.b2(
-                          context.l10n.parentName(pendingRequests.first.parent.fullName.isNotEmpty ? pendingRequests.first.parent.fullName : pendingRequests.first.student.fullName),
+                          context.l10n.parentName(
+                            pendingRequests.first.parent.fullName.isNotEmpty
+                                ? pendingRequests.first.parent.fullName
+                                : pendingRequests.first.student.fullName,
+                          ),
                           color: AppColors.grayDark80,
                         ),
                       ],
@@ -353,7 +357,7 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
                           AppText.b2(
                             _getMultipleRequestsParentNames(pendingRequests)!,
                             fontWeight: FontWeight.bold,
-                            fontSize: 13.sp,
+                            fontSize: 12.sp,
                             maxLines: 1,
                             textOverflow: TextOverflow.ellipsis,
                           ),
@@ -384,7 +388,7 @@ class _OverviewRequestCardsState extends State<OverviewRequestCards> {
         child: AppText.t2(
           context.l10n.comingSoon,
           color: AppColors.grayMedium,
-          fontSize: 12.sp,
+          fontSize: 10.sp,
         ),
       ),
     );

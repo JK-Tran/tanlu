@@ -4,7 +4,7 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_tab/widgets/attendance_status_ext.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_tab/widgets/attendance_student_time_row.dart';
 
 class StatsStudentItem extends StatelessWidget {
@@ -51,7 +51,7 @@ class StatsStudentItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          AttendanceAvatar(nickname: name, size: 42),
+          AppAvatar(name: name, size: 42),
           SizedBox(width: 12.w),
           Expanded(
             child: Column(
@@ -65,7 +65,7 @@ class StatsStudentItem extends StatelessWidget {
                     AppText.b1(
                       fullName ?? name,
                       color: AppColors.grayDark,
-                      fontSize: 14.sp,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w700,
                     ),
 
@@ -73,7 +73,7 @@ class StatsStudentItem extends StatelessWidget {
                       AppText.b2(
                         '($nickName)',
                         color: AppColors.grayMedium,
-                        fontSize: 12.sp,
+                        fontSize: 10.sp,
                         fontWeight: FontWeight.w700,
                       ),
                       SizedBox(width: 4.w),

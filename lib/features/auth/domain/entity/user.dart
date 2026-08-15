@@ -25,6 +25,10 @@ class User with _$User {
 class UserResponse with _$UserResponse {
   const factory UserResponse({
     Token? token,
+    @Default('') String accessToken,
+    @Default('') String refreshToken,
+    @Default(0) int expiresIn,
+    @Default(0) int refreshExpiresIn,
     User? user,
     @Default('') String firebaseCustomToken,
   }) = _UserResponse;

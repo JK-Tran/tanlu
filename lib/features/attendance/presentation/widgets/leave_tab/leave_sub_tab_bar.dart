@@ -84,7 +84,7 @@ class _FilterChip extends StatelessWidget {
                 child: AppText.b2(
                   label,
                   color: selected ? AppColors.white : AppColors.grayDark80,
-                  fontSize: 12.sp,
+                  fontSize: 10.sp,
                   fontWeight: FontWeight.w700,
                   textAlign: TextAlign.center,
                 ),

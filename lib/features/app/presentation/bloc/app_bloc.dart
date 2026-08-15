@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -13,12 +14,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tanlu_management/shared/services/local_storage/app_preferences.dart';
 import 'package:tanlu_management/shared/services/socket/global_web_socket_service.dart';
 
+import 'package:get_it/get_it.dart';
+import 'package:tanlu_management/features/chat/presentation/bloc/chat_bloc.dart';
+
 part 'app_bloc.freezed.dart';
 part 'app_event.dart';
 part 'app_state.dart';
 
 @lazySingleton
-class AppBloc extends BaseBloc<AppEvent, AppState> {
+class AppBloc extends BaseBloc<AppEvent, AppState> with WidgetsBindingObserver {
   AppBloc(
     this._getInitialAuthDataUseCase,
     this._getMeUseCase,
@@ -30,6 +34,7 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
     on<_Started>(_onStarted);
     on<_LoggedIn>(_onLoggedIn);
     on<_LoggedOut>(_onLoggedOut);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   final GetInitialAuthDataUseCase _getInitialAuthDataUseCase;
@@ -53,9 +58,12 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
           return;
         }
         emit(AppState.authenticated(output.user!));
-        
+
         final token = await _appPreferences.accessToken;
         _globalWebSocketService.connect(token);
+        _globalWebSocketService.subscribe('user_${output.user!.id}');
+        _globalWebSocketService.subscribe('app_presence');
+        GetIt.instance.get<ChatBloc>();
 
         try {
           final output = await _getMeUseCase.execute(const GetMeInput());
@@ -81,7 +89,6 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
             },
           );
 
-          // Nếu thành công, có thể emit lại trạng thái mới để cập nhật UI
           emit(AppState.authenticated(output.user));
         } catch (e) {
           // Bỏ qua lỗi mạng (offline), nhưng nếu lỗi là 401 thì sẽ đăng xuất
@@ -96,24 +103,53 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
     emit(AppState.authenticated(event.user));
     final token = await _appPreferences.accessToken;
     _globalWebSocketService.connect(token);
+    _globalWebSocketService.subscribe('user_${event.user.id}');
+    _globalWebSocketService.subscribe('app_presence');
+    GetIt.instance.get<ChatBloc>();
   }
 
   FutureOr<void> _onLoggedOut(_LoggedOut event, Emitter<AppState> emit) async {
-    await runBlocCatching(
-      handleLoading: false,
-      action: () async {
-        await _logoutUseCase.execute(const LogoutInput());
-        _globalWebSocketService.disconnect();
-        emit(const AppState.unauthenticated());
-      },
-      doOnError: (_) => emit(const AppState.unauthenticated()),
+    final isUnauthenticated = state.maybeWhen(
+      unauthenticated: () => true,
+      orElse: () => false,
     );
+    if (isUnauthenticated) {
+      return; // Ngăn chặn infinite loop khi RefreshTokenInterceptor gọi liên tục
+    }
+
+    emit(const AppState.unauthenticated());
+
+    try {
+      await _logoutUseCase.execute(const LogoutInput());
+    } catch (_) {
+      // Ignore API errors during logout
+    } finally {
+      _globalWebSocketService.disconnect();
+    }
   }
 
   User? get currentUser => state.mapOrNull(authenticated: (s) => s.user);
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      _globalWebSocketService.disconnect();
+    } else if (state == AppLifecycleState.resumed) {
+      if (currentUser != null) {
+        _appPreferences.accessToken.then((token) {
+          _globalWebSocketService.connect(token);
+          _globalWebSocketService.subscribe('user_${currentUser!.id}');
+          _globalWebSocketService.subscribe('app_presence');
+        });
+      }
+    }
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
   Future<void> close() {
+    WidgetsBinding.instance.removeObserver(this);
     _tokenRefreshSub?.cancel();
     return super.close();
   }

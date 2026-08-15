@@ -141,7 +141,7 @@ class _CommentBubbleState extends State<CommentBubble> {
                 SizedBox(height: 4.h),
                 AppText.b1(
                   widget.comment.content,
-                  fontSize: 13.sp,
+                  fontSize: 12.sp,
                   color: AppColors.grayDark80,
                 ),
               ],

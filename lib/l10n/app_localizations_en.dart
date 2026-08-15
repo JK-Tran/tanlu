@@ -201,6 +201,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navStudent => 'Students';
 
   @override
+  String get studentListTitle => 'Children List';
+
+  @override
+  String get studentProfileTitle => 'Child Profile';
+
+  @override
+  String get studentNotFound => 'Student not found';
+
+  @override
+  String get studentTabContact => 'Contact';
+
+  @override
+  String get studentTabNotes => 'Notes';
+
+  @override
+  String get studentTabAttendance => 'Attendance';
+
+  @override
+  String get studentTabFeed => 'Feed';
+
+  @override
   String get networkError => 'Network error. Please try again.';
 
   @override
@@ -280,7 +301,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pendingResponse => 'Pending response';
 
   @override
-  String get phoneNumber => 'Phone number';
+  String get phoneNumber => 'Phone Number';
 
   @override
   String get pleaseEnterEmail => 'Please enter email';
@@ -444,6 +465,15 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get attendanceTabAttendance => 'Attendance';
+
+  @override
+  String get attendanceTabLeave => 'Leave Requests';
+
+  @override
+  String get attendanceTabHistory => 'History';
+
+  @override
   String get attendanceTitle => 'Attendance';
 
   @override
@@ -471,4 +501,390 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goBack => 'Go back';
+
+  @override
+  String get roleParent => 'Parent';
+
+  @override
+  String get roleTeacher => 'Teacher';
+
+  @override
+  String get accountAndSecurity => 'Account & Security';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get personalInfo => 'Personal Info';
+
+  @override
+  String get fullName => 'Full Name';
+
+  @override
+  String get role => 'Role';
+
+  @override
+  String get classTitle => 'Class';
+
+  @override
+  String get assignedClass => 'Assigned Class';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get logoutConfirmMsg => 'Are you sure you want to logout?';
+
+  @override
+  String get security => 'Security';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get contentComingSoon => 'Content will be updated soon';
+
+  @override
+  String get helpCenter => 'Help Center';
+
+  @override
+  String get alwaysReadyToHelp => 'We are always ready to help you';
+
+  @override
+  String get faq => 'FAQ';
+
+  @override
+  String get contactSupport => 'Contact Support';
+
+  @override
+  String get userGuide => 'User Guide';
+
+  @override
+  String get aboutApp => 'About App';
+
+  @override
+  String version(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get termsOfUse => 'Terms of Use';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get rateApp => 'Rate App';
+
+  @override
+  String get passwordUpdated => 'Password updated';
+
+  @override
+  String get currentPassword => 'Current password';
+
+  @override
+  String get newPassword => 'New password';
+
+  @override
+  String get confirmNewPassword => 'Confirm new password';
+
+  @override
+  String get reqMinChars => 'At least 8 characters';
+
+  @override
+  String get reqUpperLower => 'Uppercase and lowercase letters';
+
+  @override
+  String get reqSpecialChar => 'Special character';
+
+  @override
+  String get overviewEvaluate => 'Evaluate';
+
+  @override
+  String get feedCreatePost => 'Create Post';
+
+  @override
+  String get feedMediaRequirePermission => 'Photo library access required. ';
+
+  @override
+  String get feedMediaEnableInSettings => 'Please enable in Settings.';
+
+  @override
+  String feedMaxVideos(int maxVideos) {
+    return 'Select up to $maxVideos videos max';
+  }
+
+  @override
+  String feedVideoSizeExceed(int maxMB) {
+    return 'Video exceeds $maxMB MB';
+  }
+
+  @override
+  String feedMaxImages(int maxImages) {
+    return 'Select up to $maxImages images max';
+  }
+
+  @override
+  String feedSkippedOversizedVideos(int count) {
+    return 'Skipped $count oversized videos ';
+  }
+
+  @override
+  String feedMaxImagesAndVideos(int maxImages) {
+    return 'Reached $maxImages images and ';
+  }
+
+  @override
+  String feedOnlyMaxImagesAnd(int maxImages) {
+    return 'Select up to $maxImages images and ';
+  }
+
+  @override
+  String get feedGallery => 'Gallery';
+
+  @override
+  String get feedNext => 'Next';
+
+  @override
+  String feedNextWithCount(int count) {
+    return 'Next ($count)';
+  }
+
+  @override
+  String feedSelectMaxImagesInfo(int maxImages) {
+    return 'Select up to $maxImages images, ';
+  }
+
+  @override
+  String get feedAndroidGalleryInfo =>
+      'Android opens system gallery to select.';
+
+  @override
+  String get feedSelectMediaFromGallery => 'Select photo or video from gallery';
+
+  @override
+  String get feedAfterSelectInfo =>
+      'After selecting, you can review and add more.';
+
+  @override
+  String get feedOpeningGallery => 'Opening gallery...';
+
+  @override
+  String get feedOpenGalleryBtn => 'Open Photo Gallery';
+
+  @override
+  String get feedSelectMoreBtn => 'Select More';
+
+  @override
+  String get feedTeacherRole => 'Teacher';
+
+  @override
+  String get feedWhatFunToday => 'What\'s fun today in our class?';
+
+  @override
+  String get feedPhotoGallery => 'Photo Gallery';
+
+  @override
+  String get feedNoClassAssigned => 'No class assigned';
+
+  @override
+  String get feedLoadingClass => 'Loading class...';
+
+  @override
+  String get feedMyClass => 'My Class';
+
+  @override
+  String get feedPostFor => 'Post for';
+
+  @override
+  String get feedPublicOnExplore => 'Public on Explore';
+
+  @override
+  String get feedWhatAreYouThinking => 'What\'s on your mind?';
+
+  @override
+  String get feedAddBtn => 'Add';
+
+  @override
+  String get feedPostBtn => 'Post';
+
+  @override
+  String get feedCannotLoadPost => 'Cannot load post';
+
+  @override
+  String get feedDeletePost => 'Delete Post';
+
+  @override
+  String get feedDeletePostConfirmMsg =>
+      'Post will be deleted and not visible on the feed.';
+
+  @override
+  String get feedDeleteBtn => 'Delete';
+
+  @override
+  String get feedPostDetailTitle => 'Post Details';
+
+  @override
+  String get feedPostNotFound => 'Post not found';
+
+  @override
+  String get feedCommentOptions => 'Comment Options';
+
+  @override
+  String get feedEditComment => 'Edit Comment';
+
+  @override
+  String get feedDeleteComment => 'Delete Comment';
+
+  @override
+  String get feedAuthorBadge => 'Author';
+
+  @override
+  String get feedWriteCommentHint => 'Write a comment...';
+
+  @override
+  String feedReplyToAuthor(String authorName) {
+    return 'Reply to $authorName';
+  }
+
+  @override
+  String get feedEditedMark => '· Edited';
+
+  @override
+  String get feedReplyBtn => 'Reply';
+
+  @override
+  String feedCommentsCount(int total) {
+    return 'Comments ($total)';
+  }
+
+  @override
+  String get feedNoCommentsYet => 'No comments yet. Be the first!';
+
+  @override
+  String get feedPostOptions => 'Post Options';
+
+  @override
+  String get feedNotLoggedIn => 'Not logged in';
+
+  @override
+  String get feedDeletePostSuccess => 'Post deleted successfully';
+
+  @override
+  String get feedNoPublicPosts => 'No public posts yet';
+
+  @override
+  String get feedSeeMore => 'See more';
+
+  @override
+  String get feedNewsFeedTitle => 'News Feed';
+
+  @override
+  String get errorGeneric => 'An error occurred, please try again later.';
+
+  @override
+  String get errorIncorrectOldPassword => 'Incorrect old password';
+
+  @override
+  String get errorMissingPasswords =>
+      'Both old password and new password are required';
+
+  @override
+  String get errorPasswordTooShort =>
+      'New password must be at least 6 characters long';
+
+  @override
+  String get errorPasswordComplexity =>
+      'New password must contain at least one uppercase letter, one lowercase letter, and one number.';
+
+  @override
+  String get chatMessageRevoked => 'Message recalled';
+
+  @override
+  String get chatMessageImage => '[Image]';
+
+  @override
+  String get chatMessageFile => '[Attachment]';
+
+  @override
+  String get chatNoMessagesYet => 'No messages yet.';
+
+  @override
+  String get chatMediaPermissionRequired =>
+      'Please grant photo access permission in settings.';
+
+  @override
+  String get chatMediaNoImages => 'No photos available.';
+
+  @override
+  String get chatInputReplying => 'Replying';
+
+  @override
+  String get chatInputDefaultMessage => 'Message';
+
+  @override
+  String chatInputSendImageError(String error) {
+    return 'Cannot send photo: $error';
+  }
+
+  @override
+  String get chatActionReply => 'Reply';
+
+  @override
+  String get chatActionRevoke => 'Recall';
+
+  @override
+  String get chatActionCopy => 'Copy';
+
+  @override
+  String get chatMsgCopied => 'Message copied';
+
+  @override
+  String get chatRevokeTitle => 'Revoke message';
+
+  @override
+  String get chatRevokeConfirmMsg =>
+      'Are you sure you want to revoke this message? This action cannot be undone.';
+
+  @override
+  String get chatMsgRevokedSuccess => 'Message revoked';
+
+  @override
+  String get chatReplied => 'Replied';
+
+  @override
+  String get chatMaxImageLimit => 'You can only select up to 10 images';
+
+  @override
+  String get chatSearchContactHint => 'Search contacts...';
+
+  @override
+  String get chatNoConversationsYet => 'No conversations yet.';
+
+  @override
+  String get chatSelectContact => 'Select contact';
+
+  @override
+  String get chatNoContacts => 'No contacts.';
+
+  @override
+  String get chatStatusOnline => 'Online';
+
+  @override
+  String get chatStatusActive => 'Active now';
+
+  @override
+  String get chatStatusOffline => 'Offline';
 }

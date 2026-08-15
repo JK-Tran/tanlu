@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 import 'package:tanlu_management/l10n/l10n.dart';
 
 class OverviewAvatarPreview {
@@ -116,8 +116,8 @@ class OverviewProgressCard extends StatelessWidget {
                                   AppText.h2(
                                     title,
                                     color: AppColors.grayDark,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 12.sp,
                                   ),
                                   SizedBox(height: 4.h),
                                   _buildAvatarRow(),
@@ -144,7 +144,7 @@ class OverviewProgressCard extends StatelessWidget {
                                           text: '$currentValue',
                                           style: TextStyle(
                                             color: primaryColor,
-                                            fontSize: 18.sp,
+                                            fontSize: 14.sp,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -160,11 +160,11 @@ class OverviewProgressCard extends StatelessWidget {
                                     ),
                                   ),
                                 SizedBox(height: 2.h),
-                                AppText.b2(
-                                  statusText,
-                                  color: AppColors.grayMedium,
-                                  fontSize: 11.sp,
-                                ),
+                                // AppText.b2(
+                                //   statusText,
+                                //   color: AppColors.grayMedium,
+                                //   fontSize: 10.sp,
+                                // ),
                               ],
                             ),
                           ],
@@ -181,31 +181,7 @@ class OverviewProgressCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AppText.b2(
-                              remainingText,
-                              color: AppColors.grayMedium,
-                              fontSize: 12.sp,
-                            ),
-                            Container(
-                              width: 24.w,
-                              height: 24.w,
-                              decoration: BoxDecoration(
-                                color: primaryColor.withValues(alpha: 0.1),
-                                shape: BoxShape.circle,
-                              ),
-                              alignment: Alignment.center,
-                              child: Icon(
-                                Icons.chevron_right,
-                                size: 16.w,
-                                color: primaryColor,
-                              ),
-                            ),
-                          ],
-                        ),
+                        SizedBox(height: 8.h),
                       ],
                     ),
                   ),
@@ -227,7 +203,7 @@ class OverviewProgressCard extends StatelessWidget {
       return AppText.b2(
         S.current.noStudentAttendanceYet,
         color: AppColors.grayMedium,
-        fontSize: 12.sp,
+        fontSize: 10.sp,
       );
     }
 
@@ -244,8 +220,7 @@ class OverviewProgressCard extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: AppColors.white, width: 2),
               ),
-              child: AttendanceAvatar(
-                nickname: avatars[i].nickname,
+              child: AppAvatar(name: avatars[i].nickname,
                 imageUrl: avatars[i].avatarUrl,
                 size: 28,
               ),

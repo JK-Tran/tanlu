@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart' as _i460;
 import '../../core/base/default_bloc.dart' as _i192;
 import '../../features/app/data/sources/app_preferences_service.dart' as _i527;
 import '../../features/app/presentation/bloc/app_bloc.dart' as _i120;
+import '../../features/app/presentation/bloc/app_locale_cubit.dart' as _i1069;
 import '../../features/attendance/data/mapper/attendance_record_data_mapper.dart'
     as _i616;
 import '../../features/attendance/data/mapper/attendance_session_data_mapper.dart'
@@ -56,6 +57,8 @@ import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i153;
 import '../../features/auth/data/sources/auth_api_service.dart' as _i587;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
+import '../../features/auth/domain/usecases/change_password_use_case.dart'
+    as _i571;
 import '../../features/auth/domain/usecases/get_initial_auth_data_use_case.dart'
     as _i146;
 import '../../features/auth/domain/usecases/get_me_use_case.dart' as _i257;
@@ -66,6 +69,32 @@ import '../../features/auth/domain/usecases/save_current_user_use_case.dart'
 import '../../features/auth/domain/usecases/update_fcm_token_use_case.dart'
     as _i860;
 import '../../features/auth/presentation/login/bloc/login_bloc.dart' as _i204;
+import '../../features/chat/data/mapper/chat_contact_mapper.dart' as _i719;
+import '../../features/chat/data/mapper/chat_conversation_mapper.dart' as _i991;
+import '../../features/chat/data/mapper/chat_message_mapper.dart' as _i416;
+import '../../features/chat/data/mapper/chat_messages_response_mapper.dart'
+    as _i178;
+import '../../features/chat/data/mapper/chat_participant_mapper.dart' as _i816;
+import '../../features/chat/data/mapper/chat_reaction_mapper.dart' as _i968;
+import '../../features/chat/data/mapper/pagination_cursor_mapper.dart' as _i574;
+import '../../features/chat/data/repositories/chat_repository_impl.dart'
+    as _i504;
+import '../../features/chat/data/sources/chat_api_service.dart' as _i958;
+import '../../features/chat/domain/repositories/chat_repository.dart' as _i420;
+import '../../features/chat/domain/usecases/create_chat_usecase.dart' as _i599;
+import '../../features/chat/domain/usecases/get_contacts_usecase.dart' as _i507;
+import '../../features/chat/domain/usecases/get_conversations_usecase.dart'
+    as _i194;
+import '../../features/chat/domain/usecases/get_messages_usecase.dart' as _i325;
+import '../../features/chat/domain/usecases/submit_message_usecase.dart'
+    as _i782;
+import '../../features/chat/domain/usecases/submit_reaction_usecase.dart'
+    as _i976;
+import '../../features/chat/domain/usecases/submit_revoke_usecase.dart'
+    as _i314;
+import '../../features/chat/domain/usecases/update_message_read_status_usecase.dart'
+    as _i712;
+import '../../features/chat/presentation/bloc/chat_bloc.dart' as _i65;
 import '../../features/feed/data/mapper/feed_author_data_mapper.dart' as _i1071;
 import '../../features/feed/data/mapper/feed_comment_data_mapper.dart' as _i70;
 import '../../features/feed/data/mapper/feed_post_data_mapper.dart' as _i517;
@@ -113,6 +142,7 @@ import '../../features/notification/domain/usecases/mark_as_read_use_case.dart'
     as _i102;
 import '../../features/notification/presentation/bloc/notification_bloc.dart'
     as _i29;
+import '../../features/person/presentation/bloc/person_bloc.dart' as _i318;
 import '../../features/student/data/mapper/class_info_data_mapper.dart'
     as _i367;
 import '../../features/student/data/mapper/contact_data_mapper.dart' as _i426;
@@ -146,6 +176,8 @@ import '../infrastructure/data/api/middleware/access_token_interceptor.dart'
 import '../infrastructure/data/api/middleware/connectivity_interceptor.dart'
     as _i896;
 import '../infrastructure/data/api/middleware/header_interceptor.dart' as _i34;
+import '../infrastructure/data/api/middleware/refresh_token_interceptor.dart'
+    as _i1045;
 import '../services/local_storage/app_preferences.dart' as _i160;
 import '../services/socket/global_web_socket_service.dart' as _i538;
 import 'register_module.dart' as _i291;
@@ -170,6 +202,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i919.TokenDataMapper>(() => _i919.TokenDataMapper());
     gh.factory<_i702.UserDataMapper>(() => _i702.UserDataMapper());
+    gh.factory<_i719.ChatContactMapper>(() => _i719.ChatContactMapper());
+    gh.factory<_i816.ChatParticipantMapper>(
+      () => _i816.ChatParticipantMapper(),
+    );
+    gh.factory<_i968.ChatReactionMapper>(() => _i968.ChatReactionMapper());
+    gh.factory<_i1071.FeedAuthorDataMapper>(
+      () => _i1071.FeedAuthorDataMapper(),
+    );
     gh.factory<_i367.ClassInfoDataMapper>(() => _i367.ClassInfoDataMapper());
     gh.factory<_i426.ContactDataMapper>(() => _i426.ContactDataMapper());
     gh.factory<_i906.ParentDataMapper>(() => _i906.ParentDataMapper());
@@ -190,8 +230,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i896.ConnectivityInterceptor>(
       () => _i896.ConnectivityInterceptor(),
     );
-    gh.factory<_i1071.FeedAuthorDataMapper>(
-      () => _i1071.FeedAuthorDataMapper(),
+    gh.factory<_i574.PaginationCursorMapper>(
+      () => _i574.PaginationCursorMapper(),
     );
     gh.lazySingleton<_i305.NotificationDataMapper>(
       () => _i305.NotificationDataMapper(),
@@ -232,11 +272,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i436.NoneAuthAppServerApiClient>(
       () => _i436.NoneAuthAppServerApiClient(gh<_i34.HeaderInterceptor>()),
     );
+    gh.factory<_i70.FeedCommentDataMapper>(
+      () => _i70.FeedCommentDataMapper(gh<_i1071.FeedAuthorDataMapper>()),
+    );
     gh.factory<_i517.FeedPostDataMapper>(
       () => _i517.FeedPostDataMapper(gh<_i1071.FeedAuthorDataMapper>()),
     );
-    gh.factory<_i70.FeedCommentDataMapper>(
-      () => _i70.FeedCommentDataMapper(gh<_i1071.FeedAuthorDataMapper>()),
+    gh.factory<_i416.ChatMessageMapper>(
+      () => _i416.ChatMessageMapper(gh<_i968.ChatReactionMapper>()),
     );
     gh.factory<_i840.DailyAttendanceResultDataMapper>(
       () => _i840.DailyAttendanceResultDataMapper(
@@ -245,36 +288,41 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i530.AttendanceStudentDataMapper>(),
       ),
     );
+    gh.factory<_i991.ChatConversationMapper>(
+      () => _i991.ChatConversationMapper(gh<_i816.ChatParticipantMapper>()),
+    );
+    gh.factory<_i1045.RefreshTokenInterceptor>(
+      () => _i1045.RefreshTokenInterceptor(
+        gh<_i436.NoneAuthAppServerApiClient>(),
+      ),
+    );
+    gh.lazySingleton<_i1069.AppLocaleCubit>(
+      () => _i1069.AppLocaleCubit(gh<_i160.AppPreferences>()),
+    );
     gh.factory<_i533.AccessTokenInterceptor>(
       () => _i533.AccessTokenInterceptor(gh<_i160.AppPreferences>()),
+    );
+    gh.factory<_i178.ChatMessagesResponseMapper>(
+      () => _i178.ChatMessagesResponseMapper(
+        gh<_i416.ChatMessageMapper>(),
+        gh<_i574.PaginationCursorMapper>(),
+      ),
     );
     gh.lazySingleton<_i695.AuthAppServerApiClient>(
       () => _i695.AuthAppServerApiClient(
         gh<_i34.HeaderInterceptor>(),
         gh<_i533.AccessTokenInterceptor>(),
-      ),
-    );
-    gh.lazySingleton<_i585.RefreshTokenApiClient>(
-      () => _i585.RefreshTokenApiClient(
-        gh<_i34.HeaderInterceptor>(),
-        gh<_i533.AccessTokenInterceptor>(),
-      ),
-    );
-    gh.lazySingleton<_i587.AuthApiService>(
-      () => _i587.AuthApiService(
-        gh<_i436.NoneAuthAppServerApiClient>(),
-        gh<_i695.AuthAppServerApiClient>(),
-      ),
-    );
-    gh.lazySingleton<_i787.AuthRepository>(
-      () => _i153.AuthRepositoryImpl(
-        gh<_i160.AppPreferences>(),
-        gh<_i702.UserDataMapper>(),
-        gh<_i587.AuthApiService>(),
+        gh<_i1045.RefreshTokenInterceptor>(),
       ),
     );
     gh.lazySingleton<_i799.AttendanceApiService>(
       () => _i799.AttendanceApiService(gh<_i695.AuthAppServerApiClient>()),
+    );
+    gh.lazySingleton<_i958.ChatApiService>(
+      () => _i958.ChatApiService(gh<_i695.AuthAppServerApiClient>()),
+    );
+    gh.lazySingleton<_i226.FeedApiService>(
+      () => _i226.FeedApiService(gh<_i695.AuthAppServerApiClient>()),
     );
     gh.lazySingleton<_i1014.NotificationApiService>(
       () => _i1014.NotificationApiService(gh<_i695.AuthAppServerApiClient>()),
@@ -282,14 +330,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i374.StudentApiService>(
       () => _i374.StudentApiService(gh<_i695.AuthAppServerApiClient>()),
     );
-    gh.lazySingleton<_i226.FeedApiService>(
-      () => _i226.FeedApiService(gh<_i695.AuthAppServerApiClient>()),
-    );
     gh.lazySingleton<_i477.AttendanceRepository>(
       () => _i719.AttendanceRepositoryImpl(
         gh<_i799.AttendanceApiService>(),
         gh<_i840.DailyAttendanceResultDataMapper>(),
         gh<_i536.LeaveRequestDataMapper>(),
+      ),
+    );
+    gh.lazySingleton<_i585.RefreshTokenApiClient>(
+      () => _i585.RefreshTokenApiClient(
+        gh<_i34.HeaderInterceptor>(),
+        gh<_i533.AccessTokenInterceptor>(),
       ),
     );
     gh.lazySingleton<_i430.FeedRepository>(
@@ -299,39 +350,26 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i70.FeedCommentDataMapper>(),
       ),
     );
-    gh.factory<_i146.GetInitialAuthDataUseCase>(
-      () => _i146.GetInitialAuthDataUseCase(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i257.GetMeUseCase>(
-      () => _i257.GetMeUseCase(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i37.LoginUseCase>(
-      () => _i37.LoginUseCase(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i711.LogoutUseCase>(
-      () => _i711.LogoutUseCase(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i546.SaveCurrentUserUseCase>(
-      () => _i546.SaveCurrentUserUseCase(gh<_i787.AuthRepository>()),
-    );
-    gh.factory<_i860.UpdateFcmTokenUseCase>(
-      () => _i860.UpdateFcmTokenUseCase(gh<_i787.AuthRepository>()),
-    );
-    gh.lazySingleton<_i120.AppBloc>(
-      () => _i120.AppBloc(
-        gh<_i146.GetInitialAuthDataUseCase>(),
-        gh<_i257.GetMeUseCase>(),
-        gh<_i711.LogoutUseCase>(),
-        gh<_i860.UpdateFcmTokenUseCase>(),
-        gh<_i160.AppPreferences>(),
-        gh<_i538.GlobalWebSocketService>(),
+    gh.lazySingleton<_i587.AuthApiService>(
+      () => _i587.AuthApiService(
+        gh<_i436.NoneAuthAppServerApiClient>(),
+        gh<_i695.AuthAppServerApiClient>(),
       ),
     );
-    gh.factory<_i204.LoginBloc>(
-      () => _i204.LoginBloc(
-        gh<_i37.LoginUseCase>(),
-        gh<_i860.UpdateFcmTokenUseCase>(),
-        gh<_i120.AppBloc>(),
+    gh.lazySingleton<_i420.ChatRepository>(
+      () => _i504.ChatRepositoryImpl(
+        gh<_i958.ChatApiService>(),
+        gh<_i991.ChatConversationMapper>(),
+        gh<_i416.ChatMessageMapper>(),
+        gh<_i719.ChatContactMapper>(),
+        gh<_i178.ChatMessagesResponseMapper>(),
+      ),
+    );
+    gh.lazySingleton<_i787.AuthRepository>(
+      () => _i153.AuthRepositoryImpl(
+        gh<_i160.AppPreferences>(),
+        gh<_i702.UserDataMapper>(),
+        gh<_i587.AuthApiService>(),
       ),
     );
     gh.factory<_i742.GetDailyAttendanceUseCase>(
@@ -376,8 +414,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i448.SubmitLeaveDecisionUseCase>(),
       ),
     );
-    gh.factory<_i61.GetFeedPostsUseCase>(
-      () => _i61.GetFeedPostsUseCase(gh<_i430.FeedRepository>()),
+    gh.factory<_i218.CreateFeedCommentUseCase>(
+      () => _i218.CreateFeedCommentUseCase(gh<_i430.FeedRepository>()),
     );
     gh.factory<_i436.CreateFeedPostUseCase>(
       () => _i436.CreateFeedPostUseCase(gh<_i430.FeedRepository>()),
@@ -385,14 +423,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i152.DeleteFeedPostUseCase>(
       () => _i152.DeleteFeedPostUseCase(gh<_i430.FeedRepository>()),
     );
-    gh.factory<_i138.UpdateFeedPostUseCase>(
-      () => _i138.UpdateFeedPostUseCase(gh<_i430.FeedRepository>()),
-    );
-    gh.factory<_i218.CreateFeedCommentUseCase>(
-      () => _i218.CreateFeedCommentUseCase(gh<_i430.FeedRepository>()),
-    );
     gh.factory<_i644.GetFeedCommentsUseCase>(
       () => _i644.GetFeedCommentsUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i61.GetFeedPostsUseCase>(
+      () => _i61.GetFeedPostsUseCase(gh<_i430.FeedRepository>()),
+    );
+    gh.factory<_i76.GetFeedPostUseCase>(
+      () => _i76.GetFeedPostUseCase(gh<_i430.FeedRepository>()),
     );
     gh.factory<_i19.ToggleCommentLikeUseCase>(
       () => _i19.ToggleCommentLikeUseCase(gh<_i430.FeedRepository>()),
@@ -400,13 +438,71 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i864.TogglePostLikeUseCase>(
       () => _i864.TogglePostLikeUseCase(gh<_i430.FeedRepository>()),
     );
-    gh.factory<_i76.GetFeedPostUseCase>(
-      () => _i76.GetFeedPostUseCase(gh<_i430.FeedRepository>()),
+    gh.factory<_i138.UpdateFeedPostUseCase>(
+      () => _i138.UpdateFeedPostUseCase(gh<_i430.FeedRepository>()),
     );
     gh.factory<_i242.FeedBloc>(
       () => _i242.FeedBloc(
         gh<_i61.GetFeedPostsUseCase>(),
         gh<_i864.TogglePostLikeUseCase>(),
+      ),
+    );
+    gh.factory<_i599.CreateChatUseCase>(
+      () => _i599.CreateChatUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i507.GetContactsUseCase>(
+      () => _i507.GetContactsUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i194.GetConversationsUseCase>(
+      () => _i194.GetConversationsUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i325.GetMessagesUseCase>(
+      () => _i325.GetMessagesUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i782.SubmitMessageUseCase>(
+      () => _i782.SubmitMessageUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i712.UpdateMessageReadStatusUseCase>(
+      () => _i712.UpdateMessageReadStatusUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i976.SubmitReactionUseCase>(
+      () => _i976.SubmitReactionUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i314.SubmitRevokeUseCase>(
+      () => _i314.SubmitRevokeUseCase(gh<_i420.ChatRepository>()),
+    );
+    gh.factory<_i571.ChangePasswordUseCase>(
+      () => _i571.ChangePasswordUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i146.GetInitialAuthDataUseCase>(
+      () => _i146.GetInitialAuthDataUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i257.GetMeUseCase>(
+      () => _i257.GetMeUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i37.LoginUseCase>(
+      () => _i37.LoginUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i711.LogoutUseCase>(
+      () => _i711.LogoutUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i546.SaveCurrentUserUseCase>(
+      () => _i546.SaveCurrentUserUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i860.UpdateFcmTokenUseCase>(
+      () => _i860.UpdateFcmTokenUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i318.PersonBloc>(
+      () => _i318.PersonBloc(gh<_i571.ChangePasswordUseCase>()),
+    );
+    gh.lazySingleton<_i120.AppBloc>(
+      () => _i120.AppBloc(
+        gh<_i146.GetInitialAuthDataUseCase>(),
+        gh<_i257.GetMeUseCase>(),
+        gh<_i711.LogoutUseCase>(),
+        gh<_i860.UpdateFcmTokenUseCase>(),
+        gh<_i160.AppPreferences>(),
+        gh<_i538.GlobalWebSocketService>(),
       ),
     );
     gh.factory<_i483.GetNotificationsUseCase>(
@@ -417,6 +513,27 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i102.MarkAsReadUseCase>(
       () => _i102.MarkAsReadUseCase(gh<_i630.NotificationRepository>()),
+    );
+    gh.lazySingleton<_i65.ChatBloc>(
+      () => _i65.ChatBloc(
+        gh<_i194.GetConversationsUseCase>(),
+        gh<_i325.GetMessagesUseCase>(),
+        gh<_i782.SubmitMessageUseCase>(),
+        gh<_i976.SubmitReactionUseCase>(),
+        gh<_i314.SubmitRevokeUseCase>(),
+        gh<_i712.UpdateMessageReadStatusUseCase>(),
+        gh<_i507.GetContactsUseCase>(),
+        gh<_i599.CreateChatUseCase>(),
+        gh<_i538.GlobalWebSocketService>(),
+        gh<_i416.ChatMessageMapper>(),
+      ),
+    );
+    gh.factory<_i204.LoginBloc>(
+      () => _i204.LoginBloc(
+        gh<_i37.LoginUseCase>(),
+        gh<_i860.UpdateFcmTokenUseCase>(),
+        gh<_i120.AppBloc>(),
+      ),
     );
     gh.factory<_i386.GetStudentsUseCase>(
       () => _i386.GetStudentsUseCase(gh<_i215.StudentRepository>()),

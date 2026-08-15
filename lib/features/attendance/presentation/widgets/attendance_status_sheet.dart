@@ -4,7 +4,7 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/attendance_student.dart';
 import 'package:tanlu_management/features/attendance/domain/entity/enums/attendance_status.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 import 'package:tanlu_management/l10n/l10n.dart';
 
 class AttendanceStatusSheet extends StatelessWidget {
@@ -30,8 +30,7 @@ class AttendanceStatusSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Row(
               children: [
-                AttendanceAvatar(
-                  nickname: nickname,
+                AppAvatar(name: nickname,
                   imageUrl: student.avatarUrl.isNotEmpty
                       ? student.avatarUrl
                       : null,

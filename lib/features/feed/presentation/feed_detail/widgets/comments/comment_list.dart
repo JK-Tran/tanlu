@@ -4,6 +4,7 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/feed/domain/entity/feed_comment.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_detail/widgets/comments/comment_item.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class CommentList extends StatefulWidget {
   const CommentList({
@@ -11,6 +12,7 @@ class CommentList extends StatefulWidget {
     required this.comments,
     required this.feedAuthorId,
     required this.viewerUserId,
+    required this.totalCommentCount,
     this.isLoading = false,
     this.canInteract = false,
     this.highlightCommentId,
@@ -23,6 +25,7 @@ class CommentList extends StatefulWidget {
   final List<FeedComment> comments;
   final int feedAuthorId;
   final int viewerUserId;
+  final int totalCommentCount;
   final bool isLoading;
   final bool canInteract;
   final int? highlightCommentId;
@@ -66,7 +69,7 @@ class _CommentListState extends State<CommentList> {
 
   @override
   Widget build(BuildContext context) {
-    final total = _countComments(widget.comments);
+    final total = widget.totalCommentCount;
 
     return Container(
       margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 12.h),
@@ -79,9 +82,9 @@ class _CommentListState extends State<CommentList> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppText.b1(
-            'Bình luận ($total)',
+            context.l10n.feedCommentsCount(total),
             fontWeight: FontWeight.w700,
-            fontSize: 14.sp,
+            fontSize: 12.sp,
             color: AppColors.grayDark,
           ),
           SizedBox(height: 12.h),
@@ -96,7 +99,7 @@ class _CommentListState extends State<CommentList> {
             Padding(
               padding: EdgeInsets.only(bottom: 12.h),
               child: AppText.b2(
-                'Chưa có bình luận nào. Hãy là người đầu tiên!',
+                context.l10n.feedNoCommentsYet,
                 color: AppColors.grayMedium,
                 fontSize: 12.sp,
               ),
@@ -154,19 +157,6 @@ class _CommentListState extends State<CommentList> {
 
     result.addAll(descendants);
     return result;
-  }
-
-  int _countComments(List<FeedComment> items) {
-    var total = 0;
-    void walk(List<FeedComment> list) {
-      for (final comment in list) {
-        total++;
-        walk(comment.replies);
-      }
-    }
-
-    walk(items);
-    return total;
   }
 }
 

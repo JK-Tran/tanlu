@@ -119,6 +119,13 @@
   "navPersonal": "Personal",
   "navProgress": "Progress",
   "navStudent": "Students",
+  "studentListTitle": "Children List",
+  "studentProfileTitle": "Child Profile",
+  "studentNotFound": "Student not found",
+  "studentTabContact": "Contact",
+  "studentTabNotes": "Notes",
+  "studentTabAttendance": "Attendance",
+  "studentTabFeed": "Feed",
   "networkError": "Network error. Please try again.",
   "noAttendanceDataForDay": "No attendance data for this day",
   "noClassUpdated": "Class not updated",
@@ -158,7 +165,7 @@
   "passwordMinLengthError": "Password must be at least 6 characters",
   "pendingConfirmation": "Pending confirmation",
   "pendingResponse": "Pending response",
-  "phoneNumber": "Phone number",
+  "phoneNumber": "Phone Number",
   "pleaseEnterEmail": "Please enter email",
   "pleaseEnterPassword": "Please enter password",
   "posts": "Posts",
@@ -253,6 +260,9 @@
       }
     }
   },
+  "attendanceTabAttendance": "Attendance",
+  "attendanceTabLeave": "Leave Requests",
+  "attendanceTabHistory": "History",
   "attendanceTitle": "Attendance",
   "selectStatus": "Select status",
   "inClass": "In class",
@@ -268,5 +278,207 @@
     }
   },
   "savedAttendanceMorning": "Morning attendance saved!",
-  "goBack": "Go back"
+  "goBack": "Go back",
+  "roleParent": "Parent",
+  "roleTeacher": "Teacher",
+  "accountAndSecurity": "Account & Security",
+  "username": "Username",
+  "changePassword": "Change Password",
+  "personalInfo": "Personal Info",
+  "fullName": "Full Name",
+  "role": "Role",
+  "classTitle": "Class",
+  "assignedClass": "Assigned Class",
+  "logout": "Logout",
+  "logoutConfirmMsg": "Are you sure you want to logout?",
+  "security": "Security",
+  "language": "Language",
+  "notifications": "Notifications",
+  "vietnamese": "Tiếng Việt",
+  "english": "English",
+  "contentComingSoon": "Content will be updated soon",
+  "helpCenter": "Help Center",
+  "alwaysReadyToHelp": "We are always ready to help you",
+  "faq": "FAQ",
+  "contactSupport": "Contact Support",
+  "userGuide": "User Guide",
+  "aboutApp": "About App",
+  "version": "Version {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "termsOfUse": "Terms of Use",
+  "privacyPolicy": "Privacy Policy",
+  "rateApp": "Rate App",
+  "passwordUpdated": "Password updated",
+  "currentPassword": "Current password",
+  "newPassword": "New password",
+  "confirmNewPassword": "Confirm new password",
+  "reqMinChars": "At least 8 characters",
+  "reqUpperLower": "Uppercase and lowercase letters",
+  "reqSpecialChar": "Special character",
+  "overviewEvaluate": "Evaluate",
+  "feedCreatePost": "Create Post",
+  "feedMediaRequirePermission": "Photo library access required. ",
+  "feedMediaEnableInSettings": "Please enable in Settings.",
+  "feedMaxVideos": "Select up to {maxVideos} videos max",
+  "@feedMaxVideos": {
+    "placeholders": {
+      "maxVideos": {
+        "type": "int"
+      }
+    }
+  },
+  "feedVideoSizeExceed": "Video exceeds {maxMB} MB",
+  "@feedVideoSizeExceed": {
+    "placeholders": {
+      "maxMB": {
+        "type": "int"
+      }
+    }
+  },
+  "feedMaxImages": "Select up to {maxImages} images max",
+  "@feedMaxImages": {
+    "placeholders": {
+      "maxImages": {
+        "type": "int"
+      }
+    }
+  },
+  "feedSkippedOversizedVideos": "Skipped {count} oversized videos ",
+  "@feedSkippedOversizedVideos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "feedMaxImagesAndVideos": "Reached {maxImages} images and ",
+  "@feedMaxImagesAndVideos": {
+    "placeholders": {
+      "maxImages": {
+        "type": "int"
+      }
+    }
+  },
+  "feedOnlyMaxImagesAnd": "Select up to {maxImages} images and ",
+  "@feedOnlyMaxImagesAnd": {
+    "placeholders": {
+      "maxImages": {
+        "type": "int"
+      }
+    }
+  },
+  "feedGallery": "Gallery",
+  "feedNext": "Next",
+  "feedNextWithCount": "Next ({count})",
+  "@feedNextWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "feedSelectMaxImagesInfo": "Select up to {maxImages} images, ",
+  "@feedSelectMaxImagesInfo": {
+    "placeholders": {
+      "maxImages": {
+        "type": "int"
+      }
+    }
+  },
+  "feedAndroidGalleryInfo": "Android opens system gallery to select.",
+  "feedSelectMediaFromGallery": "Select photo or video from gallery",
+  "feedAfterSelectInfo": "After selecting, you can review and add more.",
+  "feedOpeningGallery": "Opening gallery...",
+  "feedOpenGalleryBtn": "Open Photo Gallery",
+  "feedSelectMoreBtn": "Select More",
+  "feedTeacherRole": "Teacher",
+  "feedWhatFunToday": "What's fun today in our class?",
+  "feedPhotoGallery": "Photo Gallery",
+  "feedNoClassAssigned": "No class assigned",
+  "feedLoadingClass": "Loading class...",
+  "feedMyClass": "My Class",
+  "feedPostFor": "Post for",
+  "feedPublicOnExplore": "Public on Explore",
+  "feedWhatAreYouThinking": "What's on your mind?",
+  "feedAddBtn": "Add",
+  "feedPostBtn": "Post",
+  "feedCannotLoadPost": "Cannot load post",
+  "feedDeletePost": "Delete Post",
+  "feedDeletePostConfirmMsg": "Post will be deleted and not visible on the feed.",
+  "feedDeleteBtn": "Delete",
+  "feedPostDetailTitle": "Post Details",
+  "feedPostNotFound": "Post not found",
+  "feedCommentOptions": "Comment Options",
+  "feedEditComment": "Edit Comment",
+  "feedDeleteComment": "Delete Comment",
+  "feedAuthorBadge": "Author",
+  "feedWriteCommentHint": "Write a comment...",
+  "feedReplyToAuthor": "Reply to {authorName}",
+  "@feedReplyToAuthor": {
+    "placeholders": {
+      "authorName": {
+        "type": "String"
+      }
+    }
+  },
+  "feedEditedMark": "· Edited",
+  "feedReplyBtn": "Reply",
+  "feedCommentsCount": "Comments ({total})",
+  "@feedCommentsCount": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "feedNoCommentsYet": "No comments yet. Be the first!",
+  "feedPostOptions": "Post Options",
+  "feedNotLoggedIn": "Not logged in",
+  "feedDeletePostSuccess": "Post deleted successfully",
+  "feedNoPublicPosts": "No public posts yet",
+  "feedSeeMore": "See more",
+  "feedNewsFeedTitle": "News Feed",
+  "errorGeneric": "An error occurred, please try again later.",
+  "errorIncorrectOldPassword": "Incorrect old password",
+  "errorMissingPasswords": "Both old password and new password are required",
+  "errorPasswordTooShort": "New password must be at least 6 characters long",
+  "errorPasswordComplexity": "New password must contain at least one uppercase letter, one lowercase letter, and one number.",
+  "chatMessageRevoked": "Message recalled",
+  "chatMessageImage": "[Image]",
+  "chatMessageFile": "[Attachment]",
+  "chatNoMessagesYet": "No messages yet.",
+  "chatMediaPermissionRequired": "Please grant photo access permission in settings.",
+  "chatMediaNoImages": "No photos available.",
+  "chatInputReplying": "Replying",
+  "chatInputDefaultMessage": "Message",
+  "chatInputSendImageError": "Cannot send photo: {error}",
+  "@chatInputSendImageError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "chatActionReply": "Reply",
+  "chatActionRevoke": "Recall",
+  "chatActionCopy": "Copy",
+  "chatMsgCopied": "Message copied",
+  "chatRevokeTitle": "Revoke message",
+  "chatRevokeConfirmMsg": "Are you sure you want to revoke this message? This action cannot be undone.",
+  "chatMsgRevokedSuccess": "Message revoked",
+  "chatReplied": "Replied",
+  "chatMaxImageLimit": "You can only select up to 10 images",
+  "chatSearchContactHint": "Search contacts...",
+  "chatNoConversationsYet": "No conversations yet.",
+  "chatSelectContact": "Select contact",
+  "chatNoContacts": "No contacts.",
+  "chatStatusOnline": "Online",
+  "chatStatusActive": "Active now",
+  "chatStatusOffline": "Offline"
 }

@@ -9,6 +9,7 @@ import 'package:tanlu_management/features/feed/domain/entity/feed_post.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_page/bloc/feed_bloc.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/widgets/compose_card.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_page/widgets/my_feed_tab/my_feed_list.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class MyFeedBody extends StatelessWidget {
   const MyFeedBody({super.key});
@@ -34,7 +35,7 @@ class MyFeedBody extends StatelessWidget {
 
       AppSnackbar.show(
         context,
-        message: 'Xóa bài thành công',
+        message: context.l10n.feedDeletePostSuccess,
         type: AppSnackbarType.success,
       );
     } else if (result is FeedPost) {

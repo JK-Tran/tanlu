@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class CreateFeedSubmitBar extends StatelessWidget {
   const CreateFeedSubmitBar({
@@ -43,7 +44,7 @@ class CreateFeedSubmitBar extends StatelessWidget {
                     ),
                   )
                 : AppText.b1(
-                    'Đăng bài',
+                    context.l10n.feedPostBtn,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w700,
                     color: AppColors.white,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 import 'package:tanlu_management/features/feed/domain/entity/feed_comment.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_detail/widgets/comments/comment_bubble.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_detail/widgets/comments/comment_interactions.dart';
@@ -82,8 +82,7 @@ class CommentItem extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AttendanceAvatar(
-                    nickname: comment.author?.fullName ?? '',
+                  AppAvatar(name: comment.author?.fullName ?? '',
                     imageUrl: (comment.author?.avatarUrl?.isEmpty ?? true)
                         ? null
                         : comment.author!.avatarUrl,

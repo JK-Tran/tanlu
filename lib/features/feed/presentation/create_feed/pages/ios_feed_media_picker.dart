@@ -5,6 +5,7 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_snackbar.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/bloc/create_feed_bloc.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 /// iOS — grid thư viện trong app qua [wechat_assets_picker].
 /// Không dùng trên Android (Google Play policy).
@@ -48,8 +49,8 @@ abstract final class IosFeedMediaPicker {
         AppSnackbar.show(
           context,
           message:
-              'Cần quyền truy cập thư viện ảnh. '
-              'Vui lòng bật trong Cài đặt.',
+              '${context.l10n.feedMediaRequirePermission}'
+              '${context.l10n.feedMediaEnableInSettings}',
           type: AppSnackbarType.warning,
         );
       }
@@ -80,7 +81,7 @@ abstract final class IosFeedMediaPicker {
 
     if (asset.type == AssetType.video) {
       if (videoCount >= maxVideos) {
-        _showLimitSnackBar(context, 'Chỉ chọn tối đa $maxVideos video');
+        _showLimitSnackBar(context, context.l10n.feedMaxVideos(maxVideos));
         return false;
       }
 
@@ -90,13 +91,13 @@ abstract final class IosFeedMediaPicker {
         if (context.mounted) {
           _showLimitSnackBar(
             context,
-            'Video vượt ${AppMediaLimit.maxVideoMegabytes} MB',
+            context.l10n.feedVideoSizeExceed(AppMediaLimit.maxVideoMegabytes),
           );
         }
         return false;
       }
     } else if (asset.type == AssetType.image && imageCount >= maxImages) {
-      _showLimitSnackBar(context, 'Chỉ chọn tối đa $maxImages ảnh');
+      _showLimitSnackBar(context, context.l10n.feedMaxImages(maxImages));
       return false;
     }
 
@@ -156,7 +157,7 @@ abstract final class IosFeedMediaPicker {
         AppSnackbar.show(
           context,
           message:
-              'Đã bỏ qua $skippedOversizedVideos video vượt '
+              '${context.l10n.feedSkippedOversizedVideos(skippedOversizedVideos)}'
               '${AppMediaLimit.maxVideoMegabytes} MB',
           type: AppSnackbarType.warning,
         );
@@ -165,7 +166,7 @@ abstract final class IosFeedMediaPicker {
         AppSnackbar.show(
           context,
           message:
-              'Chỉ chọn tối đa ${AppMediaLimit.maxImagesPerPost} ảnh và '
+              '${context.l10n.feedOnlyMaxImagesAnd(AppMediaLimit.maxImagesPerPost)}'
               '${AppMediaLimit.maxVideosPerPost} video',
           type: AppSnackbarType.info,
         );

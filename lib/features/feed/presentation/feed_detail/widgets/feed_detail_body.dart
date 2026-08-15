@@ -46,6 +46,7 @@ class FeedDetailBody extends StatelessWidget {
           comments: state.comments,
           feedAuthorId: feed.author?.id ?? 0,
           viewerUserId: state.viewerUserId,
+          totalCommentCount: feed.commentCount,
           highlightCommentId: highlightCommentId,
           isLoading: state.isLoadingComments,
           canInteract: true,

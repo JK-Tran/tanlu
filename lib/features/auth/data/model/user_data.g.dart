@@ -46,6 +46,10 @@ _$UserDataResponseImpl _$$UserDataResponseImplFromJson(
   Map<String, dynamic> json,
 ) => _$UserDataResponseImpl(
   token: json['token'] as String?,
+  accessToken: json['accessToken'] as String?,
+  refreshToken: json['refreshToken'] as String?,
+  expiresIn: (json['expiresIn'] as num?)?.toInt(),
+  refreshExpiresIn: (json['refreshExpiresIn'] as num?)?.toInt(),
   user: json['user'] == null
       ? null
       : UserData.fromJson(json['user'] as Map<String, dynamic>),
@@ -56,6 +60,10 @@ Map<String, dynamic> _$$UserDataResponseImplToJson(
   _$UserDataResponseImpl instance,
 ) => <String, dynamic>{
   'token': instance.token,
+  'accessToken': instance.accessToken,
+  'refreshToken': instance.refreshToken,
+  'expiresIn': instance.expiresIn,
+  'refreshExpiresIn': instance.refreshExpiresIn,
   'user': instance.user,
   'firebaseCustomToken': instance.firebaseCustomToken,
 };

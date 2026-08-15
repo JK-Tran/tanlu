@@ -6,19 +6,21 @@ import 'package:tanlu_management/shared/infrastructure/data/api/client/base/rest
 import 'package:tanlu_management/shared/infrastructure/data/api/middleware/access_token_interceptor.dart';
 import 'package:tanlu_management/shared/infrastructure/data/api/middleware/header_interceptor.dart';
 
+import 'package:tanlu_management/shared/infrastructure/data/api/middleware/refresh_token_interceptor.dart';
+
 @LazySingleton()
 class AuthAppServerApiClient extends RestApiClient {
   AuthAppServerApiClient(
     HeaderInterceptor headerInterceptor,
     AccessTokenInterceptor accessTokenInterceptor,
-    // RefreshTokenInterceptor _refreshTokenInterceptor,
+    RefreshTokenInterceptor refreshTokenInterceptor,
   ) : super(
         dio: DioBuilder.createDio(
           options: BaseOptions(baseUrl: UrlConstants.appApiBaseUrl),
           interceptors: [
-            headerInterceptor as Interceptor,
-            accessTokenInterceptor as Interceptor,
-            // _refreshTokenInterceptor,
+            headerInterceptor,
+            accessTokenInterceptor,
+            refreshTokenInterceptor,
           ],
         ),
       );

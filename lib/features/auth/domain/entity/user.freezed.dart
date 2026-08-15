@@ -407,6 +407,10 @@ abstract class _User implements User {
 /// @nodoc
 mixin _$UserResponse {
   Token? get token => throw _privateConstructorUsedError;
+  String get accessToken => throw _privateConstructorUsedError;
+  String get refreshToken => throw _privateConstructorUsedError;
+  int get expiresIn => throw _privateConstructorUsedError;
+  int get refreshExpiresIn => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
   String get firebaseCustomToken => throw _privateConstructorUsedError;
 
@@ -424,7 +428,15 @@ abstract class $UserResponseCopyWith<$Res> {
     $Res Function(UserResponse) then,
   ) = _$UserResponseCopyWithImpl<$Res, UserResponse>;
   @useResult
-  $Res call({Token? token, User? user, String firebaseCustomToken});
+  $Res call({
+    Token? token,
+    String accessToken,
+    String refreshToken,
+    int expiresIn,
+    int refreshExpiresIn,
+    User? user,
+    String firebaseCustomToken,
+  });
 
   $TokenCopyWith<$Res>? get token;
   $UserCopyWith<$Res>? get user;
@@ -446,6 +458,10 @@ class _$UserResponseCopyWithImpl<$Res, $Val extends UserResponse>
   @override
   $Res call({
     Object? token = freezed,
+    Object? accessToken = null,
+    Object? refreshToken = null,
+    Object? expiresIn = null,
+    Object? refreshExpiresIn = null,
     Object? user = freezed,
     Object? firebaseCustomToken = null,
   }) {
@@ -455,6 +471,22 @@ class _$UserResponseCopyWithImpl<$Res, $Val extends UserResponse>
                 ? _value.token
                 : token // ignore: cast_nullable_to_non_nullable
                       as Token?,
+            accessToken: null == accessToken
+                ? _value.accessToken
+                : accessToken // ignore: cast_nullable_to_non_nullable
+                      as String,
+            refreshToken: null == refreshToken
+                ? _value.refreshToken
+                : refreshToken // ignore: cast_nullable_to_non_nullable
+                      as String,
+            expiresIn: null == expiresIn
+                ? _value.expiresIn
+                : expiresIn // ignore: cast_nullable_to_non_nullable
+                      as int,
+            refreshExpiresIn: null == refreshExpiresIn
+                ? _value.refreshExpiresIn
+                : refreshExpiresIn // ignore: cast_nullable_to_non_nullable
+                      as int,
             user: freezed == user
                 ? _value.user
                 : user // ignore: cast_nullable_to_non_nullable
@@ -506,7 +538,15 @@ abstract class _$$UserResponseImplCopyWith<$Res>
   ) = __$$UserResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Token? token, User? user, String firebaseCustomToken});
+  $Res call({
+    Token? token,
+    String accessToken,
+    String refreshToken,
+    int expiresIn,
+    int refreshExpiresIn,
+    User? user,
+    String firebaseCustomToken,
+  });
 
   @override
   $TokenCopyWith<$Res>? get token;
@@ -529,6 +569,10 @@ class __$$UserResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? token = freezed,
+    Object? accessToken = null,
+    Object? refreshToken = null,
+    Object? expiresIn = null,
+    Object? refreshExpiresIn = null,
     Object? user = freezed,
     Object? firebaseCustomToken = null,
   }) {
@@ -538,6 +582,22 @@ class __$$UserResponseImplCopyWithImpl<$Res>
             ? _value.token
             : token // ignore: cast_nullable_to_non_nullable
                   as Token?,
+        accessToken: null == accessToken
+            ? _value.accessToken
+            : accessToken // ignore: cast_nullable_to_non_nullable
+                  as String,
+        refreshToken: null == refreshToken
+            ? _value.refreshToken
+            : refreshToken // ignore: cast_nullable_to_non_nullable
+                  as String,
+        expiresIn: null == expiresIn
+            ? _value.expiresIn
+            : expiresIn // ignore: cast_nullable_to_non_nullable
+                  as int,
+        refreshExpiresIn: null == refreshExpiresIn
+            ? _value.refreshExpiresIn
+            : refreshExpiresIn // ignore: cast_nullable_to_non_nullable
+                  as int,
         user: freezed == user
             ? _value.user
             : user // ignore: cast_nullable_to_non_nullable
@@ -556,12 +616,28 @@ class __$$UserResponseImplCopyWithImpl<$Res>
 class _$UserResponseImpl implements _UserResponse {
   const _$UserResponseImpl({
     this.token,
+    this.accessToken = '',
+    this.refreshToken = '',
+    this.expiresIn = 0,
+    this.refreshExpiresIn = 0,
     this.user,
     this.firebaseCustomToken = '',
   });
 
   @override
   final Token? token;
+  @override
+  @JsonKey()
+  final String accessToken;
+  @override
+  @JsonKey()
+  final String refreshToken;
+  @override
+  @JsonKey()
+  final int expiresIn;
+  @override
+  @JsonKey()
+  final int refreshExpiresIn;
   @override
   final User? user;
   @override
@@ -570,7 +646,7 @@ class _$UserResponseImpl implements _UserResponse {
 
   @override
   String toString() {
-    return 'UserResponse(token: $token, user: $user, firebaseCustomToken: $firebaseCustomToken)';
+    return 'UserResponse(token: $token, accessToken: $accessToken, refreshToken: $refreshToken, expiresIn: $expiresIn, refreshExpiresIn: $refreshExpiresIn, user: $user, firebaseCustomToken: $firebaseCustomToken)';
   }
 
   @override
@@ -579,14 +655,30 @@ class _$UserResponseImpl implements _UserResponse {
         (other.runtimeType == runtimeType &&
             other is _$UserResponseImpl &&
             (identical(other.token, token) || other.token == token) &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.expiresIn, expiresIn) ||
+                other.expiresIn == expiresIn) &&
+            (identical(other.refreshExpiresIn, refreshExpiresIn) ||
+                other.refreshExpiresIn == refreshExpiresIn) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.firebaseCustomToken, firebaseCustomToken) ||
                 other.firebaseCustomToken == firebaseCustomToken));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, token, user, firebaseCustomToken);
+  int get hashCode => Object.hash(
+    runtimeType,
+    token,
+    accessToken,
+    refreshToken,
+    expiresIn,
+    refreshExpiresIn,
+    user,
+    firebaseCustomToken,
+  );
 
   /// Create a copy of UserResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -600,12 +692,24 @@ class _$UserResponseImpl implements _UserResponse {
 abstract class _UserResponse implements UserResponse {
   const factory _UserResponse({
     final Token? token,
+    final String accessToken,
+    final String refreshToken,
+    final int expiresIn,
+    final int refreshExpiresIn,
     final User? user,
     final String firebaseCustomToken,
   }) = _$UserResponseImpl;
 
   @override
   Token? get token;
+  @override
+  String get accessToken;
+  @override
+  String get refreshToken;
+  @override
+  int get expiresIn;
+  @override
+  int get refreshExpiresIn;
   @override
   User? get user;
   @override

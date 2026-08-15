@@ -1,8 +1,8 @@
 name: tanlu_management
 description: "A new Flutter project."
-publish_to: "none" 
+publish_to: "none"
 
-version: 1.0.0+5
+version: 1.0.1+8
 
 environment:
   sdk: ^3.11.3
@@ -35,7 +35,7 @@ dependencies:
   timezone: ^0.10.1
   android_id: 0.4.0
   internet_connection_checker: 1.0.0+1
-  
+
   # Utils
   intl: ^0.20.2
   logger: ^2.5.0
@@ -77,6 +77,7 @@ dependencies:
   firebase_core: ^4.11.0
   firebase_messaging: ^16.4.1
   web_socket_channel: ^3.0.3
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:

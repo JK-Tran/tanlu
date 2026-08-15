@@ -61,7 +61,7 @@ class AttendanceDateStrip extends StatelessWidget {
                       AppText.b2(
                         label.toString(),
                         color: AppColors.grayDark,
-                        fontSize: 12.sp,
+                        fontSize: 10.sp,
                         fontWeight: FontWeight.w600,
                       ),
                       if (onTap != null) ...[

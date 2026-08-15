@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 import 'package:tanlu_management/features/auth/domain/entity/user.dart';
 import 'package:tanlu_management/features/person/presentation/widgets/person_info_tile.dart';
 import 'package:tanlu_management/features/person/presentation/widgets/person_menu_tile.dart';
 import 'package:tanlu_management/features/person/presentation/widgets/person_sub_page_bar.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class PersonProfilePage extends StatelessWidget {
-  const PersonProfilePage({
-    super.key,
-    required this.user,
-    this.className,
-  });
+  const PersonProfilePage({super.key, required this.user, this.className});
 
   final User? user;
   final String? className;
@@ -25,13 +22,12 @@ class PersonProfilePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.grayBg,
-      appBar: const PersonSubPageBar(title: 'Thông tin cá nhân'),
+      appBar: PersonSubPageBar(title: context.l10n.personalInfo),
       body: ListView(
         padding: EdgeInsets.all(16.w),
         children: [
           Center(
-            child: AttendanceAvatar(
-              nickname: name,
+            child: AppAvatar(name: name,
               imageUrl: user?.avatarUrl,
               size: 88,
             ),
@@ -41,12 +37,12 @@ class PersonProfilePage extends StatelessWidget {
             children: [
               PersonInfoTile(
                 icon: Icons.person_outline_rounded,
-                label: 'Họ và tên',
+                label: context.l10n.fullName,
                 value: name,
               ),
               PersonInfoTile(
                 icon: Icons.phone_outlined,
-                label: 'Số điện thoại',
+                label: context.l10n.phoneNumber,
                 value: user?.phone.trim().isNotEmpty == true
                     ? user!.phone
                     : '—',
@@ -60,12 +56,17 @@ class PersonProfilePage extends StatelessWidget {
               ),
               PersonInfoTile(
                 icon: Icons.school_outlined,
-                label: 'Vai trò',
-                value: user?.role == 'parent' ? 'Phụ huynh' : 'Giáo viên',
+                label: context.l10n.role,
+                value: user?.role == 'parent'
+                    ? context.l10n.roleParent
+                    : context.l10n.roleTeacher,
               ),
+              Divider(height: 1, color: AppColors.grayLight),
               PersonInfoTile(
                 icon: Icons.class_outlined,
-                label: user?.role == 'parent' ? 'Lớp' : 'Lớp phụ trách',
+                label: user?.role == 'parent'
+                    ? context.l10n.classTitle
+                    : context.l10n.assignedClass,
                 value: className?.trim().isNotEmpty == true ? className! : '—',
                 showDivider: false,
               ),

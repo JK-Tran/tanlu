@@ -7,10 +7,10 @@ import 'package:tanlu_management/core/widgets/app_text.dart';
 class AttendanceSaveBar extends StatelessWidget {
   const AttendanceSaveBar({
     super.key,
-    required this.title,
-    required this.subtitle,
+    this.title,
+    this.subtitle,
     required this.buttonLabel,
-    required this.titleColor,
+    this.titleColor = AppColors.primary,
     required this.canSave,
     required this.isSaving,
     required this.onSave,
@@ -18,8 +18,8 @@ class AttendanceSaveBar extends StatelessWidget {
     this.onSecondarySave,
   });
 
-  final String title;
-  final String subtitle;
+  final String? title;
+  final String? subtitle;
   final String buttonLabel;
   final Color titleColor;
   final bool canSave;
@@ -49,27 +49,31 @@ class AttendanceSaveBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AppText.b1(
-                  title,
-                  color: titleColor,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-                SizedBox(height: 2.h),
-                AppText.b2(
-                  subtitle,
-                  color: AppColors.grayMedium,
-                  fontSize: 12.sp,
-                ),
-              ],
+          if (title != null && title!.isNotEmpty) ...[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppText.b1(
+                    title!,
+                    color: titleColor,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  if (subtitle != null && subtitle!.isNotEmpty) ...[
+                    SizedBox(height: 2.h),
+                    AppText.b2(
+                      subtitle!,
+                      color: AppColors.grayMedium,
+                      fontSize: 12.sp,
+                    ),
+                  ],
+                ],
+              ),
             ),
-          ),
-          SizedBox(width: 12.w),
+            SizedBox(width: 12.w),
+          ],
           if (secondaryButtonLabel != null && onSecondarySave != null) ...[
             OutlinedButton(
               onPressed: canSave ? onSecondarySave : null,
@@ -90,34 +94,57 @@ class AttendanceSaveBar extends StatelessWidget {
             ),
             SizedBox(width: 8.w),
           ],
-          FilledButton(
-            onPressed: canSave ? onSave : null,
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              disabledBackgroundColor: AppColors.grayLight,
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-            ),
-            child: isSaving
-                ? SizedBox(
-                    width: 18.w,
-                    height: 18.w,
-                    child: const CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 2,
+          if (title == null || title!.isEmpty)
+            Expanded(
+              child: SizedBox(
+                width: double.infinity,
+                child: FilledButton(
+                  onPressed: canSave ? onSave : null,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    disabledBackgroundColor: AppColors.grayLight,
+                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
-                  )
-                : AppText.b1(
-                    buttonLabel,
-                    color: Colors.white,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w700,
                   ),
-          ),
+                  child: _buildPrimaryButtonChild(),
+                ),
+              ),
+            )
+          else
+            FilledButton(
+              onPressed: canSave ? onSave : null,
+              style: FilledButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                disabledBackgroundColor: AppColors.grayLight,
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+              child: _buildPrimaryButtonChild(),
+            ),
         ],
       ),
     );
+  }
+
+  Widget _buildPrimaryButtonChild() {
+    return isSaving
+        ? SizedBox(
+            width: 18.w,
+            height: 18.w,
+            child: const CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 2,
+            ),
+          )
+        : AppText.b1(
+            buttonLabel,
+            color: Colors.white,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w700,
+          );
   }
 }

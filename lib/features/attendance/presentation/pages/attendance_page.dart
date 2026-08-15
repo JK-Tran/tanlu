@@ -211,10 +211,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
                     !checkInDone &&
                     !(state.isLoading && roster.isEmpty))
                   AttendanceSaveBar(
-                    title: 'Đã chọn $markedCount/$total',
-                    subtitle: notMarkedCount > 0
-                        ? 'Còn $notMarkedCount bé chưa chọn — bấm ○ để đánh dấu có mặt'
-                        : 'Sẵn sàng lưu điểm danh sáng',
+                    title: '$markedCount/$total',
                     buttonLabel: 'Lưu điểm danh sáng',
                     titleColor: morningReady
                         ? AppColors.success
@@ -228,12 +225,7 @@ class _AttendancePageState extends BasePageState<AttendancePage, AttendanceBloc>
 
                 if (_currentTab == 0 && checkInDone && !checkOutDone)
                   AttendanceSaveBar(
-                    title: 'Chốt cuối ngày',
-                    subtitle: missingCheckOutCount > 0
-                        ? 'Sẽ ghi giờ về cho $missingCheckOutCount bé còn lại'
-                        : 'Giáo viên xác nhận chốt điểm danh cuối ngày',
-                    buttonLabel: 'Chốt điểm danh',
-                    titleColor: AppColors.primary,
+                    buttonLabel: 'Chốt điểm danh cuối ngày',
                     canSave: !state.isSubmitting,
                     isSaving: state.isSubmitting,
                     onSave: () => _handleCompleteCheckOut(missingCheckOutCount),

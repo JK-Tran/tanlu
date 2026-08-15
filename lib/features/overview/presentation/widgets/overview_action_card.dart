@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/router/app_router.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class OverviewActionCard extends StatelessWidget {
   const OverviewActionCard({super.key});
@@ -48,10 +49,10 @@ class OverviewActionCard extends StatelessWidget {
                     ),
 
                     AppText.b1(
-                      'Điểm danh',
+                      context.l10n.attendanceTitle,
                       color: AppColors.grayDark,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14.sp,
+                      fontSize: 12.sp,
                     ),
                   ],
                 ),
@@ -88,10 +89,10 @@ class OverviewActionCard extends StatelessWidget {
                     ),
                     SizedBox(width: 4.w),
                     AppText.b1(
-                      'Đánh giá',
+                      context.l10n.overviewEvaluate,
                       color: AppColors.grayDark,
                       fontWeight: FontWeight.w600,
-                      fontSize: 14.sp,
+                      fontSize: 12.sp,
                     ),
                   ],
                 ),

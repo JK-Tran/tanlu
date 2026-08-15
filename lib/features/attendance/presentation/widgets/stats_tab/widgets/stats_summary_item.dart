@@ -45,7 +45,7 @@ class StatsSummaryCard extends StatelessWidget {
                   child: AppText.b2(
                     context.l10n.totalStudentsCount(_total),
                     color: AppColors.grayMedium,
-                    fontSize: 11.sp,
+                    fontSize: 10.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -109,14 +109,14 @@ class _StatRow extends StatelessWidget {
             child: AppText.b2(
               label,
               color: AppColors.grayDark,
-              fontSize: 13.sp,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w500,
             ),
           ),
           AppText.b2(
             '$count',
             color: AppColors.grayDark,
-            fontSize: 15.sp,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w700,
           ),
         ],

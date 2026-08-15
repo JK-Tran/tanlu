@@ -5,6 +5,12 @@ import 'package:tanlu_management/l10n/l10n.dart';
 abstract final class StringUtils {
   static bool isNullOrBlank(String? s) => s == null || s == '' || s == ' ';
 
+  static String getLastName(String? fullName) {
+    if (isNullOrBlank(fullName)) return '';
+    final parts = fullName!.trim().split(' ');
+    return parts.last;
+  }
+
   static bool hasMatch(String? value, String pattern) {
     return value == null ? false : RegExp(pattern).hasMatch(value);
   }

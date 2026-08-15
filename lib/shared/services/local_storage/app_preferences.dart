@@ -5,6 +5,8 @@ abstract class AppPreferences {
 
   String get languageCode;
 
+  Future<bool> saveLanguageCode(String code);
+
   bool get isFirstLogin;
 
   bool get isFirstLaunchApp;

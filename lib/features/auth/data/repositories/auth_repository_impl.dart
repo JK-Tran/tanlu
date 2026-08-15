@@ -27,12 +27,13 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<User> loginWithEmail(String email, String password) async {
     final response = await _authApiService.loginWithEmail(email, password);
-    final accessToken = response?.token;
+    final accessToken = response?.token ?? response?.accessToken;
     if (accessToken == null || accessToken.isEmpty) {
       throw ValidationException(ValidationExceptionKind.invalidInfomation);
     }
 
     await saveAccessToken(accessToken);
+    await saveRefreshToken(response?.refreshToken);
 
     final userData = response?.user;
     if (userData != null) {
@@ -64,9 +65,38 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<void> saveAccessToken(String? accessToken) async {
-    return accessToken!.isNotEmpty
+    return accessToken != null && accessToken.isNotEmpty
         ? _appPreferences.saveAccessToken(accessToken)
         : Future.value();
+  }
+
+  @override
+  Future<void> saveRefreshToken(String? refreshToken) async {
+    return refreshToken != null && refreshToken.isNotEmpty
+        ? _appPreferences.saveRefreshToken(refreshToken)
+        : Future.value();
+  }
+
+  @override
+  Future<String> refreshToken() async {
+    final oldRefreshToken = await _appPreferences.refreshToken;
+    if (oldRefreshToken.isEmpty) {
+      throw Exception('No refresh token available');
+    }
+
+    final response = await _authApiService.refreshToken(oldRefreshToken);
+    final newAccessToken = response?.token ?? response?.accessToken;
+    final newRefreshToken = response?.refreshToken;
+
+    if (newAccessToken != null && newAccessToken.isNotEmpty) {
+      await saveAccessToken(newAccessToken);
+      if (newRefreshToken != null && newRefreshToken.isNotEmpty) {
+        await saveRefreshToken(newRefreshToken);
+      }
+      return newAccessToken;
+    }
+
+    throw Exception('Failed to refresh token');
   }
 
   @override
@@ -81,13 +111,25 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<void> logout() async {
-    await _authApiService.logOut();
-    await updateFcmToken('');
-    await clearCurrentUserData();
+    try {
+      await Future.wait([
+        updateFcmToken(''),
+        _authApiService.logOut(),
+      ]);
+    } catch (_) {
+      // Ignore API errors during logout
+    } finally {
+      await clearCurrentUserData();
+    }
   }
 
   @override
   Future<void> updateFcmToken(String token) async {
     await _authApiService.updateFcmToken(token);
+  }
+
+  @override
+  Future<void> changePassword(String oldPassword, String newPassword) async {
+    await _authApiService.changePassword(oldPassword, newPassword);
   }
 }

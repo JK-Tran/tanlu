@@ -4,6 +4,7 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/feed/domain/entity/feed_post.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_page/widgets/explore_tab/explore_item.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class ExploreList extends StatelessWidget {
   const ExploreList({
@@ -31,7 +32,7 @@ class ExploreList extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(32.w),
             child: AppText.b1(
-              'Chưa có bài viết công khai',
+              context.l10n.feedNoPublicPosts,
               textAlign: TextAlign.center,
               color: AppColors.grayMedium,
             ),
@@ -52,7 +53,7 @@ class ExploreList extends StatelessWidget {
                       height: 24,
                       child: CircularProgressIndicator(strokeWidth: 2),
                     )
-                  : const Text('Xem thêm'),
+                  : Text(context.l10n.feedSeeMore),
             ),
           ),
       ],

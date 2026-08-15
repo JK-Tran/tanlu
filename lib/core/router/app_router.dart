@@ -11,7 +11,6 @@ import 'package:tanlu_management/features/student/presentation/pages/student_pag
 import 'package:tanlu_management/features/student/presentation/pages/student_detail/student_detail_page.dart';
 
 import 'package:tanlu_management/features/person/presentation/pages/person_page.dart';
-import 'package:tanlu_management/features/person/presentation/pages/person_about_page.dart';
 import 'package:tanlu_management/features/overview/presentation/pages/overview_page.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_page/pages/feed_page.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/pages/create_feed_page.dart';
@@ -102,12 +101,12 @@ class AppRouter {
             return StudentDetailPage(studentId: id);
           },
         ),
-        GoRoute(
-          path: settings,
-          name: 'settings',
-          parentNavigatorKey: rootNavigatorKey,
-          builder: (context, state) => const PersonAboutPage(),
-        ),
+        // GoRoute(
+        //   path: settings,
+        //   name: 'settings',
+        //   parentNavigatorKey: rootNavigatorKey,
+        //   builder: (context, state) => const PersonAboutPage(),
+        // ),
         GoRoute(
           path: attendance,
           name: 'attendance',
@@ -152,7 +151,9 @@ class AppRouter {
           pageBuilder: (context, state) {
             final id = int.tryParse(state.pathParameters['id']!) ?? 0;
             final commentIdStr = state.uri.queryParameters['commentId'];
-            final highlightCommentId = commentIdStr != null ? int.tryParse(commentIdStr) : null;
+            final highlightCommentId = commentIdStr != null
+                ? int.tryParse(commentIdStr)
+                : null;
             return SlideTransitionPage(
               child: FeedDetailPage(
                 postId: id,

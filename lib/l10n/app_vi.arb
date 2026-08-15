@@ -33,7 +33,7 @@
   "attendanceToday": "Điểm danh hôm nay",
   "attended": "Đã điểm danh",
   "callPhone": "Gọi điện",
-  "cancel": "Hủy",
+  "cancel": "Huỷ",
   "cannotCallPhone": "Không thể gọi điện thoại trên thiết bị này",
   "cannotPlayVideo": "Không thể phát video",
   "chooseFromGallery": "Chọn từ thư viện",
@@ -119,6 +119,13 @@
   "navPersonal": "Cá nhân",
   "navProgress": "Tiến trình",
   "navStudent": "Học sinh",
+  "studentListTitle": "Danh sách trẻ",
+  "studentProfileTitle": "Hồ sơ trẻ",
+  "studentNotFound": "Không tìm thấy học sinh",
+  "studentTabContact": "Liên hệ",
+  "studentTabNotes": "Ghi chú",
+  "studentTabAttendance": "Điểm danh",
+  "studentTabFeed": "Bảng tin",
   "networkError": "Không có kết nối mạng. Vui lòng kiểm tra lại.",
   "noAttendanceDataForDay": "Chưa có dữ liệu điểm danh ngày này",
   "noClassUpdated": "Chưa cập nhật lớp",
@@ -253,6 +260,9 @@
       }
     }
   },
+  "attendanceTabAttendance": "Điểm danh",
+  "attendanceTabLeave": "Xin phép",
+  "attendanceTabHistory": "Lịch sử",
   "attendanceTitle": "Điểm danh",
   "selectStatus": "Chọn trạng thái",
   "inClass": "Có trong lớp",
@@ -268,5 +278,207 @@
     }
   },
   "savedAttendanceMorning": "Đã lưu điểm danh sáng!",
-  "goBack": "Quay lại"
+  "goBack": "Quay lại",
+  "roleParent": "Phụ huynh",
+  "roleTeacher": "Giáo viên",
+  "accountAndSecurity": "Tài khoản và bảo mật",
+  "username": "Tên đăng nhập",
+  "changePassword": "Đổi mật khẩu",
+  "personalInfo": "Thông tin cá nhân",
+  "fullName": "Họ và tên",
+  "role": "Vai trò",
+  "classTitle": "Lớp",
+  "assignedClass": "Lớp phụ trách",
+  "logout": "Đăng xuất",
+  "logoutConfirmMsg": "Bạn có chắc muốn đăng xuất?",
+  "security": "Bảo mật",
+  "language": "Ngôn ngữ",
+  "notifications": "Thông báo",
+  "vietnamese": "Tiếng Việt",
+  "english": "English",
+  "contentComingSoon": "Nội dung sẽ được cập nhật sớm",
+  "helpCenter": "Trung tâm trợ giúp",
+  "alwaysReadyToHelp": "Chúng tôi luôn sẵn sàng hỗ trợ bạn",
+  "faq": "Câu hỏi thường gặp",
+  "contactSupport": "Liên hệ hỗ trợ",
+  "userGuide": "Hướng dẫn sử dụng",
+  "aboutApp": "Giới thiệu ứng dụng",
+  "version": "Phiên bản {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "termsOfUse": "Điều khoản sử dụng",
+  "privacyPolicy": "Chính sách bảo mật",
+  "rateApp": "Đánh giá ứng dụng",
+  "passwordUpdated": "Đã cập nhật mật khẩu",
+  "currentPassword": "Mật khẩu hiện tại",
+  "newPassword": "Mật khẩu mới",
+  "confirmNewPassword": "Xác nhận mật khẩu mới",
+  "reqMinChars": "Ít nhất 8 ký tự",
+  "reqUpperLower": "Có chữ hoa và chữ thường",
+  "reqSpecialChar": "Có ký tự đặc biệt",
+  "overviewEvaluate": "Đánh giá",
+  "feedCreatePost": "Tạo bài viết",
+  "feedMediaRequirePermission": "Cần quyền truy cập thư viện ảnh. ",
+  "feedMediaEnableInSettings": "Vui lòng bật trong Cài đặt.",
+  "feedMaxVideos": "Chỉ chọn tối đa {maxVideos} video",
+  "@feedMaxVideos": {
+    "placeholders": {
+      "maxVideos": {
+        "type": "int"
+      }
+    }
+  },
+  "feedVideoSizeExceed": "Video vượt {maxMB} MB",
+  "@feedVideoSizeExceed": {
+    "placeholders": {
+      "maxMB": {
+        "type": "int"
+      }
+    }
+  },
+  "feedMaxImages": "Chỉ chọn tối đa {maxImages} ảnh",
+  "@feedMaxImages": {
+    "placeholders": {
+      "maxImages": {
+        "type": "int"
+      }
+    }
+  },
+  "feedSkippedOversizedVideos": "Đã bỏ qua {count} video vượt ",
+  "@feedSkippedOversizedVideos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "feedMaxImagesAndVideos": "Đã đủ {maxImages} ảnh và ",
+  "@feedMaxImagesAndVideos": {
+    "placeholders": {
+      "maxImages": {
+        "type": "int"
+      }
+    }
+  },
+  "feedOnlyMaxImagesAnd": "Chỉ chọn tối đa {maxImages} ảnh và ",
+  "@feedOnlyMaxImagesAnd": {
+    "placeholders": {
+      "maxImages": {
+        "type": "int"
+      }
+    }
+  },
+  "feedGallery": "Thư viện",
+  "feedNext": "Tiếp",
+  "feedNextWithCount": "Tiếp ({count})",
+  "@feedNextWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "feedSelectMaxImagesInfo": "Chọn tối đa {maxImages} ảnh, ",
+  "@feedSelectMaxImagesInfo": {
+    "placeholders": {
+      "maxImages": {
+        "type": "int"
+      }
+    }
+  },
+  "feedAndroidGalleryInfo": "Android mở thư viện hệ thống để chọn.",
+  "feedSelectMediaFromGallery": "Chọn ảnh hoặc video từ thư viện",
+  "feedAfterSelectInfo": "Sau khi chọn, bạn có thể xem lại và chọn thêm.",
+  "feedOpeningGallery": "Đang mở thư viện...",
+  "feedOpenGalleryBtn": "Mở thư viện ảnh",
+  "feedSelectMoreBtn": "Chọn thêm",
+  "feedTeacherRole": "Giáo viên",
+  "feedWhatFunToday": "Hôm nay lớp mình có gì vui?",
+  "feedPhotoGallery": "Thư viện ảnh",
+  "feedNoClassAssigned": "Chưa gán lớp",
+  "feedLoadingClass": "Đang tải lớp...",
+  "feedMyClass": "Lớp của tôi",
+  "feedPostFor": "Đăng cho",
+  "feedPublicOnExplore": "Công khai trên Khám phá",
+  "feedWhatAreYouThinking": "Bạn đang nghĩ gì?",
+  "feedAddBtn": "Thêm",
+  "feedPostBtn": "Đăng bài",
+  "feedCannotLoadPost": "Không thể tải bài viết",
+  "feedDeletePost": "Xóa bài viết",
+  "feedDeletePostConfirmMsg": "Bài viết sẽ bị xóa và không hiển thị trên bảng tin.",
+  "feedDeleteBtn": "Xóa",
+  "feedPostDetailTitle": "Chi tiết bài viết",
+  "feedPostNotFound": "Không tìm thấy bài viết",
+  "feedCommentOptions": "Tùy chọn bình luận",
+  "feedEditComment": "Sửa bình luận",
+  "feedDeleteComment": "Xóa bình luận",
+  "feedAuthorBadge": "Tác giả",
+  "feedWriteCommentHint": "Viết bình luận...",
+  "feedReplyToAuthor": "Trả lời {authorName}",
+  "@feedReplyToAuthor": {
+    "placeholders": {
+      "authorName": {
+        "type": "String"
+      }
+    }
+  },
+  "feedEditedMark": "· Đã sửa",
+  "feedReplyBtn": "Trả lời",
+  "feedCommentsCount": "Bình luận ({total})",
+  "@feedCommentsCount": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "feedNoCommentsYet": "Chưa có bình luận nào. Hãy là người đầu tiên!",
+  "feedPostOptions": "Tùy chọn bài viết",
+  "feedNotLoggedIn": "Chưa đăng nhập",
+  "feedDeletePostSuccess": "Xóa bài thành công",
+  "feedNoPublicPosts": "Chưa có bài viết công khai",
+  "feedSeeMore": "Xem thêm",
+  "feedNewsFeedTitle": "Bảng tin",
+  "errorGeneric": "Đã có lỗi xảy ra, vui lòng thử lại sau.",
+  "errorIncorrectOldPassword": "Sai mật khẩu cũ",
+  "errorMissingPasswords": "Vui lòng nhập đầy đủ mật khẩu cũ và mới",
+  "errorPasswordTooShort": "Mật khẩu mới phải có ít nhất 6 ký tự",
+  "errorPasswordComplexity": "Mật khẩu mới phải bao gồm chữ hoa, chữ thường và số.",
+  "chatMessageRevoked": "Tin nhắn đã bị thu hồi",
+  "chatMessageImage": "[Hình ảnh]",
+  "chatMessageFile": "[Tệp đính kèm]",
+  "chatNoMessagesYet": "Chưa có tin nhắn nào.",
+  "chatMediaPermissionRequired": "Vui lòng cấp quyền truy cập ảnh trong cài đặt.",
+  "chatMediaNoImages": "Không có ảnh nào.",
+  "chatInputReplying": "Đang trả lời",
+  "chatInputDefaultMessage": "Tin nhắn",
+  "chatInputSendImageError": "Không thể gửi ảnh: {error}",
+  "@chatInputSendImageError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "chatActionReply": "Trả lời",
+  "chatActionRevoke": "Thu hồi",
+  "chatActionCopy": "Sao chép",
+  "chatMsgCopied": "Đã sao chép tin nhắn",
+  "chatRevokeTitle": "Thu hồi tin nhắn",
+  "chatRevokeConfirmMsg": "Bạn có chắc chắn muốn thu hồi tin nhắn này không? Hành động này không thể hoàn tác.",
+  "chatMsgRevokedSuccess": "Đã thu hồi tin nhắn",
+  "chatReplied": "Đã trả lời",
+  "chatMaxImageLimit": "Bạn chỉ có thể chọn tối đa 10 ảnh",
+  "chatSearchContactHint": "Tìm kiếm người liên hệ...",
+  "chatNoConversationsYet": "Chưa có cuộc trò chuyện nào.",
+  "chatSelectContact": "Chọn người liên hệ",
+  "chatNoContacts": "Không có liên hệ nào.",
+  "chatStatusOnline": "Trực tuyến",
+  "chatStatusActive": "Đang hoạt động",
+  "chatStatusOffline": "Không hoạt động"
 }

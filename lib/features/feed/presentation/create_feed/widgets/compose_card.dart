@@ -6,7 +6,8 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_surface_card.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/app/presentation/bloc/app_bloc.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class ComposeCard extends StatelessWidget {
   const ComposeCard({super.key, required this.onTap, this.onLibraryTap});
@@ -21,7 +22,7 @@ class ComposeCard extends StatelessWidget {
         final user = appState.mapOrNull(authenticated: (s) => s.user);
         final displayName = user?.fullName.isNotEmpty == true
             ? user!.fullName
-            : 'Giáo viên';
+            : context.l10n.feedTeacherRole;
 
         return AppSurfaceCard(
           margin: EdgeInsets.fromLTRB(16.w, 0, 16.w, 12.h),
@@ -32,8 +33,7 @@ class ComposeCard extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 8.h),
                 child: Row(
                   children: [
-                    AttendanceAvatar(
-                      nickname: displayName,
+                    AppAvatar(name: displayName,
                       imageUrl: user?.avatarUrl,
                       size: 40,
                     ),
@@ -51,9 +51,9 @@ class ComposeCard extends StatelessWidget {
                               vertical: 10.h,
                             ),
                             child: AppText.b1(
-                              'Hôm nay lớp mình có gì vui?',
+                              context.l10n.feedWhatFunToday,
                               color: AppColors.grayMedium,
-                              fontSize: 12.sp,
+                              fontSize: 10.sp,
                             ),
                           ),
                         ),
@@ -62,11 +62,7 @@ class ComposeCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(
-                height: 1,
-                thickness: 1,
-                color: AppColors.grayLight.withValues(alpha: 0.45),
-              ),
+
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 child: _LibraryAction(onTap: onLibraryTap ?? onTap),
@@ -108,8 +104,8 @@ class _LibraryAction extends StatelessWidget {
                 ),
                 SizedBox(width: 6.w),
                 AppText.b2(
-                  'Thư viện ảnh',
-                  fontSize: 12.sp,
+                  context.l10n.feedPhotoGallery,
+                  fontSize: 10.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.grayDark,
                 ),

@@ -7,6 +7,7 @@ import 'package:tanlu_management/features/feed/domain/usecases/get_feed_posts_us
 import 'package:tanlu_management/features/feed/domain/usecases/toggle_post_like_use_case.dart';
 import 'package:tanlu_management/features/feed/presentation/services/enums/feed_tab.dart';
 import 'package:tanlu_management/shared/utils/error_mapper.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 part 'feed_bloc.freezed.dart';
 part 'feed_event.dart';
@@ -40,7 +41,7 @@ class FeedBloc extends BaseBloc<FeedEvent, FeedState> {
       emit(
         state.copyWith(
           authorId: authorId,
-          onPageError: 'Chưa đăng nhập',
+          onPageError: S.current.feedNotLoggedIn,
           isLoadingClass: false,
           isLoadingExplore: false,
         ),

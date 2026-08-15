@@ -462,6 +462,14 @@ UserDataResponse _$UserDataResponseFromJson(Map<String, dynamic> json) {
 mixin _$UserDataResponse {
   @JsonKey(name: 'token')
   String? get token => throw _privateConstructorUsedError;
+  @JsonKey(name: 'accessToken')
+  String? get accessToken => throw _privateConstructorUsedError;
+  @JsonKey(name: 'refreshToken')
+  String? get refreshToken => throw _privateConstructorUsedError;
+  @JsonKey(name: 'expiresIn')
+  int? get expiresIn => throw _privateConstructorUsedError;
+  @JsonKey(name: 'refreshExpiresIn')
+  int? get refreshExpiresIn => throw _privateConstructorUsedError;
   @JsonKey(name: 'user')
   UserData? get user => throw _privateConstructorUsedError;
   @JsonKey(name: 'firebaseCustomToken')
@@ -486,6 +494,10 @@ abstract class $UserDataResponseCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'token') String? token,
+    @JsonKey(name: 'accessToken') String? accessToken,
+    @JsonKey(name: 'refreshToken') String? refreshToken,
+    @JsonKey(name: 'expiresIn') int? expiresIn,
+    @JsonKey(name: 'refreshExpiresIn') int? refreshExpiresIn,
     @JsonKey(name: 'user') UserData? user,
     @JsonKey(name: 'firebaseCustomToken') String? firebaseCustomToken,
   });
@@ -509,6 +521,10 @@ class _$UserDataResponseCopyWithImpl<$Res, $Val extends UserDataResponse>
   @override
   $Res call({
     Object? token = freezed,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
+    Object? expiresIn = freezed,
+    Object? refreshExpiresIn = freezed,
     Object? user = freezed,
     Object? firebaseCustomToken = freezed,
   }) {
@@ -518,6 +534,22 @@ class _$UserDataResponseCopyWithImpl<$Res, $Val extends UserDataResponse>
                 ? _value.token
                 : token // ignore: cast_nullable_to_non_nullable
                       as String?,
+            accessToken: freezed == accessToken
+                ? _value.accessToken
+                : accessToken // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            refreshToken: freezed == refreshToken
+                ? _value.refreshToken
+                : refreshToken // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            expiresIn: freezed == expiresIn
+                ? _value.expiresIn
+                : expiresIn // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            refreshExpiresIn: freezed == refreshExpiresIn
+                ? _value.refreshExpiresIn
+                : refreshExpiresIn // ignore: cast_nullable_to_non_nullable
+                      as int?,
             user: freezed == user
                 ? _value.user
                 : user // ignore: cast_nullable_to_non_nullable
@@ -557,6 +589,10 @@ abstract class _$$UserDataResponseImplCopyWith<$Res>
   @useResult
   $Res call({
     @JsonKey(name: 'token') String? token,
+    @JsonKey(name: 'accessToken') String? accessToken,
+    @JsonKey(name: 'refreshToken') String? refreshToken,
+    @JsonKey(name: 'expiresIn') int? expiresIn,
+    @JsonKey(name: 'refreshExpiresIn') int? refreshExpiresIn,
     @JsonKey(name: 'user') UserData? user,
     @JsonKey(name: 'firebaseCustomToken') String? firebaseCustomToken,
   });
@@ -580,6 +616,10 @@ class __$$UserDataResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? token = freezed,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
+    Object? expiresIn = freezed,
+    Object? refreshExpiresIn = freezed,
     Object? user = freezed,
     Object? firebaseCustomToken = freezed,
   }) {
@@ -589,6 +629,22 @@ class __$$UserDataResponseImplCopyWithImpl<$Res>
             ? _value.token
             : token // ignore: cast_nullable_to_non_nullable
                   as String?,
+        accessToken: freezed == accessToken
+            ? _value.accessToken
+            : accessToken // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        refreshToken: freezed == refreshToken
+            ? _value.refreshToken
+            : refreshToken // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        expiresIn: freezed == expiresIn
+            ? _value.expiresIn
+            : expiresIn // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        refreshExpiresIn: freezed == refreshExpiresIn
+            ? _value.refreshExpiresIn
+            : refreshExpiresIn // ignore: cast_nullable_to_non_nullable
+                  as int?,
         user: freezed == user
             ? _value.user
             : user // ignore: cast_nullable_to_non_nullable
@@ -607,6 +663,10 @@ class __$$UserDataResponseImplCopyWithImpl<$Res>
 class _$UserDataResponseImpl implements _UserDataResponse {
   const _$UserDataResponseImpl({
     @JsonKey(name: 'token') this.token,
+    @JsonKey(name: 'accessToken') this.accessToken,
+    @JsonKey(name: 'refreshToken') this.refreshToken,
+    @JsonKey(name: 'expiresIn') this.expiresIn,
+    @JsonKey(name: 'refreshExpiresIn') this.refreshExpiresIn,
     @JsonKey(name: 'user') this.user,
     @JsonKey(name: 'firebaseCustomToken') this.firebaseCustomToken,
   });
@@ -618,6 +678,18 @@ class _$UserDataResponseImpl implements _UserDataResponse {
   @JsonKey(name: 'token')
   final String? token;
   @override
+  @JsonKey(name: 'accessToken')
+  final String? accessToken;
+  @override
+  @JsonKey(name: 'refreshToken')
+  final String? refreshToken;
+  @override
+  @JsonKey(name: 'expiresIn')
+  final int? expiresIn;
+  @override
+  @JsonKey(name: 'refreshExpiresIn')
+  final int? refreshExpiresIn;
+  @override
   @JsonKey(name: 'user')
   final UserData? user;
   @override
@@ -626,7 +698,7 @@ class _$UserDataResponseImpl implements _UserDataResponse {
 
   @override
   String toString() {
-    return 'UserDataResponse(token: $token, user: $user, firebaseCustomToken: $firebaseCustomToken)';
+    return 'UserDataResponse(token: $token, accessToken: $accessToken, refreshToken: $refreshToken, expiresIn: $expiresIn, refreshExpiresIn: $refreshExpiresIn, user: $user, firebaseCustomToken: $firebaseCustomToken)';
   }
 
   @override
@@ -635,6 +707,14 @@ class _$UserDataResponseImpl implements _UserDataResponse {
         (other.runtimeType == runtimeType &&
             other is _$UserDataResponseImpl &&
             (identical(other.token, token) || other.token == token) &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.expiresIn, expiresIn) ||
+                other.expiresIn == expiresIn) &&
+            (identical(other.refreshExpiresIn, refreshExpiresIn) ||
+                other.refreshExpiresIn == refreshExpiresIn) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.firebaseCustomToken, firebaseCustomToken) ||
                 other.firebaseCustomToken == firebaseCustomToken));
@@ -642,8 +722,16 @@ class _$UserDataResponseImpl implements _UserDataResponse {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, token, user, firebaseCustomToken);
+  int get hashCode => Object.hash(
+    runtimeType,
+    token,
+    accessToken,
+    refreshToken,
+    expiresIn,
+    refreshExpiresIn,
+    user,
+    firebaseCustomToken,
+  );
 
   /// Create a copy of UserDataResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -665,6 +753,10 @@ class _$UserDataResponseImpl implements _UserDataResponse {
 abstract class _UserDataResponse implements UserDataResponse {
   const factory _UserDataResponse({
     @JsonKey(name: 'token') final String? token,
+    @JsonKey(name: 'accessToken') final String? accessToken,
+    @JsonKey(name: 'refreshToken') final String? refreshToken,
+    @JsonKey(name: 'expiresIn') final int? expiresIn,
+    @JsonKey(name: 'refreshExpiresIn') final int? refreshExpiresIn,
     @JsonKey(name: 'user') final UserData? user,
     @JsonKey(name: 'firebaseCustomToken') final String? firebaseCustomToken,
   }) = _$UserDataResponseImpl;
@@ -675,6 +767,18 @@ abstract class _UserDataResponse implements UserDataResponse {
   @override
   @JsonKey(name: 'token')
   String? get token;
+  @override
+  @JsonKey(name: 'accessToken')
+  String? get accessToken;
+  @override
+  @JsonKey(name: 'refreshToken')
+  String? get refreshToken;
+  @override
+  @JsonKey(name: 'expiresIn')
+  int? get expiresIn;
+  @override
+  @JsonKey(name: 'refreshExpiresIn')
+  int? get refreshExpiresIn;
   @override
   @JsonKey(name: 'user')
   UserData? get user;

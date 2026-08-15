@@ -14,8 +14,10 @@ class UrlConstants {
         return 'https://tanlu-api.lvthanh-work.workers.dev$apiVersion';
       case Flavor.staging:
         return 'https://tanlu-api.lvthanh-work.workers.dev$apiVersion';
+      // case Flavor.production:
+      //   return 'https://tanlu-api.lvthanh-work.workers.dev$apiVersion';
       case Flavor.production:
-        return 'https://tanlu-api.lvthanh-work.workers.dev$apiVersion';
+        return 'http://172.16.0.119:8787$apiVersion';
     }
   }
 
@@ -28,8 +30,10 @@ class UrlConstants {
         return 'https://tanlu-api.lvthanh-work.workers.dev$apiVersion';
       case Flavor.staging:
         return 'https://tanlu-api.lvthanh-work.workers.dev$apiVersion';
+      // case Flavor.production:
+      //   return 'https://tanlu-api.lvthanh-work.workers.dev$apiVersion';
       case Flavor.production:
-        return 'https://tanlu-api.lvthanh-work.workers.dev$apiVersion';
+        return 'http://172.16.0.119:8787$apiVersion';
     }
   }
 }

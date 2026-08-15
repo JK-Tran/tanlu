@@ -55,7 +55,7 @@ class AttendanceAppBar extends StatelessWidget {
                   AppText.b1(
                     context.l10n.attendanceTitle,
                     color: Colors.white,
-                    fontSize: 18.sp,
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
                     textAlign: TextAlign.center,
                   ),

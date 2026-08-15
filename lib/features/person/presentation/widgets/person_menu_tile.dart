@@ -69,8 +69,8 @@ class PersonMenuTile extends StatelessWidget {
                   Expanded(
                     child: AppText.b1(
                       title,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w700,
                       color: titleColor ?? AppColors.grayDark,
                     ),
                   ),
@@ -78,7 +78,7 @@ class PersonMenuTile extends StatelessWidget {
                     AppText.b2(
                       value!,
                       color: AppColors.grayMedium,
-                      fontSize: 12.sp,
+                      fontSize: 10.sp,
                     ),
                     SizedBox(width: 4.w),
                   ],
@@ -128,7 +128,7 @@ class PersonMenuSwitchTile extends StatelessWidget {
               Expanded(
                 child: AppText.b1(
                   title,
-                  fontSize: 14.sp,
+                  fontSize: 10.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.grayDark,
                 ),

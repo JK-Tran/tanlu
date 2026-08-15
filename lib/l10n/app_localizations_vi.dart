@@ -56,7 +56,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get callPhone => 'Gọi điện';
 
   @override
-  String get cancel => 'Hủy';
+  String get cancel => 'Huỷ';
 
   @override
   String get cannotCallPhone => 'Không thể gọi điện thoại trên thiết bị này';
@@ -198,6 +198,27 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get navStudent => 'Học sinh';
+
+  @override
+  String get studentListTitle => 'Danh sách trẻ';
+
+  @override
+  String get studentProfileTitle => 'Hồ sơ trẻ';
+
+  @override
+  String get studentNotFound => 'Không tìm thấy học sinh';
+
+  @override
+  String get studentTabContact => 'Liên hệ';
+
+  @override
+  String get studentTabNotes => 'Ghi chú';
+
+  @override
+  String get studentTabAttendance => 'Điểm danh';
+
+  @override
+  String get studentTabFeed => 'Bảng tin';
 
   @override
   String get networkError => 'Không có kết nối mạng. Vui lòng kiểm tra lại.';
@@ -443,6 +464,15 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
+  String get attendanceTabAttendance => 'Điểm danh';
+
+  @override
+  String get attendanceTabLeave => 'Xin phép';
+
+  @override
+  String get attendanceTabHistory => 'Lịch sử';
+
+  @override
   String get attendanceTitle => 'Điểm danh';
 
   @override
@@ -470,4 +500,388 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get goBack => 'Quay lại';
+
+  @override
+  String get roleParent => 'Phụ huynh';
+
+  @override
+  String get roleTeacher => 'Giáo viên';
+
+  @override
+  String get accountAndSecurity => 'Tài khoản và bảo mật';
+
+  @override
+  String get username => 'Tên đăng nhập';
+
+  @override
+  String get changePassword => 'Đổi mật khẩu';
+
+  @override
+  String get personalInfo => 'Thông tin cá nhân';
+
+  @override
+  String get fullName => 'Họ và tên';
+
+  @override
+  String get role => 'Vai trò';
+
+  @override
+  String get classTitle => 'Lớp';
+
+  @override
+  String get assignedClass => 'Lớp phụ trách';
+
+  @override
+  String get logout => 'Đăng xuất';
+
+  @override
+  String get logoutConfirmMsg => 'Bạn có chắc muốn đăng xuất?';
+
+  @override
+  String get security => 'Bảo mật';
+
+  @override
+  String get language => 'Ngôn ngữ';
+
+  @override
+  String get notifications => 'Thông báo';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get contentComingSoon => 'Nội dung sẽ được cập nhật sớm';
+
+  @override
+  String get helpCenter => 'Trung tâm trợ giúp';
+
+  @override
+  String get alwaysReadyToHelp => 'Chúng tôi luôn sẵn sàng hỗ trợ bạn';
+
+  @override
+  String get faq => 'Câu hỏi thường gặp';
+
+  @override
+  String get contactSupport => 'Liên hệ hỗ trợ';
+
+  @override
+  String get userGuide => 'Hướng dẫn sử dụng';
+
+  @override
+  String get aboutApp => 'Giới thiệu ứng dụng';
+
+  @override
+  String version(String version) {
+    return 'Phiên bản $version';
+  }
+
+  @override
+  String get termsOfUse => 'Điều khoản sử dụng';
+
+  @override
+  String get privacyPolicy => 'Chính sách bảo mật';
+
+  @override
+  String get rateApp => 'Đánh giá ứng dụng';
+
+  @override
+  String get passwordUpdated => 'Đã cập nhật mật khẩu';
+
+  @override
+  String get currentPassword => 'Mật khẩu hiện tại';
+
+  @override
+  String get newPassword => 'Mật khẩu mới';
+
+  @override
+  String get confirmNewPassword => 'Xác nhận mật khẩu mới';
+
+  @override
+  String get reqMinChars => 'Ít nhất 8 ký tự';
+
+  @override
+  String get reqUpperLower => 'Có chữ hoa và chữ thường';
+
+  @override
+  String get reqSpecialChar => 'Có ký tự đặc biệt';
+
+  @override
+  String get overviewEvaluate => 'Đánh giá';
+
+  @override
+  String get feedCreatePost => 'Tạo bài viết';
+
+  @override
+  String get feedMediaRequirePermission => 'Cần quyền truy cập thư viện ảnh. ';
+
+  @override
+  String get feedMediaEnableInSettings => 'Vui lòng bật trong Cài đặt.';
+
+  @override
+  String feedMaxVideos(int maxVideos) {
+    return 'Chỉ chọn tối đa $maxVideos video';
+  }
+
+  @override
+  String feedVideoSizeExceed(int maxMB) {
+    return 'Video vượt $maxMB MB';
+  }
+
+  @override
+  String feedMaxImages(int maxImages) {
+    return 'Chỉ chọn tối đa $maxImages ảnh';
+  }
+
+  @override
+  String feedSkippedOversizedVideos(int count) {
+    return 'Đã bỏ qua $count video vượt ';
+  }
+
+  @override
+  String feedMaxImagesAndVideos(int maxImages) {
+    return 'Đã đủ $maxImages ảnh và ';
+  }
+
+  @override
+  String feedOnlyMaxImagesAnd(int maxImages) {
+    return 'Chỉ chọn tối đa $maxImages ảnh và ';
+  }
+
+  @override
+  String get feedGallery => 'Thư viện';
+
+  @override
+  String get feedNext => 'Tiếp';
+
+  @override
+  String feedNextWithCount(int count) {
+    return 'Tiếp ($count)';
+  }
+
+  @override
+  String feedSelectMaxImagesInfo(int maxImages) {
+    return 'Chọn tối đa $maxImages ảnh, ';
+  }
+
+  @override
+  String get feedAndroidGalleryInfo => 'Android mở thư viện hệ thống để chọn.';
+
+  @override
+  String get feedSelectMediaFromGallery => 'Chọn ảnh hoặc video từ thư viện';
+
+  @override
+  String get feedAfterSelectInfo =>
+      'Sau khi chọn, bạn có thể xem lại và chọn thêm.';
+
+  @override
+  String get feedOpeningGallery => 'Đang mở thư viện...';
+
+  @override
+  String get feedOpenGalleryBtn => 'Mở thư viện ảnh';
+
+  @override
+  String get feedSelectMoreBtn => 'Chọn thêm';
+
+  @override
+  String get feedTeacherRole => 'Giáo viên';
+
+  @override
+  String get feedWhatFunToday => 'Hôm nay lớp mình có gì vui?';
+
+  @override
+  String get feedPhotoGallery => 'Thư viện ảnh';
+
+  @override
+  String get feedNoClassAssigned => 'Chưa gán lớp';
+
+  @override
+  String get feedLoadingClass => 'Đang tải lớp...';
+
+  @override
+  String get feedMyClass => 'Lớp của tôi';
+
+  @override
+  String get feedPostFor => 'Đăng cho';
+
+  @override
+  String get feedPublicOnExplore => 'Công khai trên Khám phá';
+
+  @override
+  String get feedWhatAreYouThinking => 'Bạn đang nghĩ gì?';
+
+  @override
+  String get feedAddBtn => 'Thêm';
+
+  @override
+  String get feedPostBtn => 'Đăng bài';
+
+  @override
+  String get feedCannotLoadPost => 'Không thể tải bài viết';
+
+  @override
+  String get feedDeletePost => 'Xóa bài viết';
+
+  @override
+  String get feedDeletePostConfirmMsg =>
+      'Bài viết sẽ bị xóa và không hiển thị trên bảng tin.';
+
+  @override
+  String get feedDeleteBtn => 'Xóa';
+
+  @override
+  String get feedPostDetailTitle => 'Chi tiết bài viết';
+
+  @override
+  String get feedPostNotFound => 'Không tìm thấy bài viết';
+
+  @override
+  String get feedCommentOptions => 'Tùy chọn bình luận';
+
+  @override
+  String get feedEditComment => 'Sửa bình luận';
+
+  @override
+  String get feedDeleteComment => 'Xóa bình luận';
+
+  @override
+  String get feedAuthorBadge => 'Tác giả';
+
+  @override
+  String get feedWriteCommentHint => 'Viết bình luận...';
+
+  @override
+  String feedReplyToAuthor(String authorName) {
+    return 'Trả lời $authorName';
+  }
+
+  @override
+  String get feedEditedMark => '· Đã sửa';
+
+  @override
+  String get feedReplyBtn => 'Trả lời';
+
+  @override
+  String feedCommentsCount(int total) {
+    return 'Bình luận ($total)';
+  }
+
+  @override
+  String get feedNoCommentsYet =>
+      'Chưa có bình luận nào. Hãy là người đầu tiên!';
+
+  @override
+  String get feedPostOptions => 'Tùy chọn bài viết';
+
+  @override
+  String get feedNotLoggedIn => 'Chưa đăng nhập';
+
+  @override
+  String get feedDeletePostSuccess => 'Xóa bài thành công';
+
+  @override
+  String get feedNoPublicPosts => 'Chưa có bài viết công khai';
+
+  @override
+  String get feedSeeMore => 'Xem thêm';
+
+  @override
+  String get feedNewsFeedTitle => 'Bảng tin';
+
+  @override
+  String get errorGeneric => 'Đã có lỗi xảy ra, vui lòng thử lại sau.';
+
+  @override
+  String get errorIncorrectOldPassword => 'Sai mật khẩu cũ';
+
+  @override
+  String get errorMissingPasswords => 'Vui lòng nhập đầy đủ mật khẩu cũ và mới';
+
+  @override
+  String get errorPasswordTooShort => 'Mật khẩu mới phải có ít nhất 6 ký tự';
+
+  @override
+  String get errorPasswordComplexity =>
+      'Mật khẩu mới phải bao gồm chữ hoa, chữ thường và số.';
+
+  @override
+  String get chatMessageRevoked => 'Tin nhắn đã bị thu hồi';
+
+  @override
+  String get chatMessageImage => '[Hình ảnh]';
+
+  @override
+  String get chatMessageFile => '[Tệp đính kèm]';
+
+  @override
+  String get chatNoMessagesYet => 'Chưa có tin nhắn nào.';
+
+  @override
+  String get chatMediaPermissionRequired =>
+      'Vui lòng cấp quyền truy cập ảnh trong cài đặt.';
+
+  @override
+  String get chatMediaNoImages => 'Không có ảnh nào.';
+
+  @override
+  String get chatInputReplying => 'Đang trả lời';
+
+  @override
+  String get chatInputDefaultMessage => 'Tin nhắn';
+
+  @override
+  String chatInputSendImageError(String error) {
+    return 'Không thể gửi ảnh: $error';
+  }
+
+  @override
+  String get chatActionReply => 'Trả lời';
+
+  @override
+  String get chatActionRevoke => 'Thu hồi';
+
+  @override
+  String get chatActionCopy => 'Sao chép';
+
+  @override
+  String get chatMsgCopied => 'Đã sao chép tin nhắn';
+
+  @override
+  String get chatRevokeTitle => 'Thu hồi tin nhắn';
+
+  @override
+  String get chatRevokeConfirmMsg =>
+      'Bạn có chắc chắn muốn thu hồi tin nhắn này không? Hành động này không thể hoàn tác.';
+
+  @override
+  String get chatMsgRevokedSuccess => 'Đã thu hồi tin nhắn';
+
+  @override
+  String get chatReplied => 'Đã trả lời';
+
+  @override
+  String get chatMaxImageLimit => 'Bạn chỉ có thể chọn tối đa 10 ảnh';
+
+  @override
+  String get chatSearchContactHint => 'Tìm kiếm người liên hệ...';
+
+  @override
+  String get chatNoConversationsYet => 'Chưa có cuộc trò chuyện nào.';
+
+  @override
+  String get chatSelectContact => 'Chọn người liên hệ';
+
+  @override
+  String get chatNoContacts => 'Không có liên hệ nào.';
+
+  @override
+  String get chatStatusOnline => 'Trực tuyến';
+
+  @override
+  String get chatStatusActive => 'Đang hoạt động';
+
+  @override
+  String get chatStatusOffline => 'Không hoạt động';
 }

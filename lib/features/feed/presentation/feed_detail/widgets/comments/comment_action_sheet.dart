@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tanlu_management/core/widgets/app_action_sheet.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 abstract final class CommentActionSheet {
   static Future<void> show(
@@ -11,17 +12,17 @@ abstract final class CommentActionSheet {
   }) {
     return AppActionSheet.show(
       context,
-      title: 'Tùy chọn bình luận',
+      title: context.l10n.feedCommentOptions,
       actions: [
         if (canEdit)
           AppActionSheetItem(
-            label: 'Sửa bình luận',
+            label: context.l10n.feedEditComment,
             icon: Icons.edit_outlined,
             onTap: onEdit,
           ),
         if (canDelete)
           AppActionSheetItem(
-            label: 'Xóa bình luận',
+            label: context.l10n.feedDeleteComment,
             icon: Icons.delete_outline_rounded,
             destructive: true,
             onTap: onDelete,

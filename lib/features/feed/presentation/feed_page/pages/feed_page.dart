@@ -8,8 +8,9 @@ import 'package:tanlu_management/features/feed/presentation/feed_page/widgets/ex
 import 'package:tanlu_management/features/feed/presentation/feed_page/widgets/my_feed_tab/my_feed_body.dart';
 import 'package:tanlu_management/features/feed/presentation/services/enums/feed_tab.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_page/bloc/feed_bloc.dart';
-import 'package:tanlu_management/features/feed/presentation/feed_page/widgets/feed_app_bar.dart';
+import 'package:tanlu_management/core/widgets/main_app_bar.dart';
 import 'package:tanlu_management/features/feed/presentation/feed_page/widgets/feed_tab_bar.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({super.key});
@@ -67,7 +68,7 @@ class _FeedPageState extends BasePageState<FeedPage, FeedBloc>
       builder: (context, state) {
         return Scaffold(
           backgroundColor: AppColors.grayBg,
-          appBar: const FeedAppBar(),
+          appBar: MainAppBar(title: context.l10n.navFeed),
           body: Column(
             children: [
               FeedTabBar(controller: _tabController),

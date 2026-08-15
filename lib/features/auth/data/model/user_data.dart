@@ -30,6 +30,10 @@ class UserData with _$UserData {
 class UserDataResponse with _$UserDataResponse {
   const factory UserDataResponse({
     @JsonKey(name: 'token') String? token,
+    @JsonKey(name: 'accessToken') String? accessToken,
+    @JsonKey(name: 'refreshToken') String? refreshToken,
+    @JsonKey(name: 'expiresIn') int? expiresIn,
+    @JsonKey(name: 'refreshExpiresIn') int? refreshExpiresIn,
     @JsonKey(name: 'user') UserData? user,
     @JsonKey(name: 'firebaseCustomToken') String? firebaseCustomToken,
   }) = _UserDataResponse;

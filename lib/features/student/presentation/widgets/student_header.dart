@@ -44,7 +44,7 @@ class _StudentHeaderState extends State<StudentHeader> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         AppText.h1(
-          "Danh sách trẻ",
+          context.l10n.studentListTitle,
           fontWeight: FontWeight.w800,
           color: AppColors.grayDark,
           fontSize: 20.sp,

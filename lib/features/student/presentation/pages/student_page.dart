@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tanlu_management/core/base/base_page_state.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
@@ -64,78 +65,89 @@ class _StudentPageState extends BasePageState<StudentPage, StudentBloc> {
           return Scaffold(
             backgroundColor: Colors.white,
             body: SafeArea(
-              child: AppRefreshList(
-                isLoading: state.showListLoading,
-                onRefresh: () async {
-                  bloc.add(const RefreshRequested());
-                  while (bloc.state.isRefreshing) {
-                    await Future<void>.delayed(
-                      const Duration(milliseconds: 50),
-                    );
-                  }
-                },
-                child: CustomScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: StudentHeader(
-                        onSearchChanged: (query) {
-                          bloc.add(SearchQueryChanged(query: query));
-                        },
-                      ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: StudentStats(
-                        total: allStudents.length,
-                        male: _countMale(allStudents),
-                        female: _countFemale(allStudents),
-                        selectedIndex: state.genderFilterIndex,
-                        onIndexChanged: (index) {
-                          bloc.add(GenderFilterChanged(index: index));
-                        },
-                      ),
-                    ),
-                    if (state.showListLoading && state.students.isEmpty)
-                      const SliverToBoxAdapter(
-                        child: ShimmerList(
-                          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                          itemCount: 6,
-                          itemHeight: 76.0,
-                        ),
-                      )
-                    else if (state.students.isEmpty)
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 48),
-                          child: Center(
-                            child: AppText.b1(
-                              context.l10n.noStudents,
-                              color: AppColors.grayMedium,
-                            ),
-                          ),
-                        ),
-                      )
-                    else
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                          final student = state.students[index];
-                          return StudentItem(
-                            studentId: student.id,
-                            fullName: student.fullName,
-                            nickName: student.nickName,
-                            gender: student.gender,
-                            avatarUrl: student.avatarUrl,
-                            className: student.classInfo.name,
-                            parentName: student.parent.fullName,
-                            onTap: () => context.push(
-                              '/student-detail/${student.id}',
-                              extra: student,
-                            ),
+              child: Column(
+                children: [
+                  StudentHeader(
+                    onSearchChanged: (query) {
+                      bloc.add(SearchQueryChanged(query: query));
+                    },
+                  ),
+                  StudentStats(
+                    total: allStudents.length,
+                    male: _countMale(allStudents),
+                    female: _countFemale(allStudents),
+                    selectedIndex: state.genderFilterIndex,
+                    onIndexChanged: (index) {
+                      bloc.add(GenderFilterChanged(index: index));
+                    },
+                  ),
+                  SizedBox(height: 10.h),
+                  Expanded(
+                    child: AppRefreshList(
+                      isLoading: state.showListLoading,
+                      onRefresh: () async {
+                        bloc.add(const RefreshRequested());
+                        while (bloc.state.isRefreshing) {
+                          await Future<void>.delayed(
+                            const Duration(milliseconds: 50),
                           );
-                        }, childCount: state.students.length),
+                        }
+                      },
+                      child: CustomScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        slivers: [
+                          if (state.showListLoading && state.students.isEmpty)
+                            const SliverToBoxAdapter(
+                              child: ShimmerList(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 0,
+                                  vertical: 8,
+                                ),
+                                itemCount: 6,
+                                itemHeight: 76.0,
+                              ),
+                            )
+                          else if (state.students.isEmpty)
+                            SliverToBoxAdapter(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 48,
+                                ),
+                                child: Center(
+                                  child: AppText.b1(
+                                    context.l10n.noStudents,
+                                    color: AppColors.grayMedium,
+                                  ),
+                                ),
+                              ),
+                            )
+                          else
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate((
+                                context,
+                                index,
+                              ) {
+                                final student = state.students[index];
+                                return StudentItem(
+                                  studentId: student.id,
+                                  fullName: student.fullName,
+                                  nickName: student.nickName,
+                                  gender: student.gender,
+                                  avatarUrl: student.avatarUrl,
+                                  className: student.classInfo.name,
+                                  parentName: student.parent.fullName,
+                                  onTap: () => context.push(
+                                    '/student-detail/${student.id}',
+                                    extra: student,
+                                  ),
+                                );
+                              }, childCount: state.students.length),
+                            ),
+                        ],
                       ),
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );

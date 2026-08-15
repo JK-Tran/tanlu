@@ -11,6 +11,7 @@ import 'package:tanlu_management/features/student/presentation/pages/student_det
 import 'package:tanlu_management/shared/di/di.dart';
 import 'package:tanlu_management/features/student/domain/repositories/student_repository.dart';
 import 'package:tanlu_management/features/student/presentation/pages/student_detail/widgets/student_detail_header.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class StudentDetailPage extends StatefulWidget {
   final int studentId;
@@ -87,7 +88,7 @@ class _StudentDetailPageState extends State<StudentDetailPage>
         ),
         body: Center(
           child: AppText.t2(
-            _error ?? 'Không tìm thấy học sinh',
+            _error ?? context.l10n.studentNotFound,
             color: AppColors.grayMedium,
           ),
         ),
@@ -108,22 +109,22 @@ class _StudentDetailPageState extends State<StudentDetailPage>
             tabs: [
               Tab(
                 icon: Icon(Icons.people_alt_rounded, size: 20.w),
-                text: 'Liên hệ',
+                text: context.l10n.studentTabContact,
                 iconMargin: EdgeInsets.only(bottom: 2.h),
               ),
               Tab(
                 icon: Icon(Icons.description_outlined, size: 20.w),
-                text: 'Ghi chú',
+                text: context.l10n.studentTabNotes,
                 iconMargin: EdgeInsets.only(bottom: 2.h),
               ),
               Tab(
                 icon: Icon(Icons.calendar_today_outlined, size: 20.w),
-                text: 'Điểm danh',
+                text: context.l10n.studentTabAttendance,
                 iconMargin: EdgeInsets.only(bottom: 2.h),
               ),
               Tab(
                 icon: Icon(Icons.notifications_none_outlined, size: 20.w),
-                text: 'Bảng tin',
+                text: context.l10n.studentTabFeed,
                 iconMargin: EdgeInsets.only(bottom: 2.h),
               ),
             ],
@@ -136,16 +137,16 @@ class _StudentDetailPageState extends State<StudentDetailPage>
                 ContactTabView(
                   contacts: student.contacts,
                 ),
-                const PlaceholderTab(
-                  title: 'Ghi chú',
+                PlaceholderTab(
+                  title: context.l10n.studentTabNotes,
                   icon: Icons.note_alt_outlined,
                 ),
-                const PlaceholderTab(
-                  title: 'Điểm danh',
+                PlaceholderTab(
+                  title: context.l10n.studentTabAttendance,
                   icon: Icons.fact_check_outlined,
                 ),
-                const PlaceholderTab(
-                  title: 'Bảng tin',
+                PlaceholderTab(
+                  title: context.l10n.studentTabFeed,
                   icon: Icons.feed_outlined,
                 ),
               ],

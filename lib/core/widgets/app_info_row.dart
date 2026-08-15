@@ -37,7 +37,7 @@ class AppInfoRow extends StatelessWidget {
           children: [
             AppText.b2(
               value,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w700,
               color: AppColors.grayDark,
             ),
             if (trailing != null) ...[SizedBox(width: 4.w), trailing!],

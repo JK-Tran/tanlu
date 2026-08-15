@@ -11,7 +11,7 @@ import 'package:tanlu_management/features/attendance/domain/entity/enums/leave_s
 import 'package:tanlu_management/features/attendance/domain/entity/leave_request.dart';
 import 'package:tanlu_management/features/attendance/presentation/enums/leave_status_ext.dart';
 import 'package:tanlu_management/features/attendance/presentation/bloc/attendance_bloc.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 import 'package:tanlu_management/shared/utils/date_time_utils.dart';
 import 'package:tanlu_management/l10n/l10n.dart';
 
@@ -133,8 +133,7 @@ class LeaveRequestItem extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AttendanceAvatar(
-                nickname: studentNickname,
+              AppAvatar(name: studentNickname,
                 imageUrl: studentAvatarUrl,
                 size: isPending ? 40.0 : 36.0,
               ),

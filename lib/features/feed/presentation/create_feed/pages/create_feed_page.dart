@@ -11,7 +11,8 @@ import 'package:tanlu_management/features/feed/presentation/create_feed/bloc/cre
 import 'package:tanlu_management/features/feed/presentation/create_feed/pages/media_picker_page.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/widgets/create_feed_body.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/widgets/create_feed_submit_bar.dart';
-import 'package:tanlu_management/features/feed/presentation/feed_page/widgets/feed_app_bar.dart';
+import 'package:tanlu_management/core/widgets/main_app_bar.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class CreateFeedPage extends StatefulWidget {
   const CreateFeedPage({super.key});
@@ -65,7 +66,7 @@ class _CreateFeedPageState
       AppSnackbar.show(
         context,
         message:
-            'Đã đủ ${AppMediaLimit.maxImagesPerPost} ảnh và '
+            '${context.l10n.feedOnlyMaxImagesAnd(AppMediaLimit.maxImagesPerPost)}'
             '${AppMediaLimit.maxVideosPerPost} video',
         type: AppSnackbarType.warning,
       );
@@ -115,10 +116,10 @@ class _CreateFeedPageState
             children: [
               Scaffold(
                 backgroundColor: AppColors.grayBg,
-                appBar: FeedAppBar(
+                appBar: MainAppBar(
                   showBack: true,
                   backEnabled: !state.isSubmitting,
-                  title: 'Tạo bài viết',
+                  title: context.l10n.feedCreatePost,
                 ),
                 body: Column(
                   children: [

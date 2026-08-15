@@ -209,7 +209,7 @@ class DateTimeUtils {
     }
 
     try {
-      return DateFormat('yyyy-MM-dd HH:mm:ss').format(time);
+      return DateFormat('yyyy-MM-dd HH:mm:ss').format(time.toLocal());
     } catch (e) {
       return null;
     }
@@ -221,17 +221,18 @@ class DateTimeUtils {
     }
 
     try {
-      return DateFormat('HH:mm').format(time);
+      return DateFormat('HH:mm').format(time.toLocal());
     } catch (e) {
       return null;
     }
   }
 
   static String? formatTime(DateTime? time, {bool hmOnly = false}) {
+    if (time == null) return null;
     try {
       return hmOnly
-          ? DateFormat.Hm().format(time!)
-          : DateFormat.Hms().format(time!);
+          ? DateFormat.Hm().format(time.toLocal())
+          : DateFormat.Hms().format(time.toLocal());
     } catch (e) {
       return null;
     }
@@ -254,7 +255,7 @@ class DateTimeUtils {
     }
 
     try {
-      return DateFormat(pattern ?? 'yyyy-MM-dd HH:mm').format(time);
+      return DateFormat(pattern ?? 'yyyy-MM-dd HH:mm').format(time.toLocal());
     } catch (e) {
       return null;
     }
@@ -278,7 +279,7 @@ class DateTimeUtils {
     }
 
     try {
-      return DateFormat('dd/MM/yyyy HH:mm ').format(time);
+      return DateFormat('dd/MM/yyyy HH:mm').format(time.toLocal());
     } catch (e) {
       return null;
     }
@@ -303,12 +304,13 @@ class DateTimeUtils {
     if (time == null) {
       return null;
     }
+    final localTime = time.toLocal();
     if (duration != null && duration > 0) {
-      final date = DateFormat('dd/MM/yyyy').format(time);
-      final String weekDay = DateFormat('EEEE').format(time);
-      final String timeFrom = DateFormat('HH:mm').format(time);
+      final date = DateFormat('dd/MM/yyyy').format(localTime);
+      final String weekDay = DateFormat('EEEE').format(localTime);
+      final String timeFrom = DateFormat('HH:mm').format(localTime);
       final String timeTo = DateFormat('HH:mm').format(
-        time.add(
+        localTime.add(
           Duration(
             hours: duration.truncate(),
             minutes: ((duration - duration.truncate()) * 60).truncate(),
@@ -320,7 +322,7 @@ class DateTimeUtils {
     }
 
     try {
-      return DateFormat('EEEE, HH:mm dd/MM/yyyy').format(time);
+      return DateFormat('EEEE, HH:mm dd/MM/yyyy').format(localTime);
     } catch (e) {
       return null;
     }
@@ -369,7 +371,7 @@ class DateTimeUtils {
     }
 
     try {
-      return DateFormat('yyyy-MM-dd').format(time);
+      return DateFormat('yyyy-MM-dd').format(time.toLocal());
     } catch (e) {
       return null;
     }
@@ -381,7 +383,7 @@ class DateTimeUtils {
     }
 
     try {
-      return DateFormat('dd-MM-yyyy').format(time);
+      return DateFormat('dd-MM-yyyy').format(time.toLocal());
     } catch (e) {
       return null;
     }
@@ -432,8 +434,9 @@ class DateTimeUtils {
       double.tryParse(duration ?? '0.0');
 
   static String? fromTimeToString(DateTime? time) {
+    if (time == null) return null;
     try {
-      return DateFormat.Hms().format(time!);
+      return DateFormat.Hms().format(time.toLocal());
     } catch (e) {
       return null;
     }
@@ -497,6 +500,23 @@ class DateTimeUtils {
     }
     final String formatted = buffer.toString();
     return value < 0 ? '-$formatted' : formatted;
+  }
+
+  static String formatChatTime(DateTime? time) {
+    if (time == null) return '';
+    final localTime = time.toLocal();
+    final now = DateTime.now();
+    final isToday =
+        now.year == localTime.year &&
+        now.month == localTime.month &&
+        now.day == localTime.day;
+    final isYesterday =
+        now.difference(localTime).inDays == 1 ||
+        (now.difference(localTime).inHours < 24 && !isToday);
+
+    if (isToday) return DateFormat('HH:mm').format(localTime);
+    if (isYesterday) return 'Hôm qua';
+    return DateFormat('dd/MM').format(localTime);
   }
 }
 

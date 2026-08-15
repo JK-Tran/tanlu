@@ -4,6 +4,7 @@ import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/feed/domain/entity/feed_comment.dart';
 import 'package:tanlu_management/shared/utils/string_utils.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class CommentInteractions extends StatelessWidget {
   const CommentInteractions({
@@ -40,7 +41,7 @@ class CommentInteractions extends StatelessWidget {
         ),
         if (_isEdited)
           AppText.b2(
-            '· Đã sửa',
+            context.l10n.feedEditedMark,
             fontSize: 10.sp,
             color: AppColors.grayMedium,
           ),
@@ -76,7 +77,7 @@ class CommentInteractions extends StatelessWidget {
           GestureDetector(
             onTap: onReply == null ? null : () => onReply!(comment),
             child: AppText.b2(
-              'Trả lời',
+              context.l10n.feedReplyBtn,
               fontSize: 10.sp,
               color: AppColors.grayMedium,
               fontWeight: FontWeight.w700,

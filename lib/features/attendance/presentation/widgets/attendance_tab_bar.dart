@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 /// Tab chính — segmented control nổi trên nền xám.
 class AttendanceTabBar extends StatelessWidget {
@@ -14,8 +15,7 @@ class AttendanceTabBar extends StatelessWidget {
   final int pendingLeaveCount;
 
   /// Chiều cao header — khớp padding + tab + viền cho SliverPersistentHeader.
-  static double get headerExtent =>
-      12.h + 12.h + 4.h + 4.h + 40.h + 2;
+  static double get headerExtent => 12.h + 12.h + 4.h + 4.h + 40.h + 2;
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +62,22 @@ class AttendanceTabBar extends StatelessWidget {
                 ],
               ),
               tabs: [
-                _tab(0, Icons.checklist_rounded, 'Điểm danh'),
+                _tab(
+                  0,
+                  Icons.checklist_rounded,
+                  context.l10n.attendanceTabAttendance,
+                ),
                 _tab(
                   1,
                   Icons.assignment_return_rounded,
-                  'Xin phép',
+                  context.l10n.attendanceTabLeave,
                   badge: pendingLeaveCount,
                 ),
-                _tab(2, Icons.history_rounded, 'Lịch sử'),
+                _tab(
+                  2,
+                  Icons.history_rounded,
+                  context.l10n.attendanceTabHistory,
+                ),
               ],
             ),
           ),
@@ -136,10 +144,7 @@ class AttendanceTabBar extends StatelessWidget {
 }
 
 class AttendanceTabBarDelegate extends SliverPersistentHeaderDelegate {
-  AttendanceTabBarDelegate({
-    required this.child,
-    required this.extent,
-  });
+  AttendanceTabBarDelegate({required this.child, required this.extent});
 
   final Widget child;
   final double extent;

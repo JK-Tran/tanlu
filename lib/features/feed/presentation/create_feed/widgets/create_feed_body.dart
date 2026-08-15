@@ -7,8 +7,9 @@ import 'package:tanlu_management/core/constants/app_media_limit.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_surface_card.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/bloc/create_feed_bloc.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class CreateFeedBody extends StatelessWidget {
   const CreateFeedBody({
@@ -28,11 +29,11 @@ class CreateFeedBody extends StatelessWidget {
   final ValueChanged<int> onRemoveMedia;
   final ValueChanged<bool> onPublicChanged;
 
-  String get _classLabel {
-    if (state.classId == 0) return 'Chưa gán lớp';
-    if (state.isLoadingClassName) return 'Đang tải lớp...';
+  String _classLabel(BuildContext context) {
+    if (state.classId == 0) return context.l10n.feedNoClassAssigned;
+    if (state.isLoadingClassName) return context.l10n.feedLoadingClass;
     if (state.className.isNotEmpty) return state.className;
-    return 'Lớp của tôi';
+    return context.l10n.feedMyClass;
   }
 
   @override
@@ -49,14 +50,14 @@ class CreateFeedBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               AppText.b1(
-                'Đăng cho',
+                context.l10n.feedPostFor,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.grayDark,
               ),
               SizedBox(height: 8.h),
               _TargetSelector(
-                classLabel: _classLabel,
+                classLabel: _classLabel(context),
                 avatar: state.avatar,
                 fullName: state.fullName,
               ),
@@ -83,7 +84,7 @@ class CreateFeedBody extends StatelessWidget {
                 color: AppColors.grayLight.withValues(alpha: 0.6),
               ),
               _SettingSwitch(
-                label: 'Công khai trên Khám phá',
+                label: context.l10n.feedPublicOnExplore,
                 value: state.isPublic,
                 enabled: enabled,
                 onChanged: onPublicChanged,
@@ -124,8 +125,7 @@ class _TargetSelector extends StatelessWidget {
       ),
       child: Row(
         children: [
-          AttendanceAvatar(
-            nickname: fullName,
+          AppAvatar(name: fullName,
             imageUrl: avatar.isEmpty ? null : avatar,
             size: 28,
           ),
@@ -172,7 +172,7 @@ class _BorderedTextField extends StatelessWidget {
         enabled: enabled,
         onChanged: onChanged,
         decoration: InputDecoration(
-          hintText: 'Bạn đang nghĩ gì?',
+          hintText: context.l10n.feedWhatAreYouThinking,
           hintStyle: TextStyle(color: AppColors.grayMedium, fontSize: 12.sp),
           border: InputBorder.none,
           isDense: true,
@@ -220,7 +220,7 @@ class _LibraryButton extends StatelessWidget {
                 ),
                 SizedBox(width: 6.w),
                 AppText.b2(
-                  'Thư viện ảnh',
+                  context.l10n.feedPhotoGallery,
                   fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                   color: enabled ? AppColors.grayDark : AppColors.grayMedium,
@@ -357,7 +357,7 @@ class _AddMediaTile extends StatelessWidget {
                 size: 22.w,
                 color: enabled ? AppColors.grayMedium : AppColors.grayLight,
               ),
-              AppText.b2('Thêm', fontSize: 10.sp, color: AppColors.grayMedium),
+              AppText.b2(context.l10n.feedAddBtn, fontSize: 10.sp, color: AppColors.grayMedium),
             ],
           ),
         ),

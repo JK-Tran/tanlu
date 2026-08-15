@@ -20,7 +20,12 @@ class AppPreferencesService implements AppPreferences {
 
   @override
   String get languageCode =>
-      _sharedPreference.getString(StorageKeys.locale) ?? '';
+      _sharedPreference.getString(StorageKeys.locale) ?? 'vi';
+
+  @override
+  Future<bool> saveLanguageCode(String code) {
+    return _sharedPreference.setString(StorageKeys.locale, code);
+  }
 
   @override
   bool get isFirstLogin =>

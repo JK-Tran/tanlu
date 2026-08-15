@@ -179,7 +179,7 @@ abstract class AppLocalizations {
   /// No description provided for @cancel.
   ///
   /// In vi, this message translates to:
-  /// **'Hủy'**
+  /// **'Huỷ'**
   String get cancel;
 
   /// No description provided for @cannotCallPhone.
@@ -439,6 +439,48 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Học sinh'**
   String get navStudent;
+
+  /// No description provided for @studentListTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Danh sách trẻ'**
+  String get studentListTitle;
+
+  /// No description provided for @studentProfileTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hồ sơ trẻ'**
+  String get studentProfileTitle;
+
+  /// No description provided for @studentNotFound.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy học sinh'**
+  String get studentNotFound;
+
+  /// No description provided for @studentTabContact.
+  ///
+  /// In vi, this message translates to:
+  /// **'Liên hệ'**
+  String get studentTabContact;
+
+  /// No description provided for @studentTabNotes.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ghi chú'**
+  String get studentTabNotes;
+
+  /// No description provided for @studentTabAttendance.
+  ///
+  /// In vi, this message translates to:
+  /// **'Điểm danh'**
+  String get studentTabAttendance;
+
+  /// No description provided for @studentTabFeed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bảng tin'**
+  String get studentTabFeed;
 
   /// No description provided for @networkError.
   ///
@@ -890,6 +932,24 @@ abstract class AppLocalizations {
   /// **'{label} ({count})'**
   String attendanceListTitle(String label, int count);
 
+  /// No description provided for @attendanceTabAttendance.
+  ///
+  /// In vi, this message translates to:
+  /// **'Điểm danh'**
+  String get attendanceTabAttendance;
+
+  /// No description provided for @attendanceTabLeave.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xin phép'**
+  String get attendanceTabLeave;
+
+  /// No description provided for @attendanceTabHistory.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lịch sử'**
+  String get attendanceTabHistory;
+
   /// No description provided for @attendanceTitle.
   ///
   /// In vi, this message translates to:
@@ -943,6 +1003,714 @@ abstract class AppLocalizations {
   /// In vi, this message translates to:
   /// **'Quay lại'**
   String get goBack;
+
+  /// No description provided for @roleParent.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phụ huynh'**
+  String get roleParent;
+
+  /// No description provided for @roleTeacher.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giáo viên'**
+  String get roleTeacher;
+
+  /// No description provided for @accountAndSecurity.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tài khoản và bảo mật'**
+  String get accountAndSecurity;
+
+  /// No description provided for @username.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tên đăng nhập'**
+  String get username;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đổi mật khẩu'**
+  String get changePassword;
+
+  /// No description provided for @personalInfo.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thông tin cá nhân'**
+  String get personalInfo;
+
+  /// No description provided for @fullName.
+  ///
+  /// In vi, this message translates to:
+  /// **'Họ và tên'**
+  String get fullName;
+
+  /// No description provided for @role.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vai trò'**
+  String get role;
+
+  /// No description provided for @classTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lớp'**
+  String get classTitle;
+
+  /// No description provided for @assignedClass.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lớp phụ trách'**
+  String get assignedClass;
+
+  /// No description provided for @logout.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng xuất'**
+  String get logout;
+
+  /// No description provided for @logoutConfirmMsg.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc muốn đăng xuất?'**
+  String get logoutConfirmMsg;
+
+  /// No description provided for @security.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bảo mật'**
+  String get security;
+
+  /// No description provided for @language.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ngôn ngữ'**
+  String get language;
+
+  /// No description provided for @notifications.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thông báo'**
+  String get notifications;
+
+  /// No description provided for @vietnamese.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tiếng Việt'**
+  String get vietnamese;
+
+  /// No description provided for @english.
+  ///
+  /// In vi, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @contentComingSoon.
+  ///
+  /// In vi, this message translates to:
+  /// **'Nội dung sẽ được cập nhật sớm'**
+  String get contentComingSoon;
+
+  /// No description provided for @helpCenter.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trung tâm trợ giúp'**
+  String get helpCenter;
+
+  /// No description provided for @alwaysReadyToHelp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chúng tôi luôn sẵn sàng hỗ trợ bạn'**
+  String get alwaysReadyToHelp;
+
+  /// No description provided for @faq.
+  ///
+  /// In vi, this message translates to:
+  /// **'Câu hỏi thường gặp'**
+  String get faq;
+
+  /// No description provided for @contactSupport.
+  ///
+  /// In vi, this message translates to:
+  /// **'Liên hệ hỗ trợ'**
+  String get contactSupport;
+
+  /// No description provided for @userGuide.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hướng dẫn sử dụng'**
+  String get userGuide;
+
+  /// No description provided for @aboutApp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giới thiệu ứng dụng'**
+  String get aboutApp;
+
+  /// No description provided for @version.
+  ///
+  /// In vi, this message translates to:
+  /// **'Phiên bản {version}'**
+  String version(String version);
+
+  /// No description provided for @termsOfUse.
+  ///
+  /// In vi, this message translates to:
+  /// **'Điều khoản sử dụng'**
+  String get termsOfUse;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chính sách bảo mật'**
+  String get privacyPolicy;
+
+  /// No description provided for @rateApp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đánh giá ứng dụng'**
+  String get rateApp;
+
+  /// No description provided for @passwordUpdated.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã cập nhật mật khẩu'**
+  String get passwordUpdated;
+
+  /// No description provided for @currentPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu hiện tại'**
+  String get currentPassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu mới'**
+  String get newPassword;
+
+  /// No description provided for @confirmNewPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xác nhận mật khẩu mới'**
+  String get confirmNewPassword;
+
+  /// No description provided for @reqMinChars.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ít nhất 8 ký tự'**
+  String get reqMinChars;
+
+  /// No description provided for @reqUpperLower.
+  ///
+  /// In vi, this message translates to:
+  /// **'Có chữ hoa và chữ thường'**
+  String get reqUpperLower;
+
+  /// No description provided for @reqSpecialChar.
+  ///
+  /// In vi, this message translates to:
+  /// **'Có ký tự đặc biệt'**
+  String get reqSpecialChar;
+
+  /// No description provided for @overviewEvaluate.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đánh giá'**
+  String get overviewEvaluate;
+
+  /// No description provided for @feedCreatePost.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạo bài viết'**
+  String get feedCreatePost;
+
+  /// No description provided for @feedMediaRequirePermission.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cần quyền truy cập thư viện ảnh. '**
+  String get feedMediaRequirePermission;
+
+  /// No description provided for @feedMediaEnableInSettings.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng bật trong Cài đặt.'**
+  String get feedMediaEnableInSettings;
+
+  /// No description provided for @feedMaxVideos.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ chọn tối đa {maxVideos} video'**
+  String feedMaxVideos(int maxVideos);
+
+  /// No description provided for @feedVideoSizeExceed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Video vượt {maxMB} MB'**
+  String feedVideoSizeExceed(int maxMB);
+
+  /// No description provided for @feedMaxImages.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ chọn tối đa {maxImages} ảnh'**
+  String feedMaxImages(int maxImages);
+
+  /// No description provided for @feedSkippedOversizedVideos.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã bỏ qua {count} video vượt '**
+  String feedSkippedOversizedVideos(int count);
+
+  /// No description provided for @feedMaxImagesAndVideos.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã đủ {maxImages} ảnh và '**
+  String feedMaxImagesAndVideos(int maxImages);
+
+  /// No description provided for @feedOnlyMaxImagesAnd.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chỉ chọn tối đa {maxImages} ảnh và '**
+  String feedOnlyMaxImagesAnd(int maxImages);
+
+  /// No description provided for @feedGallery.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thư viện'**
+  String get feedGallery;
+
+  /// No description provided for @feedNext.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tiếp'**
+  String get feedNext;
+
+  /// No description provided for @feedNextWithCount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tiếp ({count})'**
+  String feedNextWithCount(int count);
+
+  /// No description provided for @feedSelectMaxImagesInfo.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn tối đa {maxImages} ảnh, '**
+  String feedSelectMaxImagesInfo(int maxImages);
+
+  /// No description provided for @feedAndroidGalleryInfo.
+  ///
+  /// In vi, this message translates to:
+  /// **'Android mở thư viện hệ thống để chọn.'**
+  String get feedAndroidGalleryInfo;
+
+  /// No description provided for @feedSelectMediaFromGallery.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn ảnh hoặc video từ thư viện'**
+  String get feedSelectMediaFromGallery;
+
+  /// No description provided for @feedAfterSelectInfo.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sau khi chọn, bạn có thể xem lại và chọn thêm.'**
+  String get feedAfterSelectInfo;
+
+  /// No description provided for @feedOpeningGallery.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang mở thư viện...'**
+  String get feedOpeningGallery;
+
+  /// No description provided for @feedOpenGalleryBtn.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mở thư viện ảnh'**
+  String get feedOpenGalleryBtn;
+
+  /// No description provided for @feedSelectMoreBtn.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn thêm'**
+  String get feedSelectMoreBtn;
+
+  /// No description provided for @feedTeacherRole.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giáo viên'**
+  String get feedTeacherRole;
+
+  /// No description provided for @feedWhatFunToday.
+  ///
+  /// In vi, this message translates to:
+  /// **'Hôm nay lớp mình có gì vui?'**
+  String get feedWhatFunToday;
+
+  /// No description provided for @feedPhotoGallery.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thư viện ảnh'**
+  String get feedPhotoGallery;
+
+  /// No description provided for @feedNoClassAssigned.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa gán lớp'**
+  String get feedNoClassAssigned;
+
+  /// No description provided for @feedLoadingClass.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang tải lớp...'**
+  String get feedLoadingClass;
+
+  /// No description provided for @feedMyClass.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lớp của tôi'**
+  String get feedMyClass;
+
+  /// No description provided for @feedPostFor.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng cho'**
+  String get feedPostFor;
+
+  /// No description provided for @feedPublicOnExplore.
+  ///
+  /// In vi, this message translates to:
+  /// **'Công khai trên Khám phá'**
+  String get feedPublicOnExplore;
+
+  /// No description provided for @feedWhatAreYouThinking.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn đang nghĩ gì?'**
+  String get feedWhatAreYouThinking;
+
+  /// No description provided for @feedAddBtn.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thêm'**
+  String get feedAddBtn;
+
+  /// No description provided for @feedPostBtn.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đăng bài'**
+  String get feedPostBtn;
+
+  /// No description provided for @feedCannotLoadPost.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không thể tải bài viết'**
+  String get feedCannotLoadPost;
+
+  /// No description provided for @feedDeletePost.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa bài viết'**
+  String get feedDeletePost;
+
+  /// No description provided for @feedDeletePostConfirmMsg.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bài viết sẽ bị xóa và không hiển thị trên bảng tin.'**
+  String get feedDeletePostConfirmMsg;
+
+  /// No description provided for @feedDeleteBtn.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa'**
+  String get feedDeleteBtn;
+
+  /// No description provided for @feedPostDetailTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chi tiết bài viết'**
+  String get feedPostDetailTitle;
+
+  /// No description provided for @feedPostNotFound.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tìm thấy bài viết'**
+  String get feedPostNotFound;
+
+  /// No description provided for @feedCommentOptions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tùy chọn bình luận'**
+  String get feedCommentOptions;
+
+  /// No description provided for @feedEditComment.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sửa bình luận'**
+  String get feedEditComment;
+
+  /// No description provided for @feedDeleteComment.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa bình luận'**
+  String get feedDeleteComment;
+
+  /// No description provided for @feedAuthorBadge.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tác giả'**
+  String get feedAuthorBadge;
+
+  /// No description provided for @feedWriteCommentHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Viết bình luận...'**
+  String get feedWriteCommentHint;
+
+  /// No description provided for @feedReplyToAuthor.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trả lời {authorName}'**
+  String feedReplyToAuthor(String authorName);
+
+  /// No description provided for @feedEditedMark.
+  ///
+  /// In vi, this message translates to:
+  /// **'· Đã sửa'**
+  String get feedEditedMark;
+
+  /// No description provided for @feedReplyBtn.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trả lời'**
+  String get feedReplyBtn;
+
+  /// No description provided for @feedCommentsCount.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bình luận ({total})'**
+  String feedCommentsCount(int total);
+
+  /// No description provided for @feedNoCommentsYet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có bình luận nào. Hãy là người đầu tiên!'**
+  String get feedNoCommentsYet;
+
+  /// No description provided for @feedPostOptions.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tùy chọn bài viết'**
+  String get feedPostOptions;
+
+  /// No description provided for @feedNotLoggedIn.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa đăng nhập'**
+  String get feedNotLoggedIn;
+
+  /// No description provided for @feedDeletePostSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xóa bài thành công'**
+  String get feedDeletePostSuccess;
+
+  /// No description provided for @feedNoPublicPosts.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có bài viết công khai'**
+  String get feedNoPublicPosts;
+
+  /// No description provided for @feedSeeMore.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem thêm'**
+  String get feedSeeMore;
+
+  /// No description provided for @feedNewsFeedTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bảng tin'**
+  String get feedNewsFeedTitle;
+
+  /// No description provided for @errorGeneric.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã có lỗi xảy ra, vui lòng thử lại sau.'**
+  String get errorGeneric;
+
+  /// No description provided for @errorIncorrectOldPassword.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sai mật khẩu cũ'**
+  String get errorIncorrectOldPassword;
+
+  /// No description provided for @errorMissingPasswords.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng nhập đầy đủ mật khẩu cũ và mới'**
+  String get errorMissingPasswords;
+
+  /// No description provided for @errorPasswordTooShort.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu mới phải có ít nhất 6 ký tự'**
+  String get errorPasswordTooShort;
+
+  /// No description provided for @errorPasswordComplexity.
+  ///
+  /// In vi, this message translates to:
+  /// **'Mật khẩu mới phải bao gồm chữ hoa, chữ thường và số.'**
+  String get errorPasswordComplexity;
+
+  /// No description provided for @chatMessageRevoked.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tin nhắn đã bị thu hồi'**
+  String get chatMessageRevoked;
+
+  /// No description provided for @chatMessageImage.
+  ///
+  /// In vi, this message translates to:
+  /// **'[Hình ảnh]'**
+  String get chatMessageImage;
+
+  /// No description provided for @chatMessageFile.
+  ///
+  /// In vi, this message translates to:
+  /// **'[Tệp đính kèm]'**
+  String get chatMessageFile;
+
+  /// No description provided for @chatNoMessagesYet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có tin nhắn nào.'**
+  String get chatNoMessagesYet;
+
+  /// No description provided for @chatMediaPermissionRequired.
+  ///
+  /// In vi, this message translates to:
+  /// **'Vui lòng cấp quyền truy cập ảnh trong cài đặt.'**
+  String get chatMediaPermissionRequired;
+
+  /// No description provided for @chatMediaNoImages.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không có ảnh nào.'**
+  String get chatMediaNoImages;
+
+  /// No description provided for @chatInputReplying.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang trả lời'**
+  String get chatInputReplying;
+
+  /// No description provided for @chatInputDefaultMessage.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tin nhắn'**
+  String get chatInputDefaultMessage;
+
+  /// No description provided for @chatInputSendImageError.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không thể gửi ảnh: {error}'**
+  String chatInputSendImageError(String error);
+
+  /// No description provided for @chatActionReply.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trả lời'**
+  String get chatActionReply;
+
+  /// No description provided for @chatActionRevoke.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thu hồi'**
+  String get chatActionRevoke;
+
+  /// No description provided for @chatActionCopy.
+  ///
+  /// In vi, this message translates to:
+  /// **'Sao chép'**
+  String get chatActionCopy;
+
+  /// No description provided for @chatMsgCopied.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã sao chép tin nhắn'**
+  String get chatMsgCopied;
+
+  /// No description provided for @chatRevokeTitle.
+  ///
+  /// In vi, this message translates to:
+  /// **'Thu hồi tin nhắn'**
+  String get chatRevokeTitle;
+
+  /// No description provided for @chatRevokeConfirmMsg.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn có chắc chắn muốn thu hồi tin nhắn này không? Hành động này không thể hoàn tác.'**
+  String get chatRevokeConfirmMsg;
+
+  /// No description provided for @chatMsgRevokedSuccess.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã thu hồi tin nhắn'**
+  String get chatMsgRevokedSuccess;
+
+  /// No description provided for @chatReplied.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã trả lời'**
+  String get chatReplied;
+
+  /// No description provided for @chatMaxImageLimit.
+  ///
+  /// In vi, this message translates to:
+  /// **'Bạn chỉ có thể chọn tối đa 10 ảnh'**
+  String get chatMaxImageLimit;
+
+  /// No description provided for @chatSearchContactHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tìm kiếm người liên hệ...'**
+  String get chatSearchContactHint;
+
+  /// No description provided for @chatNoConversationsYet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa có cuộc trò chuyện nào.'**
+  String get chatNoConversationsYet;
+
+  /// No description provided for @chatSelectContact.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn người liên hệ'**
+  String get chatSelectContact;
+
+  /// No description provided for @chatNoContacts.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không có liên hệ nào.'**
+  String get chatNoContacts;
+
+  /// No description provided for @chatStatusOnline.
+  ///
+  /// In vi, this message translates to:
+  /// **'Trực tuyến'**
+  String get chatStatusOnline;
+
+  /// No description provided for @chatStatusActive.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang hoạt động'**
+  String get chatStatusActive;
+
+  /// No description provided for @chatStatusOffline.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không hoạt động'**
+  String get chatStatusOffline;
 }
 
 class _AppLocalizationsDelegate

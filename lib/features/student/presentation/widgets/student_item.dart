@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 
 class StudentItem extends StatelessWidget {
   const StudentItem({
@@ -72,8 +72,7 @@ class StudentItem extends StatelessWidget {
                   color: Colors.white,
                 ),
                 padding: EdgeInsets.all(1.5.w),
-                child: AttendanceAvatar(
-                  nickname: displayName,
+                child: AppAvatar(name: displayName,
                   imageUrl: avatarUrl,
                   size: 44,
                 ),
@@ -88,14 +87,14 @@ class StudentItem extends StatelessWidget {
                     fullName,
                     color: AppColors.grayDark80,
                     fontWeight: FontWeight.w700,
-                    fontSize: 14.sp,
+                    fontSize: 12.sp,
                   ),
                   if (nickName.isNotEmpty) ...[
                     SizedBox(height: 2.h),
                     AppText.t1(
                       nickName,
                       color: AppColors.grayMedium,
-                      fontSize: 12.sp,
+                      fontSize: 10.sp,
                     ),
                   ],
                 ],

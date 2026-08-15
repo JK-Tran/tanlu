@@ -261,7 +261,12 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
       handleLoading: false,
       action: () async {
         emit(
-          state.copyWith(isSubmitting: true, isLoading: true, onPageError: ''),
+          state.copyWith(
+            isSubmitting: true,
+            isLoading: true,
+            onPageError: '',
+            successMessage: null,
+          ),
         );
 
         final daily = state.dailyAttendance!;
@@ -275,9 +280,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
 
         // Refresh để lấy session đã cập nhật từ server
         await _getDailyAttendance(emit: emit, date: daily.date);
-
-        // Hoàn thành submit
-        emit(state.copyWith(isSubmitting: false));
+        emit(state.copyWith(isSubmitting: false, successMessage: 'Đã lưu điểm danh sáng thành công'));
       },
       doOnError: (e) {
         emit(
@@ -405,7 +408,12 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
       handleLoading: false,
       action: () async {
         emit(
-          state.copyWith(isSubmitting: true, isLoading: true, onPageError: ''),
+          state.copyWith(
+            isSubmitting: true,
+            isLoading: true,
+            onPageError: '',
+            successMessage: null,
+          ),
         );
 
         final daily = state.dailyAttendance!;
@@ -415,7 +423,7 @@ class AttendanceBloc extends BaseBloc<AttendanceEvent, AttendanceState> {
         );
 
         await _getDailyAttendance(emit: emit, date: daily.date);
-        emit(state.copyWith(isSubmitting: false));
+        emit(state.copyWith(isSubmitting: false, successMessage: 'Đã chốt điểm danh cuối ngày thành công'));
       },
       doOnError: (e) {
         emit(

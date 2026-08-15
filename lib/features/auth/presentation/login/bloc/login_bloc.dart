@@ -16,8 +16,8 @@ part 'login_state.dart';
 
 @injectable
 class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
-  static const _debugEmail = 'teacher@tanlu.com';
-  static const _debugPassword = '123456';
+  static const _debugEmail = 'teacher.primary@tanlu.local';
+  static const _debugPassword = 'TanluSeed!2026';
 
   LoginBloc(this._loginUseCase, this._updateFcmTokenUseCase, this._appBloc)
     : super(

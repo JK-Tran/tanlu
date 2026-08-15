@@ -114,7 +114,10 @@ class _StatsBodyState extends State<StatsBody>
                     initiallyExpanded: false,
                   ),
                 if (excused.isNotEmpty)
-                  _StatsSection(title: context.l10n.excused, attendances: excused),
+                  _StatsSection(
+                    title: context.l10n.excused,
+                    attendances: excused,
+                  ),
                 if (marked.isNotEmpty)
                   _StatsSection(
                     title: context.l10n.attended,
@@ -122,7 +125,10 @@ class _StatsBodyState extends State<StatsBody>
                     showTime: true,
                   ),
                 if (absent.isNotEmpty)
-                  _StatsSection(title: context.l10n.absent, attendances: absent),
+                  _StatsSection(
+                    title: context.l10n.absent,
+                    attendances: absent,
+                  ),
               ],
               SliverToBoxAdapter(child: SizedBox(height: 40.h)),
             ],
@@ -179,7 +185,7 @@ class _StatsSectionState extends State<_StatsSection> {
                     child: AppText.b2(
                       '${widget.title} (${widget.attendances.length})',
                       color: AppColors.grayMedium,
-                      fontSize: 13.sp,
+                      fontSize: 10.sp,
                       fontWeight: FontWeight.w700,
                     ),
                   ),

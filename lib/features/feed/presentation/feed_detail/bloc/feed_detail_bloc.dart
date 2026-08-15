@@ -15,8 +15,9 @@ import 'package:tanlu_management/features/feed/domain/usecases/get_feed_post_use
 import 'package:tanlu_management/features/feed/domain/usecases/toggle_comment_like_use_case.dart';
 import 'package:tanlu_management/features/feed/domain/usecases/toggle_post_like_use_case.dart';
 import 'package:tanlu_management/shared/services/socket/global_web_socket_service.dart';
+import 'package:tanlu_management/shared/services/socket/socket_event.dart';
 import 'package:tanlu_management/shared/utils/error_mapper.dart';
-
+import 'package:tanlu_management/l10n/l10n.dart';
 
 part 'feed_detail_bloc.freezed.dart';
 part 'feed_detail_event.dart';
@@ -85,7 +86,12 @@ class FeedDetailBloc extends BaseBloc<FeedDetailEvent, FeedDetailState> {
           _subscribeAndLoad(feedId, event.openComments);
         },
         doOnError: (e) {
-          emit(state.copyWith(isLoadingFeed: false, errorMessage: 'Không thể tải bài viết'));
+          emit(
+            state.copyWith(
+              isLoadingFeed: false,
+              errorMessage: S.current.feedCannotLoadPost,
+            ),
+          );
         },
       );
     } else if (feedId != 0) {
@@ -143,7 +149,8 @@ class FeedDetailBloc extends BaseBloc<FeedDetailEvent, FeedDetailState> {
         final result = await _getFeedCommentsUseCase.execute(
           GetFeedCommentsInput(
             postId: feed.id,
-            highlightCommentId: event.highlightCommentId ?? state.highlightCommentId,
+            highlightCommentId:
+                event.highlightCommentId ?? state.highlightCommentId,
           ),
         );
         emit(
@@ -156,7 +163,10 @@ class FeedDetailBloc extends BaseBloc<FeedDetailEvent, FeedDetailState> {
       },
       doOnError: (e) {
         emit(
-          state.copyWith(isLoadingComments: false, errorMessage: ErrorMapper.getMessage(e)),
+          state.copyWith(
+            isLoadingComments: false,
+            errorMessage: ErrorMapper.getMessage(e),
+          ),
         );
       },
     );
@@ -226,7 +236,9 @@ class FeedDetailBloc extends BaseBloc<FeedDetailEvent, FeedDetailState> {
       },
       doOnError: (e) {
         // Roll back optimistic update on failure
-        emit(state.copyWith(feed: feed, errorMessage: ErrorMapper.getMessage(e)));
+        emit(
+          state.copyWith(feed: feed, errorMessage: ErrorMapper.getMessage(e)),
+        );
       },
     );
   }
@@ -344,7 +356,7 @@ class FeedDetailBloc extends BaseBloc<FeedDetailEvent, FeedDetailState> {
       // Root comment – append to bottom
       return [...comments, newComment];
     }
-    
+
     // Reply – insert into the correct parent's replies list
     bool inserted = false;
     final newComments = comments.map((c) {
@@ -360,7 +372,9 @@ class FeedDetailBloc extends BaseBloc<FeedDetailEvent, FeedDetailState> {
     // If not found in root, it might be a reply to a reply (nested).
     // Find the root comment that contains this parent in its replies and append there.
     return comments.map((c) {
-      final hasParentInReplies = c.replies.any((r) => r.id == newComment.parentId);
+      final hasParentInReplies = c.replies.any(
+        (r) => r.id == newComment.parentId,
+      );
       if (hasParentInReplies) {
         // Prevent duplicate insertion if socket already added it
         if (!c.replies.any((r) => r.id == newComment.id)) {

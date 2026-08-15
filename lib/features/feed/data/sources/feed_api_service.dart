@@ -113,10 +113,7 @@ class FeedApiService {
     required int limit,
     int? highlightCommentId,
   }) async {
-    final Map<String, dynamic> queryParameters = {
-      'page': page,
-      'limit': limit,
-    };
+    final Map<String, dynamic> queryParameters = {'page': page, 'limit': limit};
     if (highlightCommentId != null) {
       queryParameters['highlight_comment_id'] = highlightCommentId;
     }

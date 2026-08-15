@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
-import 'package:tanlu_management/features/attendance/presentation/widgets/attendance_avatar.dart';
+import 'package:tanlu_management/core/widgets/app_avatar.dart';
 import 'package:tanlu_management/features/feed/domain/entity/feed_post.dart';
 import 'package:tanlu_management/features/feed/presentation/widgets/feed_media_grid.dart';
 import 'package:tanlu_management/l10n/l10n.dart';
-import 'package:intl/intl.dart';
+import 'package:tanlu_management/shared/utils/date_time_utils.dart';
 
 /// UI một bài viết — dùng chung feed list và chi tiết.
 class FeedItem extends StatelessWidget {
@@ -49,11 +49,9 @@ class FeedItem extends StatelessWidget {
                       className: context.l10n.classLabel(
                         feed.classId.toString(),
                       ),
-                      timeLabel: feed.createdAt != null
-                          ? DateFormat(
-                              'dd/MM/yyyy HH:mm',
-                            ).format(feed.createdAt!)
-                          : '',
+                      timeLabel:
+                          DateTimeUtils.formatDateTimeType2(feed.createdAt) ??
+                          '',
                       onMoreTap: onMoreTap,
                     ),
                     SizedBox(height: 10.h),
@@ -73,7 +71,14 @@ class FeedItem extends StatelessWidget {
               ),
             ),
             if (showActions) ...[
-              Divider(height: 1, thickness: 1, color: AppColors.grayVeryLight),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                child: Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: AppColors.grayLight,
+                ),
+              ),
               _ActionBar(
                 likeCount: feed.likeCount,
                 commentCount: feed.commentCount,
@@ -108,8 +113,8 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        AttendanceAvatar(
-          nickname: fullName,
+        AppAvatar(
+          name: fullName,
           imageUrl: avatar.isEmpty ? null : avatar,
           size: 40,
         ),
@@ -133,7 +138,7 @@ class _Header extends StatelessWidget {
             ],
           ),
         ),
-        AppText.b2(timeLabel, color: AppColors.grayMedium, fontSize: 11.sp),
+        AppText.b2(timeLabel, color: AppColors.grayMedium, fontSize: 10.sp),
       ],
     );
   }
@@ -174,9 +179,9 @@ class _ActionBar extends StatelessWidget {
           // Divider
           Container(
             width: 1,
-            height: 18.h,
+            height: 22.h,
             margin: EdgeInsets.symmetric(horizontal: 4.w),
-            color: AppColors.grayVeryLight,
+            color: AppColors.grayDark,
           ),
           // Comment button
           _ActionButton(
@@ -186,7 +191,7 @@ class _ActionBar extends StatelessWidget {
                 ? context.l10n.commentsCount(_formatCount(commentCount))
                 : context.l10n.comment,
             labelColor: AppColors.grayMedium,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.normal,
             onTap: onComment,
           ),
         ],

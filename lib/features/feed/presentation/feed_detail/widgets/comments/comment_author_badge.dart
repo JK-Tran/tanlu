@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanlu_management/core/themes/app_colors.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 class CommentAuthorBadge extends StatelessWidget {
   const CommentAuthorBadge({super.key});
@@ -15,7 +16,7 @@ class CommentAuthorBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(4.r),
       ),
       child: AppText.b2(
-        'Tác giả',
+        context.l10n.feedAuthorBadge,
         fontSize: 9.sp,
         fontWeight: FontWeight.w600,
         color: AppColors.primary,

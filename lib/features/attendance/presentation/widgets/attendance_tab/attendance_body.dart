@@ -217,7 +217,7 @@ class _Section extends StatelessWidget {
             child: AppText.b2(
               context.l10n.attendanceListTitle(label, students.length),
               color: AppColors.grayMedium,
-              fontSize: 13.sp,
+              fontSize: 10.sp,
               fontWeight: FontWeight.w700,
             ),
           ),

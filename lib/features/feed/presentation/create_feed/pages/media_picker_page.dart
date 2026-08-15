@@ -9,7 +9,8 @@ import 'package:tanlu_management/core/widgets/app_snackbar.dart';
 import 'package:tanlu_management/core/widgets/app_text.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/bloc/create_feed_bloc.dart';
 import 'package:tanlu_management/features/feed/presentation/create_feed/pages/ios_feed_media_picker.dart';
-import 'package:tanlu_management/features/feed/presentation/feed_page/widgets/feed_app_bar.dart';
+import 'package:tanlu_management/core/widgets/main_app_bar.dart';
+import 'package:tanlu_management/l10n/l10n.dart';
 
 /// Chọn media khi tạo bài viết.
 ///
@@ -128,7 +129,7 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
       AppSnackbar.show(
         context,
         message:
-            'Đã bỏ qua $skippedOversizedVideos video vượt '
+            '${context.l10n.feedSkippedOversizedVideos(skippedOversizedVideos)}'
             '${AppMediaLimit.maxVideoMegabytes} MB',
         type: AppSnackbarType.warning,
       );
@@ -138,7 +139,7 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
       AppSnackbar.show(
         context,
         message:
-            'Chỉ chọn tối đa ${widget.maxImages} ảnh và '
+            '${context.l10n.feedOnlyMaxImagesAnd(widget.maxImages)}'
             '${widget.maxVideos} video',
         type: AppSnackbarType.info,
       );
@@ -175,15 +176,15 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
 
     return Scaffold(
       backgroundColor: AppColors.grayBg,
-      appBar: FeedAppBar(
+      appBar: MainAppBar(
         showBack: true,
-        title: 'Thư viện',
+        title: context.l10n.feedGallery,
         trailing: SizedBox(
           width: 72.w,
           child: TextButton(
             onPressed: canConfirm ? _onConfirm : null,
             child: AppText.b1(
-              _selected.isEmpty ? 'Tiếp' : 'Tiếp (${_selected.length})',
+              _selected.isEmpty ? context.l10n.feedNext : context.l10n.feedNextWithCount(_selected.length),
               fontSize: 12.sp,
               fontWeight: FontWeight.w700,
               color: canConfirm ? AppColors.primary : AppColors.grayMedium,
@@ -199,9 +200,9 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 8.h),
                   child: AppText.b2(
-                    'Chọn tối đa ${widget.maxImages} ảnh, '
+                    '${context.l10n.feedSelectMaxImagesInfo(widget.maxImages)}'
                     '${widget.maxVideos} video (≤${AppMediaLimit.maxVideoMegabytes} MB). '
-                    'Android mở thư viện hệ thống để chọn.',
+                    '${context.l10n.feedAndroidGalleryInfo}',
                     fontSize: 11.sp,
                     color: AppColors.grayMedium,
                   ),
@@ -221,7 +222,7 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
                             ),
                             SizedBox(height: 12.h),
                             AppText.b2(
-                              'Chọn ảnh hoặc video từ thư viện',
+                              context.l10n.feedSelectMediaFromGallery,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.grayDark,
@@ -229,7 +230,7 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
                             ),
                             SizedBox(height: 8.h),
                             AppText.b2(
-                              'Sau khi chọn, bạn có thể xem lại và chọn thêm.',
+                              context.l10n.feedAfterSelectInfo,
                               fontSize: 12.sp,
                               color: AppColors.grayMedium,
                               textAlign: TextAlign.center,
@@ -252,8 +253,8 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
                               ),
                               label: Text(
                                 _openingPicker
-                                    ? 'Đang mở thư viện...'
-                                    : 'Mở thư viện ảnh',
+                                    ? context.l10n.feedOpeningGallery
+                                    : context.l10n.feedOpenGalleryBtn,
                               ),
                             ),
                           ],
@@ -289,7 +290,7 @@ class _MediaPickerPageState extends State<MediaPickerPage> {
                       onPressed: _openingPicker ? null : _openSystemPicker,
                       icon: const Icon(Icons.add_photo_alternate_outlined),
                       label: Text(
-                        _openingPicker ? 'Đang mở thư viện...' : 'Chọn thêm',
+                        _openingPicker ? context.l10n.feedOpeningGallery : context.l10n.feedSelectMoreBtn,
                       ),
                     ),
                   ),
